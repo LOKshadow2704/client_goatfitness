@@ -1,0 +1,88 @@
+.wrap_cart{
+    width: 500px;
+    background-color: white;
+    box-shadow: 0px 2px 4px 1px black;
+    border-radius: 10px 0 10px 10px;
+    position: absolute;
+    right: 18%;
+    padding: 40px 10px;
+}
+
+.wrap_cart h1 {
+    font-size: 20px;
+}
+
+.cart-item{
+    display: grid;
+    grid-template-columns: 5% 60% 20% 15%;
+    align-items: center;
+    justify-items: center;
+    padding: 2%;
+}
+
+.product_info {
+    display: grid;
+    grid-template-columns: 20% 60%;
+    align-items: center;
+    justify-content: center;
+}
+
+.product_info img{
+    width: 100%;
+}
+
+.product_info h1 {
+    font-size: 12px;
+}
+
+.quan{
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    justify-content: center;
+}
+
+.quan:nth-child(1){
+    padding: 0 10px;
+}
+
+.quan input{
+    width: 30%;
+    text-align: center;
+}
+
+.buy {
+    
+    align-items: center;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 70% 30%;
+    grid-template-rows: auto auto;
+    justify-items: center;
+}
+
+.buy h4 {
+    display: inline-block;
+    padding-left: 15%;
+    text-align: left !important;
+    width: 100%;
+}
+
+.buy span {
+    text-align: right;
+    padding: 0 20px;
+    grid-column-start: 2;
+    text-align: right;
+    
+}
+
+.buy a{
+    width: 100%;
+    grid-column: span 2; 
+}
+
+.buy button {
+    grid-row: 2;
+    width: 90%;
+    margin-left: 5%;
+ }

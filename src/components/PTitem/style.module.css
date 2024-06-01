@@ -1,0 +1,98 @@
+
+.CartBtn{
+  width: 80%;
+  height: 2.3em;
+  margin: 0.5em;
+  background: black;
+  color: white;
+  border: none;
+  border-radius: 0.625em;
+  font-size: 20px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
+  z-index: 0;
+  overflow: hidden;
+  padding: 0 !important;
+}
+.CartBtn a{
+  display: inline-block;
+  height: 100%;
+  width: 100%;
+  color: white !important;
+  padding-top: 5px !important;
+  padding-left: 0 !important;
+}
+
+.CartBtn:hover a{
+  color: black !important;
+}
+
+
+.CartBtn:after {
+  content: "";
+  background: white;
+  position: absolute;
+  z-index: -1;
+  left: -20%;
+  right: -20%;
+  top: 0;
+  bottom: 0;
+  transform: skewX(-45deg) scale(0, 1);
+  transition: all 0.5s;
+ }
+ 
+ .CartBtn:hover:after {
+  transform: skewX(-45deg) scale(1, 1);
+  -webkit-transition: all 0.5s;
+  transition: all 0.5s;
+ }
+
+ .CartBtn p {
+  margin: 0;
+  font-size: 15px;
+  padding: 0;
+ }
+
+ .HlvItem{
+  width: 100%;
+  height: 100%;
+  background-color: white;
+  display: grid;
+  grid-template-rows: 50% 25% 25%;
+  align-items: center;
+  border-radius: 10px;
+  transition: 0.2s ;
+  align-items: center;
+  justify-items: center;
+}
+
+.HlvItem a{
+color: #081158;
+}
+
+.HlvItem img{
+  width: 100%;
+  height: 180px;
+}
+
+.HlvItem :not(img){
+  padding: 10px;
+}
+
+.wrap_content{
+  height: 100%;
+  margin-top: 30px;
+}
+
+.wrap_content  h1{
+  font-size: 15px;
+  text-align: left;
+}
+.wrap_content p{
+  margin: 0;
+  padding: 0 10px;
+  font-size: 15px;
+  width: 100%;
+}
+

@@ -1,0 +1,132 @@
+.wrap {
+    background-color: white;
+    margin-top: 20px;
+}
+
+.header{
+    width: 95%;
+    margin: 20px 0;
+    padding-top: 20px;
+    padding-left: 5%;
+}
+
+.header input {
+    margin-right: 100px;
+}
+
+
+.header input {
+    max-width: 190px;
+    background-color: #f5f5f5;
+    color: #242424;
+    padding: .15rem .5rem;
+    min-height: 30px;
+    border-radius: 4px;
+    outline: none;
+    border: none;
+    line-height: 1.15;
+    box-shadow: 0px 10px 20px -18px;
+}
+
+.header input:focus {
+    border-bottom: 2px solid #5b5fc7;
+    border-radius: 4px 4px 2px 2px;
+}
+
+.header input:hover {
+    outline: 1px solid lightgrey;
+}
+
+/*Table*/
+.manage_product{
+    width: 90%;
+    margin-left: 5%;
+}
+
+.manage_product thead {
+    font-size: 15px;
+    font-weight: 500;
+}
+
+
+.manage_product th{
+    background-color: #081158;
+    color: white;
+}
+
+.manage_product td{
+    text-align: center;
+}
+
+.manage_product tbody {
+    font-size: 15px;
+}
+
+.manage_product tbody tr{
+    border-bottom:  1px solid rgb(168, 168, 168);
+}
+
+.manage_product tbody td:nth-child(1){
+    display: flex;
+    flex-direction: row-reverse;
+    align-content: center;
+    align-items: center;
+    justify-content: center;
+    height: 47px;
+
+}
+
+.manage_product tbody td:nth-child(1) img{
+    width: 100px;
+}
+
+.manage_product tbody td:nth-child(1) p{
+    text-align: left; 
+    width: 70%;
+}
+
+.manage_product tbody td:nth-child(2){
+    width: 20%;
+}
+
+.manage_product tbody td:nth-child(3){
+    width: 20%;
+}
+
+.manage_product tbody td:nth-child(4){
+    width: 20%;
+}
+.manage_product tbody td:nth-child(5){
+    width: 20%;
+}
+
+
+
+.manage_product tbody td:nth-child(5) button , .header button{
+    width: fit-content;
+    min-width: 100px;
+    height: 45px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 2.5px solid #E0E1E4;
+    box-shadow: 0px 0px 20px -20px;
+    cursor: pointer;
+    background-color: white;
+    transition: all 0.2s ease-in-out 0ms;
+    user-select: none;
+    font-family: 'Poppins', sans-serif;
+}
+  
+.manage_product tbody td:nth-child(5) button:hover , .header button:hover{
+    background-color: #F2F2F2;
+    box-shadow: 0px 0px 20px -18px;
+}
+  
+.manage_product tbody td:nth-child(5) button:active , .header button:active{
+    transform: scale(0.95);
+}
+
+.header button{
+    height: 35px;
+    margin-left: 50px;
+}

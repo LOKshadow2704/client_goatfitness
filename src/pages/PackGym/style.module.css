@@ -1,0 +1,134 @@
+.container {
+    padding-top: 7%;
+    margin-bottom: 150px;
+
+}
+
+.container .header{
+    height: 520px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background-image: url('https://i.imgur.com/eMXpqKw.jpeg');
+    color: white;
+    background-repeat: no-repeat;
+    background-size: cover;
+}
+
+.wrap_content {
+  display: grid;
+  grid-template-columns: 50% 50%;
+  align-items: center;
+
+}
+
+.wrap_content img{
+  margin-top: 20px;
+  border-radius: 10px;
+}
+
+
+.wrap_content :first-child h1{
+  width: 70%;
+  padding-left: 20px;
+}
+
+.group{
+  padding-left: 40px;
+}
+
+.group label{
+  font-weight: 700;
+}
+
+.radio_box{
+  border: 1px solid gray;
+  padding: 10px 20px;
+  border-radius: 10px;
+  margin: 10px 0;
+  width: 70%;
+}
+
+.group h1{
+  text-align: left;
+}
+
+.packageGym button {
+  margin: 40px 0 0 30%;
+  width: 25%;
+  font-size: 15px !important;
+  background: #081158;
+  color: white;
+  font-family: inherit;
+  padding: 0.35em;
+  padding-left: 1.2em;
+  font-size: 17px;
+  font-weight: 500;
+  border-radius: 0.9em;
+  border: none;
+  letter-spacing: 0.05em;
+  display: flex;
+  align-items: center;
+  box-shadow: inset 0 0 1.6em -0.6em #081158;
+  overflow: hidden;
+  position: relative;
+  height: 2.8em;
+  padding-right: 3.3em;
+  cursor: pointer;
+}
+
+.packageGym button > div {
+  background: white;
+  margin-left: 1em;
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 2.2em;
+  width: 2.2em;
+  border-radius: 0.7em;
+  box-shadow: 0.1em 0.1em 0.6em 0.2em #081158;
+  right: 0.3em;
+  transition: all 0.3s;
+}
+
+.packageGym button:hover > div {
+  width: calc(100% - 0.6em);
+}
+
+.packageGym button > div svg {
+  width: 1.1em;
+  transition: transform 0.3s;
+  color: #081158;
+}
+
+.packageGym button:hover > div svg {
+  transform: translateX(0.1em);
+}
+
+.packageGym button:active > div {
+  transform: scale(0.95);
+}
+
+.info{
+  margin-top: 100px;
+}
+
+.info table {
+  border-collapse: collapse;
+  width: 80%;
+  margin-left: 10%;
+}
+
+.info table td ,.info table th{
+  border: 0.5px solid rgb(167, 167, 167);
+}
+
+.info table tbody tr:nth-child(odd){
+  background-color: #f2f2f2; 
+}
+
+.info table td:not(:first-child) {
+  text-align: center;  
+}

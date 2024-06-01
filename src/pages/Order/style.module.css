@@ -1,0 +1,177 @@
+.container {
+    padding-top: 10%;
+    margin-bottom: 150px;
+    background-color: rgb(240, 240, 240);
+    background-size: cover;
+    background-position: center;
+    font-size: 15px;
+}
+
+.orderItem h1:nth-of-type(1) {
+    width: 100%;
+    text-align: left;
+    padding-left: 10% ;
+}
+
+.orderItem h1:nth-of-type(2) {
+    font-size: 18px !important;
+    text-align: left;
+    padding: 50px 0 50px 10%;
+  }
+
+.orderItem{
+    background-color: white;
+}
+
+.group_title{
+    display: grid;
+    grid-template-columns: 40% 50%;
+}
+
+.group_title h1{
+    padding-left: 25% !important;
+}
+
+
+.group_title > input {
+    height: 30px;
+    border-radius: 10px;
+    outline: 2px solid #FEBF00;
+    border: 0;
+    background-color: #e2e2e2;
+    outline-offset: 3px;
+    padding: 0 1rem;
+    transition: 0.25s;
+  }
+  
+  .group_title > input:focus {
+    outline-offset: 5px;
+    background-color: #fff
+  }
+
+.container table{
+    width: 90%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.container table th ,  .container table tr{
+    border-bottom: 1px solid gray;
+    padding-bottom: 50px;
+}
+
+.container table , tr , td{
+    border: none;
+}
+
+.container table tr:not(:first-child){
+    height: 100px;
+}
+
+.container table tbody tr td:first-child{
+    height: 100px;
+    display: grid;
+    grid-template-columns: 10% 30% 60%;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+}
+
+
+.container table td{
+    text-align: center;
+}
+
+.container table img{
+    width: 30%;
+}
+
+.container table th td{
+    font-weight: 600;
+}
+
+.container table tr td{
+    width: 100%; 
+}
+.container table tr td:nth-child(2){
+    width: 10%;
+}
+.container table tr td:nth-child(3){
+    width: 10%;
+}
+.container table tr td:nth-child(4){
+    width: 30%;
+}
+
+
+
+.order{
+    float: right;
+    display: grid;
+    grid-template-columns: repeat(2,1fr);
+    grid-template-rows: repeat(2,1fr);
+    padding-right: 12%;
+    margin-bottom: 100px;
+}
+
+.order h1{
+    display: inline-block;
+    grid-column: span 2;
+}
+
+.order button {
+    margin-top: 20px;
+    border-radius: 10px;
+    grid-column: span 2; 
+    width: 100%;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #081158;
+    border: none;
+    color: white;
+    font-weight: 600;
+    gap: 8px;
+    cursor: pointer;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.103);
+    position: relative;
+    overflow: hidden;
+    transition-duration: .3s;
+  }
+  
+  .order button svg {
+    width: 16px;
+  }
+  
+  .order button svg path {
+    fill: white;
+  }
+  
+  .order button::before {
+    width: 100%;
+    height: 130px;
+    position: absolute;
+    content: "";
+    background-color: rgb(240, 240, 240);
+    border-radius: 50%;
+    left: -100%;
+    top: 0;
+    transition-duration: .3s;
+    mix-blend-mode: difference;
+  }
+  
+  .order button:hover::before {
+    transition-duration: .3s;
+    transform: translate(100%,-50%);
+    border-radius: 0;
+  }
+  
+  .order button:active {
+    transform: translate(2px,2px);
+    transition-duration: .3s;
+  }
+
+.orderItem table tbody tr :nth-child(2) input{
+    width: 35px;
+}

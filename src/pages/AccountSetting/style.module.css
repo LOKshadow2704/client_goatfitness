@@ -1,0 +1,85 @@
+.container {
+    padding-top: 10%;
+    margin-bottom: 150px;
+    background-color: rgb(240, 240, 240);
+    background-size: cover;
+    background-position: center;
+    font-size: 15px;
+}
+
+
+.WrapBox{
+    height: 700px;
+    background-color: white;
+    box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+    width: 100%;
+}
+
+.WrapBox h1 {
+    grid-row-start: 1;
+    text-align: left;
+    padding: 40px 0;
+    height: 50px;
+    width: 80%;
+    margin-left: 10%;
+}
+
+.User{
+    grid-row-start: 2;
+    display: grid;
+    grid-template-columns: 30% 70%;
+    gap: 45px;
+}
+
+.menu {
+    width: 60%;
+    height: 75%;
+    margin-left: 40%;
+    display: grid;
+    grid-template-rows: 3;
+    justify-content: start;
+    align-items: center;
+    justify-items: start;
+}
+
+.menu img{
+    height: 120px;
+    width: 120px;
+}
+
+.menu a{
+    height: 50px;
+    width: 100%;
+    text-align: center;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.menu a p{
+    width: 100px;
+    color: black;
+}
+
+.menu a svg{
+    color: black;
+}
+
+.menu a:hover p , .menu a:hover svg{
+    color: red;
+}
+
+.avt label , .avt{
+    display: flex;
+    align-items: center;
+}
+
+.avt label{
+    margin-left: 10px;
+}
+
+.avt label p{
+    padding-left: 10px;
+}
+
+

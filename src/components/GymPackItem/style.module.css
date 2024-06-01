@@ -1,0 +1,17 @@
+.GymPackItem{
+    width: 100%;
+    height: 100%;
+    background-color: white;
+    display: flex;
+    flex-direction: row-reverse;
+    align-items: center;
+}
+.GymPackItem img{
+    width: 100%;
+    height: 250px;
+    border-radius: 10px 10px 0 0;
+}
+
+.GymPackItem :not(img){
+    padding: 10px;
+}

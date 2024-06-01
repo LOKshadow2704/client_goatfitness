@@ -1,0 +1,136 @@
+.container{
+    display: grid;
+    grid-template-columns: 20% 78%;
+    gap: 20px;
+    background-color: rgba(145, 153, 194, 0.1);
+    height: 100vh;
+}
+
+.menu{
+    background-color: rgb(6, 4, 60);
+    box-shadow: 4px -3px 6px 5px rgba(108, 123, 202, 0.1);
+    color: white;
+}
+
+.menu h4{
+    text-align: center;
+    font-size: 18px;
+    display: flex;
+    align-items: center;
+}
+
+.menu h4 img{
+    height: 90px;
+}
+
+.menu h4 p{
+    display: inline;
+}
+
+.menu > ul{
+    padding-left: 0;
+}
+
+.menu > ul li{
+    text-align: left;
+    list-style: none;
+    height: 50px;
+    width: 80%;
+    display: flex;
+    align-content: center;
+    align-items: center;
+    justify-content: flex-start;
+    padding-left: 20%;
+    cursor: pointer;
+}
+
+.menu ul li:hover {
+    background-color: rgb(12, 10, 77);
+}
+
+.menu ul > li:active {
+    color: rgb(97, 97, 97);
+}
+
+
+.infoEmployee {
+    display: grid;
+    grid-template-columns: 40% 60%;
+    justify-content: center;
+    align-items: center;
+    justify-items: start;
+    padding: 20px  30px;
+    background-color: rgb(14 27 61 / 80%);
+    color: white;
+    padding-right: 0;
+}
+
+
+.infoEmployee h4 {
+    font-size: 15px;
+    padding-right: 5px;
+    text-align: left;
+}
+
+.infoEmployee span {
+    color:#0cb90c;
+    display: flex;
+    align-items: center;
+}
+
+.infoEmployee span svg {
+    margin-right: 5px;
+}
+
+.infoEmployee img{
+    width: 80px;
+    height: 80px;
+    border-radius: 50%;
+    grid-row: 1 / span 2;
+}
+
+.content {
+    overflow-y: auto;
+}
+
+.content> h1{
+    background-color: white;
+    box-shadow: 4px -3px 6px 5px rgba(108, 123, 202, 0.1);
+    padding-left: 10%;
+    text-align: left;
+
+}
+
+.menu >ul li:nth-child(6) {
+    position: relative;
+}
+
+.dropdown{
+    display: none;
+    position: absolute;
+    padding: 0;
+    width: 100%;
+    top:100%;
+    left: 0%;
+}
+
+.dropdown li{
+    width: 70% !important;
+    padding-left: 30% !important;
+}
+
+.menu > ul li:nth-child(6):hover .dropdown{
+    display: inline-block;
+}
+
+.menu > ul li:nth-child(6) ul li:not(:active) {
+    color: white;
+}
+
+.menu > ul li:nth-child(6) ul li:active{
+    color: rgb(97, 97, 97);
+}
+
+.AccountInfo{
+    background-color: white;
+}

@@ -1,0 +1,91 @@
+.modal{
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2;
+    grid-template-rows: 3;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(37, 51, 141, 0.1);
+    box-sizing: border-box;
+    z-index: 99999;
+    background-color: rgba(0, 0, 0, 0.2); 
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+}
+
+.wrap_content {
+    width: 700px;
+    height: fit-content;
+    background-color: white;
+    border-radius: 10px;
+    padding: 35px 40px;
+    padding-top: 0 !important;
+    padding-bottom: 100px;
+}
+
+.wrap_content > h1:first-child{
+    padding: 0;
+    font-size: 30px;
+    width: 100%;
+    text-align: right;
+    padding-right: 10px;
+}
+
+.wrap_content > h1:first-child svg{
+    padding-right: 10px;
+    padding-top: 20px;
+    cursor: pointer;
+}
+
+.wrap_content > h1:first-child svg :hover{
+    color: red;
+}
+
+.wrap_content > h1:first-child svg :active{
+    color: rgb(174, 10, 10);
+}
+
+.wrap_content h1:nth-child(2){
+    font-size: 28px;
+}
+
+.info{
+    display: grid;
+    grid-template-columns: 50% 50%;
+    grid-template-rows: repeat(2,1fr);
+    justify-items: center;
+    align-items: center;
+}
+
+.info h1:nth-child(1){
+    grid-row-start: 1;
+    grid-column: 1 / span 2;
+    font-size: 28px;
+    width: 100%;
+}
+
+.describe table {
+    border-collapse: collapse;
+    width: 80%;
+    margin-left: 10%;
+  }
+  
+.describe table td ,.describe table th{
+    border: 0.5px solid rgb(167, 167, 167);
+}
+
+.describe table tbody tr:nth-child(odd){
+    background-color: #f2f2f2; 
+}
+
+.describe table td:not(:first-child) {
+    text-align: center;  
+}

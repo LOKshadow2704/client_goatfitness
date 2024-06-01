@@ -1,0 +1,115 @@
+.modal{
+    height: 100%;
+    width: 100%;
+    display: grid;
+    grid-template-columns: 2;
+    grid-template-rows: 3;
+    align-items: center;
+    justify-content: center;
+    justify-items: center;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    padding: 20px;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(37, 51, 141, 0.1);
+    box-sizing: border-box;
+    z-index: 99999;
+    background-color: rgba(0, 0, 0, 0.2); 
+    backdrop-filter: blur(5px);
+    border-radius: 10px;
+}
+
+.wrap_content {
+    width: 700px;
+    height: fit-content;
+    background-color: white;
+    border-radius: 10px;
+    padding: 35px 40px;
+    padding-top: 0 !important;
+    padding-bottom: 100px;
+}
+
+.wrap_content > h1:first-child{
+    padding: 0;
+    font-size: 30px;
+    width: 100%;
+    text-align: center;
+    padding-right: 10px;
+}
+
+.wrap_content > h1:first-child svg{
+    padding-right: 10px;
+    padding-top: 20px;
+    cursor: pointer;
+}
+
+.wrap_content > h1:first-child svg :hover{
+    color: red;
+}
+
+.wrap_content > h1:first-child svg :active{
+    color: rgb(174, 10, 10);
+}
+
+.wrap_content h1:nth-child(2){
+    font-size: 28px;
+}
+
+.wrap_content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.wrap_content p{
+    width: 100%;
+    text-align: right;
+}
+
+.updateForm {
+    width: 100%;
+}
+
+.formGroup {
+    display: grid;
+    grid-template-columns: 30% 70%;
+    margin: 10px 0;
+}
+
+.formGroup img{
+    width: 100px;
+    grid-column-start: 2;
+}
+
+.wrap_content .formGroup:nth-child(3){
+    height: 100px;
+}
+
+.updateForm button {
+    background-color: #081158;
+    width: 80%;
+    height: 35px;
+    margin-left: 10%;
+    margin-top: 20px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 2.5px solid #E0E1E4;
+    box-shadow: 0px 0px 20px -20px;
+    cursor: pointer;
+    transition: all 0.2s ease-in-out 0ms;
+    user-select: none;
+    font-family: 'Poppins', sans-serif;
+    color: white;
+}
+  
+.updateForm button:hover {
+    background-color: #13239b;
+    box-shadow: 0px 0px 20px -18px;
+}
+  
+.updateForm button:active {
+    transform: scale(0.95);
+}

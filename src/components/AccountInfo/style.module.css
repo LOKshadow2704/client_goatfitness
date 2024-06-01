@@ -1,0 +1,76 @@
+.container{
+}
+
+.group {
+    display: flex;
+    flex-direction: column;
+    width: fit-content;
+    position: static;
+    width: 50%;
+    margin-left: 15%;
+  }
+  
+  .group label {
+    font-size: 0.75rem;
+    color: #818CF8;
+    font-weight: 700;
+    position: relative;
+    top: 0.5rem;
+    margin: 0 0 0 7px;
+    padding: 0 3px;
+    background: white;
+    width: fit-content;
+  }
+  
+  .group input {
+    padding: 11px 10px;
+    font-size: 15px;
+    border: 2px #818CF8 solid;
+    border-radius: 5px;
+    background: white;
+  }
+  
+  .group input input:focus {
+    outline: none;
+  }
+
+  .action {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    margin-top: 20px;
+  }
+
+.action .submit{
+  display: flex;
+  justify-content: flex-end;
+}
+
+.action .reset{
+  display: flex;
+  justify-content: flex-start;
+  margin-left: 60px;
+}
+
+  .action button {
+    width: fit-content;
+    min-width: 100px;
+    height: 45px;
+    padding: 8px;
+    border-radius: 5px;
+    border: 2.5px solid #E0E1E4;
+    box-shadow: 0px 0px 20px -20px;
+    cursor: pointer;
+    background-color: white;
+    transition: all 0.2s ease-in-out 0ms;
+    user-select: none;
+    font-family: 'Poppins', sans-serif;
+  }
+  
+  .action button:hover {
+    background-color: #F2F2F2;
+    box-shadow: 0px 0px 20px -18px;
+  }
+  
+  .action button:active {
+    transform: scale(0.95);
+  }

@@ -1,0 +1,127 @@
+.container{
+    display: grid;
+    grid-template-columns: 40% 60%;
+    margin-top: 10%;
+    height: fit-content;
+    padding-bottom: 100px;
+}
+
+.left{
+    display: flex;
+    justify-content: center;   
+}
+
+.left img {
+    height: 276px;
+    width: 275px;
+}
+
+.right table {
+    width: 70%;
+}
+
+.right span{
+  display: inline-block;
+  margin: 10px 0;
+}
+
+.right h1{
+    font-size: 20px;
+    text-align: left;
+}
+
+.right p {
+    display: inline-block;
+}
+
+.action {
+  width: 50%;
+  display: grid;
+  grid-template-columns: repeat(2,1fr);
+  grid-template-rows: repeat(2,1fr);
+}
+
+
+.action button{
+    width: 90%;
+    height: 40px;
+    border-radius: 12px;
+    border: none;
+    background-color: rgb(255, 208, 0);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    cursor: pointer;
+    transition-duration: .5s;
+    overflow: hidden;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
+    position: relative;
+    margin: 10px 0;
+}
+
+.CartBtn-1{
+  grid-row-start: 2;
+}
+
+.CartBtn-2{
+  grid-row-start: 2;
+}
+
+.IconContainer {
+    position: absolute;
+    left: -50px;
+    width: 30px;
+    height: 30px;
+    background-color: transparent;
+    border-radius: 50%;
+    overflow: hidden;
+    z-index: 2;
+    transition-duration: .5s;
+    width: 20px;
+  }
+
+  .fa-cart-plus{
+    width: 20px;
+  }
+
+  
+  .text {
+    height: 100%;
+    width: fit-content;
+    color: rgb(17, 17, 17);
+    transition-duration: .5s;
+    font-size: 1.04em;
+    font-weight: 600;
+    margin: 0;
+    display: flex !important;
+    align-items: center;
+  }
+  
+  .CartBtn:hover .IconContainer {
+    transform: translateX(58px);
+    border-radius: 40px;
+    transition-duration: .5s;
+  }
+  
+  
+  .CartBtn:active {
+    transform: scale(0.95);
+    transition-duration: .5s;
+  }
+
+.action input{
+    width: 40px;
+    height: 20px;
+}
+
+.info table , .info table td{
+  border: 1px solid black;
+}
+
+.info table td{
+  text-align: center;
+}
+
+.info table tr td:first-child{
+  font-weight: 700;
+}
