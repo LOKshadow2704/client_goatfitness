@@ -30,7 +30,7 @@ function Footer (){
                     <hr/>
                     <a href="">Góp ý & phản hồi</a>
                     <hr/>
-                    <a href="">Tuyển dụng</a>
+                    <a href="">Tuyển dụng 1</a>
                 </div>
             </div>
         </footer>
