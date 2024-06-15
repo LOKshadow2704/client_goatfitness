@@ -57,6 +57,7 @@
     margin-left: 10px;
     height: 100px;
     margin-bottom: 15px;
+    width: 95% !important;
 }
 
 .contact {
@@ -125,7 +126,6 @@ hr {
 }
 
 .map {
-    width: 350px;
     height: 200px;
     border: none;
     float: left;
@@ -154,4 +154,11 @@ hr {
 .footer1 {
     border: solid 1px gray;
     width: 100%;
+}
+.addressText{
+    font-weight: bold;
+    font-size: 1.2em;
+}
+.giandong{
+    margin-bottom: 20px;
 }
