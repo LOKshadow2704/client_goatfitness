@@ -9,10 +9,13 @@ import Dashboard from "../../components/Dashboard";
 import ManageProduct from "../../components/ManegeProduct";
 import AccountInfo from "../../components/AccountInfo";
 import AccountSetting from "../AccountSetting";
+import { useAnnouncement } from "../../contexts/Announcement";
+import Announcement from "../../components/Announcement";
 function Employee(){
     const [currentPage, setCurrentPage] = useState('Dashboard');
     const {user , logout , fetchUserInfo} = useAuth();
     const [update , setUpdate] = useState(false);
+    const {success , warning , error} = useAnnouncement();
     useEffect(()=>{
         fetchUserInfo();
         setUpdate(false);
@@ -40,7 +43,7 @@ function Employee(){
             </div>
 
             <div className={style["content"]}>
-                <h1>{currentPage}</h1>
+                <h1>{currentPage} {error || success || warning ? <Announcement /> : null}</h1>
                 {currentPage==='Dashboard' && (<Dashboard/>)}
                 {currentPage==='Quản lý sản phẩm' && (<ManageProduct/>)}
                 {currentPage==='Quản lý gói tập' && (<ManagePackGym />)}

@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UpdateProductModal from "../../components/UpdateProductModal";
 import AddProductModal from "../../components/AddProductModal";
 import axios from "axios";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function ManageProduct({ data }) {
     const [product, setProduct] = useState([]);
@@ -14,6 +15,7 @@ function ManageProduct({ data }) {
     const [selectedProduct, setSelectedProduct] = useState(null);
     const [rerender, setRerender] = useState(false);
     const [addproductModal , setAddproductModal] = useState(false);
+    const { setSuccess, setError, setMessage } = useAnnouncement();
 
     useEffect(() => {
         fetch('http://localhost:88/Backend/shop/manege/')
@@ -78,13 +80,15 @@ function ManageProduct({ data }) {
             axios.post('http://localhost:88/Backend/product/delete',  {IDSanPham:id}, { headers: headers 
             }).then(response => {
                 if(response.status >= 200 && response.status < 300){
-                    alert("Xóa thành công");
+                    setSuccess(true);
+                    setMessage("Xóa thành công");
                     setRerender(!rerender);
                 }else{
                     throw new Error("Xóa thất bại");
                 }
             }).catch(error => {
-                alert(error.response.data.error);
+                setError(true);
+                setMessage(error.response.data.error);
             });
     };
     };

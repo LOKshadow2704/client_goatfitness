@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import CreateUserModal from "../CreateUserModal";
 import UpdateRoleModal from "../UpdateRoleModal";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function ManageAccount({ data }) {
     const [accounts, setAccount] = useState([]);
@@ -13,6 +14,7 @@ function ManageAccount({ data }) {
     const [searchTerm, setSearchTerm] = useState("");
     const [modalUpdate , setModalUpdte] = useState(false);
     const [selectUser , setSelectedUser] = useState(null);
+    const { setError , setMessage} = useAnnouncement;
     useEffect(() => {
         const findCookie = (name) => {
             const cookies = document.cookie.split(';');
@@ -36,12 +38,12 @@ function ManageAccount({ data }) {
             .then(response => {
                 if(response.status >= 200 && response.status < 300){
                     setAccount(response.data);
-                    console.log(response.data);
                 }else{
                     throw new Error("Lấy thông tin thất bại");
                 }
             }).catch(error => {
-                alert(error.response.data.error);
+                setError(true);
+                setMessage(error.response.data.error);
             });
     };
     }, [modalUpdate ,modalAdd]);

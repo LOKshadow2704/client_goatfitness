@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import axios from "axios";
 import style from './style.module.css';
+import { useAnnouncement } from "../../contexts/Announcement";
+import Announcement from "../../components/Announcement";
 
 function Signup() {
+    const {error , success , warning , setError ,setMessage ,setSuccess , setLocation , setLink} = useAnnouncement();
     const [formData, setFormData] = useState({
         fullname: '',
         username: '',
@@ -74,7 +77,6 @@ function Signup() {
     };
 
     const validateForm = () => {
-        const { username, password, re_password, email, phone } = formData;
         let isValid = true;
         const newErrors = {};
 
@@ -101,17 +103,24 @@ function Signup() {
         }
         try {
             const response = await axios.post('http://localhost:88/Backend/signup', formDataToSend);
-            alert("Đăng ký thành công");
-            window.location.href ="http://localhost:3000/login";
-            
+            if(!response.error){
+                setSuccess(true);   
+                setMessage("Đăng ký thành công");
+                setLocation(true);
+                setLink("http://localhost:3000/login");
+            }else{
+                throw new Error(response.data.error);
+            }
         } catch (error) {
-            console.error("Đã xảy ra lỗi khi đăng ký!", error);
+            setError(true);
+            setMessage( error.response.data.error);
             // handle error
         }
     };
 
     return (
         <div className={style['Wrap']}>
+            {error || success || warning ? <Announcement /> : null}
             <form className={`${style['login']} ${style['scrollable']}`} onSubmit={handleSubmit}>
                 <h2 className={style['wrap-back']}><a href="/" className={style['back']}>Quay lại</a> </h2>
                 <h1>Đăng ký</h1>

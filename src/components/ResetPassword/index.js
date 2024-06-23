@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import style from "./style.module.css";
 import axios from "axios";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function ResetPassword(){
     const [currentPW, setCurrentPW] = useState("");
     const [newPW, setNewPW] = useState("");
     const [confirmPW, setConfirmPW] = useState("");
     const [dataChanged, setDataChanged] = useState(false); 
+    const { setError ,setMessage ,setSuccess } = useAnnouncement();
     const findCookie = (name) => {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
@@ -32,24 +34,27 @@ function ResetPassword(){
         axios.post('http://localhost:88/Backend/updatePassword',  data, { headers: headers 
         }).then(response => {
             if(response.status >= 200 && response.status < 300){
-                alert(response.data.message);
+                setSuccess(true);
+                setMessage(response.data.message);
             }else{
                 throw new Error(response.data.message);
             }
         }).catch(error => {
-            alert(error.response.data.message);
-            console.error(error);
+            setError(true);
+            setMessage(error.response.data.message);
         });
     };
     const handleUpdateClick = () => {
         if (currentPW.trim() === "" || newPW.trim() === "" || confirmPW.trim() === "") {
             // Nếu có một trường nào đó không nhập, không thực hiện cập nhật
-            alert('Vui lòng nhập đầy đủ thông tin.');
+            setError(true);
+            setMessage('Vui lòng nhập đầy đủ thông tin.');
             return false;
         }
 
         if (newPW !== confirmPW) {
-            alert('Mật khẩu mới và xác nhận mật khẩu không khớp.');
+            setError(true);
+            setMessage('Mật khẩu không khớp.');
             return false;
         }
 

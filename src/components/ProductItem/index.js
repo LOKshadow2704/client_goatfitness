@@ -2,8 +2,10 @@ import style from './style.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { Link } from 'react-router-dom';
+import { useAnnouncement } from '../../contexts/Announcement';
 
 function ProductItem({children, current ,  setAddCartCount}){
+  const {setSuccess , setError , setMessage} = useAnnouncement();
   function AddtoCart(IDSanPham){
     const findCookie = (name) => {
       const cookies = document.cookie.split(';');
@@ -18,9 +20,9 @@ function ProductItem({children, current ,  setAddCartCount}){
     
     const jwt = findCookie('jwt');
     if(!jwt){
-      alert("Vui lòng đăng nhập")
-      window.location.href = "http://localhost:3000/login" ;
-      return
+      setError(true);
+      setMessage("Vui lòng đăng nhập");
+      return;
     }
     const data = {
       IDSanPham: IDSanPham
@@ -37,15 +39,15 @@ function ProductItem({children, current ,  setAddCartCount}){
     fetch("http://localhost:88/Backend/cart/add", option)
     .then(response => {
       if (!response.ok) {
-          alert("Vui lòng đăng nhập")
-          window.location.href = "http://localhost:3000/login" ;
+          setError(true);
+          setMessage("Không thực hiện được hành động");
           throw new Error(response.error);
       }
       return response.json();
       })
       .then(data => {
-          const message = data.message;
-          console.log(message);
+          setSuccess(true);
+          setMessage(data.message);
       })
       .catch(error => {
           console.error('Lỗi khi thêm vào giỏ hàng', error);

@@ -3,10 +3,11 @@ import style from "./style.module.css";
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import axios from "axios";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function PurchaseOrder(){
     const [PurchaseOrder , SetPurchaseOrder] = useState();
-   
+    const { setError ,setMessage , setLocation , setLink} = useAnnouncement();
     useEffect(()=>{
         const findCookie = (name) => {
             const cookies = document.cookie.split(';');
@@ -34,11 +35,17 @@ function PurchaseOrder(){
                     throw new Error("Lấy thông tin đơn hàng thất bại!");
                 }
             }).catch(error => {
-                alert(error.response.data.error);
+                setError(true);
+                setMessage(error.response.data.error);
             });
                 
+        }else{
+            setError(true);
+            setMessage("Vui lòng đăng nhập!");
+            setLocation(true);
+            setLink("http://localhost:3000/login");
         }
-    },[])
+    },[setError, setLink, setLocation,setMessage])
     function formatDate(dateString) {
         const date = new Date(dateString);
         const year = date.getFullYear();

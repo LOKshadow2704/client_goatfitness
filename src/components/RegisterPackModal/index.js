@@ -3,6 +3,7 @@ import style from "./style.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function RegisterPackModal({ data, setShowModal }) {
     const [formData, setFormData] = useState({
@@ -10,6 +11,7 @@ function RegisterPackModal({ data, setShowModal }) {
         IDGoiTap: "",
         ThoiHan: ""
     });
+    const { setError ,setMessage ,setSuccess , setLocation , setLink} = useAnnouncement();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -17,7 +19,8 @@ function RegisterPackModal({ data, setShowModal }) {
 
         // Kiểm tra xem số điện thoại có bắt đầu bằng số 0 hay không
         if (name === "SDT" && value.length > 0 && value.charAt(0) !== '0') {
-            alert("Số điện thoại phải bắt đầu bằng số 0");
+            setError(true);
+            setMessage("Số điện thoại phải bắt đầu bằng số 0");
             return;
         }
 
@@ -49,7 +52,8 @@ function RegisterPackModal({ data, setShowModal }) {
         const isLogin = findCookie("jwt");
         if(isLogin){
             if (!formData.SDT || !formData.IDGoiTap) {
-                alert("Vui lòng điền đầy đủ thông tin");
+                setError(true);
+                setMessage("Vui lòng điền đầy đủ thông tin");
                 return;
             }
             const jwt = findCookie('jwt');
@@ -62,16 +66,22 @@ function RegisterPackModal({ data, setShowModal }) {
             axios.post('http://localhost:88/Backend/gympack/registerByEmployee', formData ,{ headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
-                        alert("Đăng ký thành công!");
+                        setSuccess(true);
+                        setMessage("Đăng ký thành công!");
                         setShowModal(false);
                     } else {
                         throw new Error("Đăng ký thất bại");
                     }
                 })
                 .catch(error => {
-                    console.log(error.response.data)
-                    alert(error.response.data.error);
+                    setError(true);
+                    setMessage(error.response.data.error);
                 });
+        }else{
+            setError(true);
+            setMessage("Vui lòng đăng nhập!");
+            setLocation(true);
+            setLink("http://localhost:3000/login"); 
         }    
     };
 

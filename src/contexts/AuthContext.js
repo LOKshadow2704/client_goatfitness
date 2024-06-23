@@ -26,7 +26,7 @@ export const AuthProvider = ({ children }) => {
             return { success: true , role: user[0].TenVaiTro };
         } catch (error) {
             console.error('Error', error.message);
-            return { success: false, message: 'Đăng nhập không thành công, kiểm tra lại thông tin' };
+            return { success: false, message: 'Kiểm tra lại thông tin' };
         }
     };
 

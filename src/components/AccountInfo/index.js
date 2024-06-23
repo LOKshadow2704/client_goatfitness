@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import axios from "axios";
 import style from './style.module.css';
+import { useAnnouncement } from '../../contexts/Announcement';
 
 function AccountInfo({ userData , setUpdate  }) {
     const [name, setName] = useState(userData.HoTen);
@@ -9,6 +10,7 @@ function AccountInfo({ userData , setUpdate  }) {
     const [phoneNum, setPhoneNum] = useState(userData.SDT);
     const [dataChanged, setDataChanged] = useState(false);
     const [rerender , setRerender] = useState(false);
+    const {setSuccess , setError , setMessage , setWarning} = useAnnouncement();
     //Kiểm tra thay đổi nhập
     useEffect(() => {
         setDataChanged(
@@ -56,11 +58,12 @@ function AccountInfo({ userData , setUpdate  }) {
             if(response.status >= 200 && response.status < 300){
                 setUpdate(true);
                 setRerender(!rerender);
-                alert('Update thông tin thành công');
+                setSuccess(true);
+                setMessage('Update thông tin thành công');
             }
         }).catch(error => {
-            console.log(error)
-            alert('Update thông tin thất bại');
+            setError(true);
+            setMessage("Update thông tin thất bại");
         });
     };
 
@@ -80,7 +83,8 @@ function AccountInfo({ userData , setUpdate  }) {
             setDataChanged(true);
             updateUser(); // Gửi yêu cầu đến backend khi dữ liệu thay đổi
         } else {
-            alert('Không có thay đổi nào để cập nhật.');
+            setWarning(true);
+            setMessage('Không có thay đổi nào để cập nhật.');
         }
     };
 
