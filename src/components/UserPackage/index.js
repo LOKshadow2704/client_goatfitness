@@ -4,10 +4,11 @@ import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons/faCircleCheck";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function UserPackage({setShowModal}) {
     const [data , setData] = useState();
-
+    const { setError ,setMessage , setLocation , setLink} = useAnnouncement();
     useEffect(()=>{
         const findCookie = (name) => {
             const cookies = document.cookie.split(';');
@@ -34,12 +35,14 @@ function UserPackage({setShowModal}) {
                     console.log(response.data);
                 }
             }).catch(error => {
-                alert(error.response.data.error);
-                window.location.href = "http://localhost:3000/GymPack";
+                setError(true);
+                setMessage(error.response.data.error);
+                setLocation(true);
+                setLink("http://localhost:3000/GymPack");
             });
                 
         }
-    },[])
+    },[setError ,setMessage , setLocation , setLink])
     return (
         <div className={style.modal}>
             <div className={style.wrap_content}>

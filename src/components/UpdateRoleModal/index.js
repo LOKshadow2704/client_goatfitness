@@ -3,8 +3,10 @@ import style from "./style.module.css";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function UpdateRoleModal({ data, setShowModal }) {
+    const { setError ,setMessage ,setSuccess , setLocation , setLink} = useAnnouncement();
     const [formData, setFormData] = useState({
         TenDangNhap: data.TenDangNhap,
         IDVaiTro: data.IDVaiTro,
@@ -34,7 +36,8 @@ function UpdateRoleModal({ data, setShowModal }) {
         const isLogin = findCookie("jwt");
         if (isLogin) {
             if(formData.TenDangNhap === data.TenDangNhap && formData.IDVaiTro === data.IDVaiTro){
-                alert("Không có thay đổi nào cả");
+                setError(true);
+                setMessage("Không có thay đổi nào cả");
                 setShowModal(false);
                 return;
             }
@@ -50,14 +53,21 @@ function UpdateRoleModal({ data, setShowModal }) {
             axios.put('http://localhost:88/Backend/admin/update', formData, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
-                        alert("Cập nhật thành công");
+                        setSuccess(true);
+                        setMessage("Cập nhật thành công");
                         setShowModal(false);
                     } else {
                         throw new Error("Lấy thông tin thất bại");
                     }
                 }).catch(error => {
-                    alert(error.response.data.error);
+                    setError(true);
+                    setMessage(error.response.data.error);
                 });
+        }else{
+            setError(true);
+            setMessage("Vui lòng đăng nhập");
+            setLocation(true);
+            setLink("http://localhost:3000/login");
         }
     };
 

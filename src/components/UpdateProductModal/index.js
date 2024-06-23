@@ -3,12 +3,13 @@ import style from "./style.module.css";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function UpdateProductModal({ data ,setShowModal}) {
     const [formData, setFormData] = useState({ ...data });
     const [changedData, setChangedData] = useState({});
     const [category , setCategory] = useState();
-
+    const { setError ,setMessage ,setSuccess } = useAnnouncement();
     useEffect(()=>{
         axios.get('http://localhost:88/Backend/product/get_All_Category',  data, null).then(response => {
                 if(response.status >= 200 && response.status < 300){
@@ -17,9 +18,10 @@ function UpdateProductModal({ data ,setShowModal}) {
                     throw new Error("Lấy thông tin thất bại");
                 }
             }).catch(error => {
-                alert(error.response.data.error);
+                setError(true);
+                setMessage(error.response.data.error);
             });
-},[data])
+},[data ,setError ,setMessage])
 
     //Nhập thông tin vào formData
     const handleChange = (e) => {
@@ -68,7 +70,8 @@ function UpdateProductModal({ data ,setShowModal}) {
             const validExtensions = ['jpg', 'jpeg', 'png'];
             const fileExtension = file.name.split('.').pop().toLowerCase();
             if (!validExtensions.includes(fileExtension)) {
-                alert('File được chấp nhận JPG, JPEG, PNG.');
+                setError(true);
+                setMessage('File được chấp nhận JPG, JPEG, PNG.');
                 reject('Invalid file extension');
                 return;
             }
@@ -76,7 +79,8 @@ function UpdateProductModal({ data ,setShowModal}) {
             // Kiểm tra kích thước tệp
             const maxFileSize = 10 * 1024 * 1024; // 10 MB
             if (file.size > maxFileSize) {
-                alert('Kích thước phải nhỏ hơn 10MB');
+                setError(true);
+                setMessage('Kích thước phải nhỏ hơn 10MB');
                 reject('File size too large');
                 return;
             }
@@ -130,13 +134,15 @@ function UpdateProductModal({ data ,setShowModal}) {
             axios.put('http://localhost:88/Backend/product/update',  data, { headers: headers 
             }).then(response => {
                 if(response.status >= 200 && response.status < 300){
-                    alert("Cập nhật thành công");
+                    setSuccess(true);
+                    setMessage("Cập nhật thành công");
                     setShowModal(false)
                 }else{
                     throw new Error("Lấy thông tin thất bại");
                 }
             }).catch(error => {
-                alert(error.response.data.error);
+                setError(true);
+                setMessage(error.response.data.error);
             });
         }
     }

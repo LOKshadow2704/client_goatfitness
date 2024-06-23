@@ -6,15 +6,15 @@ import PaymentModal from "../../components/PaymentModal";
 import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function GymPack(){
     const [categories , setCategories] = useState();
     const location = useLocation();
-    const navigate = useNavigate();
     const [statusPayment , setStatusPayment] = useState(false);
     const [selectedPackage, setSelectedPackage] = useState(null);
-    const [ShownMessage, setShownMessage] = useState(false);
+    const { setError ,setMessage ,setSuccess , setLocation , setLink} = useAnnouncement();
     
     useEffect( ()=>{
         axios.get("http://localhost:88/Backend/gympack/",null,null)
@@ -43,30 +43,29 @@ function GymPack(){
     //Thông báo
     useEffect(() => {
         const checkMessage = () => {
-          if (ShownMessage) {
             const searchParams = new URLSearchParams(location.search);
             const message = searchParams.get('message');
             if (message) {
               switch (message) {
                 case "successfully":
-                  alert('Đăng ký thành công!');
-                  navigate("/GymPack", { replace: true });
+                    setSuccess(true);
+                  setMessage('Đăng ký thành công!');
+                  setLocation(true);
+                  setLink("http://localhost:3000/GymPack");
                   break;
                 case "unsuccessfully":
-                  alert('Đăng ký không thành công!');
+                    setError(true);
+                    setMessage('Đăng ký không thành công!');
                   break;
                 default:
                   break;
               }
             }
-          }
         };
       
         checkMessage();
         // Cập nhật trạng thái hasShownMessage
-      }, [ShownMessage]);
-
-    useEffect(()=>{setShownMessage(true);},[])
+      }, [location.search, setError, setLink, setLocation, setMessage, setSuccess]);
    //Change Value GoiTap 
     const handlePackageChange = (event) => {
         const selectedPackageID_ = parseInt(event.target.value, 10);;
@@ -86,7 +85,8 @@ function GymPack(){
       };
     const handleSubmit = (payment, selectedPackage_)=>{
         if(!selectedPackage_ || !selectedPackage_.IDGoiTap){
-            alert("Vui lòng chọn gói tập");
+            setError(true);
+            setMessage("Vui lòng chọn gói tập");
             return;
         }
         const isLogin = findCookie("jwt");
@@ -110,19 +110,24 @@ function GymPack(){
                     if( response.data.success){
                         window.location.href= response.data.success;
                     }else{
-                        alert(response.data.message);
-                        window.location.href="http://localhost:3000/GymPack";
+                        setSuccess(true);
+                        setMessage(response.data.message);
+                        setLocation(true);
+                        setLink("http://localhost:3000/GymPack");
                     }
                 }else{
                     throw new Error("Đăng ký không thành công!");
                 }
             }).catch(error => {
-                alert(error.response.data.error);
+                setError(true);
+                setMessage(error.response.data.error);
             });
                 
         }else{
-            alert("Vui lòng đăng nhập!");
-            window.location.href="http://localhost:3000/login";
+            setError(true);
+            setMessage("Vui lòng đăng nhập!");
+            setLocation(true);
+            setLink("http://localhost:3000/login");
         }
     };
     

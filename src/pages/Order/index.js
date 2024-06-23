@@ -5,7 +5,8 @@ import Footer from '../../components/Footer';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import { Navigate, useLocation } from "react-router-dom";
+import {  useLocation } from "react-router-dom";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function Order(){
     const location = useLocation();
@@ -13,7 +14,7 @@ function Order(){
     const [products , setProducts] = useState();
     const [selectedPayment, setSelectedPayment] = useState(1);
     const [address , setAddress] = useState();
-    const [navigateToPurchaseOrder, setNavigateToPurchaseOrder] = useState(false);
+    const { setError ,setMessage ,setSuccess , setLocation , setLink} = useAnnouncement();
 
     //Thông báo
     useEffect(() => {
@@ -21,17 +22,20 @@ function Order(){
         const message = searchParams.get('message');
         switch(message){
             case "successfully":
-                alert('Đặt hàng thành công!');
+                setSuccess(true);
+                setMessage('Đặt hàng thành công!');
                 sessionStorage.removeItem('OrderInfo');
-                window.location.href = "http://localhost:3000/PurchaseOrder";
+                setLocation(true);
+                setLink("http://localhost:3000/PurchaseOrder");
                 break;
             case "unsuccessfully":
-                alert('Đặt hàng không thành công!');
+                setError(true);
+                setMessage('Đặt hàng không thành công!');
                 break;
             default:
                 break;
         }
-    }, [location.search]);
+    }, [location.search, setError ,setMessage ,setSuccess , setLocation , setLink ]);
     
     //Data order
     useEffect(() => {
@@ -76,10 +80,11 @@ function Order(){
                     throw new Error("Lấy thông tin thất bại");
                 }
             }).catch(error => {
-                alert(error.response.data.error);
+                setError(true);
+                setMessage(error.response.data.error);
             });
         }
-    }, []);
+    }, [setError , setMessage]);
 
     const handleBuy = ()=>{
         const isLogin = findCookie("jwt");
@@ -102,28 +107,29 @@ function Order(){
                     if( response.data.success){
                         window.location.href= response.data.success;
                     }else{
-                        console.log(response.data)
-                        alert(response.data.message);
-                        setNavigateToPurchaseOrder(true);
+                        setSuccess(true);
+                        setMessage(response.data.message);
+                        setLocation(true);
+                        setLink("http://localhost:3000/PurchaseOrder");
                     }
                 }else{
                     throw new Error("Đặt hàng không thành công!");
                 }
             }).catch(error => {
-                alert(error.response.data.error);
+                setError(true);
+                setMessage(error.response.data.error);
             });
                 
         }else{
-            alert("Vui lòng đăng nhập");
-            window.location.href = "http://localhost:3000/login";
+            setError(true);
+            setMessage("Vui lòng đăng nhập");
+            setLocation(true);
+            setLink("http://localhost:3000/login");
             return ;
             
         }
     };
 
-    if (navigateToPurchaseOrder) {
-        return <Navigate to="/PurchaseOrder" />;
-    }
      
     
 

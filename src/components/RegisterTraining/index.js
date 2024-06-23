@@ -6,6 +6,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faXmark } from '@fortawesome/free-solid-svg-icons';
 import axios from 'axios';
 import PaymentModal from '../PaymentModal';
+import {useAnnouncement} from '../../contexts/Announcement';
 
 
 function RegisterTraining({setShowModal , peronalTrainer }) {
@@ -13,6 +14,7 @@ function RegisterTraining({setShowModal , peronalTrainer }) {
     const [endDate, setEndDate] = useState(null);
     const [amount , setAmount] = useState(0);
     const [statusPayment , setStatusPayment] = useState(false);
+    const { setError ,setMessage ,setSuccess , setLocation , setLink} = useAnnouncement();
 
     const handleStartDateChange = (date) => {
         setStartDate(date);
@@ -94,19 +96,24 @@ function RegisterTraining({setShowModal , peronalTrainer }) {
                 if( response.data.success){
                   window.location.href= response.data.success;
                 }else{
-                  alert(response.data.message);
-                  window.location.href="http://localhost:3000/PT";
+                  setSuccess(true);
+                  setMessage(response.data.message);
+                  setLocation(true); 
+                  setLink("http://localhost:3000/PT");
                 }
             }else{
                 throw new Error("Đặt hàng không thành công!");
             }
         }).catch(error => {
-            alert(error.response.data.error);
+            setError(true);
+            setMessage(error.response.data.error);
         });
             
     }else{
-      alert("Vui lòng đăng nhập");
-      window.location.href="http://localhost:3000/login";
+      setError(true);
+      setMessage("Vui lòng đăng nhập");
+      setLocation(true);
+      setLink("http://localhost:3000/login");
     }
   }
   return (

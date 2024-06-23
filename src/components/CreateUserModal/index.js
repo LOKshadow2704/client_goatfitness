@@ -3,6 +3,7 @@ import axios from "axios";
 import style from './style.module.css';
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function CreateUserModal({setShowModal}) {
     const [formData, setFormData] = useState({
@@ -14,6 +15,7 @@ function CreateUserModal({setShowModal}) {
         phone: '',
         address: ''
     });
+    const {setSuccess  , setMessage } = useAnnouncement();
 
     const [errors, setErrors] = useState({});
 
@@ -103,7 +105,8 @@ function CreateUserModal({setShowModal}) {
         }
         try {
             const response = await axios.post('http://localhost:88/Backend/signup', formDataToSend);
-            alert("Đăng ký thành công");
+            setSuccess(true);
+            setMessage("Đăng ký thành công");
             setShowModal(false)
             
         } catch (error) {

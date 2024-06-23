@@ -3,7 +3,6 @@ import { PublicRoutes, AdminRoutes, EmployeeRoutes, PrivateRoutes } from "./rout
 import { AuthProvider, useAuth } from "./contexts/AuthContext";
 import { useEffect, useState } from "react";
 import { AnnouncementProvider } from "./contexts/Announcement";
-import Announcement from "../src/components/Announcement";
 
 const PrivateRoute = ({ element, allowedRoles }) => {
   const { user, isLogin } = useAuth();
@@ -70,7 +69,6 @@ function App() {
                 />
               ))}
             </Routes>
-            <Announcement />
           </div>
         </Router>
       </AnnouncementProvider>

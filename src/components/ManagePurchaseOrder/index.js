@@ -3,13 +3,14 @@ import style from './style.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function ManagePurchaseOrder() {
     const [purchaseOrders, setPurchaseOrders] = useState([]);
     const [update, setUpdate] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [sortOrder, setSortOrder] = useState('');
-
+    const {setSuccess, setError , setMessage} = useAnnouncement();
     useEffect(() => {
         const isLogin = findCookie("jwt");
         if (isLogin) {
@@ -27,10 +28,11 @@ function ManagePurchaseOrder() {
                         throw new Error("Lấy thông tin đơn hàng thất bại!");
                     }
                 }).catch(error => {
-                    alert(error.response.data.error);
+                    setError(true);
+                    setMessage(error.response.data.error);
                 });
         }
-    }, [update]);
+    }, [update]);// eslint-disable-line react-hooks/exhaustive-deps
 
     const findCookie = (name) => {
         const cookies = document.cookie.split(';');
@@ -55,13 +57,15 @@ function ManagePurchaseOrder() {
             axios.put("http://localhost:88/Backend/PurchaseOrder/confirm", { IDDonHang: id }, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
+                        setSuccess(true);
+                        setMessage("Đã xác nhận chuẩn bị đơn hàng");
                         setUpdate(!update);
-                        alert("Đã xác nhận chuẩn bị đơn hàng");
                     } else {
                         throw new Error("Xác nhận thất bại!");
                     }
                 }).catch(error => {
-                    alert(error.response.data.error);
+                    setError(true);
+                    setMessage(error.response.data.error);
                 });
         }
     };

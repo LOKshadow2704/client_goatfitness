@@ -4,11 +4,13 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faHeartPulse, faIndustry, faUsers } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Statistical from "../../components/Statistical";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function Dashboard(){
     const [userTraining , setUserTraining] = useState([]);
     const [employeeWorking , setEmployeeWorking] = useState();
     const [purchaseOder , setPurchaseOder] = useState();
+    const { setError , setMessage } = useAnnouncement();
 
     useEffect(()=>{
         axios.get("http://localhost:88/Backend/user/checkin")
@@ -21,9 +23,10 @@ function Dashboard(){
                         setUserTraining(response.data.success);
                     }
                 }).catch(error => {
-                    alert(error.response.data.error);
+                    setError(true);
+                    setMessage(error.response.data.error);
             });
-    },[])
+    },[setError , setMessage])
 
     useEffect(()=>{
         axios.get("http://localhost:88/Backend/employee/working")
@@ -33,9 +36,10 @@ function Dashboard(){
                         setEmployeeWorking(response.data.success);
                     }
                 }).catch(error => {
-                    alert(error.response.data.error);
+                    setError(true);
+                    setMessage(error.response.data.error);
             });
-    },[])
+    },[setError , setMessage])
 
     useEffect(()=>{
         const findCookie = (name) => {
@@ -64,11 +68,12 @@ function Dashboard(){
                     throw new Error("Lấy thông tin đơn hàng thất bại!");
                 }
             }).catch(error => {
-                alert(error.response.data.error);
+                setError(true);
+                setMessage(error.response.data.error);
             });
         
 }
-    },[])
+    },[setError , setMessage])
 
     return(
         <div className={style["wrap-content"]}>

@@ -1,13 +1,15 @@
 .Announcement{
     position: fixed;
-    top: 0;
-    z-index: 2;
+    top: 150px;
+    z-index: 9999999;
     right: 0;
-    margin-top: 7%;
+    /* margin-top: 7%; */
     width: 350px;
-    height: 80px;
-    transform: translateX(80%);
-    animation: slideInFromRight 2.5s ease forwards;
+    height: 60px;
+}
+
+.slideInFromRight {
+    animation: slideInFromRight 0.5s ease forwards;
 }
 
 @keyframes slideInFromRight {
@@ -19,7 +21,7 @@
     }
 }
 
-.error , .success{
+.error , .success , .warning{
     display: grid;
     grid-template-columns: 20% 80%;
     align-items: center;
@@ -28,53 +30,77 @@
     height: 100%;
 }
 
-.error p, .success p{
+.error p,.warning p, .success p{
     margin: 10px 0;
 }
 
-.error span:first-child , .success span:first-child{
+.error span:first-child , .success span:first-child , .warning span:first-child{
     grid-row: 1 / span 2; 
     grid-column: 1; 
-    font-size: 20px;
-    color: green;
+    font-size: 18px;
     width: 100%;
-    height: 80%;
-    border-right: 4px solid rgb(8, 83, 8);
+    height: 60%;
     text-align: center;
     display: flex;
     justify-content: center;
     align-items: center;
 }
 
+.success span:first-child{
+    color: green;
+    border-right: 4px solid rgb(8, 83, 8);
+}
 
-.error p:nth-child(2) , .success p:nth-child(2){
+.error span:first-child {
+    color: rgb(154, 0, 0);
+    border-right: 4px solid rgb(120, 7, 7);
+}
+
+.warning span:first-child {
+    color: rgb(255, 170, 0);
+    border-right: 4px solid rgb(193, 183, 0);
+}
+
+
+
+.error p:nth-child(2) , .success p:nth-child(2) , .warning p:nth-child(2){
     grid-row: 1; 
     grid-column: 2; 
-    width: 100%;
-    padding-left: 20px;
+    width: 90%;
+    padding-left: 10%;
     color: white;
     font-family: math;
     font-weight: 600;
+    font-size: 16px;
 }
 
-.error p:nth-child(3) , .success p:nth-child(3){
+.error p:nth-child(3) , .success p:nth-child(3) ,.warning p:nth-child(3){
     grid-row: 2; 
     grid-column: 2; 
-    width: 100%;
-    padding-left: 20px;
+    width: 90%;
+    padding-left: 10%;
     color: white;
     font-family: math;
+    font-size: 15px;
+    font-weight: 500;
 }
 
 .error {
     background-color: rgb(206, 135, 135);
-
+    box-shadow: -2px 0px 20px 6px #c94646;
+    border: 3px solid #db2626a8;
 }
 
 .success{
     background-color: rgba(90, 189, 90, 1);
     box-shadow: -2px 0px 20px 6px #65994a;
     border: 3px solid #00c700;
+}
+
+.warning{
+    background-color: rgb(165, 185, 79);
+    box-shadow: -2px 0px 20px 6px #b7bf4f;
+    border: 3px solid #c5d700;
 }
 
 
