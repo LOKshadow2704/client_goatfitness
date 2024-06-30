@@ -1,78 +1,184 @@
 .container {
     padding-top: 10%;
-    background-color: rgb(196, 196, 196);
+    background-color: #fff;
 }
 
-.Wrap_content > h1{
+.Wrap_content > h1 {
     text-align: left;
-    padding-left: 10%;
-    font-size: 20px;
+    padding-left: 3%;
+    font-size: 30px;
     margin-bottom: 3%;
 }
 
+.order_item {
+    background-color: white;
+    box-shadow: -1px 0px 5px rgb(75, 94, 129);
+    margin-bottom: 20px;
+    padding-bottom: 20px;
+    border-radius: 10px;
+    padding: 20px;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.order_item h1 {
+    text-align: left;
+    margin-left: 2%;
+    font-size: 15px;
+    display: inline-block;
+}
+
+.order_item h1.right {
+    text-align: right;
+    margin-right: 5%;
+    margin-left: 100px;
+    float: right;
+
+}
+.order_item h1.left {
+    text-align: left;
+    float: left;
+
+}
+
+.order_item .order_details {
+    border-top: 1px solid #ccc;
+    margin-top: 20px;
+    padding-top: 20px;
+}
+
 .product_item {
-    height: 150px;
+    height: auto;
     display: grid;
     grid-template-columns: 50% 25% 25%;
+    padding-bottom: 10px;
+    margin-bottom: 10px;
 }
 
 .group1 {
     display: grid;
-    grid-template-rows: 50% 50%;
+    grid-template-rows: auto auto;
     grid-template-columns: 30% 70%;
     height: 100%;
     align-items: center;
+    padding-left: 10px;
 }
 
-.group1 p{
+.group1 p {
     display: inline-block;
     grid-column-start: 2;
     grid-row-start: 1;
 }
 
-.group1 img{
-    grid-row-start: 1; 
-    grid-row-end: 3; 
-    grid-column: 1; 
+.group1 img {
+    grid-row-start: 1;
+    grid-row-end: 3;
+    grid-column: 1;
     justify-self: end;
+    border-right: 1px solid #ccc;
+    padding-right: 20%;
 }
 
 .group1 span {
     grid-column-start: 2;
 }
 
-.group2 {
+.group2, .group3 {
     display: flex;
     flex-direction: column;
     justify-content: center;
+    border-left: 1px solid #ccc;
+    padding-left: 10px;
 }
 
-.group3{
-    display: flex;
-    flex-direction: column;
-    justify-content: space-evenly;
+.group2 span, .group3 span {
+    padding: 5px 0;
 }
 
-.order_item{
-    background-color: white;
-    box-shadow: -1px 0px 5px rgb(75, 94, 129);
-    margin-bottom: 20px;
-    padding-bottom: 20px;
-}
-
-.order_item >h1{
-    text-align: left;
-    margin-left: 5%;
-    font-size: 15px;
-    display: inline-block;
-    
-}
-
-.order_item >span{
-    display: block;
+.order_total {
+    border-top: 1px solid #ccc;
+    padding-top: 10px;
+    margin-top: 10px;
+    text-align: right;
     color: red;
-    border-top: 1px solid gray;
-    width: 15%;
-    margin-left: 10%;
-    padding-left: 65%;
+    font-weight: bold;
+    padding-right: 10%;
 }
+.text_margin{
+    padding-left: 2%;
+}
+
+@media (max-width: 768px) {
+    .product_item {
+        grid-template-columns: 100%;
+        height: auto;
+        padding: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        margin-bottom: 20px;
+    }
+
+    .group1, .group2, .group3 {
+        grid-template-columns: 100%;
+        border-left: none;
+        padding-left: 0;
+    }
+
+    .group1 img {
+        justify-self: center;
+        border-right: none;
+        padding-right: 0;
+    }
+
+    .group1 p, .group1 span, .group2 span, .group3 span {
+        text-align: center;
+        margin-top: 10px;
+    }
+
+    .order_item h1, .order_item h1.right {
+        text-align: center;
+        margin: 0;
+    }
+
+    .order_total {
+        text-align: center;
+        margin-top: 20px;
+    }
+}
+
+@media (max-width: 480px) {
+    .Wrap_content > h1 {
+        font-size: 18px;
+        padding-left: 5%;
+    }
+
+    .order_item {
+        padding: 10px;
+    }
+
+    .group1 img {
+        width: 100px;
+        height: auto;
+    }
+
+    .group1 p, .group1 span {
+        font-size: 14px;
+        text-align: left;
+    }
+
+    .group2 span, .group3 span {
+        font-size: 14px;
+        text-align: left;
+    }
+
+    .group1 p {
+        word-break: break-word;
+    }
+}
+@media (max-width: 768px) {
+    .product_item .group1 p,
+    .product_item .group1 span {
+        display: none; 
+    }
+}
+
