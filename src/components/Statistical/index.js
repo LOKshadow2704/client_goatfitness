@@ -42,7 +42,7 @@ function Statistical(){
               'Authorization': 'Bearer ' + jwt,
               'PHPSESSID': findCookie("PHPSESSID")
           };
-          axios.post("http://localhost:88/Backend/employee/statistical",null, { headers: headers 
+          axios.get("http://localhost:88/Backend/employee/statistical", { headers: headers 
           }).then(response => {
               if(response.status >= 200 && response.status < 300){
                 const responseData = response.data.success;

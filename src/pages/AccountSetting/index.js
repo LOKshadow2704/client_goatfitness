@@ -78,7 +78,7 @@ function AccountSetting({changeForm , setRefresh}){
                         'Authorization': 'Bearer ' + jwt,
                         'PHPSESSID': findCookie("PHPSESSID")
                     };
-                    axios.post('http://localhost:88/Backend/updateAvt',  data, { headers: headers 
+                    axios.put('http://localhost:88/Backend/updateAvt',  data, { headers: headers 
                     }).then(response => {
                         if(response.status >= 200 && response.status < 300){
                             if(update===true){setUpdate(false);}else{setUpdate(true);}
@@ -120,7 +120,7 @@ function AccountSetting({changeForm , setRefresh}){
         if(isLogin){
             const jwt = findCookie('jwt');
             const option = {
-                method : 'POST',
+                method : 'GET',
                 headers:{
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer '+jwt,

@@ -67,20 +67,20 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const jwt = findCookie('jwt');
-        if (jwt) {
-            setIsLogin(true);
-            if(!user){
+        if(!user){
+            if (jwt) {
+                setIsLogin(true);               
                 fetchUserInfo();
             }
         }
         // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, []);
+    }, [user]);
 
     const fetchUserInfo = () => {
         const jwt = findCookie('jwt');
         if (jwt) {
             const option = {
-                method: 'POST',
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': 'Bearer ' + jwt,
@@ -117,7 +117,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, isLogin , fetchUserInfo}}>
+        <AuthContext.Provider value={{ user, login, logout, isLogin }}>
             {children}
         </AuthContext.Provider>
     );

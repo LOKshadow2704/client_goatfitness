@@ -59,36 +59,27 @@ function ProductInfo (){
               console.error('Lỗi khi thêm vào giỏ hàng', error);
           });
       }
-    useEffect(()=>{
-        fetch("http://localhost:88/Backend/product", {
-            method: 'POST',
+    useEffect(() => {
+        fetch(`http://localhost:88/Backend/product?IDSanPham=${productID}`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body:JSON.stringify({
-                "IDSanPham": productID,
-            })
+            }
         })
-            .then(
-                response =>{
-                    if(!response.ok){
-                        throw new Error('Lỗi server');
-                    }else{
-                        return response.json();
-                    }
-                }
-            )
-            .then(
-                data => {
-                    setProduct(data[0]);
-                }
-            )
-            .catch(
-                error => {
-                    console.error('Lỗi khi truy cập dữ liệu', error);
-                }
-            )
-    },[productID])
+        .then(response => {
+            if (!response.ok) {
+                throw new Error('Lỗi server');
+            } else {
+                return response.json();
+            }
+        })
+        .then(data => {
+            setProduct(data[0]);
+        })
+        .catch(error => {
+            console.error('Lỗi khi truy cập dữ liệu', error);
+        });
+    }, [productID])
     return (
         <>
             <Header/>

@@ -14,7 +14,7 @@ function RegisterTraining({setShowModal , peronalTrainer }) {
     const [endDate, setEndDate] = useState(null);
     const [amount , setAmount] = useState(0);
     const [statusPayment , setStatusPayment] = useState(false);
-    const { setError ,setMessage ,setSuccess , setLocation , setLink} = useAnnouncement();
+    const { setError ,setMessage ,setSuccess , setLocation , setLink , setWarning} = useAnnouncement();
 
     const handleStartDateChange = (date) => {
         setStartDate(date);
@@ -22,15 +22,19 @@ function RegisterTraining({setShowModal , peronalTrainer }) {
     };
 
     const handleEndDateChange = (date) => {
+      if (!startDate) {
+        setWarning(true);
+        setMessage("Vui lòng chọn ngày bắt đầu trước");
+        return;
+      }
       if (date < startDate) {
-        const newEndDate = new Date(startDate); // Tạo một bản sao của startDate
-        newEndDate.setHours(date.getHours(), date.getMinutes(), date.getSeconds()); // Đặt số giờ của newEndDate bằng số giờ của date
-        setEndDate(newEndDate);
-        console.log(date)
+          const newEndDate = new Date(startDate);
+          newEndDate.setHours(date.getHours(), date.getMinutes(), date.getSeconds());
+          setEndDate(newEndDate);
       } else {
           setEndDate(date);
       }
-    };
+  };
     const today = new Date();
     today.setHours(0, 0, 0);
     const minStartTime = new Date();
@@ -40,7 +44,6 @@ function RegisterTraining({setShowModal , peronalTrainer }) {
     const minEndTime = startDate ? new Date(startDate.getTime() + 60 * 60 * 1000) : null; // Thời điểm sau 1 giờ của giờ bắt đầu
     const maxEndTime = new Date();
     maxEndTime.setHours(18, 0, 0); // 18 giờ PM
-
   // Hàm tính thành tiền
   const calculateTotal = useCallback(() => {
     if (startDate && endDate) {
@@ -64,7 +67,13 @@ function RegisterTraining({setShowModal , peronalTrainer }) {
     var second = String(date.getSeconds()).padStart(2, '0');
     return `${year}-${month}-${day} ${hour}:${minute}:${second}`;
   }
+  //
   const handleSubmit = (payment ) => {
+    if(!startDate || !endDate){
+      setError(true);
+      setMessage("Bạn chưa chọn ngày giờ");
+      return;
+    }
     const findCookie = (name) => {
       const cookies = document.cookie.split(';');
       for (let i = 0; i < cookies.length; i++) {
@@ -116,6 +125,12 @@ function RegisterTraining({setShowModal , peronalTrainer }) {
       setLink("http://localhost:3000/login");
     }
   }
+
+  const defaultMinEndTime = new Date();
+  defaultMinEndTime.setHours(8, 0, 0);
+
+  const defaultMaxEndTime = new Date();
+  defaultMaxEndTime.setHours(18, 0, 0);
   return (
     <div className={style.modal}>
         <div className={style.wrap_content}>
@@ -146,8 +161,8 @@ function RegisterTraining({setShowModal , peronalTrainer }) {
                 placeholderText="Chọn giờ kết thúc"
                 minDate={startDate}
                 maxDate={startDate}
-                minTime={minEndTime}
-                maxTime={maxEndTime}
+                minTime={minEndTime ?? defaultMinEndTime}
+                maxTime={maxEndTime ?? defaultMaxEndTime}
                 />
             </div>
             <span>Thành tiền: <p>{amount && amount.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</p></span>

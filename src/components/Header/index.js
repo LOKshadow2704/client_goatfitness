@@ -15,7 +15,7 @@ function Header(){
     const [cart , setCart] = useState(false);
     const cartRef = useRef(null);
     const { isLogin , user } = useAuth();
-    const {error , success  , warning , setError , setSuccess , setMessage } = useAnnouncement();
+    const {error , success  , warning , setError , setSuccess , setMessage , setLocation} = useAnnouncement();
 
     useEffect(()=>{
         
@@ -76,6 +76,7 @@ function Header(){
                 data =>{
                     setSuccess(true);
                     setMessage(data.message);
+                    setLocation(true);
                 }
             )
             .catch(

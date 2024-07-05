@@ -27,14 +27,14 @@ function PT() {
               switch (message) {
                 case "successfully":
                     setSuccess(true);
-                  setMessage('Đăng ký thành công!');
-                  setLocation(true);
-                  setLink("http://localhost:3000/PT");
-                  break;
+                    setMessage('Đăng ký thành công!');
+                    setLocation(true);
+                    setLink("http://localhost:3000/PT");
+                    break;
                 case "unsuccessfully":
                     setError(true);
-                  setMessage('Đăng ký không thành công!');
-                  break;
+                    setMessage('Đăng ký không thành công!');
+                    break;
                 default:
                   break;
             }
@@ -47,7 +47,7 @@ function PT() {
       }, [location.search, setError, setLink, setLocation, setMessage, setSuccess]);
 
     useEffect(() => {
-        fetch("http://localhost:88/Backend/PT/" )
+        fetch("http://localhost:88/Backend/PT/")
             .then(
                 response=>{
                     if(response.ok){

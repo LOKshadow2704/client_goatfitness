@@ -11,7 +11,7 @@ function UpdateProductModal({ data ,setShowModal}) {
     const [category , setCategory] = useState();
     const { setError ,setMessage ,setSuccess } = useAnnouncement();
     useEffect(()=>{
-        axios.get('http://localhost:88/Backend/product/get_All_Category',  data, null).then(response => {
+        axios.get('http://localhost:88/Backend/product/get_All_Category', null).then(response => {
                 if(response.status >= 200 && response.status < 300){
                     setCategory(response.data);
                 }else{

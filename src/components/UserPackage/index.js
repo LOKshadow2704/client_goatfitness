@@ -28,7 +28,7 @@ function UserPackage({setShowModal}) {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.post('http://localhost:88/Backend/PackageGym/UserInfo',  null, { headers: headers 
+            axios.get('http://localhost:88/Backend/PackageGym/UserInfo', { headers: headers 
             }).then(response => {
                 if(response.status >= 200 && response.status < 300){
                     setData(response.data);

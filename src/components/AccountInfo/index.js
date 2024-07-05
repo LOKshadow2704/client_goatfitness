@@ -53,7 +53,7 @@ function AccountInfo({ userData , setUpdate  }) {
             'Authorization': 'Bearer ' + jwt,
             'PHPSESSID': findCookie("PHPSESSID")
         };
-        axios.post('http://localhost:88/Backend/updateUser',  data, { headers: headers 
+        axios.put('http://localhost:88/Backend/updateUser',  data, { headers: headers 
         }).then(response => {
             if(response.status >= 200 && response.status < 300){
                 setUpdate(true);

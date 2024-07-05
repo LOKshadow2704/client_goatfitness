@@ -14,7 +14,7 @@
 
 .cart-item{
     display: grid;
-    grid-template-columns: 5% 60% 20% 15%;
+    grid-template-columns: 5% 50% 20% 15% 10%   ;
     align-items: center;
     justify-items: center;
     padding: 2%;
@@ -22,7 +22,7 @@
 
 .product_info {
     display: grid;
-    grid-template-columns: 20% 60%;
+    grid-template-columns: 20% 80%;
     align-items: center;
     justify-content: center;
 }
@@ -46,9 +46,11 @@
     padding: 0 10px;
 }
 
-.quan input{
-    width: 30%;
+.quan span{
     text-align: center;
+    user-select: none;
+    margin: 0 10px;
+    color: red;
 }
 
 .buy {
@@ -85,4 +87,13 @@
     grid-row: 2;
     width: 90%;
     margin-left: 5%;
+ }
+
+ .price {
+    font-size: 16px;
+ }
+
+
+ .wrap_cart svg{
+    cursor: pointer;
  }

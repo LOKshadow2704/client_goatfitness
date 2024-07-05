@@ -34,7 +34,7 @@ function ManageAccount({ data }) {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.post('http://localhost:88/Backend/admin/getAllAccount',null ,{headers:headers})
+            axios.get('http://localhost:88/Backend/admin/getAllAccount' ,{headers:headers})
             .then(response => {
                 if(response.status >= 200 && response.status < 300){
                     setAccount(response.data);
@@ -46,7 +46,7 @@ function ManageAccount({ data }) {
                 setMessage(error.response.data.error);
             });
     };
-    }, [modalUpdate ,modalAdd]);
+    }, [modalUpdate ,modalAdd ,setError ,setMessage]);
 
     const handleSearchChange = (e) => {
         setSearchTerm(e.target.value);

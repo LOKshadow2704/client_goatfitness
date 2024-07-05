@@ -1,4 +1,3 @@
-import { width } from '@fortawesome/free-solid-svg-icons/faCircleCheck';
 import React from 'react';
 import { Slide } from 'react-slideshow-image';
 import 'react-slideshow-image/dist/styles.css'

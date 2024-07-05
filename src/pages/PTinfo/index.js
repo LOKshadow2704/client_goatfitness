@@ -13,38 +13,27 @@ function PTInfo (){
     const [peronalTrainer, setperonalTrainer] = useState();
     const [showModal, setShowModal] = useState(false);
     
-    useEffect(()=>{
-        console.log(PTID);
-        fetch("http://localhost:88/Backend/personalTrainer/Info", {
-            method: 'POST',
+    useEffect(() => {
+        fetch(`http://localhost:88/Backend/personalTrainer/Info?IDHLV=${PTID}`, {
+            method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
-            },
-            body:JSON.stringify({
-                "IDHLV": PTID,
-            })
+            }
         })
-            .then(
-                response =>{
-                    if(!response.ok){
-                        throw new Error('Lỗi server');
-                    }else{
-                        
-                        return response.json();
-                    }
+            .then(response => {
+                if (!response.ok) {
+                    throw new Error('Lỗi server');
+                } else {
+                    return response.json();
                 }
-            )
-            .then(
-                data => {
-                    setperonalTrainer(data[0]);
-                }
-            )
-            .catch(
-                error => {
-                    console.error('Lỗi khi truy cập dữ liệu', error);
-                }
-            )
-    },[PTID])
+            })
+            .then(data => {
+                setperonalTrainer(data[0]);
+            })
+            .catch(error => {
+                console.error('Lỗi khi truy cập dữ liệu', error);
+            })
+    }, [PTID]);
     return(
         <>
             <Header></Header>

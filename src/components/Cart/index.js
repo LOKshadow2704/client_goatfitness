@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
 import style from './style.module.css';
-import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faMinus, faPlus, faTrash } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from '@tippyjs/react';
 import { Link } from "react-router-dom";
+import { useAnnouncement } from "../../contexts/Announcement";
 function Cart(){
     const [cartData, setCartData]= useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [selectedItems, setSelectedItems] = useState([]);
     const [update , setUpdate] = useState(false);
+    const { setMessage , setWarning , setSuccess ,setError} = useAnnouncement();
     const handleClickBuy = () =>{
         let orderInfos = [];
         selectedItems.forEach((index) => {
@@ -16,13 +18,6 @@ function Cart(){
         });
         sessionStorage.setItem('OrderInfo', JSON.stringify(orderInfos));
     }
-    useEffect(()=>{
-        let total = 0;
-        selectedItems.forEach((index) => {
-            total += cartData[index].DonGia * cartData[index].SoLuong;
-        });
-        setTotalPrice(total);
-    }, [selectedItems, cartData]);
     useEffect(()=>{
         const findCookie = (name) => {
             const cookies = document.cookie.split(';');
@@ -37,7 +32,7 @@ function Cart(){
 
         const jwt = findCookie('jwt');
         const option = {
-            method : 'POST',
+            method : 'GET',
             headers:{
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer '+jwt,
@@ -91,7 +86,7 @@ function Cart(){
           
         const jwt = findCookie('jwt');
         const option = {
-            method : 'POST',
+            method : 'PUT',
             headers:{
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer '+jwt,
@@ -134,7 +129,7 @@ function Cart(){
           
         const jwt = findCookie('jwt');
         const option = {
-            method : 'POST',
+            method : 'PUT',
             headers:{
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer '+jwt,
@@ -154,6 +149,66 @@ function Cart(){
             )
             .catch(
                 error => {
+                    console.log(error);
+                }
+            )
+    }
+
+    //Tính thành tiền
+    useEffect(() => {
+        let total = 0;
+        if(!selectedItems){
+            return;
+        }
+        selectedItems.forEach((index) => {
+            if (cartData[index]) {
+                total += cartData[index].DonGia * cartData[index].SoLuong;
+            }
+        });
+        setTotalPrice(total);
+    }, [selectedItems, cartData]);
+
+    function deleteCartItem (IDSanPham){
+        const findCookie = (name) => {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+              const cookie = cookies[i].trim();
+              if (cookie.startsWith(name + '=')) {
+                return cookie.substring(name.length + 1);
+              }
+            }
+            return null;
+          };
+          const data ={
+            IDSanPham : IDSanPham
+          }
+          
+        const jwt = findCookie('jwt');
+        const option = {
+            method : 'DELETE',
+            headers:{
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer '+jwt,
+                'PHPSESSID': findCookie("PHPSESSID")
+            },
+            body: JSON.stringify(data)
+        }
+        fetch('http://localhost:88/Backend/cart/delete',option)
+            .then(
+                response =>{
+                    if(!response.ok){
+                        throw new Error('Lỗi server');
+                    }else{
+                        setSuccess(true);
+                        setMessage("Đã xóa SP khỏi giỏ hàng")
+                        setUpdate(true);
+                    }
+                }
+            )
+            .catch(
+                error => {
+                    setError(true);
+                    setMessage("Xóa không thành công");
                     console.error('Lỗi khi lấy dữ liệu:', error);
                 }
             )
@@ -185,17 +240,22 @@ function Cart(){
                 
                 <div className={style.quan}>
                     <FontAwesomeIcon icon={faPlus} onClick={()=>updateQuanPlus(value.IDSanPham)} />
-                    <input  type="number"
-                            value={value.SoLuong}
-                            readOnly/>
-                    <FontAwesomeIcon icon={faMinus} onClick={()=>updateQuanMinus(value.IDSanPham)} />
+                    <span>{value.SoLuong}</span>
+                    <FontAwesomeIcon icon={faMinus} onClick={() => {
+                                    if (value.SoLuong > 1) {
+                                        updateQuanMinus(value.IDSanPham);
+                                    }else{
+                                        setWarning(true);
+                                        setMessage("Số lượng không hợp lệ");
+                                    }
+                                }} />
                 </div>
-            
+                <span onClick={()=>deleteCartItem(value.IDSanPham)}><FontAwesomeIcon icon={faTrash}  /></span>
             </div>
         ))}
         <div className={style.buy}>
             
-                <h4>Thành tiền</h4>
+            <h4>Thành tiền</h4>
             <span>{totalPrice.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</span>
             <Link to="/Order" ><button onClick={()=>handleClickBuy()}>Mua ngay</button></Link>
         </div>

@@ -17,7 +17,7 @@ function GymPack(){
     const { setError ,setMessage ,setSuccess , setLocation , setLink} = useAnnouncement();
     
     useEffect( ()=>{
-        axios.get("http://localhost:88/Backend/gympack/",null,null)
+        axios.get("http://localhost:88/Backend/gympack/")
             .then(
                 response=>{
                     if(response.status >= 200 && response.status < 300){

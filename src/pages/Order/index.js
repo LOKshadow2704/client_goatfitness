@@ -72,7 +72,7 @@ function Order(){
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.post('http://localhost:88/Backend/getAccountInfo',  null, { headers: headers 
+            axios.get('http://localhost:88/Backend/getAccountInfo', { headers: headers 
             }).then(response => {
                 if(response.status >= 200 && response.status < 300){
                     setAddress(response.data.DiaChi);
