@@ -5,38 +5,38 @@ import PTitem from "../../components/PTitem";
 import style from "./style.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { useLocation ,useNavigate  } from "react-router-dom";
+import { useLocation   } from "react-router-dom";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function PT() {
     const location = useLocation();
-    const navigate = useNavigate();
     const [ptrainers, setPtrainer] = useState([]);
     const [categories, setCategories] = useState([]);
     const [productsByCategory, setProductsByCategory] = useState('Tất cả');
     const [cartCount, setCartCount] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [sortOrder, setSortOrder] = useState('none');
-    const [ShownMessage, setShownMessage] = useState(false);
+    const { setError ,setMessage ,setSuccess , setLocation , setLink} = useAnnouncement();
 
      //Thông báo
      useEffect(() => {
         const checkMessage = () => {
-          if (ShownMessage) {
             const searchParams = new URLSearchParams(location.search);
             const message = searchParams.get('message');
-      
             if (message) {
               switch (message) {
                 case "successfully":
-                  alert('Đăng ký thành công!');
-                  navigate("/PT", { replace: true });
+                    setSuccess(true);
+                  setMessage('Đăng ký thành công!');
+                  setLocation(true);
+                  setLink("http://localhost:3000/PT");
                   break;
                 case "unsuccessfully":
-                  alert('Đăng ký không thành công!');
+                    setError(true);
+                  setMessage('Đăng ký không thành công!');
                   break;
                 default:
                   break;
-              }
             }
           }
         };
@@ -44,10 +44,9 @@ function PT() {
         checkMessage();
       
         // Cập nhật trạng thái hasShownMessage
-      }, [ShownMessage]);
+      }, [location.search, setError, setLink, setLocation, setMessage, setSuccess]);
 
     useEffect(() => {
-        setShownMessage(true);
         fetch("http://localhost:88/Backend/PT/" )
             .then(
                 response=>{
@@ -62,18 +61,17 @@ function PT() {
                     setCategories(uniqueCategories);
                 }
             ).catch(error => {
-                alert(error.response.data.error);
+                setError(true);
+                setMessage(error.response.data.error);
             });
-    }, []);
+    }, [setError , setMessage]);
 
     const handleSearch = (e) => {
         setSearchQuery(e.target.value);
-        console.log(e.target.value)
     };
 
     const handleSort = (e) => {
         setSortOrder(e.target.value);
-        console.log(e.target.value)
     };
 
     const filteredProducts = ptrainers

@@ -5,7 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import RegisterPackModal from "../RegisterPackModal";
 import UpdateGymPackModal from "../UpdateGymPackModal";
-
+import { useAnnouncement } from "../../contexts/Announcement";
 function ManagePackGym() {
     const [gympack, setGymPack] = useState([]);
     const [searchTerm, setSearchTerm] = useState("");
@@ -13,7 +13,7 @@ function ManagePackGym() {
     const [showModal , setShowModal] = useState(false);
     const [update ,setUpdate] = useState(false);
     const [selectedPack, setSelectedPack] = useState(null);
-
+    const { setError , setMessage} = useAnnouncement;
     useEffect(() => {
         axios.get('http://localhost:88/Backend/gympack/')
             .then(response => {
@@ -24,9 +24,10 @@ function ManagePackGym() {
                 }
             })
             .catch(error => {
-                alert(error.response.data.error);
+                setError(true);
+                setMessage(error.response.data.error);
             });
-    }, [update]);
+    }, [update]);// eslint-disable-line react-hooks/exhaustive-deps
 
     const handleSearch = (e) => {
         setSearchTerm(e.target.value);

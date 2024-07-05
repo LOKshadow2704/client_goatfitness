@@ -9,12 +9,14 @@ import { faKey, faUserGear , faUserPen} from "@fortawesome/free-solid-svg-icons"
 import AccountInfo from "../../components/AccountInfo";
 import ResetPassword from "../../components/ResetPassword";
 import Loading from "../../components/Loading";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function AccountSetting({changeForm , setRefresh}){
     const [currentMenu , setCurrentMenu] = useState('info');
     const [userData , setUserData] = useState();
     const [update, setUpdate] = useState(false);
     const [loading, setLoading] = useState(false);
+    const { setError ,setMessage ,setSuccess , setLocation , setLink} = useAnnouncement();
     const handleFileChange = (event) => {
         const file = event.target.files[0];
         if (file) {
@@ -47,16 +49,18 @@ function AccountSetting({changeForm , setRefresh}){
         const fileExtension = file.name.split('.').pop().toLowerCase();
         if (!validExtensions.includes(fileExtension)) {
             setLoading(false);
-            alert('File được chấp nhận JPG, JPEG, PNG .');
+            setError(true);
+            setMessage('File được chấp nhận JPG, JPEG, PNG .');
             return;
         }
 
        // Kiểm tra kích thước tệp
        const maxFileSize = 10 * 1024 * 1024; // 10 MB
        if (file.size > maxFileSize) {
-            setLoading(false);
-           alert('Kích thước phải nhỏ hơn 10MB');
-           return;
+        setLoading(false);
+        setError(true);
+        setMessage('Kích thước phải nhỏ hơn 10MB');
+        return;
        }
    
        // Kiểm tra tính toàn vẹn của hình ảnh
@@ -78,22 +82,26 @@ function AccountSetting({changeForm , setRefresh}){
                     }).then(response => {
                         if(response.status >= 200 && response.status < 300){
                             if(update===true){setUpdate(false);}else{setUpdate(true);}
-                            alert("Thay đổi ảnh đại diện thành công!");
+                            setSuccess(true);
+                            setMessage("Thay đổi ảnh đại diện thành công!");
                             setLoading(false);
                             setRefresh(true);
                         }else{
                             throw new Error("Thay đổi ảnh đại diện không thành công!");
                         }
                     }).catch(error => {
-                        console.error(error);
+                        setError(true);
+                        setMessage(error);
                     });
                 })
                 .catch(error => {
-                    console.error('Error uploading to Imgur: ', error);
+                    setError(true);
+                    setMessage('Error uploading to Imgur: ', error);
                 });
         }).catch(() => {
             // Hình ảnh không hợp lệ
-            console.error('Hình ảnh không hợp lệ');
+            setError(true);
+            setMessage('Hình ảnh không hợp lệ');
         });
         
     };
@@ -141,8 +149,13 @@ function AccountSetting({changeForm , setRefresh}){
                     }
                 )
                 
+        }else{
+            setError(true);
+            setMessage("Vui lòng đăng nhập");
+            setLocation(true);
+            setLink("http://localhost:3000/login");
         }
-      }, [update]);
+      }, [update,setError ,setMessage ,setSuccess , setLocation , setLink]);
     return(
         <>
             {

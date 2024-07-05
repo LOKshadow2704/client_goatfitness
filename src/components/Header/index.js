@@ -7,23 +7,23 @@ import { Link } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import Cart from '../../components/Cart';
 import UserPackage from '../UserPackage';
+import { useAnnouncement } from '../../contexts/Announcement';
+import Announcement from '../../components/Announcement';
 
 function Header(){
     const [showModal, setShowModal] = useState(false);
     const [cart , setCart] = useState(false);
     const cartRef = useRef(null);
     const { isLogin , user } = useAuth();
-    const [userLoaded, setUserLoaded] = useState(false); 
+    const {error , success  , warning , setError , setSuccess , setMessage } = useAnnouncement();
 
-    useEffect(() => {
-        // Khi user đã được cập nhật, set userLoaded thành true
-        if (user !== null) {
-            setUserLoaded(true);
-        }
-    }, [user]);
+    useEffect(()=>{
+        
+    },[error , success , warning])
+
+
 
     
-
     useEffect(() => {
         const handleClickOutside = (event) => {
             if (cartRef.current && !cartRef.current.contains(event.target)) {
@@ -36,6 +36,7 @@ function Header(){
             document.removeEventListener('click', handleClickOutside);
         };
     });
+
 
     const findCookie = (name) => {
         const cookies = document.cookie.split(';');
@@ -73,8 +74,8 @@ function Header(){
             )
             .then(
                 data =>{
-                    alert(data.message);
-                    window.location.href = 'http://localhost:3000/';
+                    setSuccess(true);
+                    setMessage(data.message);
                 }
             )
             .catch(
@@ -107,14 +108,14 @@ function Header(){
                 <FontAwesomeIcon icon={faShopify}  onClick={() => {
                     if (cart) {
                         if (!isLogin) {
-                            alert("Vui lòng đăng nhập!");
-                            window.location.href = "http://localhost:3000/login";
+                            setError(true);
+                            setMessage("Vui lòng đăng nhập!");
                         }
                         setCart(false);
                     } else {
                         if (!isLogin) {
-                            alert("Vui lòng đăng nhập!");
-                            window.location.href = "http://localhost:3000/login";
+                            setError(true);
+                            setMessage("Vui lòng đăng nhập!");
                         }
                         setCart(true);
                     }
@@ -143,6 +144,7 @@ function Header(){
             {
                 showModal && <UserPackage setShowModal = {setShowModal}/>
             }
+             {error || success || warning ? <Announcement /> : null}
         </header>
     );
 };

@@ -1,12 +1,14 @@
 import React, { useEffect, useState } from "react";
-import style from "./style.module.css";
+// import style from "./style.module.css";
 import { Bar } from 'react-chartjs-2';
 import { Chart as ChartJS, BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend } from 'chart.js';
 import axios from "axios";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 ChartJS.register(BarElement, CategoryScale, LinearScale, Title, Tooltip, Legend);
 
 function Statistical(){
+  const { setError ,setMessage , setLocation , setLink} = useAnnouncement();
   const [data, setData] = useState({
     labels: [],
     datasets: [
@@ -62,13 +64,16 @@ function Statistical(){
                   throw new Error("Lấy thông tin đơn hàng thất bại!");
               }
           }).catch(error => {
-              alert(error.response.data.error);
+              setError(true);
+              setMessage(error.response.data.error);
           });
       }else{
-          alert("Vui lòng đăng nhập");
-          window.location.href = "http://localhost:3000/login";
+          setError(true);
+          setMessage("Vui lòng đăng nhập");
+          setLocation(true);
+          setLink("http://localhost:3000/login");
       }
-  },[])
+  },[setError ,setMessage , setLocation , setLink])
   
   const options = {
     responsive: true,

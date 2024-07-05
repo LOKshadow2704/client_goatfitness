@@ -1,0 +1,14 @@
+.slide-container{
+height: 350px;
+width: 100%;
+}
+
+.slide-item {
+    display: flex;
+    justify-content: center;
+}
+
+.slide-container img{
+    height: 550px;
+    width: 80%;
+}

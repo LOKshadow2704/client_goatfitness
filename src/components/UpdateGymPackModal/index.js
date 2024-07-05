@@ -1,10 +1,12 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import style from "./style.module.css";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
+import { useAnnouncement } from "../../contexts/Announcement";
 
 function UpdateGymPackModal({ data ,setShowModal}) {
+    const { setError ,setMessage ,setSuccess } = useAnnouncement();
     const [formData, setFormData] = useState({
         IDGoiTap: data.IDGoiTap,
         TenGoiTap: "",
@@ -70,16 +72,19 @@ function UpdateGymPackModal({ data ,setShowModal}) {
                 axios.put('http://localhost:88/Backend/gympack/update',  cleanData, { headers: headers 
                 }).then(response => {
                     if(response.status >= 200 && response.status < 300){
-                        alert("Cập nhật thành công");
+                        setSuccess(true);
+                        setMessage("Cập nhật thành công");
                         setShowModal(false);
                     }else{
                         throw new Error("Lấy thông tin thất bại");
                     }
                 }).catch(error => {
-                    alert(error.response.data.error);
+                    setError(true);
+                    setMessage(error.response.data.error);
                 });
             }else{
-                alert("Không có thay đổi!");
+                setError(true);
+                setMessage("Không có thay đổi!");
                 return;
             }
         }

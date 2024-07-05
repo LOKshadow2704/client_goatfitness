@@ -5,11 +5,12 @@ import Footer from "../../components/Footer";
 import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faReceipt } from '@fortawesome/free-solid-svg-icons';
+import { useAnnouncement } from "../../contexts/Announcement";
 
-function PurchaseOrder() {
-    const [PurchaseOrder, SetPurchaseOrder] = useState();
-
-    useEffect(() => {
+function PurchaseOrder(){
+    const [PurchaseOrder , SetPurchaseOrder] = useState();
+    const { setError ,setMessage , setLocation , setLink} = useAnnouncement();
+    useEffect(()=>{
         const findCookie = (name) => {
             const cookies = document.cookie.split(';');
             for (let i = 0; i < cookies.length; i++) {
@@ -29,20 +30,25 @@ function PurchaseOrder() {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.post('http://localhost:88/Backend/PurchaseOrder', null, { headers: headers })
-                .then(response => {
-                    if (response.status >= 200 && response.status < 300) {
-                        SetPurchaseOrder(response.data.orders);
-                    } else {
-                        throw new Error("Lấy thông tin đơn hàng thất bại!");
-                    }
-                })
-                .catch(error => {
-                    alert(error.response.data.error);
-                });
+            axios.post('http://localhost:88/Backend/PurchaseOrder',null, { headers: headers 
+            }).then(response => {
+                if(response.status >= 200 && response.status < 300){
+                    SetPurchaseOrder(response.data.orders);
+                }else{
+                    throw new Error("Lấy thông tin đơn hàng thất bại!");
+                }
+            }).catch(error => {
+                setError(true);
+                setMessage(error.response.data.error);
+            });
+                
+        }else{
+            setError(true);
+            setMessage("Vui lòng đăng nhập!");
+            setLocation(true);
+            setLink("http://localhost:3000/login");
         }
-    }, []);
-
+    },[setError, setLink, setLocation,setMessage])
     function formatDate(dateString) {
         const date = new Date(dateString);
         const year = date.getFullYear();
