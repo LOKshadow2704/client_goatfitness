@@ -6,15 +6,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAnnouncement } from "../../contexts/Announcement";
 
 function CreateUserModal({setShowModal}) {
-    const [formData, setFormData] = useState({
-        fullname: '',
-        username: '',
-        password: '',
-        re_password: '',
-        email: '',
-        phone: '',
-        address: ''
-    });
+    const [formData, setFormData] = useState();
     const {setSuccess  , setMessage } = useAnnouncement();
 
     const [errors, setErrors] = useState({});
@@ -30,7 +22,7 @@ function CreateUserModal({setShowModal}) {
 
     const validateField = (id, value) => {
         let errorMsg = '';
-
+    
         switch (id) {
             case 'username':
                 if (!/^[a-zA-Z0-9]{10,30}$/.test(value)) {
@@ -38,7 +30,7 @@ function CreateUserModal({setShowModal}) {
                 }
                 break;
             case 'password':
-                if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}\[\]:;<>,.?~\\/-]).{6,18}$/.test(value)) {
+                if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~\\/-]).{6,18}$/.test(value)) {
                     errorMsg = "Mật khẩu phải từ 6 đến 18 ký tự, gồm chữ thường, chữ in, số và ký tự đặc biệt.";
                 }
                 break;
@@ -70,7 +62,7 @@ function CreateUserModal({setShowModal}) {
             default:
                 break;
         }
-
+    
         setErrors(prevState => ({
             ...prevState,
             [id]: errorMsg
@@ -78,7 +70,6 @@ function CreateUserModal({setShowModal}) {
     };
 
     const validateForm = () => {
-        const { username, password, re_password, email, phone } = formData;
         let isValid = true;
         const newErrors = {};
 
@@ -105,10 +96,16 @@ function CreateUserModal({setShowModal}) {
         }
         try {
             const response = await axios.post('http://localhost:88/Backend/signup', formDataToSend);
-            setSuccess(true);
-            setMessage("Đăng ký thành công");
-            setShowModal(false)
-            
+            if (response.status === 200) { 
+                setSuccess(true);
+                setMessage("Đăng ký thành công");
+                setShowModal(false);
+            } else {
+                setErrors(true);
+                console.error("Đăng ký không thành công. Mã lỗi:", response.status);
+                setMessage("Đăng ký không thành công. Vui lòng thử lại sau.");
+            }
+
         } catch (error) {
             console.error("Đã xảy ra lỗi khi đăng ký!", error);
             // handle error

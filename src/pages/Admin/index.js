@@ -19,7 +19,7 @@ function Employee(){
     useEffect(()=>{
         fetchUserInfo();
         setUpdate(false);
-    },[update])
+    },[success , warning , error ,update,fetchUserInfo])
     return (
         <div className={style["container"]}>
             <div className={style["menu"]}>

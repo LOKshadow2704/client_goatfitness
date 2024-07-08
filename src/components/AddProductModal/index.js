@@ -31,7 +31,7 @@ function AddProductModal({ setShowModal }) {
                 setError(true);
                 setMessage(error.response.data.error);
             });
-    }, []);//Lấy thông tin category
+    }, [setError, setMessage]);//Lấy thông tin category
 
     const handleChange = (e) => {
         const { name, value } = e.target;

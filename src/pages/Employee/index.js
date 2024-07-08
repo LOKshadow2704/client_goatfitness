@@ -7,7 +7,6 @@ import ManagePurchaseOrder from "../../components/ManagePurchaseOrder";
 import ManagePackGym from "../../components/ManagePackGym";
 import Dashboard from "../../components/Dashboard";
 import ManageProduct from "../../components/ManegeProduct";
-import AccountInfo from "../../components/AccountInfo";
 import AccountSetting from "../AccountSetting";
 import { useAnnouncement } from "../../contexts/Announcement";
 import Announcement from "../../components/Announcement";
@@ -19,7 +18,7 @@ function Employee(){
     useEffect(()=>{
         fetchUserInfo();
         setUpdate(false);
-    },[update])
+    },[success , warning , error ,update,fetchUserInfo])
     return (
         <div className={style["container"]}>
             <div className={style["menu"]}>
