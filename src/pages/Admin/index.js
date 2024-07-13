@@ -13,13 +13,12 @@ import Announcement from "../../components/Announcement";
 import { useAnnouncement } from "../../contexts/Announcement";
 function Employee(){
     const [currentPage, setCurrentPage] = useState('Dashboard');
-    const {user , logout , fetchUserInfo} = useAuth();
+    const {user , logout } = useAuth();
     const [update , setUpdate] = useState(false);
     const {success , warning , error} = useAnnouncement();
     useEffect(()=>{
-        fetchUserInfo();
         setUpdate(false);
-    },[success , warning , error ,update,fetchUserInfo])
+    },[success , warning , error ,update])
     return (
         <div className={style["container"]}>
             <div className={style["menu"]}>

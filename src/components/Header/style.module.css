@@ -6,8 +6,8 @@ header {
     display: grid;
     grid-template-columns: 20% 10% 50% 20%; 
     align-items: center;
-    color: #081158 ;
-    background: white;
+    color: white;
+    background: #FFFF;
     z-index: 1;
   }
   
@@ -36,7 +36,7 @@ header {
   .navbar ul li a{
     color: #081158 ;
     font-size: 18px;
-    font-weight: 500;
+    font-weight: bold;
     font-family: "SF Pro Display", "SF Pro Icons", "Helvetica Neue", Helvetica, Arial, sans-serif;
     font-size: 15px;
 

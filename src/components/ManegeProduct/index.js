@@ -129,21 +129,29 @@ function ManageProduct({ data }) {
                         <th>Loại sản phẩm</th>
                         <th>Đơn giá</th>
                         <th>Số lượng tồn kho</th>
-                        <th>Action</th>
+                        <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
                     {sortData()
                         .filter((item) => item.TenSP.toLowerCase().includes(searchTerm.toLowerCase()))
                         .map((value) => (
-                            <tr key={value.IDSanPham}>
+                            <tr key={value.IDSanPham} style={{
+                                alignItems: 'center'
+                            }}>
                                 <td><p>{value.TenSP}</p><img src={value.IMG} alt={value.TenSP} width='100%' /></td>
                                 <td>{value.TenLoaiSanPham}</td>
-                                <td>{value.DonGia}</td>
+                                <td>{value.DonGia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
                                 <td>{value.SoLuong}</td>
                                 <td>
-                                    <button onClick={() => handleEdit(value)}><FontAwesomeIcon icon={faPenToSquare} />Chỉnh sửa</button>
-                                    <button onClick={() => handleDelete(value.IDSanPham)}> <FontAwesomeIcon icon={faTrashCan} />Xóa</button></td>
+                                    <div style={{
+                                        display: 'flex',
+                                        marginLeft: '50px'
+                                    }}>
+                                    <button onClick={() => handleEdit(value)}><FontAwesomeIcon icon={faPenToSquare} /></button>
+                                    <button onClick={() => handleDelete(value.IDSanPham)}> <FontAwesomeIcon icon={faTrashCan} /></button>
+                                    </div>
+                                </td>
                             </tr>
                         ))}
                 </tbody>
