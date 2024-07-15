@@ -7,8 +7,8 @@
 }
 
 .menu{
-    background-color: rgb(6, 4, 60);
-    box-shadow: 4px -3px 6px 5px rgba(108, 123, 202, 0.1);
+    background-color: #081158;
+    box-shadow: #081158;
     color: white;
 }
 
@@ -60,7 +60,7 @@
     align-items: center;
     justify-items: start;
     padding: 20px  30px;
-    background-color: rgb(14 27 61 / 80%);
+    background-color: #081158;
     color: white;
     padding-right: 0;
 }
@@ -95,7 +95,7 @@
 
 .content> h1{
     background-color: white;
-    box-shadow: 4px -3px 6px 5px rgba(108, 123, 202, 0.1);
+    box-shadow: #081158;
     padding-left: 10%;
     text-align: left;
 

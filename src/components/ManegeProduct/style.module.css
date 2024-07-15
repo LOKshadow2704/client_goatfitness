@@ -52,6 +52,7 @@
 .manage_product th{
     background-color: #081158;
     color: white;
+    height: 20px;
 }
 
 .manage_product td{
@@ -103,7 +104,7 @@
 
 .manage_product tbody td:nth-child(5) button , .header button{
     width: fit-content;
-    min-width: 100px;
+    min-width: 50px;
     height: 45px;
     padding: 8px;
     border-radius: 5px;
@@ -114,6 +115,9 @@
     transition: all 0.2s ease-in-out 0ms;
     user-select: none;
     font-family: 'Poppins', sans-serif;
+    margin-top: 4px;
+    margin-right: 2px;
+    border: none;
 }
   
 .manage_product tbody td:nth-child(5) button:hover , .header button:hover{
