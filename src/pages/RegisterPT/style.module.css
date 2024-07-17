@@ -43,7 +43,7 @@
     margin-right: 50px;
 }
 
-button {
+.formGroup button {
     background: #0070f3;
     color: #fff;
     padding: 10px 15px;
@@ -53,7 +53,7 @@ button {
     transition: background 0.3s;
 }
 
-button:hover {
+.formGroup button:hover {
     background: #005bb5;
 }
 .modal {
@@ -112,7 +112,7 @@ button:hover {
     margin-top: 10px;
     
 }
-button {
+.formGroup button {
     background: #0070f3;
     color: #fff;
     padding: 10px 15px;
@@ -123,6 +123,6 @@ button {
     
 }
 
-button:hover {
+.formGroup button:hover {
     background: #005bb5;
 }
