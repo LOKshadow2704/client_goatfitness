@@ -124,16 +124,18 @@
     border: 2.5px solid #E0E1E4;
     box-shadow: 0px 0px 20px -20px;
     cursor: pointer;
-    background-color: #FFF;
+    background-color: #ed6d00;
     transition: all 0.2s ease-in-out 0ms;
     user-select: none;
     font-family: 'Poppins', sans-serif;
     padding-left: 10px;
 }
 
+
+
 .manage_product tbody td:nth-child(5) button:hover,
 .header button:hover {
-    background-color: #F2F2F2;
+    background-color: #0095e8;
     box-shadow: 0px 0px 20px -18px;
 }
 

@@ -10,7 +10,8 @@ function ManagePurchaseOrder() {
     const [update, setUpdate] = useState(false);
     const [searchTerm, setSearchTerm] = useState('');
     const [sortOrder, setSortOrder] = useState('');
-    const {setSuccess, setError , setMessage} = useAnnouncement();
+    const { setSuccess, setError, setMessage } = useAnnouncement();
+
     useEffect(() => {
         const isLogin = findCookie("jwt");
         if (isLogin) {
@@ -32,7 +33,7 @@ function ManagePurchaseOrder() {
                     setMessage(error.response.data.error);
                 });
         }
-    }, [update]);// eslint-disable-line react-hooks/exhaustive-deps
+    }, [update]); // eslint-disable-line react-hooks/exhaustive-deps
 
     const findCookie = (name) => {
         const cookies = document.cookie.split(';');
@@ -93,9 +94,13 @@ function ManagePurchaseOrder() {
         return filteredOrders;
     };
 
+    const formatCurrency = (value) => {
+        return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".") + "đ";
+    };
+
     return (
         <div className={style["wrap"]}>
-            <div className={style.header}>
+            <div className={style['header']}>
                 <input
                     type="text"
                     placeholder="Tìm kiếm đơn hàng..."
@@ -116,17 +121,17 @@ function ManagePurchaseOrder() {
                         <th>Thông tin đơn hàng</th>
                         <th>Thông tin thanh toán</th>
                         <th>Thông tin giao hàng</th>
-                        <th>Action</th>
+                        <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
                     {filteredAndSortedOrders().map((value) => (
                         <tr key={value.IDDonHang}>
                             <td>
-                                <p>ID Đơn hàng: {value.IDDonHang}</p>
-                                <div className={style.products}>
+                                <p><b>ID Đơn hàng: {value.IDDonHang}</b></p>
+                                <div className={style['products']}>
                                     {value.orderInfo.map(item => (
-                                        <div className={style.product_item} key={item.IDSanPham}>
+                                        <div className={style['product_item']} key={item.IDSanPham}>
                                             <p>{item.TenSP}</p>
                                             <img src={item.IMG} alt={item.TenSP} width='80px' />
                                         </div>
@@ -134,10 +139,12 @@ function ManagePurchaseOrder() {
                                 </div>
                             </td>
                             <td>
-                                <span>Giá trị đơn hàng: {value.ThanhTien} </span>
+                                <span>Giá trị đơn hàng: {formatCurrency(value.ThanhTien)} </span>
                                 {value.IDHinhThuc === 1 && <span> (Thanh toán khi nhận hàng)</span>}
                                 {value.IDHinhThuc === 2 && <span> (Thanh toán VNPay)</span>}
-                                <span>Trạng thái thanh toán: {value.TrangThaiThanhToan}</span>
+                                <span className={value.TrangThaiThanhToan === "Chưa thanh toán" ? style['red'] : style['green']}>
+                                    Trạng thái thanh toán: {value.TrangThaiThanhToan}
+                                </span>
                             </td>
                             <td>
                                 <span>Ngày đặt: {value.NgayDat}</span>
@@ -145,7 +152,7 @@ function ManagePurchaseOrder() {
                             </td>
                             <td>
                                 <button onClick={() => handleUpdate(value.IDDonHang)}>
-                                    <FontAwesomeIcon icon={faPenToSquare} />Chấp nhận
+                                    <FontAwesomeIcon icon={faPenToSquare} /> Chấp nhận
                                 </button>
                             </td>
                         </tr>

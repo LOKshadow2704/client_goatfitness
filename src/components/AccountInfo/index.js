@@ -98,30 +98,30 @@ function AccountInfo({ userData , setUpdate  }) {
     };
 
     return (
-        <div className={style.container}>
-            <div className={style.group}>
+        <div className={style['container']}>
+            <div className={style['group']}>
                 <label htmlFor="name">Họ tên</label>
                 <input id="name" type="text" value={name} onChange={(e) => setName(e.target.value)} />
             </div>
-            <div className={style.group}>
+            <div className={style['group']}>
                 <label htmlFor="email">Email</label>
                 <input id="email" type="email" value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
-            <div className={style.group}>
+            <div className={style['group']}>
                 <label htmlFor="address">Địa chỉ</label>
                 <input id="address" type="text" value={address} onChange={(e) => setAddress(e.target.value)} />
             </div>
-            <div className={style.group}>
+            <div className={style['group']}>
                 <label htmlFor="phoneNum">Số điện thoại</label>
                 <input id="phoneNum" type="text" value={phoneNum} onChange={(e) => setPhoneNum(e.target.value)} />
             </div>
-            <div className={style.action}>
-                <div className={style.submit}>
+            <div className={style['action']}>
+                <div className={style['submit']}>
                     <button onClick={handleUpdateClick}>
                         Cập nhật thay đổi
                     </button>
                 </div>
-                <div className={style.reset}>
+                <div className={style['reset']}>
                     <button onClick={resetData}>
                         Reset
                     </button>

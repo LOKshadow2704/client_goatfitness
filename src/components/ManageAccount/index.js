@@ -71,14 +71,14 @@ function ManageAccount({ data }) {
         setModalUpdte(true);
     }
     return (
-        <div className={style.wrap}>
+        <div className={style['wrap']}>
             {
                 modalAdd && <CreateUserModal setShowModal={setModalAdd} />
             }
             {
                 modalUpdate && <UpdateRoleModal setShowModal={setModalUpdte}  data = {selectUser}/>
             }
-            <div className={style.header}>
+            <div className={style['header']}>
                 {/* Input tìm kiếm */}
                 <input
                     type="text"
@@ -100,7 +100,7 @@ function ManageAccount({ data }) {
                     <tr>
                         <th>Tên đăng nhập</th>
                         <th>Loại tài khoản</th>
-                        <th>Action</th>
+                        <th>Hành động</th>
                     </tr>
                 </thead>
                 <tbody>
