@@ -1,79 +1,65 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import style from "./style.module.css";
-import axios from "axios";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { faCircleCheck } from "@fortawesome/free-solid-svg-icons/faCircleCheck";
-import { useAnnouncement } from "../../contexts/Announcement";
 
-function UserPackage({setShowModal}) {
-    const [data , setData] = useState();
-    const { setError ,setMessage , setLocation , setLink} = useAnnouncement();
-    useEffect(()=>{
-        const findCookie = (name) => {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-              const cookie = cookies[i].trim();
-              if (cookie.startsWith(name + '=')) {
-                return cookie.substring(name.length + 1);
-              }
-            }
-            return null;
-          };
-        const isLogin = findCookie("jwt");
-        if(isLogin){
-            const jwt = findCookie('jwt');
-            const headers = {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + jwt,
-                'PHPSESSID': findCookie("PHPSESSID")
-            };
-            axios.get('http://localhost:88/Backend/PackageGym/UserInfo', { headers: headers 
-            }).then(response => {
-                if(response.status >= 200 && response.status < 300){
-                    setData(response.data);
-                    console.log(response.data);
-                }
-            }).catch(error => {
-                setError(true);
-                setMessage(error.response.data.error);
-                setLocation(true);
-                setLink("http://localhost:3000/GymPack");
-            });
-                
-        }
-    },[setError ,setMessage , setLocation , setLink])
-    return (
-        <div className={style.modal}>
-            <div className={style.wrap_content}>
-            <h1><FontAwesomeIcon icon={faXmark} onClick={() => setShowModal(false)}/></h1>
-                <h1>Thông tin gói tập của bạn</h1>
-                <div className={style.info}>
-                    <h1>Tên gói tập: {data && data.info.TenGoiTap}</h1>
-                    <span>Ngày đăng ký: {data && data.NgayDangKy}</span>
-                    <span>Ngày hết hạn: {data && data.NgayHetHan}</span>
-                </div>
-                <div className={style.describe}>
-                    <table>
-                        <thead>
-                            <tr><th></th><th>Classic</th><th>Royal</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Không giới hạn thời gian luyện tập</td><td></td><td><FontAwesomeIcon icon={faCircleCheck} /></td>
-                            </tr>
-                            <tr>
-                                <td>Tự do tập luyện tại tất cả câu lạc bộ trong hệ thống GOAT Fitness</td><td><FontAwesomeIcon icon={faCircleCheck} /></td><td><FontAwesomeIcon icon={faCircleCheck} /></td>
-                            </tr>
-                            <tr>
-                                <td>Nước uống miễn phí</td><td><FontAwesomeIcon icon={faCircleCheck} /></td><td><FontAwesomeIcon icon={faCircleCheck} /></td>
-                            </tr>
-                        </tbody>
-                    </table>
-               </div>
-            </div>
-        </div>
-    );
+const services = {
+  classic: {
+    duration: "15 THÁNG",
+    cost: "11,880,000 VNĐ",
+    costPerMonth: "792,000 VNĐ",
+    costPerDay: "26,400 VNĐ",
+  },
+  "classic-plus": {
+    duration: "22 THÁNG",
+    cost: "17,930,000 VNĐ",
+    costPerMonth: "815,000 VNĐ",
+    costPerDay: "27,167 VNĐ",
+  },
+  citipassport: {
+    duration: "36 THÁNG",
+    cost: "29,810,000 VNĐ",
+    costPerMonth: "828,056 VNĐ",
+    costPerDay: "27,602 VNĐ",
+  },
+  // Add more services as needed
 };
+
+function UserPackage({ setShowModal }) {
+  const [selectedService, setSelectedService] = useState("classic");
+
+  const handleServiceClick = (service) => {
+    setSelectedService(service);
+  };
+
+  const { duration, cost, costPerMonth, costPerDay } = services[selectedService];
+
+  return (
+    <div className={style.modal}>
+      <div className={style.wrap_content}>
+        <h1><FontAwesomeIcon icon={faXmark} onClick={() => setShowModal(false)} /></h1>
+        <h1>Thông tin gói tập của bạn</h1>
+        <div className={style.serviceTabs}>
+          {Object.keys(services).map((service) => (
+            <button
+              key={service}
+              className={selectedService === service ? style.active : ""}
+              onClick={() => handleServiceClick(service)}
+            >
+              {service.toUpperCase()}
+            </button>
+          ))}
+        </div>
+        <div className={style.info}>
+          <h1>Thời gian tập luyện: {duration}</h1>
+          <span>Tổng chi phí: {cost}</span>
+          <span>Chi phí / tháng: {costPerMonth}</span>
+          <span>Chi phí / ngày: {costPerDay}</span>
+        </div>
+        <button className={style.registerButton}>ĐĂNG KÝ NGAY</button>
+      </div>
+    </div>
+  );
+}
 
 export default UserPackage;

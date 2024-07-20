@@ -3,6 +3,7 @@ import style from './style.module.css';
 import { useState } from "react";
 import { useAuth } from "../../contexts/AuthContext";
 import { useAnnouncement } from "../../contexts/Announcement";
+import Button from '@mui/material/Button';
 import Announcement from "../../components/Announcement";
 
 function Login(){
@@ -64,7 +65,7 @@ function Login(){
                     <input type="password" id="password" value={password} onChange={(e)=>setPassword(e.target.value)}/> <br/>
                 </div>
                 <h2 className={style['wrap-forgot-pw']}><a href="/ForgotPassword" className={style['forgot-pw']}>Quên mật khẩu?</a> </h2>
-                <button type="submit" className={style['button']}>Đăng nhập</button>
+                <Button type="submit" className={style['button']}>Đăng nhập</Button>
                 <p>Hoặc</p>
                 <h3><a href="/signup">Đăng ký</a></h3>
             </form>
