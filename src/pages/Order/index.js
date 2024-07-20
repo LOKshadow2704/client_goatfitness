@@ -8,29 +8,30 @@ import axios from "axios";
 import { useLocation } from "react-router-dom";
 import { useAnnouncement } from "../../contexts/Announcement";
 import Loading from "../../components/Loading";
+import { useAuth } from "../../contexts/AuthContext";
 
 function Order() {
     const location = useLocation();
     const [totalPrice, setTotalPrice] = useState(0);
     const [products, setProducts] = useState();
     const [selectedPayment, setSelectedPayment] = useState(1);
-    const [address, setAddress] = useState();
     const [loading, setLoading] = useState(false); // loading
     const { setError, setMessage, setSuccess, setLocation, setLink } = useAnnouncement();
+    const {user} = useAuth();
 
-    // Thông báo
+    //Thông báo
     useEffect(() => {
         const searchParams = new URLSearchParams(location.search);
         const message = searchParams.get('message');
         switch (message) {
-            case "successfully":
+            case "success":
                 setSuccess(true);
                 setMessage('Đặt hàng thành công!');
                 sessionStorage.removeItem('OrderInfo');
                 setLocation(true);
                 setLink("http://localhost:3000/PurchaseOrder");
                 break;
-            case "unsuccessfully":
+            case "canceled":
                 setError(true);
                 setMessage('Đặt hàng không thành công!');
                 break;
@@ -66,31 +67,6 @@ function Order() {
         return null;
     };
 
-    useEffect(() => {
-        const isLogin = findCookie("jwt");
-        if (isLogin) {
-            setLoading(true);
-            const jwt = findCookie('jwt');
-            const headers = {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + jwt,
-                'PHPSESSID': findCookie("PHPSESSID")
-            };
-            axios.get('http://localhost:88/Backend/getAccountInfo', { headers: headers })
-                .then(response => {
-                    if (response.status >= 200 && response.status < 300) {
-                        setAddress(response.data.DiaChi);
-                    } else {
-                        throw new Error("Lấy thông tin thất bại");
-                    }
-                    setLoading(false);
-                }).catch(error => {
-                    setLoading(false);
-                    setError(true);
-                    setMessage(error.response.data.error);
-                });
-        }
-    }, [setError, setMessage]);
 
     const handleBuy = () => {
         const isLogin = findCookie("jwt");
@@ -100,8 +76,6 @@ function Order() {
             const data = {
                 products: products,
                 HinhThucThanhToan: selectedPayment,
-                amount: totalPrice,
-                DiaChi: address,
             };
             const headers = {
                 'Content-Type': 'application/json',
@@ -111,14 +85,15 @@ function Order() {
             axios.post('http://localhost:88/Backend/order', data, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
-                        if (response.data.success) {
-                            window.location.href = response.data.success;
+                        if (response.data) {
+                            window.location.href = response.data;
                         } else {
                             setSuccess(true);
                             setMessage(response.data.message);
                             setLocation(true);
                             setLink("http://localhost:3000/PurchaseOrder");
                         }
+                        console.log(response)
                     } else {
                         throw new Error("Đặt hàng không thành công!");
                     }
@@ -160,7 +135,7 @@ function Order() {
                         <h1>Thông tin đặt hàng</h1>
                         <div className={style.group_title}>
                             <h1>Địa chỉ</h1>
-                            <input type="text" value={address ? address : ''} onChange={(e) => setAddress(e.target.value)} />
+                            <input type="text" value={user ? user['DiaChi'] : ''} />
                         </div>
                         <table>
                             <thead>

@@ -16,7 +16,7 @@ function Shop() {
     const [sortOrder, setSortOrder] = useState('none');
 
     useEffect(() => {
-        fetch('http://localhost:88/Backend/shop/')
+        fetch('http://localhost:88/Backend/shop')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Lỗi kết nối');

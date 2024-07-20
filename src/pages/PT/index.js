@@ -133,7 +133,7 @@ function PT() {
                     <div className={style['product']}>
                         <ul>
                             {filteredProducts && filteredProducts.map(value => (
-                                <li key={value.IDSanPham}>
+                                <li key={value.IDHLV}>
                                     <PTitem
                                         children={value}
                                     />
