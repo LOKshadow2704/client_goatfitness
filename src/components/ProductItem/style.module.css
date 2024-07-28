@@ -94,3 +94,6 @@
     font-size: 15px;
     text-align: -webkit-match-parent;
   }
+  .red_price{
+    color: red;
+  }

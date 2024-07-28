@@ -28,6 +28,7 @@
     margin-left: 5%;
     gap: 40px;
     justify-content: center;
+    margin-top: 2%;
 }
 
 .product ul li{
@@ -87,4 +88,12 @@
     fill: #9e9ea7;
     width: 12rem;
     height: 1rem;
+}
+.action2{
+    width: 170px !important;
+    margin-top: 10px;
+}
+.action3{
+    width: 170px !important;
+    margin-top: 10px;
 }

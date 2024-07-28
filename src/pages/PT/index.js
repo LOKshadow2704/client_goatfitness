@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useLocation } from "react-router-dom";
 import { useAnnouncement } from "../../contexts/Announcement";
+import { Select, MenuItem, InputLabel, FormControl } from "@mui/material"; // Import MUI components
 
 function PT() {
     const location = useLocation();
@@ -113,21 +114,37 @@ function PT() {
                         </div>
 
                         <div className={style.action2}>
-                            <label htmlFor="product_category">Danh mục HLV </label>
-                            <select id="product_category" onChange={(e) => setProductsByCategory(e.target.value)}>
-                                <option value="Tất cả">Tất cả</option>
-                                {categories.map((value, index) => (
-                                    <option key={index} value={value}>{value}</option>
-                                ))}
-                            </select>
+                            <FormControl fullWidth>
+                                <InputLabel id="pt_category_label">Danh mục HLV</InputLabel>
+                                <Select
+                                    labelId="pt_category_label"
+                                    id="pt_category"
+                                    value={productsByCategory}
+                                    label="Danh mục HLV"
+                                    onChange={(e) => setProductsByCategory(e.target.value)}
+                                >
+                                    <MenuItem value="Tất cả">Tất cả</MenuItem>
+                                    {categories.map((value, index) => (
+                                        <MenuItem key={index} value={value}>{value}</MenuItem>
+                                    ))}
+                                </Select>
+                            </FormControl>
                         </div>
                         <div className={style.action3}>
-                            <label htmlFor="sort">Sắp xếp theo giá  </label>
-                            <select id="sort" onChange={handleSort}>
-                                <option value="none">Không sắp xếp</option>
-                                <option value="asc">Tăng dần</option>
-                                <option value="desc">Giảm dần</option>
-                            </select>
+                            <FormControl fullWidth>
+                                <InputLabel id="sort_label">Sắp xếp theo giá</InputLabel>
+                                <Select
+                                    labelId="sort_label"
+                                    id="sort"
+                                    value={sortOrder}
+                                    label="Sắp xếp theo giá"
+                                    onChange={handleSort}
+                                >
+                                    <MenuItem value="none">Không sắp xếp</MenuItem>
+                                    <MenuItem value="asc">Tăng dần</MenuItem>
+                                    <MenuItem value="desc">Giảm dần</MenuItem>
+                                </Select>
+                            </FormControl>
                         </div>
                     </div>
                     <div className={style['product']}>

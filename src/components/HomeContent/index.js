@@ -51,6 +51,7 @@ function HomeContent() {
               color: '#fff', 
               padding: '12px 24px',
               borderRadius: '8px', 
+              marginTop:'20px',
               '&:hover': { 
                 backgroundColor: '#1974D3'
               }
@@ -151,46 +152,51 @@ function HomeContent() {
       </div>
 
       <div className={style["container-item-4"]}>
-        <h1>Huấn luyện viên nổi bậc</h1>
-        <div className={style["wrap-pt"]}>
-          {pts &&
-            pts.map((value, index) => (
-              <div className={style["list-item"]} key={index}>
-                <img src={value.avt} alt="nothing" width="100%" />
-                <Link to={`/PTInfo/${value.IDKhachHang}`}>
-                  <div className={style["wrap-content"]}>
-                    <h2>{value.HoTen} </h2>
-                    <h3>Chứng chỉ: {value.ChungChi}</h3>
-                    <h3 style={{ color: "red" }}>
-                      {value.GiaThue.toLocaleString("vi", {
-                        style: "currency",
-                        currency: "VND",
-                      })}{" "}
-                      / giờ
-                    </h3>
-                    <Button
-                      variant="contained"
-                      sx={{ 
-                        backgroundColor: '#081158', 
-                        color: '#fff', 
-                        padding: '8px 16px', // Padding điều chỉnh theo nhu cầu
-                        borderRadius: '8px', 
-                        '&:hover': { 
-                          backgroundColor: '#1974D3'
-                        }
-                      }}
-                      component={Link}
-                      to={`/PTInfo/${value.IDKhachHang}`}
-                    >
-                      Đăng ký ngay
-                    </Button>
-                  </div>
-                </Link>
-              </div>
-            ))}
+  <h1>Huấn luyện viên nổi bậc</h1>
+  <div className={style["wrap-pt"]}>
+    {pts &&
+      pts.map((value, index) => (
+        <div className={style["list-item"]} key={index}>
+          <img src={value.avt} alt="nothing" width="100%" />
+          <Link to={`/PTInfo/${value.IDKhachHang}`}>
+            <div className={style["wrap-content"]}>
+              <h2>{value.HoTen} </h2>
+              <h3>Chứng chỉ: {value.ChungChi}</h3>
+              <h3>
+                Đơn giá:{" "}
+                <span className={style.price}>
+                  {value.GiaThue.toLocaleString("vi-VN", { style: "currency", currency: "VND" }).replace('₫', '')}
+                  <span className={style.currency}>VNĐ</span>
+                </span>{" "}
+                / giờ
+              </h3>
+              <Button
+                variant="contained"
+                sx={{ 
+                  backgroundColor: '#ffd000', 
+                  color: '#fff', 
+                  padding: '8px 16px', // Padding điều chỉnh theo nhu cầu
+                  borderRadius: '8px', 
+                  marginTop: '15px',
+                  marginLeft:'25%',
+                  marginBottom: '10px',
+                  '&:hover': { 
+                    backgroundColor: '#1974D3'
+                  }
+                }}
+                component={Link}
+                to={`/PTInfo/${value.IDKhachHang}`}
+              >
+                Đăng ký ngay
+              </Button>
+            </div>
+          </Link>
         </div>
-        <a href="/PT">Xem thêm</a>
-      </div>
+      ))}
+  </div>
+</div>
+
+
 
       <div className={style["container-item-5"]}>
         <h1>Các sản phẩm hỗ trợ luyện tập</h1>
@@ -202,29 +208,32 @@ function HomeContent() {
                 <Link to={`/ProductInfo/${value.IDSanPham}`}>
                   <div className={style["wrap-content"]}>
                     <h2>{value.TenSP}</h2>
-                    <h3>
-                      {value.DonGia.toLocaleString("vi", {
-                        style: "currency",
-                        currency: "VND",
-                      })}
-                    </h3>
-                    <Button
-                      variant="contained"
-                      sx={{ 
-                        backgroundColor: '#FFDAC0', 
-                        color: '#fff', 
-                        padding: '8px 16px',
-                        marginTop: '5px', // Padding điều chỉnh theo nhu cầu
-                        borderRadius: '8px', 
-                        '&:hover': { 
-                          backgroundColor: '#1974D3'
-                        }
-                      }}
-                      component={Link}
-                      to={`/ProductInfo/${value.IDSanPham}`}
-                    >
-                      Đăng ký ngay
-                    </Button>
+                    <p>
+  Đơn giá:
+  <span className={style.price}>
+    {value.DonGia.toLocaleString("vi-VN", { style: "currency", currency: "VND" }).replace('₫', '')}
+    <span className={style.currency}>VNĐ</span>
+  </span>
+</p>
+<div className={style["button-container"]}>
+  <Button
+    variant="contained"
+    sx={{ 
+      backgroundColor: '#ffd000', 
+      color: '#fff', 
+      padding: '5px 16px',
+      borderRadius: '8px',
+      '&:hover': { 
+        backgroundColor: '#1974D3'
+      }
+    }}
+    component={Link}
+    to={`/ProductInfo/${value.IDSanPham}`}
+  >
+    Mua ngay
+  </Button>
+</div>
+
                   </div>
                 </Link>
               </div>

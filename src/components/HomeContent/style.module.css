@@ -1,3 +1,4 @@
+/* Container adjustments */
 #container {
     margin-top: 135px !important;
 }
@@ -23,21 +24,6 @@
 .container-item-1 .right-item {
     width: 50%; 
     padding: 0 5%;
-}
-
-.container-item-1 .right-item h1, .container-item-1 .right-item h2 {
-    color: #081158;
-    font-family: system-ui;
-    padding: 5px 0;
-    letter-spacing: 1px;
-}
-
-.container-item-1 button {
-    margin-top: 10px;
-    cursor: pointer;
-}
-
-.container-item-1 .right-item {
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -61,6 +47,11 @@
     font-weight: 500;
 }
 
+.container-item-1 button {
+    margin-top: 10px;
+    cursor: pointer;
+}
+
 .goPT {
     background: #081158;
     height: 50px;
@@ -69,6 +60,7 @@
     border-radius: 8px;
 }
 
+/* Container Item 2 */
 .container-item-2 {
     height: 100px;
     background-color: #081158;
@@ -80,6 +72,7 @@
     font-size: 20px; 
 }
 
+/* Container Item 3 */
 .container-item-3 h1 {
     width: 100%;
     text-align: center;
@@ -105,7 +98,8 @@
 }
 
 .wrap-content p {
-    text-align: justify;
+    font-size: 15px;
+    text-align: -webkit-match-parent;
 }
 
 .container-item-3 .wrap-trip .trip .wrap-content {
@@ -129,6 +123,7 @@
     padding: 40px 0;
 }
 
+/* Container Items 4 and 5 */
 .container-item-4, .container-item-5 {
     background-color: #081158;
     height: 600px;
@@ -171,6 +166,9 @@
 
 .container-item-4 .wrap-content, .container-item-5 .wrap-content {
     padding: 0 5% 0px 5%;
+    color: #081158;
+    font-weight: 500;
+    align-items: center;
 }
 
 .container-item-5 {
@@ -196,23 +194,21 @@
 }
 
 .container-item-4 .wrap-content h2, .container-item-5 .wrap-content h2 {
-    font-size: 18px !important;
+    font-size: 20px !important;
+    font-weight: bold;
+    text-align: center;
 }
 
 .container-item-4 .wrap-content h3, .container-item-5 .wrap-content h3 {
-    font-size: 16px;
+    font-size: 15px;
     font-weight: 500;
-    margin: 0;
+    text-align: justify;
+    margin-top: 5px;
 }
 
 .container-item-4 .wrap-content h3:nth-child(3), .container-item-5 .wrap-content h3:nth-child(3) {
     text-align: right;
     font-weight: 700;
-}
-
-.container-item-4 .wrap-content, .container-item-5 .wrap-content {
-    color: #081158;
-    font-weight: 500;
 }
 
 .container-item-4 .wrap-content a, .container-item-5 .wrap-content a {
@@ -223,17 +219,39 @@
     color: red;
 }
 
+/* Register Button Styles (for "Đăng ký ngay") */
 .registerButton {
     display: inline-block;
-    background-color: #F5F5DC;
+    background-color: #F5F5DC; /* Match the desired background color */
     color: white;
     padding: 10px 20px;
     border-radius: 5px;
     text-align: center;
     text-decoration: none;
     margin-top: 10px;
+    box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
 }
 
 .registerButton:hover {
     background-color: #0056b3;
 }
+.button-container {
+    display: flex;
+    justify-content: center; 
+    align-items: center; 
+    margin-top: 10px; 
+}
+
+.price {
+    margin-left: 4px;
+    margin-top: 5px;
+    display: inline-block;
+    color: red;
+}
+
+.price .currency {
+    margin-left: 1px;
+    margin-top: 1px;
+    display: inline-block;
+}
+

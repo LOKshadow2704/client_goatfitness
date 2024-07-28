@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Tabs, Tab } from '@mui/material';
-import { Link } from 'react-router-dom';
+import { Link, useLocation } from 'react-router-dom';
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faShopify } from '@fortawesome/free-brands-svg-icons';
 import { useAuth } from '../../contexts/AuthContext';
@@ -16,6 +16,7 @@ function Header() {
     const cartRef = useRef(null);
     const { isLogin, user } = useAuth();
     const { error, success, warning, setError, setSuccess, setMessage, setLocation } = useAnnouncement();
+    const location = useLocation();
 
     useEffect(() => {
         // Handle announcements (if needed)
@@ -76,18 +77,53 @@ function Header() {
     }
 
     return (
-        <header className={style['header']}>
+        <header className={style.header}>
             <div className={style['wrap-logo']}>
                 <div className={style.logo}>
                     <a href="/"><img src="https://i.imgur.com/n63xUfG.jpeg" alt="logo" width="100%" /></a>
                 </div>
             </div>
             <div className={style.navbar}>
-                <Tabs className={style.TabsList} aria-label="navigation tabs">
-                    <Tab label="Shop" component={Link} to="/shop" className={style.Tab} />
-                    <Tab label="HLV Cá Nhân" component={Link} to="/PT" className={style.Tab} />
-                    <Tab label="Giới thiệu" component={Link} to="/info" className={style.Tab} />
-                    <Tab label="Gói tập" component={Link} to="/GymPack" className={style.Tab} />
+                <Tabs
+                    value={location.pathname}
+                    className={style.TabsList}
+                    aria-label="navigation tabs"
+                >
+                    <Tab
+                        label="Trang chủ"
+                        component={Link}
+                        to="/"
+                        value="/"
+                        className={style.Tab}
+                    />
+                    <Tab
+                        label="Shop"
+                        component={Link}
+                        to="/shop"
+                        value="/shop"
+                        className={style.Tab}
+                    />
+                    <Tab
+                        label="HLV Cá Nhân"
+                        component={Link}
+                        to="/PT"
+                        value="/PT"
+                        className={style.Tab}
+                    />
+                    <Tab
+                        label="Giới thiệu"
+                        component={Link}
+                        to="/info"
+                        value="/info"
+                        className={style.Tab}
+                    />
+                    <Tab
+                        label="Gói tập"
+                        component={Link}
+                        to="/GymPack"
+                        value="/GymPack"
+                        className={style.Tab}
+                    />
                 </Tabs>
             </div>
             <div className={style.nav_item}>

@@ -60,7 +60,7 @@ function ProductItem({children, current ,  setAddCartCount}){
           <div className={style.wrap_content}>
         
             <h1>{children.TenSP}</h1>
-            <p>Đơn giá: {children.DonGia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</p>
+            <p>Đơn giá:<span className={style.red_price}>{children.DonGia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</span></p>
             
           </div>
           </Link>

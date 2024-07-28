@@ -58,6 +58,7 @@
     height: 100px;
     margin-bottom: 15px;
     width: 95% !important;
+    padding-top: 5px;
 }
 
 .contact {
@@ -157,7 +158,8 @@ hr {
 }
 .addressText{
     font-weight: bold;
-    font-size: 1.2em;
+    font-size: 1em;
+    padding-top: 5px;
 }
 .giandong{
     margin-bottom: 20px;
