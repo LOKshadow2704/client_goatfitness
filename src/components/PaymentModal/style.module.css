@@ -33,6 +33,7 @@
     grid-row-start: 2;
     grid-column: 1 / span 2;
     margin-top: 0;
+    margin-bottom: 40px;
 }
 
 .modal button:nth-child(3){

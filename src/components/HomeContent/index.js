@@ -239,7 +239,7 @@ function HomeContent() {
               </div>
             ))}
         </div>
-        <a href="/shop">Xem thêm</a>
+        {/* <a href="/shop">Xem thêm</a> */}
       </div>
     </main>
   );

@@ -170,8 +170,8 @@ function Login() {
                 <Button 
                     type="submit" 
                     sx={{
-                        width: '70%',
-                        marginLeft: '15%',
+                        width: '40%',
+                        marginLeft: '30%',
                         padding: '15px',
                         borderRadius: '10px',
                         backgroundColor: '#081158',

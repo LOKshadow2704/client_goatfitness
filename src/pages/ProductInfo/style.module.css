@@ -125,3 +125,12 @@
 .info table tr td:first-child{
   font-weight: 700;
 }
+.red-text {
+  color: red;
+}
+.info div {
+  line-height: 1.6; 
+}
+.info{
+  margin-bottom: 10px;
+}

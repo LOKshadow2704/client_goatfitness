@@ -43,21 +43,21 @@ function PTInfo (){
                 </div>
                 <div className={style.right}>
                     <div className={style.info}>
-                        <h1>{peronalTrainer && peronalTrainer.HoTen}</h1>
-                        <p>Đánh giá </p>
+                        <h1>Họ và tên HLV: {peronalTrainer && peronalTrainer.HoTen}</h1>
+                        <p className={style.rating}>Đánh giá </p>
                         <StarRating rating={peronalTrainer && peronalTrainer.DanhGia}/>
-                       
                         <div className={style.info}>
                             <p>Loại dịch vụ: {peronalTrainer && peronalTrainer.DichVu}</p>
                         </div>
-                        <button className={style['CartBtn']} onClick={()=>setShowModal(true)}>
+                        
+                    </div>
+                    <div className={style.info}>
+                        <p>Các chứng chỉ: {peronalTrainer && peronalTrainer.ChungChi}</p>
+                        <span className={style.info}>Liên hệ công việc: {peronalTrainer && peronalTrainer.SDT }</span>
+                    </div>
+                    <button className={style['CartBtn']} onClick={()=>setShowModal(true)}>
                             <p className={style['text']}>Đăng ký tập ngay <FontAwesomeIcon icon={faCaretRight} /></p>
                         </button>
-                    </div>
-                    <div className={style.describe}>
-                        <p>Các chứng chỉ: {peronalTrainer && peronalTrainer.ChungChi}</p>
-                        <span>Liên hệ công việc: {peronalTrainer && peronalTrainer.SDT }</span>
-                    </div>
                 </div>
                 {
                     showModal && <RegisterTraining setShowModal = {setShowModal}  peronalTrainer = {peronalTrainer}/>

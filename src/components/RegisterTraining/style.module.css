@@ -41,6 +41,7 @@
 
 .wrap_content > h2{
     margin: 0 ;
+    margin-bottom: 20px;
 }
 
 .startday , .endday , .wrap_content > span{
@@ -136,4 +137,9 @@
     top: 0;
     border-radius: 10px;
   }
+.cost{
+  margin-left: 50%;
+  margin-bottom: 20px;
+  color: red;
+}
   

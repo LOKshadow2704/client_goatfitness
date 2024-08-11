@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import style from "./style.module.css";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+// import { faXmark } from "@fortawesome/free-solid-svg-icons";
+// import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import { useAnnouncement } from "../../contexts/Announcement";
+import { IconButton } from "@mui/material";
+import CloseIcon from '@mui/icons-material/Close';
 
 function UpdateGymPackModal({ data ,setShowModal}) {
     const { setError ,setMessage ,setSuccess } = useAnnouncement();
@@ -92,8 +94,10 @@ function UpdateGymPackModal({ data ,setShowModal}) {
 
     return (
         <div className={style.modal}><div className={style.wrap_content}>
-        <p><FontAwesomeIcon icon={faXmark} onClick={() => setShowModal(false)}/></p>
-        <h1>Cập nhật Gói tập</h1>
+        <IconButton onClick={() => setShowModal(false)} style={{ alignSelf: 'flex-end' }}>
+                    <CloseIcon />
+                </IconButton>
+        <h1>Cập nhật gói tập</h1>
         <form className={style.updateForm} onSubmit={handleSubmit}>
             <div className={style.formGroup}>
                 <label htmlFor="TenGoiTap">Tên gói tập:</label>

@@ -71,6 +71,7 @@
 
 .updateForm {
     width: 100%;
+    margin-top: 10px;
 }
 
 .formGroup {
@@ -82,6 +83,15 @@
 .formGroup img{
     width: 100px;
     grid-column-start: 2;
+}
+
+.formGroup input {
+    height: 35px;
+    border-radius: 5px;
+    border: 1px solid #ccc; /* Giữ border để có sự phân biệt với box-shadow */
+    box-shadow: 0 0 0 2px rgba(0, 0, 0, 0.1); /* Tạo hiệu ứng border nhẹ */
+    padding: 0 8px; /* Thêm padding để nội dung không bị sát viền */
+    box-sizing: border-box; /* Đảm bảo padding và border không làm tăng kích thước tổng */
 }
 
 

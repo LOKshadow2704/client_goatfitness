@@ -1,12 +1,12 @@
 import React, { useState } from "react";
 import style from "./style.module.css";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Close } from "@mui/icons-material";
 import axios from "axios";
 import { useAnnouncement } from "../../contexts/Announcement";
+import { Button } from "@mui/material"; 
 
 function UpdateRoleModal({ data, setShowModal }) {
-    const { setError ,setMessage ,setSuccess , setLocation , setLink} = useAnnouncement();
+    const { setError, setMessage, setSuccess, setLocation, setLink } = useAnnouncement();
     const [formData, setFormData] = useState({
         TenDangNhap: data.TenDangNhap,
         IDVaiTro: data.IDVaiTro,
@@ -35,7 +35,7 @@ function UpdateRoleModal({ data, setShowModal }) {
         e.preventDefault();
         const isLogin = findCookie("jwt");
         if (isLogin) {
-            if(formData.TenDangNhap === data.TenDangNhap && formData.IDVaiTro === data.IDVaiTro){
+            if (formData.TenDangNhap === data.TenDangNhap && formData.IDVaiTro === data.IDVaiTro) {
                 setError(true);
                 setMessage("Không có thay đổi nào cả");
                 setShowModal(false);
@@ -63,7 +63,7 @@ function UpdateRoleModal({ data, setShowModal }) {
                     setError(true);
                     setMessage(error.response.data.error);
                 });
-        }else{
+        } else {
             setError(true);
             setMessage("Vui lòng đăng nhập");
             setLocation(true);
@@ -75,12 +75,15 @@ function UpdateRoleModal({ data, setShowModal }) {
         <div className={style.modal}>
             <div className={style.wrap_content}>
                 <p>
-                    <FontAwesomeIcon icon={faXmark} onClick={() => setShowModal(false)} />
+                    <Close
+                        onClick={() => setShowModal(false)}
+                        style={{ cursor: 'pointer' ,marginTop:'5px'}} // Thêm kiểu con trỏ để giống như icon đóng
+                    />
                 </p>
                 <h1>Cập nhật vai trò</h1>
                 <form className={style.updateForm} onSubmit={handleSubmit}>
                     <div className={style.formGroup}>
-                        <label htmlFor="TenDangNhap">Tên Đăng nhập:</label>
+                        <label htmlFor="TenDangNhap">Tên đăng nhập:</label>
                         <input
                             type="text"
                             id="TenDangNhap"
@@ -90,7 +93,7 @@ function UpdateRoleModal({ data, setShowModal }) {
                         />
                     </div>
                     <div className={style.formGroup}>
-                        <label htmlFor="IDVaiTro">Vai Trò :</label>
+                        <label htmlFor="IDVaiTro">Vai trò :</label>
                         <select
                             id="IDVaiTro"
                             name="IDVaiTro"
@@ -102,7 +105,14 @@ function UpdateRoleModal({ data, setShowModal }) {
                             <option value="3">User</option>
                         </select>
                     </div>
-                    <button type="submit">Lưu</button>
+                    <Button 
+                        type="submit" 
+                        variant="contained" 
+                        color="primary"
+                        style={{ width: '20%', marginTop: '20px' , marginLeft:'45%' ,padding:'20px'}}
+                    >
+                        Lưu
+                    </Button>
                 </form>
             </div>
         </div>

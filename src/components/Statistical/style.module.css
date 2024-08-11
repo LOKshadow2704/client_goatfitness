@@ -1,0 +1,25 @@
+/* style.module.css */
+
+.statistical {
+  width: 100%;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+.apexcharts-menu-icon {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.apexcharts-toolbar {
+  font-size: 14px !important;
+}
+
+.apexcharts-toolbar .apexcharts-toolbar-icon {
+  width: 16px !important;
+  height: 16px !important;
+}
+
+.apexcharts-menu-item {
+  font-size: 12px !important;
+}

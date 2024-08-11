@@ -90,10 +90,23 @@ function ProductInfo (){
                 <div className={style.right}>
                     <h1>{product ? product.TenSP: ''}</h1>
 
-                    <span>{product ? product.DonGia :''}</span>
+                    <span> Đơn giá:
+   <span style={{ color: 'red',marginLeft:'2px', fontSize:'16px' }}>
+    {product ? new Intl.NumberFormat('vi-VN').format(product.DonGia) : ''}
+  </span> VNĐ
+</span>
+
+<div className={style.info}>
+  <div dangerouslySetInnerHTML={{ 
+    __html: product 
+      ? '· ' + product.Mota
+          .replace(/(\r\n|\n|\r)/g, '<br>· ') 
+      : '' 
+  }} />
+</div>
 
                     <div className={style.action}>
-
+                    <p> Số lượng </p>
                     <input type="number" min='1' defaultValue="1" ref={quantityInput} />
                         <button className={style['CartBtn-1']} onClick={()=>{
                             AddtoCart(product.IDSanPham);
@@ -106,9 +119,7 @@ function ProductInfo (){
                         <button className={style['CartBtn-2']} onClick={()=>handleClickBuy(product , quantityInput.current.value)}><p className={style['text']}>Mua ngay</p></button>
                         
                     </div>
-                    <div className={style.info}>
-                        <div dangerouslySetInnerHTML={{ __html: product?product.Mota : '' }} />
-                    </div>
+                    
                 </div>
             </div>
             <Footer></Footer>

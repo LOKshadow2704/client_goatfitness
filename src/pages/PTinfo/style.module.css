@@ -10,6 +10,9 @@
     justify-content: center;   
 }
 
+.left img{
+    border-radius: 5px;
+}
 
 
 .right{
@@ -42,6 +45,7 @@
     position: relative;
     z-index: 0;
     overflow: hidden;
+    margin-top: 30px;
 }
 
 .CartBtn:hover{
@@ -74,8 +78,24 @@
 }
 .info{
     display: grid;
+    margin-top: 10px;
+    font-size: 20px;
 }
 
 .describe{
     display: grid;
+    margin-top: 5px;
+}
+.rate{
+    margin-top: 3px;
+}
+.service{
+    margin-top: 3px;
+}
+.contract{
+    margin-top: 3px;
+}
+.rating{
+    margin-top: 10px;
+    font-size: 20px;
 }
