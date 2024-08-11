@@ -19,34 +19,34 @@ function Login(){
         if (result.success) {
             setSuccess(true);
             setMessage("Đăng nhập thành công");
-            if(result.role === "user"){
-                setLocation(true);
-                setLink("http://localhost:3000/");
-            }else if(result.role === "employee"){
-                setLocation(true);
-                setLink("http://localhost:3000/employee");
-            }else if(result.role === "admin"){
-                setLocation(true);
-                setLink("http://localhost:3000/admin");
-            }
+            // if(result.role === "user"){
+            //     setLocation(true);
+            //     setLink("http://localhost:3000/");
+            // }else if(result.role === "employee"){
+            //     setLocation(true);
+            //     setLink("http://localhost:3000/employee");
+            // }else if(result.role === "admin"){
+            //     setLocation(true);
+            //     setLink("http://localhost:3000/admin");
+            // }
         } else {
             setError(true);
             setMessage(result.message);
         }
     };
 
-    if(isLogin){
-        if(user.role === "user"){
-            setLocation(true);
-            setLink("http://localhost:3000/");
-        }else if(user.role === "employee"){
-            setLocation(true);
-            setLink("http://localhost:3000/employee");
-        }else if(user.role === "admin"){
-            setLocation(true);
-            setLink("http://localhost:3000/admin");
-        }
-    }
+    // if(isLogin){
+    //     if(user.role === "user"){
+    //         setLocation(true);
+    //         setLink("http://localhost:3000/");
+    //     }else if(user.role === "employee"){
+    //         setLocation(true);
+    //         setLink("http://localhost:3000/employee");
+    //     }else if(user.role === "admin"){
+    //         setLocation(true);
+    //         setLink("http://localhost:3000/admin");
+    //     }
+    // }
 
     return (
         <div className={style['Wrap']}>
