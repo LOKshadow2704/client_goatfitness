@@ -94,7 +94,7 @@ function Dashboard(){
             </div>
             <div className={style["statistical"]}>
                 
-                <h2><FontAwesomeIcon icon={faIndustry} /> Lượng người tham gia tập</h2>
+                <h1><FontAwesomeIcon icon={faIndustry} />Thống kê lượng người tham gia tập</h1>
                 <Statistical />
             </div>
 
