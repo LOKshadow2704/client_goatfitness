@@ -50,7 +50,7 @@ function UpdateRoleModal({ data, setShowModal }) {
 
             console.log(formData)
 
-            axios.put('http://localhost:88/Backend/admin/update', formData, { headers: headers })
+            axios.put('http://localhost:8080/Backend/admin/update', formData, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);

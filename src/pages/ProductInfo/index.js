@@ -44,7 +44,7 @@ function ProductInfo (){
             },
             body: JSON.stringify(data)
         }
-        fetch("http://localhost:88/Backend/cart/add", option)
+        fetch("http://localhost:8080/Backend/cart/add", option)
         .then(response => {
           if (!response.ok) {
               throw new Error(response.error);
@@ -60,7 +60,7 @@ function ProductInfo (){
           });
       }
     useEffect(() => {
-        fetch(`http://localhost:88/Backend/product?IDSanPham=${productID}`, {
+        fetch(`http://localhost:8080/Backend/product?IDSanPham=${productID}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

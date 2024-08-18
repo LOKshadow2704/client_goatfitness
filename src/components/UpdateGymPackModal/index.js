@@ -71,7 +71,7 @@ function UpdateGymPackModal({ data ,setShowModal}) {
                     'PHPSESSID': findCookie("PHPSESSID")
                 };
                 // Gửi đi
-                axios.put('http://localhost:88/Backend/gympack/update',  cleanData, { headers: headers 
+                axios.put('http://localhost:8080/Backend/gympack/update',  cleanData, { headers: headers 
                 }).then(response => {
                     if(response.status >= 200 && response.status < 300){
                         setSuccess(true);

@@ -39,7 +39,7 @@ function Cart(){
                 'PHPSESSID': findCookie("PHPSESSID")
             }
         }
-        fetch('http://localhost:88/Backend/cart/',option)
+        fetch('http://localhost:8080/Backend/cart/',option)
             .then(
                 response =>{
                     if(!response.ok){
@@ -94,7 +94,7 @@ function Cart(){
             },
             body: JSON.stringify(data)
         }
-        fetch('http://localhost:88/Backend/cart/updateQuanPlus',option)
+        fetch('http://localhost:8080/Backend/cart/updateQuanPlus',option)
             .then(
                 response =>{
                     if(!response.ok){
@@ -137,7 +137,7 @@ function Cart(){
             },
             body: JSON.stringify(data)
         }
-        fetch('http://localhost:88/Backend/cart/updateQuanMinus',option)
+        fetch('http://localhost:8080/Backend/cart/updateQuanMinus',option)
             .then(
                 response =>{
                     if(!response.ok){
@@ -193,7 +193,7 @@ function Cart(){
             },
             body: JSON.stringify(data)
         }
-        fetch('http://localhost:88/Backend/cart/delete',option)
+        fetch('http://localhost:8080/Backend/cart/delete',option)
             .then(
                 response =>{
                     if(!response.ok){

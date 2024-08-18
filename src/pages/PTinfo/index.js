@@ -14,7 +14,7 @@ function PTInfo (){
     const [showModal, setShowModal] = useState(false);
     
     useEffect(() => {
-        fetch(`http://localhost:88/Backend/personalTrainer/Info?IDHLV=${PTID}`, {
+        fetch(`http://localhost:8080/Backend/personalTrainer/Info?IDHLV=${PTID}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'

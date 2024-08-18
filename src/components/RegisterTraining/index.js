@@ -94,7 +94,7 @@ function RegisterTraining({ setShowModal, peronalTrainer }) {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.post('http://localhost:88/Backend/PT/Register', data, { headers: headers })
+            axios.post('http://localhost:8080/Backend/PT/Register', data, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         if (response.data.success) {

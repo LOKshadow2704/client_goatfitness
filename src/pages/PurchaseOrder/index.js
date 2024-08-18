@@ -34,7 +34,7 @@ function PurchaseOrder(){
                         'Authorization': 'Bearer ' + jwt,
                         'PHPSESSID': findCookie("PHPSESSID")
                     };
-                    const response = await axios.get('http://localhost:88/Backend/PurchaseOrder', { headers: headers });
+                    const response = await axios.get('http://localhost:8080/Backend/PurchaseOrder', { headers: headers });
                     if (response.status >= 200 && response.status < 300) {
                         setPurchaseOrders(response.data.orders);
                     } else {
