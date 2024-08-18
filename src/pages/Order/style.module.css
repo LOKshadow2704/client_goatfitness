@@ -175,3 +175,7 @@
 .orderItem table tbody tr :nth-child(2) input{
     width: 35px;
 }
+.thanhtoan{
+    font-size: 18px;
+    margin-top: 15px;
+}

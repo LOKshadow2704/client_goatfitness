@@ -53,7 +53,9 @@
 .startday p, .endday p{
    margin: 5% 10%;
 }
-
+.endday{
+  margin-top: 5px;
+}
 .wrap_content > span{
     justify-content: center;
 }
@@ -141,5 +143,9 @@
   margin-left: 50%;
   margin-bottom: 20px;
   color: red;
+  margin-top: 5px;
+  font-size: 18px;
 }
-  
+.style.wrap_content h2{
+  margin-bottom: 10px;
+}

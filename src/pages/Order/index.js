@@ -9,6 +9,10 @@ import { useLocation } from "react-router-dom";
 import { useAnnouncement } from "../../contexts/Announcement";
 import Loading from "../../components/Loading";
 import { useAuth } from "../../contexts/AuthContext";
+import TextField from '@mui/material/TextField';
+import Select from '@mui/material/Select';
+import MenuItem from '@mui/material/MenuItem';
+import Button from '@mui/material/Button';
 
 function Order() {
     const location = useLocation();
@@ -135,9 +139,18 @@ function Order() {
                         <h1>Thông tin đặt hàng</h1>
                         <div className={style.group_title}>
                             <h1>Địa chỉ</h1>
-                            <input type="text" value={user ? user['DiaChi'] : ''} />
+                            <TextField 
+    label="Địa chỉ" 
+    variant="outlined" 
+    fullWidth 
+    value={user ? user['DiaChi'] : ''} 
+    InputProps={{
+        readOnly: true,
+    }} 
+/>
+
                         </div>
-                        <table>
+                        <table className={style.bang}>
                             <thead>
                                 <tr><th>Sản Phẩm</th><th>Số Lượng</th><th>Đơn Giá</th><th>Thành tiền</th></tr>
                             </thead>
@@ -171,18 +184,29 @@ function Order() {
                         </table>
                     </div>
                     <div className={style.order}>
-                        <h1>Thông tin thanh toán</h1>
-                        <span>Thành tiền: </span> <span>{totalPrice.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</span>
-                        <label htmlFor='payment'>Hình thức thanh toán</label>
-                        <select id="payment" value={selectedPayment} onChange={(e) => setSelectedPayment(e.target.value)}>
-                            <option value="1">Thanh toán khi nhận hàng</option>
-                            <option value="2">Thanh toán trực tuyến</option>
-                        </select>
-                        <button onClick={handleBuy}>
-                            Đặt hàng
-                            <svg viewBox="0 0 576 512"><path d="M512 80c8.8 0 16 7.2 16 16v32H48V96c0-8.8 7.2-16 16-16H512zm16 144V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V224H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24h48c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H248z"></path></svg>
-                        </button>
-                    </div>
+    <h1>Thông tin thanh toán</h1>
+    <span className={style.thanhtoan}>Thành tiền: </span> 
+<span style={{ color: 'red',fontSize:'24px',marginTop:'10px' }}>
+    {totalPrice.toLocaleString('vi', { style: 'currency', currency: 'VND' })}
+</span>
+    
+    <label htmlFor='payment' className={style.thanhtoan}>Hình thức thanh toán:</label>
+    
+    <Select
+        id="payment"
+        value={selectedPayment}
+        onChange={(e) => setSelectedPayment(e.target.value)}
+        fullWidth
+    >
+        <MenuItem value={1}>Thanh toán khi nhận hàng</MenuItem>
+        <MenuItem value={2}>Thanh toán trực tuyến</MenuItem>
+    </Select>
+    
+    <button onClick={handleBuy}>
+        Đặt hàng
+        <svg viewBox="0 0 576 512"><path d="M512 80c8.8 0 16 7.2 16 16v32H48V96c0-8.8 7.2-16 16-16H512zm16 144V416c0 8.8-7.2 16-16 16H64c-8.8 0-16-7.2-16-16V224H528zM64 32C28.7 32 0 60.7 0 96V416c0 35.3 28.7 64 64 64H512c35.3 0 64-28.7 64-64V96c0-35.3-28.7-64-64-64H64zm56 304c-13.3 0-24 10.7-24 24s10.7 24 24 24h48c13.3 0 24-10.7 24-24s-10.7-24-24-24H120zm128 0c-13.3 0-24 10.7-24 24s10.7 24 24 24H360c13.3 0 24-10.7 24-24s-10.7-24-24-24H248z"></path></svg>
+    </button>
+</div>
                 </div>
             )}
             <Footer />
