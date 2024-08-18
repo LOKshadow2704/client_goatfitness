@@ -108,7 +108,7 @@ function Signup() {
             return;
         }
         try {
-            const response = await axios.post('http://localhost:88/Backend/signup', formDataToSend);
+            const response = await axios.post('http://localhost:8080/Backend/signup', formDataToSend);
             if (!response.error) {
                 setSuccess(true);
                 setMessage("Đăng ký thành công");

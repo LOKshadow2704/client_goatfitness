@@ -20,7 +20,7 @@ function RegisterPT({ setShowModal }) {
             desiredRent,
         };
 
-        axios.post('http://localhost:88/Backend/PT/register', data)
+        axios.post('http://localhost:8080/Backend/PT/register', data)
             .then(response => {
                 setIsLoading(false); 
                 setSuccess(true);

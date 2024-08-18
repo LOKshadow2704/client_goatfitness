@@ -20,7 +20,7 @@ function AddProductModal({ setShowModal }) {
     const [loading, setLoading] = useState(false);
 
     useEffect(() => {
-        axios.get('http://localhost:88/Backend/product/get_All_Category')
+        axios.get('http://localhost:8080/Backend/product/get_All_Category')
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
                     setCategory(response.data);
@@ -137,7 +137,7 @@ function AddProductModal({ setShowModal }) {
                 formData.IMG = newlink;
             }
             // Gửi đi
-            axios.post('http://localhost:88/Backend/product/add', { data: formData , SoLuong: soLuong }, { headers: headers })
+            axios.post('http://localhost:8080/Backend/product/add', { data: formData , SoLuong: soLuong }, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);

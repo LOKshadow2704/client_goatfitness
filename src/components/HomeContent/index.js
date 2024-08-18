@@ -18,7 +18,7 @@ function HomeContent() {
       window.location.href = "http://localhost:3000/admin";
     }
     axios
-      .get("http://localhost:88/Backend/HomeContent")
+      .get("http://localhost:8080/Backend/HomeContent")
       .then((response) => {
         setPts(response.data[0]);
         setProducts(response.data[1]);

@@ -11,7 +11,7 @@ function UpdateProductModal({ data ,setShowModal}) {
     const [category , setCategory] = useState();
     const { setError ,setMessage ,setSuccess } = useAnnouncement();
     useEffect(()=>{
-        axios.get('http://localhost:88/Backend/product/get_All_Category', null).then(response => {
+        axios.get('http://localhost:8080/Backend/product/get_All_Category', null).then(response => {
                 if(response.status >= 200 && response.status < 300){
                     setCategory(response.data);
                 }else{
@@ -131,7 +131,7 @@ function UpdateProductModal({ data ,setShowModal}) {
             console.log(data)
 
             // Gửi đi
-            axios.put('http://localhost:88/Backend/product/update',  data, { headers: headers 
+            axios.put('http://localhost:8080/Backend/product/update',  data, { headers: headers 
             }).then(response => {
                 if(response.status >= 200 && response.status < 300){
                     setSuccess(true);
