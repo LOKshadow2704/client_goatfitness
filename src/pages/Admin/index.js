@@ -5,13 +5,13 @@ import { faArrowRightFromBracket, faCircle, faClipboard, faDumbbell, faFolderOpe
 import { useAuth } from "../../contexts/AuthContext";
 import ManagePurchaseOrder from "../../components/ManagePurchaseOrder";
 import ManagePackGym from "../../components/ManagePackGym";
-import Dashboard from "../../components/Dashboard";
+import Dashboard from "../../components/MainLayout";
 import ManageProduct from "../../components/ManegeProduct";
 import AccountSetting from "../AccountSetting";
 import ManageAccount from "../../components/ManageAccount";
 import Announcement from "../../components/Announcement";
 import { useAnnouncement } from "../../contexts/Announcement";
-function Employee(){
+function Admin(){
     const [currentPage, setCurrentPage] = useState('Dashboard');
     const {user , logout } = useAuth();
     const [update , setUpdate] = useState(false);
@@ -56,4 +56,4 @@ function Employee(){
     );
 };
 
-export default Employee;
+export default Admin;

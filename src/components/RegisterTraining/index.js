@@ -69,71 +69,62 @@ function RegisterTraining({ setShowModal, peronalTrainer }) {
     return format(date, "yyyy-MM-dd HH:mm:ss", { locale: vi });
   }
 
-  const handleSubmit = (payment) => {
-    if (!startDate || !endDate) {
-      setError(true);
-      setMessage("Bạn chưa chọn ngày giờ");
-      return;
-    }
-    if (endDate < startDate) {
-      setError(true);
-      setMessage("Ngày giờ kết thúc không thể trước ngày giờ bắt đầu");
-      return;
-    }
-    const findCookie = (name) => {
-      const cookies = document.cookie.split(";");
-      for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith(name + "=")) {
-          return cookie.substring(name.length + 1);
+    const handleSubmit = (payment) => {
+        if (!startDate || !endDate) {
+            setError(true);
+            setMessage("Bạn chưa chọn ngày giờ");
+            return;
         }
-      }
-      return null;
-    };
-    const isLogin = findCookie("jwt");
-    if (isLogin) {
-      const jwt = findCookie("jwt");
-      const data = {
-        IDHLV: peronalTrainer.IDHLV,
-        HinhThucThanhToan: payment,
-        amount: amount,
-        StartDate: formatDate(startDate),
-        EndDate: formatDate(endDate),
-      };
-      const headers = {
-        "Content-Type": "application/json",
-        Authorization: "Bearer " + jwt,
-        PHPSESSID: findCookie("PHPSESSID"),
-      };
-      axios
-        .post("http://localhost:88/Backend/PT/Register", data, {
-          headers: headers,
-        })
-        .then((response) => {
-          if (response.status >= 200 && response.status < 300) {
-            if (response.data.success) {
-              window.location.href = response.data.success;
-            } else {
-              setSuccess(true);
-              setMessage(response.data.message);
-              setLocation(true);
-              setLink("http://localhost:3000/PT");
+        const findCookie = (name) => {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
             }
-          } else {
-            throw new Error("Đặt hàng không thành công!");
-          }
-        })
-        .catch((error) => {
-          setError(true);
-          setMessage(error.response.data.error);
-        });
-    } else {
-      setError(true);
-      setMessage("Vui lòng đăng nhập");
-      setLocation(true);
-      setLink("http://localhost:3000/login");
+            return null;
+        };
+        const isLogin = findCookie("jwt");
+        if (isLogin) {
+            const jwt = findCookie('jwt');
+            const data = {
+                IDHLV: peronalTrainer.IDHLV,
+                HinhThucThanhToan: payment,
+                amount: amount,
+                StartDate: formatDate(startDate),
+                EndDate: formatDate(endDate),
+            }
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + jwt,
+                'PHPSESSID': findCookie("PHPSESSID")
+            };
+            axios.post('http://localhost:88/Backend/PT/Register', data, { headers: headers })
+                .then(response => {
+                    if (response.status >= 200 && response.status < 300) {
+                        if (response.data.success) {
+                            window.location.href = response.data.success;
+                        } else {
+                            setSuccess(true);
+                            setMessage(response.data.message);
+                            setLocation(true);
+                            setLink("http://localhost:3000/PT");
+                        }
+                    } else {
+                        throw new Error("Đặt hàng không thành công!");
+                    }
+                }).catch(error => {
+                    setError(true);
+                    setMessage(error.response.data.error);
+                });
+        } else {
+            setError(true);
+            setMessage("Vui lòng đăng nhập");
+            setLocation(true);
+            setLink("http://localhost:3000/login");
+        }
     }
-  };
 
   const defaultMinEndTime = new Date();
   defaultMinEndTime.setHours(8, 0, 0);

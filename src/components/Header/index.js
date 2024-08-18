@@ -56,7 +56,7 @@ function Header() {
                 'PHPSESSID': findCookie("PHPSESSID")
             }
         }
-        fetch('http://localhost:88/Backend/logout/', option)
+        fetch('http://localhost:8080/Backend/logout/', option)
             .then(response => {
                 if (response.ok) {
                     document.cookie = 'jwt=; Max-Age=-1; path=/;';

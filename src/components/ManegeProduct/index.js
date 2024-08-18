@@ -18,7 +18,7 @@ function ManageProduct({ data }) {
     const { setSuccess, setError, setMessage } = useAnnouncement();
 
     useEffect(() => {
-        fetch('http://localhost:88/Backend/shop/manege/')
+        fetch('http://localhost:8080/Backend/shop/manege/')
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Không thể truy cập');
@@ -77,7 +77,7 @@ function ManageProduct({ data }) {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.delete('http://localhost:88/Backend/product/delete',  {IDSanPham:id}, { headers: headers 
+            axios.delete('http://localhost:8080/Backend/product/delete',  {IDSanPham:id}, { headers: headers 
             }).then(response => {
                 if(response.status >= 200 && response.status < 300){
                     setSuccess(true);

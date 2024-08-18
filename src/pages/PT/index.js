@@ -48,7 +48,7 @@ function PT() {
     }, [location.search, setError, setLink, setLocation, setMessage, setSuccess]);
 
     useEffect(() => {
-        fetch("http://localhost:88/Backend/PT/")
+        fetch("http://localhost:8080/Backend/PT/")
             .then(
                 response => {
                     if (response.ok) {

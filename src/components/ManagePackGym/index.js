@@ -17,7 +17,7 @@ function ManagePackGym() {
     const { setError, setMessage } = useAnnouncement;
 
     useEffect(() => {
-        axios.get('http://localhost:88/Backend/gympack/')
+        axios.get('http://localhost:8080/Backend/gympack/')
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
                     setGymPack(response.data);

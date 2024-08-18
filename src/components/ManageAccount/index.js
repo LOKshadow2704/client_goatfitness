@@ -43,7 +43,7 @@ function ManageAccount({ data }) {
         'Authorization': 'Bearer ' + jwt,
         'PHPSESSID': findCookie("PHPSESSID")
       };
-      axios.get('http://localhost:88/Backend/admin/getAllAccount', { headers: headers })
+      axios.get('http://localhost:8080/Backend/admin/getAllAccount', { headers: headers })
         .then(response => {
           if (response.status >= 200 && response.status < 300) {
             setAccounts(response.data);

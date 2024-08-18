@@ -86,7 +86,7 @@ function Order() {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.post('http://localhost:88/Backend/order', data, { headers: headers })
+            axios.post('http://localhost:8080/Backend/order', data, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         if (response.data) {

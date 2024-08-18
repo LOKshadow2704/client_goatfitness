@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (credentials) => {
         try {
             console.log(credentials)
-            const response = await axios.post('http://localhost:88/Backend/login/', credentials, {
+            const response = await axios.post('http://localhost:8080/Backend/login/', credentials, {
                 withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json',
@@ -40,7 +40,7 @@ export const AuthProvider = ({ children }) => {
                 'PHPSESSID': findCookie("PHPSESSID")
             }
         }
-        fetch('http://localhost:88/Backend/logout/',option)
+        fetch('http://localhost:8080/Backend/logout/',option)
             .then(
                 response=>{
                     if(response.ok){
@@ -87,7 +87,7 @@ export const AuthProvider = ({ children }) => {
                     'PHPSESSID': findCookie("PHPSESSID")
                 }
             }
-            fetch('http://localhost:88/Backend/getAccountInfo', option)
+            fetch('http://localhost:8080/Backend/getAccountInfo', option)
                 .then(response => {
                     if (response.ok) {
                         return response.json();

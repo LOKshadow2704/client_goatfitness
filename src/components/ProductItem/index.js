@@ -36,7 +36,7 @@ function ProductItem({children, current ,  setAddCartCount}){
         },
         body: JSON.stringify(data)
     }
-    fetch("http://localhost:88/Backend/cart/add", option)
+    fetch("http://localhost:8080/Backend/cart/add", option)
     .then(response => {
       if (!response.ok) {
           setError(true);
