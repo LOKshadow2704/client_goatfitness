@@ -3,7 +3,7 @@
     "baseUrl": "src",
     "paths": {
       "@src/*": ["*"],
-      "ui-component/*": ["components/ui-component/*"]
+      "store/*": ["store/*"] // Thêm alias cho store
     }
   },
   "include": ["src"]
