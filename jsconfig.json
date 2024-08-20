@@ -2,8 +2,7 @@
   "compilerOptions": {
     "baseUrl": "src",
     "paths": {
-      "@src/*": ["*"],
-      "store/*": ["store/*"] // Thêm alias cho store
+      "@src/*": ["*"]
     }
   },
   "include": ["src"]
