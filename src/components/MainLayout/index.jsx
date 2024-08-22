@@ -12,12 +12,12 @@ import { CssBaseline, styled, useTheme } from '@mui/material';
 import Header from './Header';
 import Sidebar from './Sidebar';
 import Customization from '../Customization';
-import Breadcrumbs from 'ui-component/extended/Breadcrumbs';
+import Breadcrumbs from 'components/ui-component/extended/Breadcrumbs';
 import { SET_MENU } from 'store/actions';
 import { drawerWidth } from 'store/constant';
 
 // assets
-import { IconChevronRight } from '@src/components/ui-component';
+import { IconChevronRight } from '@tabler/icons-react';
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' && prop !== 'theme' })(({ theme, open }) => ({
   ...theme.typography.mainContent,
@@ -89,7 +89,7 @@ const MainLayout = () => {
       {/* main content */}
       <Main theme={theme} open={leftDrawerOpened}>
         {/* breadcrumb */}
-        <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign />
+        {/* <Breadcrumbs separator={IconChevronRight} navigation={navigation} icon title rightAlign /> */}
         <Outlet />
       </Main>
       <Customization />
