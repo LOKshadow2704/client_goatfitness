@@ -25,9 +25,9 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project imports
-import Google from 'assets/images/icons/social-google.svg';
-import AnimateButton from 'components/ui-component/extended/AnimateButton';
-import { strengthColor, strengthIndicator } from 'components/utils/password-strength';
+import Google from 'src/assets/images/icons/social-google.svg';
+import AnimateButton from 'src/components/ui-component/extended/AnimateButton';
+import { strengthColor, strengthIndicator } from 'src/components/utils/password-strength';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';

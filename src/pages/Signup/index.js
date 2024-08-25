@@ -10,7 +10,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 // project imports
 import AuthWrapper1 from '../Login/AuthWrapper1';
 import AuthCardWrapper from '../Login/AuthCardWrapper';
-import Logo from 'components/ui-component/Logo';
+import Logo from 'src/components/ui-component/Logo';
 import AuthRegister from './AuthRegister';
 
 // assets

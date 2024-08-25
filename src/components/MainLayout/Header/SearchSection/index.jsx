@@ -15,7 +15,7 @@ import Popper from '@mui/material/Popper';
 import PopupState, { bindPopper, bindToggle } from 'material-ui-popup-state';
 
 // project imports
-import Transitions from 'components/ui-component/extended/Transitions';
+import Transitions from 'src/components/ui-component/extended/Transitions';
 
 // assets
 import { IconAdjustmentsHorizontal, IconSearch, IconX } from '@tabler/icons-react';

@@ -1,6 +1,6 @@
 // material-ui
 import { useTheme } from '@mui/material/styles';
-import logo from 'assets/img/logo_ver1.jpg';
+import logo from 'src/assets/img/logo_ver1.jpg';
 
 const Logo = () => {
   const theme = useTheme();

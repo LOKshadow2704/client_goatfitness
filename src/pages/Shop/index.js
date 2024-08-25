@@ -5,7 +5,9 @@ import ProductItem from "../../components/ProductItem";
 import style from "./style.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
-import { Select, MenuItem, InputLabel, FormControl } from "@mui/material"; // Import MUI components
+import { Select, MenuItem, InputLabel, FormControl, Pagination, PaginationItem } from "@mui/material";
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 function Shop() {
     const [products, setProducts] = useState([]);
@@ -14,6 +16,8 @@ function Shop() {
     const [cartCount, setCartCount] = useState(0);
     const [searchQuery, setSearchQuery] = useState('');
     const [sortOrder, setSortOrder] = useState('none');
+    const [page, setPage] = useState(1);
+    const itemsPerPage = 8;
 
     useEffect(() => {
         fetch('http://localhost:8080/Backend/shop')
@@ -55,6 +59,14 @@ function Shop() {
             }
             return 0;
     });
+
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
+    const handleChangePage = (event, value) => {
+        setPage(value);
+    };
+
+    const paginatedProducts = filteredProducts.slice((page - 1) * itemsPerPage, page * itemsPerPage);
 
     return (
         <>
@@ -111,7 +123,7 @@ function Shop() {
                     </div>
                     <div className={style['product']}>
                         <ul>
-                            {filteredProducts.map(value => (
+                            {paginatedProducts.map(value => (
                                 <li key={value.IDSanPham}>
                                     <ProductItem 
                                         children={value} 
@@ -121,6 +133,20 @@ function Shop() {
                                 </li>
                             ))}
                         </ul>
+                    </div>
+                    <div className={style['pagination-container']}>
+                        <Pagination
+                            count={totalPages}
+                            page={page}
+                            onChange={handleChangePage}
+                            renderItem={(item) => (
+                                <PaginationItem
+                                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                    {...item}
+                                />
+                            )}
+                            color="primary"
+                        />
                     </div>
                 </div>
             </div>

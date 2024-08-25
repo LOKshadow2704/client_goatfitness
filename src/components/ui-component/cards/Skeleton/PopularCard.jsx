@@ -5,7 +5,7 @@ import Grid from '@mui/material/Grid';
 import Skeleton from '@mui/material/Skeleton';
 
 // project imports
-import { gridSpacing } from '@src/store/constant';
+import { gridSpacing } from 'src/store/constant';
 
 // ==============================|| SKELETON - POPULAR CARD ||============================== //
 

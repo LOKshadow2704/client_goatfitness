@@ -24,13 +24,13 @@ import * as Yup from 'yup';
 import { Formik } from 'formik';
 
 // project imports
-import AnimateButton from 'components/ui-component/extended/AnimateButton';
+import AnimateButton from 'src/components/ui-component/extended/AnimateButton';
 
 // assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
 
-import Google from 'assets/social-google.svg';
+import Google from 'src/assets/social-google.svg';
 
 // ============================|| FIREBASE - LOGIN ||============================ //
 

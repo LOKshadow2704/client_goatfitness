@@ -1,8 +1,7 @@
 import React, { useCallback, useEffect } from "react";
-import style from "./style.module.css";
 import { useAnnouncement } from "../../contexts/Announcement";
-import { faCircleCheck, faCircleExclamation, faTriangleExclamation } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import Alert from '@mui/material/Alert';
+import Stack from '@mui/material/Stack';
 
 function Announcement() {
     const { error, success, warning, message, setError, setSuccess, setWarning, location, setLocation, link, setLink } = useAnnouncement();
@@ -12,19 +11,6 @@ function Announcement() {
         setSuccess(false);
         setWarning(false);
     }, [setError, setSuccess, setWarning]);
-
-    const handleClickAnnouncement = () => {
-        handleReset();
-        if (location && link) {
-            const newLink = link;
-            setLocation(null);
-            setLink('');
-            window.location.href = newLink;
-        }else if(location && !link){
-            setLocation(null);
-            window.location.reload();
-        }
-    };
 
     useEffect(() => {
         if (error || success || warning) {
@@ -37,40 +23,34 @@ function Announcement() {
                     window.location.href = newLink;
                 }
             }, 3000);
-            
+
             return () => clearTimeout(timeout);
         }
     }, [error, success, warning, handleReset, link, location, setLink, setLocation]);
-    
+
     return (
-        <div className={`${style.Announcement} ${error || success || warning ? style.slideInFromRight : ''}`} onClick={handleClickAnnouncement}>
-            {/* Thông báo lỗi */}
+        <Stack
+            sx={{ position: 'fixed', top: 100, right: 0, width: 350, zIndex: 9999999 }}
+            spacing={2}
+        >
             {error &&                 
-                <span className={style.error}>
-                    <span><FontAwesomeIcon icon={faCircleExclamation} /></span>
-                    <p>Không thành công: </p>
-                    <p>{message}</p>
-                </span>               
+                <Alert severity="error" sx={{ mb: 1 }}>
+                    Không thành công: {message}
+                </Alert>
             }
             
-            {/* Thông báo thành công */}
             {success && 
-                <span className={style.success}>
-                    <span><FontAwesomeIcon icon={faCircleCheck} /></span>
-                    <p>Thành công: </p>
-                    <p>{message}</p>
-                </span>
+                <Alert severity="success" sx={{ mb: 1 }}>
+                    Thành công: {message}
+                </Alert>
             }
 
-            {/* Thông báo Warning */}
             {warning && 
-                <span className={style.warning}>
-                    <span><FontAwesomeIcon icon={faTriangleExclamation} /></span>
-                    <p>Cảnh báo: </p>
-                    <p>{message}</p>
-                </span>
+                <Alert severity="warning" sx={{ mb: 1 }}>
+                    Cảnh báo: {message}
+                </Alert>
             }
-        </div>
+        </Stack>
     );
 }
 

@@ -5,9 +5,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import ButtonBase from '@mui/material/ButtonBase';
 
 // project imports
-import config from 'config';
-import Logo from 'components/ui-component/Logo';
-import { MENU_OPEN } from 'store/actions';
+import config from 'src/config';
+import Logo from 'src/components/ui-component/Logo';
+import { MENU_OPEN } from 'src/store/actions';
 
 // ==============================|| MAIN LOGO ||============================== //
 

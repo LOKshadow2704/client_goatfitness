@@ -15,9 +15,9 @@ import { BrowserView, MobileView } from 'react-device-detect';
 import MenuCard from './MenuCard';
 import MenuList from './MenuList';
 import LogoSection from '../LogoSection';
-import Chip from 'components/ui-component/extended/Chip';
+import Chip from 'src/components/ui-component/extended/Chip';
 
-import { drawerWidth } from 'store/constant';
+import { drawerWidth } from 'src/store/constant';
 
 // ==============================|| SIDEBAR DRAWER ||============================== //
 
@@ -44,7 +44,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
           <MenuList />
           <MenuCard />
           <Stack direction="row" justifyContent="center" sx={{ mb: 2 }}>
-            <Chip label={import.meta.env.VITE_APP_VERSION} disabled chipcolor="secondary" size="small" sx={{ cursor: 'pointer' }} />
+            {/* <Chip label={import.meta.env.VITE_APP_VERSION} disabled chipcolor="secondary" size="small" sx={{ cursor: 'pointer' }} /> */}
           </Stack>
         </PerfectScrollbar>
       </BrowserView>
@@ -53,7 +53,7 @@ const Sidebar = ({ drawerOpen, drawerToggle, window }) => {
           <MenuList />
           <MenuCard />
           <Stack direction="row" justifyContent="center" sx={{ mb: 2 }}>
-            <Chip label={import.meta.env.VITE_APP_VERSION} disabled chipcolor="secondary" size="small" sx={{ cursor: 'pointer' }} />
+            {/* <Chip label={import.meta.env.VITE_APP_VERSION} disabled chipcolor="secondary" size="small" sx={{ cursor: 'pointer' }} /> */}
           </Stack>
         </Box>
       </MobileView>
