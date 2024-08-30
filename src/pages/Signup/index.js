@@ -10,7 +10,7 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 // project imports
 import AuthWrapper1 from '../Login/AuthWrapper1';
 import AuthCardWrapper from '../Login/AuthCardWrapper';
-import Logo from 'src/components/ui-component/Logo';
+import Logo from '../Login/Logo';
 import AuthRegister from './AuthRegister';
 
 // assets
@@ -29,21 +29,21 @@ const Register = () => {
               <AuthCardWrapper>
                 <Grid container spacing={2} alignItems="center" justifyContent="center">
                   <Grid item sx={{ mb: 3 }}>
-                    <Link to="#" aria-label="theme logo">
+                    <Link to="/" aria-label="theme logo">
                       <Logo />
                     </Link>
                   </Grid>
                   <Grid item xs={12}>
                     <Grid container direction={{ xs: 'column-reverse', md: 'row' }} alignItems="center" justifyContent="center">
                       <Grid item>
-                        <Stack alignItems="center" justifyContent="center" spacing={1}>
-                          <Typography color="secondary.main" gutterBottom variant={downMD ? 'h3' : 'h2'}>
+                        {/* <Stack alignItems="center" justifyContent="center" spacing={1}>
+                          <Typography color="secondary.main" gutterBottom variant={downMD ? 'h5' : 'h4'}>
                             Đăng ký
                           </Typography>
                           <Typography variant="caption" fontSize="16px" textAlign={{ xs: 'center', md: 'inherit' }}>
                             Enter your credentials to continue
                           </Typography>
-                        </Stack>
+                        </Stack> */}
                       </Grid>
                     </Grid>
                   </Grid>

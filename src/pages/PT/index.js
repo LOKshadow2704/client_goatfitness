@@ -8,7 +8,9 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useLocation } from "react-router-dom";
 import { useAnnouncement } from "../../contexts/Announcement";
-import { Select, MenuItem, InputLabel, FormControl } from "@mui/material"; // Import MUI components
+import { Select, MenuItem, InputLabel, FormControl, Pagination, PaginationItem } from "@mui/material"; // Import MUI components
+import ArrowBackIcon from '@mui/icons-material/ArrowBack';
+import ArrowForwardIcon from '@mui/icons-material/ArrowForward';
 
 function PT() {
     const location = useLocation();
@@ -21,7 +23,10 @@ function PT() {
     const [showModal, setShowModal] = useState(false);
     const { setError, setMessage, setSuccess, setLocation, setLink } = useAnnouncement();
 
-    //Thông báo
+    // Pagination state
+    const [page, setPage] = useState(1);
+    const itemsPerPage = 4;
+
     useEffect(() => {
         const checkMessage = () => {
             const searchParams = new URLSearchParams(location.search);
@@ -49,19 +54,15 @@ function PT() {
 
     useEffect(() => {
         fetch("http://localhost:8080/Backend/PT/")
-            .then(
-                response => {
-                    if (response.ok) {
-                        return response.json();
-                    }
+            .then(response => {
+                if (response.ok) {
+                    return response.json();
                 }
-            ).then(
-                data => {
-                    setPtrainer(data)
-                    const uniqueCategories = [...new Set(data.map(product => product.DichVu))];
-                    setCategories(uniqueCategories);
-                }
-            ).catch(error => {
+            }).then(data => {
+                setPtrainer(data);
+                const uniqueCategories = [...new Set(data.map(product => product.DichVu))];
+                setCategories(uniqueCategories);
+            }).catch(error => {
                 setError(true);
                 setMessage(error.response.data.error);
             });
@@ -88,6 +89,16 @@ function PT() {
             }
             return 0;
         });
+
+    // Tính toán số trang dựa trên danh sách đã lọc
+    const totalPages = Math.ceil(filteredProducts.length / itemsPerPage);
+
+    // Chia trang cho danh sách đã lọc
+    const paginatedProducts = filteredProducts.slice((page - 1) * itemsPerPage, page * itemsPerPage);
+
+    const handleChangePage = (event, value) => {
+        setPage(value);
+    };
 
     return (
         <>
@@ -149,7 +160,7 @@ function PT() {
                     </div>
                     <div className={style['product']}>
                         <ul>
-                            {filteredProducts && filteredProducts.map(value => (
+                            {paginatedProducts && paginatedProducts.map(value => (
                                 <li key={value.IDHLV}>
                                     <PTitem
                                         children={value}
@@ -158,12 +169,28 @@ function PT() {
                             ))}
                         </ul>
                     </div>
+
+                    {/* Thêm thành phần Pagination */}
+                    <div className={style['pagination-container']}>
+                        <Pagination
+                            count={totalPages}
+                            page={page}
+                            onChange={handleChangePage}
+                            renderItem={(item) => (
+                                <PaginationItem
+                                    slots={{ previous: ArrowBackIcon, next: ArrowForwardIcon }}
+                                    {...item}
+                                />
+                            )}
+                            color="primary"
+                        />
+                    </div>
                 </div>
             </div>
             <Footer />
             {showModal && <RegisterPT setShowModal={setShowModal} />}
         </>
     );
-};
+}
 
 export default PT;

@@ -108,7 +108,7 @@ const AuthRegister = ({ ...others }) => {
               disableRipple
               disabled
             >
-              OR
+              Hoặc
             </Button>
             <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
           </Box>
@@ -127,8 +127,8 @@ const AuthRegister = ({ ...others }) => {
           submit: null
         }}
         validationSchema={Yup.object().shape({
-          email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-          password: Yup.string().max(255).required('Password is required')
+          email: Yup.string().email('Phải là email hợp lệ').max(255).required('Email là bắt buộc'),
+          password: Yup.string().max(255).required('Mật khẩu là bắt buộc')
         })}
       >
         {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
@@ -137,7 +137,7 @@ const AuthRegister = ({ ...others }) => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
-                  label="First Name"
+                  label="Họ"
                   margin="normal"
                   name="fname"
                   type="text"
@@ -148,7 +148,7 @@ const AuthRegister = ({ ...others }) => {
               <Grid item xs={12} sm={6}>
                 <TextField
                   fullWidth
-                  label="Last Name"
+                  label="Tên"
                   margin="normal"
                   name="lname"
                   type="text"
@@ -174,6 +174,23 @@ const AuthRegister = ({ ...others }) => {
                 </FormHelperText>
               )}
             </FormControl>
+            {/* <FormControl fullWidth error={Boolean(touched.phone && errors.phone)} sx={{ ...theme.typography.customInput,marginTop:'10px' }}>
+              <InputLabel htmlFor="outlined-adornment-phone-register">Số điện thoại</InputLabel>
+              <OutlinedInput
+                id="outlined-adornment-phone-register"
+                type="phone"
+                value={values.phone}
+                name="phone"
+                onBlur={handleBlur}
+                onChange={handleChange}
+                inputProps={{}}
+              />
+              {touched.phone && errors.phone && (
+                <FormHelperText error id="standard-weight-helper-text--register">
+                  {errors.phone}
+                </FormHelperText>
+              )}
+            </FormControl> */}
 
             <FormControl fullWidth error={Boolean(touched.password && errors.password)} sx={{ ...theme.typography.customInput, marginTop:'10px' }}>
               <InputLabel htmlFor="outlined-adornment-password-register">Mật khẩu</InputLabel>

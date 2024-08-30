@@ -6,7 +6,7 @@ const Logo = () => {
   const theme = useTheme();
 
   return (
-    <img src={logo} alt="GOAT GYM" width="150" height="auto" />
+    <img src={logo} alt="GOAT GYM" width="150" height="auto"/>
   );
 };
 

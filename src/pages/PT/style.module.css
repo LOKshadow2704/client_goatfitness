@@ -1,6 +1,6 @@
 .container {
     padding-top: 10%;
-    margin-bottom: 150px;
+    margin-bottom: 50px;
 
 }
 
@@ -19,6 +19,7 @@
 .action {
     width: 100%;
     height: 80px;
+    margin-top: 20px;
 }
 
 .action2 {
@@ -176,6 +177,11 @@
     background-position: 0 0;
   }
 }
-
+.pagination-container {
+  display: flex;
+  justify-content: flex-end; /* Đặt các phần tử phân trang ở phía bên phải */
+  margin-top: 40px;
+  margin-right: 40px;
+}
 
   

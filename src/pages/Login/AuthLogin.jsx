@@ -1,150 +1,124 @@
-import { useState } from 'react';
-import { useSelector } from 'react-redux';
-
-// material-ui
+import React, { useState } from 'react';
 import { useTheme } from '@mui/material/styles';
 import useMediaQuery from '@mui/material/useMediaQuery';
-import Box from '@mui/material/Box';
-import Button from '@mui/material/Button';
-import Checkbox from '@mui/material/Checkbox';
-import Divider from '@mui/material/Divider';
-import FormControl from '@mui/material/FormControl';
-import FormControlLabel from '@mui/material/FormControlLabel';
-import FormHelperText from '@mui/material/FormHelperText';
-import Grid from '@mui/material/Grid';
-import IconButton from '@mui/material/IconButton';
-import InputAdornment from '@mui/material/InputAdornment';
-import InputLabel from '@mui/material/InputLabel';
-import OutlinedInput from '@mui/material/OutlinedInput';
-import Typography from '@mui/material/Typography';
-import Stack from '@mui/material/Stack';
-
-// third party
-import * as Yup from 'yup';
+import { Box, Button, Checkbox, Divider, FormControl, FormControlLabel, FormHelperText, Grid, IconButton, InputAdornment, InputLabel, OutlinedInput, Typography, Stack } from '@mui/material';
 import { Formik } from 'formik';
-
-// project imports
+import * as Yup from 'yup';
 import AnimateButton from 'src/components/ui-component/extended/AnimateButton';
-
-// assets
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
-
 import Google from 'src/assets/social-google.svg';
+import { useNavigate } from 'react-router-dom'; // Import useNavigate
+import axios from 'axios'; // Import axios
 
-// ============================|| FIREBASE - LOGIN ||============================ //
-
-const AuthLogin = ({ ...others }) => {
+const AuthLogin = ({ onSubmit, ...others }) => {
   const theme = useTheme();
   const matchDownSM = useMediaQuery(theme.breakpoints.down('md'));
-  const customization = useSelector((state) => state.customization);
   const [checked, setChecked] = useState(true);
-
-  const googleHandler = async () => {
-    console.error('Login');
-  };
-
   const [showPassword, setShowPassword] = useState(false);
-  const handleClickShowPassword = () => {
-    setShowPassword(!showPassword);
-  };
+  const navigate = useNavigate(); // Initialize useNavigate
 
-  const handleMouseDownPassword = (event) => {
-    event.preventDefault();
+  const handleClickShowPassword = () => setShowPassword(!showPassword);
+  const handleMouseDownPassword = (event) => event.preventDefault();
+
+  const handleFormSubmit = async (values, { setSubmitting, setErrors }) => {
+    try {
+      // Replace with your login API endpoint
+      const response = await axios.post('http://localhost:8080/Backend/login/', {
+        username: values.username,
+        password: values.password,
+      });
+
+      const { role } = response.data; // Assuming response contains user role
+
+      // Determine the redirect path based on the user role
+      if (role === 'admin') {
+        navigate('/admin'); // Redirect to admin route
+      } else if (role === 'employee') {
+        navigate('/employee'); // Redirect to employee route
+      } else {
+        navigate('/Order'); // Redirect to default private route
+      }
+    } catch (error) {
+      setErrors({ submit: 'Đăng nhập không thành công.' });
+    } finally {
+      setSubmitting(false);
+    }
   };
 
   return (
-    <>
-      <Grid container direction="column" justifyContent="center" spacing={2}>
-        <Grid item xs={12}>
-          <AnimateButton>
-            <Button
-              disableElevation
-              fullWidth
-              onClick={googleHandler}
-              size="large"
-              variant="outlined"
-              sx={{
-                color: 'grey.700',
-                backgroundColor: theme.palette.grey[50],
-                borderColor: theme.palette.grey[100]
-              }}
-            >
-              <Box sx={{ mr: { xs: 1, sm: 2, width: 20 } }}>
-                <img src={Google} alt="google" width={16} height={16} style={{ marginRight: matchDownSM ? 8 : 16 }} />
+    <Formik
+      initialValues={{
+        username: '',
+        password: '',
+        submit: null
+      }}
+      validationSchema={Yup.object().shape({
+        username: Yup.string().max(255).required('Tên đăng nhập là bắt buộc'),
+        password: Yup.string().max(255).required('Mật khẩu là bắt buộc')
+      })}
+      onSubmit={handleFormSubmit}
+    >
+      {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
+        <form noValidate onSubmit={handleSubmit} {...others}>
+          <Grid container direction="column" justifyContent="center" spacing={2}>
+            <Grid item xs={12}>
+              <AnimateButton>
+                <Button
+                  disableElevation
+                  fullWidth
+                  onClick={() => console.error('Login')}
+                  size="large"
+                  variant="outlined"
+                  sx={{ color: 'grey.700', backgroundColor: theme.palette.grey[50], borderColor: theme.palette.grey[100] }}
+                >
+                  <Box sx={{ mr: { xs: 1, sm: 2, width: 20 } }}>
+                    <img src={Google} alt="google" width={16} height={16} style={{ marginRight: matchDownSM ? 8 : 16 }} />
+                  </Box>
+                  Đăng nhập bằng Google
+                </Button>
+              </AnimateButton>
+            </Grid>
+            <Grid item xs={12}>
+              <Box sx={{ alignItems: 'center', display: 'flex' }}>
+                <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
+                <Button
+                  variant="outlined"
+                  sx={{
+                    cursor: 'unset',
+                    m: 2,
+                    py: 0.5,
+                    px: 7,
+                    borderColor: `${theme.palette.grey[100]} !important`,
+                    color: `${theme.palette.grey[900]}!important`,
+                    fontWeight: 500,
+                    borderRadius: `${theme.shape.borderRadius}px`
+                  }}
+                  disableRipple
+                  disabled
+                >
+                  Hoặc
+                </Button>
+                <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
               </Box>
-              Đăng nhập bằng Google
-            </Button>
-          </AnimateButton>
-        </Grid>
-        <Grid item xs={12}>
-          <Box
-            sx={{
-              alignItems: 'center',
-              display: 'flex'
-            }}
-          >
-            <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
-
-            <Button
-              variant="outlined"
-              sx={{
-                cursor: 'unset',
-                m: 2,
-                py: 0.5,
-                px: 7,
-                borderColor: `${theme.palette.grey[100]} !important`,
-                color: `${theme.palette.grey[900]}!important`,
-                fontWeight: 500,
-                borderRadius: `${customization.borderRadius}px`
-              }}
-              disableRipple
-              disabled
-            >
-              Hoặc
-            </Button>
-
-            <Divider sx={{ flexGrow: 1 }} orientation="horizontal" />
-          </Box>
-        </Grid>
-        {/* <Grid item xs={12} container alignItems="center" justifyContent="center">
-          <Box sx={{ mb: 2 }}>
-            <Typography variant="subtitle1">Đăng nhập bằng địa chỉ Email</Typography>
-          </Box>
-        </Grid> */}
-      </Grid>
-      <Formik
-        initialValues={{
-          email: '',
-          password: '',
-          submit: null
-        }}
-        validationSchema={Yup.object().shape({
-          email: Yup.string().email('Must be a valid email').max(255).required('Email is required'),
-          password: Yup.string().max(255).required('Password is required')
-        })}
-      >
-        {({ errors, handleBlur, handleChange, handleSubmit, isSubmitting, touched, values }) => (
-          <form noValidate onSubmit={handleSubmit} {...others}>
-            <FormControl fullWidth error={Boolean(touched.email && errors.email)} sx={{ ...theme.typography.customInput, marginBottom: '25px'  }}>
-              <InputLabel htmlFor="outlined-adornment-email-login">Địa chỉ email / Tên đăng nhập</InputLabel>
+            </Grid>
+            <FormControl fullWidth error={Boolean(touched.username && errors.username)} sx={{ ...theme.typography.customInput, marginBottom: '25px' }}>
+              <InputLabel htmlFor="outlined-adornment-username-login">Tên đăng nhập</InputLabel>
               <OutlinedInput
-                id="outlined-adornment-email-login"
-                type="email"
-                value={values.email}
-                name="email"
+                id="outlined-adornment-username-login"
+                type="text"
+                value={values.username}
+                name="username"
                 onBlur={handleBlur}
                 onChange={handleChange}
-                label="Email Address / Username"
-                inputProps={{}}
+                label="Tên đăng nhập"
               />
-              {touched.email && errors.email && (
-                <FormHelperText error id="standard-weight-helper-text-email-login">
-                  {errors.email}
+              {touched.username && errors.username && (
+                <FormHelperText error id="standard-weight-helper-text-username-login">
+                  {errors.username}
                 </FormHelperText>
               )}
             </FormControl>
-
             <FormControl fullWidth error={Boolean(touched.password && errors.password)} sx={{ ...theme.typography.customInput }}>
               <InputLabel htmlFor="outlined-adornment-password-login">Mật khẩu</InputLabel>
               <OutlinedInput
@@ -167,8 +141,7 @@ const AuthLogin = ({ ...others }) => {
                     </IconButton>
                   </InputAdornment>
                 }
-                label="Password"
-                inputProps={{}}
+                label="Mật khẩu"
               />
               {touched.password && errors.password && (
                 <FormHelperText error id="standard-weight-helper-text-password-login">
@@ -192,18 +165,25 @@ const AuthLogin = ({ ...others }) => {
                 <FormHelperText error>{errors.submit}</FormHelperText>
               </Box>
             )}
-
             <Box sx={{ mt: 2 }}>
               <AnimateButton>
-                <Button disableElevation disabled={isSubmitting} fullWidth size="large" type="submit" variant="contained" color="secondary">
+                <Button
+                  disableElevation
+                  fullWidth
+                  type="submit"
+                  size="large"
+                  variant="contained"
+                  color="primary"
+                  disabled={isSubmitting}
+                >
                   Đăng nhập
                 </Button>
               </AnimateButton>
             </Box>
-          </form>
-        )}
-      </Formik>
-    </>
+          </Grid>
+        </form>
+      )}
+    </Formik>
   );
 };
 
