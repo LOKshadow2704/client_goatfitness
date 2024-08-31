@@ -13,7 +13,6 @@ import Order from "../pages/Order";
 import AccountSetting from "../pages/AccountSetting";
 import PurchaseOrder from "../pages/PurchaseOrder";
 import RegisterPT from "../pages/RegisterPT";
-import Dashboard from "src/components/Dashboard";
 
 
 // Route public cho nhóm người dùng

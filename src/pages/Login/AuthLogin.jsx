@@ -23,28 +23,30 @@ const AuthLogin = ({ onSubmit, ...others }) => {
 
   const handleFormSubmit = async (values, { setSubmitting, setErrors }) => {
     try {
-      // Replace with your login API endpoint
-      const response = await axios.post('http://localhost:8080/Backend/login/', {
-        username: values.username,
-        password: values.password,
-      });
+        // Gửi request đăng nhập tới API
+        const response = await axios.post('http://localhost:8080/Backend/login/', {
+            username: values.username,
+            password: values.password,
+        });
 
-      const { role } = response.data; // Assuming response contains user role
+        // Lấy dữ liệu từ phản hồi API
+        const role = response.data.user[0].TenVaiTro; // Lấy đúng 'TenVaiTro'
 
-      // Determine the redirect path based on the user role
-      if (role === 'admin') {
-        navigate('/admin'); // Redirect to admin route
-      } else if (role === 'employee') {
-        navigate('/employee'); // Redirect to employee route
-      } else {
-        navigate('/Order'); // Redirect to default private route
-      }
+        // Chuyển hướng dựa trên vai trò của người dùng
+        if (role === 'admin') {
+            navigate('/admin'); // Redirect to admin route
+        } else if (role === 'employee') {
+            navigate('/employee'); // Redirect to employee route
+        } else {
+            navigate('/'); // Redirect to default private route
+        }
     } catch (error) {
-      setErrors({ submit: 'Đăng nhập không thành công.' });
+        setErrors({ submit: 'Sai tên đăng nhập hoặc mật khẩu.' });
     } finally {
-      setSubmitting(false);
+        setSubmitting(false);
     }
-  };
+};
+
 
   return (
     <Formik
