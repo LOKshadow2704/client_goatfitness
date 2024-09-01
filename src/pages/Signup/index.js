@@ -3,9 +3,9 @@ import { Link } from 'react-router-dom';
 // material-ui
 import Divider from '@mui/material/Divider';
 import Grid from '@mui/material/Grid';
-import Stack from '@mui/material/Stack';
+// import Stack from '@mui/material/Stack';
 import Typography from '@mui/material/Typography';
-import useMediaQuery from '@mui/material/useMediaQuery';
+// import useMediaQuery from '@mui/material/useMediaQuery';
 
 // project imports
 import AuthWrapper1 from '../Login/AuthWrapper1';
@@ -18,7 +18,7 @@ import AuthRegister from './AuthRegister';
 // ===============================|| AUTH3 - REGISTER ||=============================== //
 
 const Register = () => {
-  const downMD = useMediaQuery((theme) => theme.breakpoints.down('md'));
+  // const downMD = useMediaQuery((theme) => theme.breakpoints.down('md'));
 
   return (
     <AuthWrapper1>
@@ -33,20 +33,21 @@ const Register = () => {
                       <Logo />
                     </Link>
                   </Grid>
-                  <Grid item xs={12}>
+                  {/* <Grid item xs={12}>
                     <Grid container direction={{ xs: 'column-reverse', md: 'row' }} alignItems="center" justifyContent="center">
                       <Grid item>
-                        {/* <Stack alignItems="center" justifyContent="center" spacing={1}>
+                        
+                        <Stack alignItems="center" justifyContent="center" spacing={1}>
                           <Typography color="secondary.main" gutterBottom variant={downMD ? 'h5' : 'h4'}>
                             Đăng ký
                           </Typography>
                           <Typography variant="caption" fontSize="16px" textAlign={{ xs: 'center', md: 'inherit' }}>
                             Enter your credentials to continue
                           </Typography>
-                        </Stack> */}
+                        </Stack>
                       </Grid>
                     </Grid>
-                  </Grid>
+                  </Grid> */}
                   <Grid item xs={12}>
                     <AuthRegister />
                   </Grid>
