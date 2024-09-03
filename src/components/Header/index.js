@@ -9,6 +9,8 @@ import UserPackage from '../UserPackage';
 import { useAnnouncement } from '../../contexts/Announcement';
 import Announcement from '../../components/Announcement';
 import style from './style.module.css';
+import { useNavigate } from 'react-router-dom';
+
 
 function Header() {
     const [showModal, setShowModal] = useState(false);
@@ -17,6 +19,7 @@ function Header() {
     const { isLogin, user } = useAuth();
     const { error, success, warning, setError, setSuccess, setMessage, setLocation } = useAnnouncement();
     const location = useLocation();
+    const navigate = useNavigate(); 
 
     useEffect(() => {
         // Handle announcements (if needed)
@@ -48,33 +51,50 @@ function Header() {
 
     function Logout() {
         const jwt = findCookie('jwt');
+        const phpSessionId = findCookie('PHPSESSID');
+
+        if (!jwt || !phpSessionId) {
+            console.error("Không tìm thấy thông tin đăng nhập.");
+            setError(true);
+            setMessage("Đăng xuất thất bại. Vui lòng thử lại.");
+            return;
+        }
+
         const option = {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
                 'Authorization': 'Bearer ' + jwt,
-                'PHPSESSID': findCookie("PHPSESSID")
+                'PHPSESSID': phpSessionId
             }
-        }
+        };
+
         fetch('http://localhost:8080/Backend/logout/', option)
             .then(response => {
-                if (response.ok) {
-                    document.cookie = 'jwt=; Max-Age=-1; path=/;';
-                    document.cookie = 'PHPSESSID=; Max-Age=-1; path=/;';
-                    return response.json();
-                } else {
-                    throw new Error(response.error);
+                if (!response.ok) {
+                    throw new Error('Đăng xuất thất bại. Server trả về lỗi.');
                 }
+                return response.json();
             })
             .then(data => {
+                // Đăng xuất thành công
+                document.cookie = 'jwt=; Max-Age=-1; path=/;';
+                document.cookie = 'PHPSESSID=; Max-Age=-1; path=/;';
+
                 setSuccess(true);
-                setMessage(data.message);
+                setMessage(data.message || 'Đăng xuất thành công');
                 setLocation(true);
+
+                // Điều hướng về trang login
+                navigate('/login');  // Thêm dòng này
             })
             .catch(error => {
                 console.error(error);
+                setError(true);
+                setMessage("Đăng xuất thất bại. Vui lòng thử lại.");
             });
     }
+
 
     return (
         <header className={style.header}>

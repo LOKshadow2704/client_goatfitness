@@ -10,31 +10,31 @@ import AuthWrapper1 from './AuthWrapper1';
 import AuthCardWrapper from './AuthCardWrapper';
 import AuthLogin from './AuthLogin';
 import Logo from './Logo';
-import { useAuth } from "src/contexts/AuthContext";
-import { useState } from 'react';
-import { useAnnouncement } from 'src/contexts/Announcement';
+// import { useAuth } from "src/contexts/AuthContext";
+// import { useState } from 'react';
+// import { useAnnouncement } from 'src/contexts/Announcement';
 
 
 // ================================|| AUTH3 - LOGIN ||================================ //
 
 const Login = () => {
-  const { isLogin, login, user } = useAuth();
-  const [username, setUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const { setError ,setMessage ,setSuccess } = useAnnouncement();
+  // const { isLogin, login, user } = useAuth();
+  // const [username, setUsername] = useState('');
+  // const [password, setPassword] = useState('');
+  // const { setError ,setMessage ,setSuccess } = useAnnouncement();
 
-  const handleSubmit = async (e) => {
-    e.preventDefault(); // Chặn gửi dữ liệu mặc định, hạn chế gửi yêu cầu không cần thiết
-    const result = await login({ username, password });
-    console.log(result)
-    if (result.success) {
-      setSuccess(true);
-      setMessage("Đăng nhập thành công");
-    } else {
-      setError(true);
-      setMessage(result.message);
-    }
-  };
+  // const handleSubmit = async (e) => {
+  //   e.preventDefault(); // Chặn gửi dữ liệu mặc định, hạn chế gửi yêu cầu không cần thiết
+  //   const result = await login({ username, password });
+  //   console.log(result)
+  //   if (result.success) {
+  //     setSuccess(true);
+  //     setMessage("Đăng nhập thành công");
+  //   } else {
+  //     setError(true);
+  //     setMessage(result.message);
+  //   }
+  // };
 
   return (
     <AuthWrapper1>

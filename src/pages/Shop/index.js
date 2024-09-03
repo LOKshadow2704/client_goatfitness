@@ -88,38 +88,66 @@ function Shop() {
                             />
                         </div>
                         <div className={style.action2}>
-                            <FormControl fullWidth>
-                                <InputLabel id="product_category_label">Danh mục sản phẩm</InputLabel>
-                                <Select
-                                    labelId="product_category_label"
-                                    id="product_category"
-                                    value={productsByCategory}
-                                    label="Danh mục sản phẩm"
-                                    onChange={(e) => setProductsByCategory(e.target.value)}
-                                >
-                                    <MenuItem value="Tất cả">Tất cả</MenuItem>
-                                    {categories.map((value, index) => (
-                                        <MenuItem key={index} value={value}>{value}</MenuItem>
-                                    ))}
-                                </Select>
-                            </FormControl>
-                        </div>
-                        <div className={style.action3}>
-                            <FormControl fullWidth>
-                                <InputLabel id="sort_label">Sắp xếp theo giá</InputLabel>
-                                <Select
-                                    labelId="sort_label"
-                                    id="sort"
-                                    value={sortOrder}
-                                    label="Sắp xếp theo giá"
-                                    onChange={handleSort}
-                                >
-                                    <MenuItem value="none">Không sắp xếp</MenuItem>
-                                    <MenuItem value="asc">Tăng dần</MenuItem>
-                                    <MenuItem value="desc">Giảm dần</MenuItem>
-                                </Select>
-                            </FormControl>
-                        </div>
+  <FormControl
+    fullWidth
+    sx={{
+      width: "200px",  
+      height: "50px",   
+      marginTop: "10px",  
+    }}
+  >
+    <InputLabel id="product_category_label">Danh mục sản phẩm</InputLabel>
+    <Select
+      labelId="product_category_label"
+      id="product_category"
+      value={productsByCategory}
+      label="Danh mục sản phẩm"
+      onChange={(e) => setProductsByCategory(e.target.value)}
+      sx={{
+        height: "50px",  
+        width: "200px",  
+        fontSize: "14px",  
+        borderRadius: "8px",  
+      }}
+    >
+      <MenuItem value="Tất cả">Tất cả</MenuItem>
+      {categories.map((value, index) => (
+        <MenuItem key={index} value={value}>{value}</MenuItem>
+      ))}
+    </Select>
+  </FormControl>
+</div>
+
+<div className={style.action3}>
+  <FormControl
+    fullWidth
+    sx={{
+      width: "200px",  
+      height: "50px",   
+      marginTop: "10px",  
+    }}
+  >
+    <InputLabel id="sort_label">Sắp xếp theo giá</InputLabel>
+    <Select
+      labelId="sort_label"
+      id="sort"
+      value={sortOrder}
+      label="Sắp xếp theo giá"
+      onChange={handleSort}
+      sx={{
+        height: "50px",  
+        width: "200px",  
+        fontSize: "14px",  
+        borderRadius: "8px",  
+      }}
+    >
+      <MenuItem value="none">Không sắp xếp</MenuItem>
+      <MenuItem value="asc">Tăng dần</MenuItem>
+      <MenuItem value="desc">Giảm dần</MenuItem>
+    </Select>
+  </FormControl>
+</div>
+
                     </div>
                     <div className={style['product']}>
                         <ul>
