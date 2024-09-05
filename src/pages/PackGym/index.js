@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCircleCheck } from "@fortawesome/free-solid-svg-icons";
 import { useLocation } from "react-router-dom";
 import { useAnnouncement } from "../../contexts/Announcement";
+import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 
 function GymPack() {
     const [categories, setCategories] = useState();
@@ -186,24 +187,37 @@ function GymPack() {
                     <img alt="" src="https://i.imgur.com/8f617SD.jpeg" width="80%" />
                 </div>
 
-
+                {/* Phần bảng được chuyển sang MUI */}
                 <div className={style.info}>
-                    <table>
-                        <thead>
-                            <tr><th></th><th>Classic</th><th>Royal</th></tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>Không giới hạn thời gian luyện tập</td><td></td><td><FontAwesomeIcon icon={faCircleCheck} /></td>
-                            </tr>
-                            <tr>
-                                <td>Tự do tập luyện tại tất cả câu lạc bộ trong hệ thống GOAT Fitness</td><td><FontAwesomeIcon icon={faCircleCheck} /></td><td><FontAwesomeIcon icon={faCircleCheck} /></td>
-                            </tr>
-                            <tr>
-                                <td>Nước uống miễn phí</td><td><FontAwesomeIcon icon={faCircleCheck} /></td><td><FontAwesomeIcon icon={faCircleCheck} /></td>
-                            </tr>
-                        </tbody>
-                    </table>
+                    <h3>Thông tin chi tiết các gói tập</h3>
+                    <TableContainer component={Paper} sx={{ border: 'none',width:'1500px',height:'250px',paddingTop:'40px' }}>
+                        <Table>
+                            <TableHead>
+                                <TableRow>
+                                    <TableCell></TableCell>
+                                    <TableCell>Classic</TableCell>
+                                    <TableCell>Royal</TableCell>
+                                </TableRow>
+                            </TableHead>
+                            <TableBody>
+                                <TableRow>
+                                    <TableCell>Không giới hạn thời gian luyện tập</TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} /></TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Tự do tập luyện tại tất cả câu lạc bộ trong hệ thống GOAT Fitness</TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} /></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} /></TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Nước uống miễn phí</TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} /></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} /></TableCell>
+                                </TableRow>
+                            </TableBody>
+                        </Table>
+                    </TableContainer>
                 </div>
             </div>
             <Footer />
