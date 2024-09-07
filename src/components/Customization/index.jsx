@@ -19,7 +19,7 @@ import FormControlLabel from '@mui/material/FormControlLabel';
 import PerfectScrollbar from 'react-perfect-scrollbar';
 
 // project imports
-import SubCard from "@src/components/ui-component/cards/SubCard";
+import SubCard from "@src";
 import AnimateButton from 'components/ui-component/extended/AnimateButton';
 import { SET_BORDER_RADIUS, SET_FONT_FAMILY } from 'store/actions';
 import { gridSpacing } from 'store/constant';
