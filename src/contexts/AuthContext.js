@@ -73,15 +73,12 @@ export const AuthProvider = ({ children }) => {
 
     useEffect(() => {
         const jwt = findCookie('jwt');
-        if(!user){
-            if (jwt) {
-                setIsLogin(true);               
-                fetchUserInfo();
-            }
+        if (jwt && !user) {
+            setIsLogin(true);
+            fetchUserInfo();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
-
+    
     const fetchUserInfo = () => {
         const jwt = findCookie('jwt');
         if (jwt) {
