@@ -1,4 +1,3 @@
-import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
@@ -85,8 +84,6 @@ const MainLayout = () => {
 
       {/* main content */}
       <Main theme={theme} open={leftDrawerOpened}>
-        {/* breadcrumb */}
-        <Outlet />
       </Main>
       <Customization />
     </Box>
