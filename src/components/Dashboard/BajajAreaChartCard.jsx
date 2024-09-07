@@ -26,7 +26,6 @@ const BajajAreaChartCard = () => {
   React.useEffect(() => {
     const newSupportChart = {
       ...chartData.options,
-      colors: [orangeDark],
       tooltip: { theme: 'light' }
     };
     ApexCharts.exec(`support-chart`, 'updateOptions', newSupportChart);

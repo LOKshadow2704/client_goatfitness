@@ -13,6 +13,7 @@ import Order from "../pages/Order";
 import AccountSetting from "../pages/AccountSetting";
 import PurchaseOrder from "../pages/PurchaseOrder";
 import RegisterPT from "../pages/RegisterPT";
+import Dashboard from "../components/Dashboard";
 
 
 // Route public cho nhóm người dùng
@@ -39,6 +40,7 @@ const PrivateRoutes =[
 // Route riêng tư cho admin
 const AdminRoutes = [
     {path: '/admin', component: Admin , allowedRoles: ['admin'] ,isLogin : true},
+    {path: '/dashboard', component: Dashboard , allowedRoles: ['admin'] ,isLogin : true},
 ];
 
 // Route riêng tư cho nhân viên
