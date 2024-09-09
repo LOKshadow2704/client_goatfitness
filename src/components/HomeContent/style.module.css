@@ -100,6 +100,10 @@
 .wrap-content p {
     font-size: 15px;
     text-align: -webkit-match-parent;
+    text-align: justify;
+    line-height: 1.5;
+    padding-left: 20px;
+    padding-right: 20px;
 }
 
 .container-item-3 .wrap-trip .trip .wrap-content {
