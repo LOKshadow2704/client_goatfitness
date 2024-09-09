@@ -13,6 +13,8 @@ import Sidebar from './Sidebar';
 import Customization from '../Customization';
 import { SET_MENU } from 'src/store/actions';
 import { drawerWidth } from 'src/store/constant';
+import { Outlet } from 'react-router-dom';
+import Dashboard from '../Dashboard';
 
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' && prop !== 'theme' })(({ theme, open }) => ({
@@ -84,6 +86,8 @@ const MainLayout = () => {
 
       {/* main content */}
       <Main theme={theme} open={leftDrawerOpened}>
+        <Dashboard />
+        {/* <Outlet /> */}
       </Main>
       <Customization />
     </Box>

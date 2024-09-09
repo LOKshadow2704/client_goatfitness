@@ -1,8 +1,8 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Tabs, Tab } from '@mui/material';
 import { Link, useLocation } from 'react-router-dom';
-import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
-import { faShopify } from '@fortawesome/free-brands-svg-icons';
+// import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
+// import { faShopify } from '@fortawesome/free-brands-svg-icons';
 import { useAuth } from '../../contexts/AuthContext';
 import Cart from '../../components/Cart';
 import UserPackage from '../UserPackage';
@@ -10,6 +10,7 @@ import { useAnnouncement } from '../../contexts/Announcement';
 import Announcement from '../../components/Announcement';
 import style from './style.module.css';
 import { useNavigate } from 'react-router-dom';
+import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
 
 
 function Header() {
@@ -149,7 +150,7 @@ function Header() {
             <div className={style.nav_item}>
                 {!isLogin &&
                     <button><a href="/login">Luyện tập ngay</a></button>}
-                <div className={style['shopyfi']} ref={cartRef}>
+                {/* <div className={style['shopyfi']} ref={cartRef}>
                     <FontAwesomeIcon icon={faShopify} onClick={() => {
                         if (cart) {
                             if (!isLogin) {
@@ -168,7 +169,28 @@ function Header() {
                     {cart && isLogin &&
                         <Cart />
                     }
-                </div>
+                </div> */}
+                <div className={style['shopyfi']} ref={cartRef}>
+    <ShoppingCartIcon 
+        onClick={() => {
+            if (cart) {
+                if (!isLogin) {
+                    setError(true);
+                    setMessage("Vui lòng đăng nhập!");
+                }
+                setCart(false);
+            } else {
+                if (!isLogin) {
+                    setError(true);
+                    setMessage("Vui lòng đăng nhập!");
+                }
+                setCart(true);
+            }
+        }} 
+    />
+    {cart && isLogin && <Cart />}
+</div>
+
                 {user && isLogin && (
                     <div className={style["user"]}>
                         <img src={user.avt} alt="user" width="100%" />

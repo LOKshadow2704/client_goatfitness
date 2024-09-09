@@ -70,7 +70,7 @@ function RegisterPT({ setShowModal }) {
                     <CloseIcon />
                 </IconButton>
 
-                <h2 id="modal-title">Đăng ký làm huấn luyện viên cá nhân</h2>
+                <h2 id="modal-title">Đăng ký làm huấn luyện viên</h2>
                 <form onSubmit={handleSubmit}>
                     <TextField
                         id="certificates"
