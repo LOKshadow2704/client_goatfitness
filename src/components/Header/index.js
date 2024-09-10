@@ -199,7 +199,8 @@ function Header() {
                             <li><Link to="/account-setting">Thông tin tài khoản</Link></li>
                             <li onClick={() => setShowModal(true)}><Link to="#">Thông tin gói tập</Link></li>
                             <li><Link to="/PurchaseOrder">Đơn hàng</Link></li>
-                            <li onClick={Logout}>Đăng Xuất</li>
+                            <li><Link to="#">Thông tin thuê PT</Link></li>
+                            <li onClick={Logout}>Đăng xuất</li>
                         </ul>
                     </div>
                 )}

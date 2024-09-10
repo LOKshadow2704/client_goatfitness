@@ -5,6 +5,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import Tippy from '@tippyjs/react';
 import { Link } from "react-router-dom";
 import { useAnnouncement } from "../../contexts/Announcement";
+import { Button } from '@mui/material';
+
 function Cart(){
     const [cartData, setCartData]= useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
@@ -254,10 +256,17 @@ function Cart(){
             </div>
         ))}
         <div className={style.buy}>
-            
             <h4>Thành tiền</h4>
             <span>{totalPrice.toLocaleString('vi', {style : 'currency', currency : 'VND'})}</span>
-            <Link to="/Order" ><button onClick={()=>handleClickBuy()}>Mua ngay</button></Link>
+            <Link to="/Order">
+                        <Button 
+                            variant="contained"  
+                            color="primary"     
+                            onClick={handleClickBuy}  
+                        >
+                            Mua ngay
+                        </Button>
+                    </Link>
         </div>
         
     </div>

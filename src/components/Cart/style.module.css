@@ -54,7 +54,6 @@
 }
 
 .buy {
-    
     align-items: center;
     width: 100%;
     display: grid;
@@ -68,6 +67,7 @@
     padding-left: 15%;
     text-align: left !important;
     width: 100%;
+    margin-top: 15px;
 }
 
 .buy span {
@@ -75,7 +75,7 @@
     padding: 0 20px;
     grid-column-start: 2;
     text-align: right;
-    
+    color: red;
 }
 
 .buy a{
@@ -85,8 +85,9 @@
 
 .buy button {
     grid-row: 2;
-    width: 90%;
-    margin-left: 5%;
+    width: 50%;
+    margin-left: 25%;
+    margin-top: 30px;
  }
 
  .price {

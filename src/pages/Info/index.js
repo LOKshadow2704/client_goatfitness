@@ -21,7 +21,7 @@ function Info() {
                         </p>
                     </div>
                     <div className={style["right-content"]}>
-                        <img src="https://i.imgur.com/HMCjpoa.png" width="500px" alt="not connected" />
+                        <img src="https://i.imgur.com/VZFGZRM.png" width="450px" height="500px" alt="not connected" />
                     </div>
                 </div>
                 <div className={style["border"]}></div>
@@ -46,15 +46,15 @@ function Info() {
                     <div className={style["wrap-item"]}>
                         <div className={style["item"]}>
                             <h1 className={style["text-size"]}>Fitness</h1>
-                            <img className={style["rounded-image"]} src="https://i.imgur.com/Yh9YN2A.jpeg" width="85%" alt="not connected" />
+                            <img className={style["rounded-image"]} src="https://i.imgur.com/iy2Dz3G.png" width="85%" alt="not connected" />
                         </div>
                         <div className={style["item"]}>
                             <h1 className={style["text-size"]}>Yoga</h1>
-                            <img className={style["rounded-image"]} src="https://i.imgur.com/Fg2Jm6h.jpeg" width="85%" alt="not connected" />
+                            <img className={style["rounded-image"]} src="https://i.imgur.com/ac74NtE.png" width="85%" alt="not connected" />
                         </div>
                         <div className={style["item"]}>
                             <h1 className={style["text-size"]}>Boxing</h1>
-                            <img className={style["rounded-image"]} src="https://i.imgur.com/ck556e8.jpg" width="80%" alt="not connected" />
+                            <img className={style["rounded-image"]} src="https://i.imgur.com/RSW4MzG.png" width="80%" alt="not connected" />
                         </div>
                     </div>
                 </div>
@@ -68,8 +68,7 @@ function Info() {
                     <SlideShow />
                     </div>
                 </div>
-                
-                <br />
+                <br/><br/>
                 <div className={style["children_5"]}>
                     <h1 className={style["gradientText1"]}>Cam kết của chúng tôi</h1>
                     <p className={style["text-fix"]}>Tại GOAT GYM, chúng tôi đặt sự chăm sóc và lợi ích của khách hàng lên hàng đầu, xem đó là trách nhiệm và sứ mệnh của mình. Chúng tôi cam kết mang đến cho bạn một môi trường tập luyện không chỉ hiện đại và tiện nghi mà còn đầy sự hỗ trợ và khích lệ. Chất lượng dịch vụ của chúng tôi được xây dựng dựa trên tiêu chuẩn cao nhất, với đội ngũ huấn luyện viên chuyên nghiệp, giàu kinh nghiệm và tận tâm. Chúng tôi hiểu rằng sự hài lòng của bạn không chỉ đến từ các thiết bị và dịch vụ mà còn từ sự quan tâm chân thành và cá nhân hóa mà chúng tôi dành cho từng khách hàng. Hãy để GOAT GYM trở thành người bạn đồng hành đáng tin cậy trong hành trình nâng cao sức khỏe và thể chất của bạn. Chúng tôi luôn sẵn sàng lắng nghe, hỗ trợ và đồng hành cùng bạn để giúp bạn đạt được những mục tiêu sức khỏe và thể chất mà bạn đề ra. Với sự cam kết và nỗ lực không ngừng, chúng tôi hy vọng sẽ trở thành điểm đến yêu thích của bạn trong hành trình chăm sóc sức khỏe và phát triển thể chất.</p>

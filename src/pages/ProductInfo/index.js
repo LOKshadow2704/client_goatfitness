@@ -1,16 +1,17 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useEffect, useState } from "react";
 import style from './style.module.css';
 import Header from "../../components/Header";
 import Footer from "../../components/Footer";
 import { useNavigate, useParams } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
+import { Button, ButtonGroup } from '@mui/material';
 import { useAnnouncement } from "../../contexts/Announcement"; 
 
 function ProductInfo() {
     const { productID } = useParams();
     const [product, setProduct] = useState();
-    const quantityInput = useRef(null);
+    const [quantity, setQuantity] = useState(1); // State để quản lý số lượng
     const navigate = useNavigate();
     const { setSuccess, setError } = useAnnouncement(); // Lấy setSuccess, setError từ context
 
@@ -86,6 +87,10 @@ function ProductInfo() {
             });
     }, [productID])
 
+    const handleQuantityChange = (newQuantity) => {
+        setQuantity(prevQuantity => Math.max(prevQuantity + newQuantity, 1)); // Đảm bảo số lượng không nhỏ hơn 1
+    };
+
     return (
         <>
             <Header />
@@ -96,7 +101,7 @@ function ProductInfo() {
                 <div className={style.right}>
                     <h1>{product ? product.TenSP : ''}</h1>
                     <span> Đơn giá:
-                        <span style={{ color: 'red', marginLeft: '2px', fontSize: '16px' }}>
+                        <span style={{ color: 'red', marginLeft: '5px', fontSize: '20px',fontWeight:'bold' }}>
                             {product ? new Intl.NumberFormat('vi-VN').format(product.DonGia) : ''}
                         </span> VNĐ
                     </span>
@@ -109,19 +114,38 @@ function ProductInfo() {
                         }} />
                     </div>
 
-                    <div className={style.action}>
+                    <div>
                         <p> Số lượng </p>
-                        <input type="number" min='1' defaultValue="1" ref={quantityInput} />
-                        <button className={style['CartBtn-1']} onClick={() => {
+                        <ButtonGroup
+                          size="small"
+                          aria-label="small outlined button group"
+                          sx={{ marginLeft: 7, color: "black" }}
+                        >
+                          <Button
+                            onClick={() => handleQuantityChange(-1)}
+                            disabled={quantity === 1}
+                          >
+                            -
+                          </Button>
+                          <Button disabled>{quantity}</Button>
+                          <Button
+                            onClick={() => handleQuantityChange(1)}
+                          >
+                            +
+                          </Button>
+                        </ButtonGroup>
+                        <div className={style.action}>
+                            <button className={style['CartBtn-1']} onClick={() => {
                             AddtoCart(product.IDSanPham);
                         }}>
                             <FontAwesomeIcon className={style['IconContainer']} icon={faCartPlus} />
                             <p className={style['text']}>Thêm vào giỏ hàng</p>
                         </button>
 
-                        <button className={style['CartBtn-2']} onClick={() => handleClickBuy(product, quantityInput.current.value)}>
+                        <button className={style['CartBtn-2']} onClick={() => handleClickBuy(product, quantity)}>
                             <p className={style['text']}>Mua ngay</p>
                         </button>
+                        </div>
                     </div>
                 </div>
             </div>

@@ -23,6 +23,7 @@
 .right span{
   display: inline-block;
   margin: 10px 0;
+  font-size: 20px;
 }
 
 .right h1{
@@ -56,7 +57,6 @@
     overflow: hidden;
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
     position: relative;
-    margin: 10px 0;
 }
 
 .CartBtn-1{
@@ -130,6 +130,9 @@
 }
 .info div {
   line-height: 1.6; 
+  margin-right: 20%;
+  text-align: justify;
+  line-height: 1.5;
 }
 .info{
   margin-bottom: 10px;

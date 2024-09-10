@@ -3,7 +3,7 @@ import style from "./style.module.css";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
-import Button from '@mui/material/Button'; // Import Button từ MUI
+import Button from '@mui/material/Button'; 
 
 function HomeContent() {
   const [pts, setPts] = useState([]);
@@ -87,10 +87,10 @@ function HomeContent() {
                 Học cách sống khỏe mạnh nhờ tập thể dục
               </h2>
               <p style={{ fontSize: "16px" }}>
-                Tập thể dục là cách hiệu quả nhất để duy trì sức khỏe và tăng
-                cường tinh thần. Điều này không chỉ giúp cải thiện sức khỏe tim
-                mạch và kiểm soát cân nặng mà còn giảm căng thẳng và tăng cường
-                sự tự tin.
+              Tập thể dục là phương pháp hiệu quả để duy trì sức khỏe toàn diện và cải thiện tinh thần. 
+              Nó không chỉ giúp tăng cường sức khỏe tim mạch, kiểm soát cân nặng mà còn giảm căng thẳng, 
+              nâng cao sự tự tin. Với một lối sống năng động và thói quen tập luyện đều đặn, bạn sẽ cảm 
+              nhận được những thay đổi tích cực cả về thể chất lẫn tinh thần.
               </p>
             </div>
           </div>
@@ -104,10 +104,10 @@ function HomeContent() {
             <div className={style["wrap-content"]}>
               <h2 style={{ fontSize: "20px" }}>Thực hiện bài tập đúng cách</h2>
               <p style={{ fontSize: "16px" }}>
-                Thực hiện bài tập đúng cách là chìa khóa để đạt được kết quả tốt
-                nhất và tránh nguy cơ chấn thương. Điều này bao gồm việc tuân
-                thủ kỹ thuật đúng, không ép bản thân quá sức, và luôn tập trung
-                vào cảm giác của cơ thể trong quá trình tập luyện.
+              Để đạt được hiệu quả tốt nhất và tránh chấn thương, việc thực hiện đúng kỹ thuật trong 
+              quá trình tập luyện là rất quan trọng. Bạn cần tuân thủ hướng dẫn, không ép bản thân tập 
+              quá sức và luôn lắng nghe cơ thể mình. Điều này không chỉ giúp tối ưu hóa kết quả mà còn 
+              bảo vệ bạn khỏi những rủi ro không mong muốn trong quá trình tập luyện.
               </p>
             </div>
           </div>
@@ -123,10 +123,10 @@ function HomeContent() {
                 Theo dõi quá trình của bạn hàng tuần
               </h2>
               <p style={{ fontSize: "16px" }}>
-                Theo dõi quá trình hàng tuần không chỉ giúp bạn tự đánh giá tiến
-                độ và nhận biết những cải thiện nhỏ, mà còn là cách hiệu quả để
-                điều chỉnh kế hoạch tập luyện linh hoạt, từ đó thúc đẩy sự tiến
-                bộ và động viên bạn tiếp tục phấn đấu.
+              Việc theo dõi tiến trình hàng tuần giúp bạn đánh giá được sự thay đổi và cải thiện của bản 
+              thân. Đồng thời, điều này cũng tạo điều kiện để bạn điều chỉnh kế hoạch tập luyện khi cần 
+              thiết. Nhờ đó, bạn sẽ luôn có động lực phấn đấu, tiếp tục cải thiện và tiến bộ trong hành 
+              trình rèn luyện sức khỏe của mình.
               </p>
             </div>
           </div>
@@ -142,9 +142,9 @@ function HomeContent() {
                 Thực hiện theo một kế hoạch cụ thể
               </h2>
               <p style={{ fontSize: "16px" }}>
-                Thực hiện theo một kế hoạch cụ thể giúp bạn tổ chức thời gian và
-                năng lượng một cách hiệu quả, tăng khả năng hoàn thành mục tiêu
-                và duy trì động lực trong quá trình tập luyện.
+              Thực hiện theo kế hoạch tập luyện rõ ràng giúp bạn tối ưu hóa thời gian và năng lượng, tăng khả 
+              năng đạt được mục tiêu đề ra. Việc có một lộ trình cụ thể không chỉ giúp bạn duy trì động lực mà 
+              còn hỗ trợ quản lý tốt việc tập luyện, đảm bảo tính liên tục và đạt được kết quả lâu dài.
               </p>
             </div>
           </div>

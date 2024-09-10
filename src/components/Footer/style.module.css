@@ -64,6 +64,8 @@
 .contact {
     text-align: center;
     margin-top: 20px;
+    
+    line-height: 1.5;
 }
 
 .contact1 {
@@ -89,8 +91,9 @@
 }
 
 .icon {
-    font-size: 24px;
-    margin-right: 8px; /* Adds spacing between the icon and the text */
+    font-size: 1em;
+    margin-right: 8px; 
+    vertical-align: middle;
 }
 
 .explore {
@@ -138,12 +141,8 @@ hr {
 }
 
 .gradientText {
-    background: linear-gradient(90deg, #6a41fb, #f49959, #6a41fb);
-    -webkit-background-clip: text;
-    -webkit-text-fill-color: transparent;
-    background-clip: text;
-    text-fill-color: transparent;
-    font-size: 2rem;
+    color: #D3D3D3;
+    font-size: 24px;
     font-weight: bold;
     text-align: left; 
 }
@@ -159,7 +158,9 @@ hr {
 .addressText{
     font-weight: bold;
     font-size: 1em;
-    padding-top: 5px;
+    padding-top: 8px;
+    padding-bottom: 5px;
+    padding-left: 10px;
 }
 .giandong{
     margin-bottom: 20px;

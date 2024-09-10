@@ -83,7 +83,7 @@
 .container-item-3 .wrap-trip {
     display: grid;
     grid-template-columns: 50% 50%;
-    row-gap: 10%;
+    row-gap: 5%;
 }
 
 .container-item-3 .wrap-trip .trip {
@@ -107,7 +107,7 @@
 }
 
 .container-item-3 .wrap-trip .trip .wrap-content {
-    padding: 20px 0;
+    padding: 10px 0;
     width: 65%;
     color: #081158;
     font-weight: 500;
@@ -258,4 +258,6 @@
     margin-top: 1px;
     display: inline-block;
 }
-
+.wrap-content p{
+    color: black;
+}

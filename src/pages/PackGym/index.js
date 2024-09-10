@@ -155,16 +155,17 @@ function GymPack() {
                         <h1>Bảng dịch vụ: </h1>
                         {categories && Object.keys(categories).map((category) => (
                             <div className={style.group} key={category}>
-                                <h1>{category.charAt(0).toUpperCase() + category.slice(1)}</h1>
-                                {categories[category].map((value) => (
-                                    <div className={style.radio_box} key={value.IDGoiTap}>
-                                        <label htmlFor={value.IDGoiTap}>{value.TenGoiTap}</label>
-                                        <input type="radio" id={value.IDGoiTap} name="packageGym" value={value.IDGoiTap} onChange={handlePackageChange} />
-                                        <label htmlFor={value.IDGoiTap}> {value.ThoiHan} ngày - {value.Gia.toLocaleString()} VND</label>
-                                        <label htmlFor={value.IDGoiTap}>  Chỉ với {Math.floor(value.Gia / value.ThoiHan).toLocaleString()} / ngày</label>
-                                    </div>
-                                ))}
-                            </div>
+                            <h1>{category.charAt(0).toUpperCase() + category.slice(1)}</h1>
+                            {categories[category].map((value) => (
+                                <div className={style.radio_box} key={value.IDGoiTap}>
+                                    <label htmlFor={value.IDGoiTap}>{value.TenGoiTap}</label>
+                                    <input type="radio" id={value.IDGoiTap} name="packageGym" value={value.IDGoiTap} onChange={handlePackageChange} />
+                                    <label htmlFor={value.IDGoiTap}> {value.ThoiHan} ngày - <span style={{ color: 'red' }}>{value.Gia.toLocaleString()} </span> VNĐ</label>
+                                    <label htmlFor={value.IDGoiTap}> Chỉ với <span style={{ color: 'red' }}>{Math.floor(value.Gia / value.ThoiHan).toLocaleString()}</span> VNĐ / ngày</label>
+                                </div>
+                            ))}
+                        </div>
+                                               
                         ))}
                         <button onClick={() => setStatusPayment(true)}>
                             Đăng ký ngay
@@ -184,36 +185,80 @@ function GymPack() {
                             </div>
                         </button>
                     </div>
-                    <img alt="" src="https://i.imgur.com/8f617SD.jpeg" width="80%" />
+                    <img alt="" src="https://i.imgur.com/k9U4tVY.png" width="80%" />
                 </div>
-
-                {/* Phần bảng được chuyển sang MUI */}
                 <div className={style.info}>
                     <h3>Thông tin chi tiết các gói tập</h3>
-                    <TableContainer component={Paper} sx={{ border: 'none',width:'1500px',height:'250px',paddingTop:'40px' }}>
+                    <TableContainer component={Paper} sx={{ border: 'none',width:'1300px',height:'auto',paddingTop:'40px',marginLeft:'8%',paddingBottom:'30px' }}>
                         <Table>
                             <TableHead>
                                 <TableRow>
                                     <TableCell></TableCell>
-                                    <TableCell>Classic</TableCell>
-                                    <TableCell>Royal</TableCell>
+                                    <TableCell style={{fontWeight:"bold", textAlign:"center",fontSize:"18px"}}>Classic</TableCell>
+                                    <TableCell style={{fontWeight:"bold", textAlign:"center",fontSize:"18px"}}>Royal</TableCell>
+                                    <TableCell style={{fontWeight:"bold", textAlign:"center",fontSize:"18px"}}>Signature</TableCell>
                                 </TableRow>
                             </TableHead>
                             <TableBody>
                                 <TableRow>
-                                    <TableCell>Không giới hạn thời gian luyện tập</TableCell>
+                                    <TableCell>Không giới hạn thời gian luyện tập.</TableCell>
                                     <TableCell></TableCell>
-                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} /></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>Tự do tập luyện tại tất cả câu lạc bộ trong hệ thống GOAT Fitness</TableCell>
-                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} /></TableCell>
-                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} /></TableCell>
+                                    <TableCell>Tự do tập luyện tại tất cả câu lạc bộ trong hệ thống GOAT Fitness.</TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
                                 </TableRow>
                                 <TableRow>
-                                    <TableCell>Nước uống miễn phí</TableCell>
-                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} /></TableCell>
-                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} /></TableCell>
+                                    <TableCell>Nước uống miễn phí.</TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Dịch vụ khăn tập thể thao cao cấp.</TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>1 buổi định hướng luyện tập riêng biệt và tư vấn dinh dưỡng.</TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Được sử dụng dịch vụ thư giãn sau luyện tập (sauna và steambath).</TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Được dẫn theo 1 người thân đi tập cùng (người đi cùng được phục vụ như quyền lợi thẻ classic).</TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Lối vào check-in ưu tiên cho hội viên Signature.</TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Phục vụ thảm tập Yoga có logo Signature khi tham gia lớp.</TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                </TableRow>
+                                <TableRow>
+                                    <TableCell>Sử dụng khu vực VIP Lounge dành riêng cho hội viên Signature (Không áp dụng cho Khách đi kèm).</TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell></TableCell>
+                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
                                 </TableRow>
                             </TableBody>
                         </Table>

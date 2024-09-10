@@ -1,6 +1,7 @@
 import React from "react";
 import style from './style.module.css';
 import { FaFacebook, FaInstagram } from 'react-icons/fa';
+import { Phone, Email } from '@mui/icons-material';
 
 function Footer() {
     return (
@@ -19,13 +20,13 @@ function Footer() {
                     ></iframe>
             </div>
             <div className={style.footerItem}>
-                <div className={style.contact}>
+            <div className={style.contact}>
                     <h1>Bạn cần hỗ trợ?</h1>
                     <h2>Liên hệ ngay:</h2>
-                    <p>SĐT 1: 0328 05 88 32</p>
-                    <p>SĐT 2: 0888 55 23 24</p>
-                    <p>Email 1: Nguyenlocface@gmail.com</p>
-                    <p>Email 2: Huahonglongvy2k2@gmail.com</p>
+                    <p><Phone className={style.icon} /> 0328 05 88 32</p>
+                    <p><Phone className={style.icon} /> 0888 55 23 24</p>
+                    <p><Email className={style.icon} /> Nguyenlocface@gmail.com</p>
+                    <p><Email className={style.icon} /> Huahonglongvy2k2@gmail.com</p>
                 </div>
             </div>
             <div className={style.footerItem}>

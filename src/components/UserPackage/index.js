@@ -8,8 +8,8 @@ import { useAnnouncement } from "../../contexts/Announcement";
 import { Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper } from "@mui/material";
 
 function UserPackage({ setShowModal }) {
-  const [data, setData] = useState();
-  const { setError, setMessage, setLocation, setLink } = useAnnouncement();
+  const [data, setData] = useState(null);
+  const { setError, setMessage, setWarning, setLocation, setLink } = useAnnouncement();
 
   useEffect(() => {
     const findCookie = (name) => {
@@ -38,6 +38,14 @@ function UserPackage({ setShowModal }) {
           if (response.status >= 200 && response.status < 300) {
             setData(response.data);
             console.log(response.data);
+
+            // Kiểm tra trạng thái thanh toán và hiển thị thông báo nếu cần
+            if (response.data.TrangThaiThanhToan === "Chưa thanh toán") {
+              setWarning(true);
+              setMessage("Vui lòng thanh toán để tiếp tục sử dụng dịch vụ.");
+              setLocation(true);
+              setLink("http://localhost:3000/GymPack");
+            }
           }
         })
         .catch((error) => {
@@ -47,7 +55,11 @@ function UserPackage({ setShowModal }) {
           setLink("http://localhost:3000/GymPack");
         });
     }
-  }, [setError, setMessage, setLocation, setLink]);
+  }, [setError, setMessage, setWarning, setLocation, setLink]);
+
+  // Xác định giá trị hiển thị cho ngày đăng ký và ngày hết hạn
+  const displayDate = data && data.TrangThaiThanhToan === "Chưa thanh toán" ? "Không có" : data ? data.NgayDangKy : "";
+  const displayExpiryDate = data && data.TrangThaiThanhToan === "Chưa thanh toán" ? "Không có" : data ? data.NgayHetHan : "";
 
   return (
     <div className={style.modal}>
@@ -58,11 +70,12 @@ function UserPackage({ setShowModal }) {
         <h1>Thông tin gói tập của bạn</h1>
         <div className={style.info}>
           <h1>Tên gói tập: {data && data.info.TenGoiTap}</h1>
-          <span>Ngày đăng ký: {data && data.NgayDangKy}</span>
-          <span>Ngày hết hạn: {data && data.NgayHetHan}</span>
+          <span>Ngày đăng ký: {displayDate}</span>
+          <span>Ngày hết hạn: {displayExpiryDate}</span>
+          {/* <span>Trạng thái thanh toán: {data && data.TrangThaiThanhToan}</span> */}
         </div>
         <div className={style.describe}>
-          <TableContainer component={Paper} sx={{ paddingTop:5, paddingBottom:5 }}> 
+          <TableContainer component={Paper} sx={{ paddingTop: 5, paddingBottom: 5 }}>
             <Table>
               <TableHead>
                 <TableRow>
