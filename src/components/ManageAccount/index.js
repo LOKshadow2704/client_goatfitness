@@ -11,7 +11,8 @@ import axios from "axios";
 import CreateUserModal from "../CreateUserModal";
 import UpdateRoleModal from "../UpdateRoleModal";
 import { useAnnouncement } from "../../contexts/Announcement";
-import style from './style.module.css';
+import { AddCircleOutline } from "@mui/icons-material";
+
 
 function ManageAccount({ data }) {
   const [accounts, setAccounts] = useState([]);
@@ -90,12 +91,13 @@ function ManageAccount({ data }) {
   };
 
   return (
-    <div className={style.wrap}>
+    <div>
       {modalAdd && <CreateUserModal setShowModal={setModalAdd} />}
       {modalUpdate && <UpdateRoleModal setShowModal={setModalUpdate} data={selectedUser} />}
-      <div className={style.header}>
-        <div className={style.action1}>
-          <FontAwesomeIcon icon={faMagnifyingGlass} />
+
+      <div style={{ display: 'flex', marginTop: '20px', marginBottom:'20px' }}>
+        <div style={{ display: 'flex', alignItems: 'center' }}>
+          <FontAwesomeIcon style={{ paddingTop: '50px' }} />
           <TextField
             type="text"
             id="search"
@@ -104,64 +106,66 @@ function ManageAccount({ data }) {
             onChange={handleSearchChange}
             variant="outlined"
             size="small"
+            sx={{marginRight:'40px'}}
           />
         </div>
-        <div className={style.action2}>
-          <FormControl fullWidth>
-            <InputLabel id="sort_label">Sắp xếp theo</InputLabel>
-            <Select
-              labelId="sort_label"
-              id="sort"
-              value={sortBy}
-              label="Sắp xếp theo"
-              onChange={handleSortChange}
-            >
-              <MenuItem value="">Sắp xếp theo...</MenuItem>
-              <MenuItem value="name">Tên từ A-Z</MenuItem>
-              <MenuItem value="name_desc">Tên từ Z-A</MenuItem>
-            </Select>
-          </FormControl>
-        </div>
+
+        <FormControl variant="outlined" size="small" style={{ width: '200px' }}>
+          <InputLabel id="sort_label">Sắp xếp theo</InputLabel>
+          <Select
+            labelId="sort_label"
+            id="sort"
+            value={sortBy}
+            label="Sắp xếp theo"
+            onChange={handleSortChange}
+          >
+            <MenuItem value="">Sắp xếp theo...</MenuItem>
+            <MenuItem value="name">Tên từ A-Z</MenuItem>
+            <MenuItem value="name_desc">Tên từ Z-A</MenuItem>
+          </Select>
+        </FormControl>
+
         <Button
   variant="contained"
   color="primary"
-  startIcon={<FontAwesomeIcon icon={faPlus} />}
+  startIcon={<AddCircleOutline />}
   onClick={() => setModalAdd(true)}
-  className={style.createaccount} 
+  sx={{marginLeft:'46%'}}
 >
   Tạo tài khoản
 </Button>
 
       </div>
+
       <TableContainer component={Paper}>
-  <Table className={style.table}>
-    <TableHead>
-      <TableRow>
-        <TableCell className={style.tableCellMargin}>Tên đăng nhập</TableCell>
-        <TableCell className={style.tableCellMargin}>Loại tài khoản</TableCell>
-        <TableCell className={style.tableCellMargin2}>Hành động</TableCell>
-      </TableRow>
-    </TableHead>
-    <TableBody>
-      {filteredAccounts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((value) => (
-        <TableRow key={value.IDSanPham}>
-          <TableCell className={style.tableCellMargin1}>{value.TenDangNhap}</TableCell>
-          <TableCell className={style.tableCellMargin1}>{value.TenVaiTro}</TableCell>
-          <TableCell className={style.tableCellMargin1}>
-            <Button
-              variant="contained"
-              color="secondary"
-              startIcon={<FontAwesomeIcon icon={faPenToSquare} />}
-              onClick={() => handleClickUpdate(value)}
-            >
-              Chỉnh sửa
-            </Button>
-          </TableCell>
-        </TableRow>
-      ))}
-    </TableBody>
-  </Table>
-</TableContainer>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>Tên đăng nhập</TableCell>
+              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>Loại tài khoản</TableCell>
+              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>Hành động</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {filteredAccounts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((value) => (
+              <TableRow key={value.IDSanPham}>
+                <TableCell style={{ textAlign: "center"}}>{value.TenDangNhap}</TableCell>
+                <TableCell style={{ textAlign: "center"}}>{value.TenVaiTro}</TableCell>
+                <TableCell style={{ textAlign: "center"}}>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    startIcon={<FontAwesomeIcon icon={faPenToSquare} />}
+                    onClick={() => handleClickUpdate(value)}
+                  >
+                    Chỉnh sửa
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
 
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}

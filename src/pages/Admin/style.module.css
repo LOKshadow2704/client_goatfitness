@@ -96,8 +96,10 @@
 .content> h1{
     background-color: white;
     box-shadow: 4px -3px 6px 5px rgba(108, 123, 202, 0.1);
-    padding-left: 10%;
+    padding-left: 2%;
     text-align: left;
+    font-size: 24px;
+    padding-top: 20px;
 
 }
 

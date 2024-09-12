@@ -1,122 +1,187 @@
 import React, { useEffect, useState } from "react";
-import style from './style.module.css';
-import { faPenToSquare, faPlus, faSearch, faSort } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import RegisterPackModal from "../RegisterPackModal";
 import UpdateGymPackModal from "../UpdateGymPackModal";
 import { useAnnouncement } from "../../contexts/Announcement";
+import {
+  Table,
+  TableBody,
+  TableCell,
+  TableContainer,
+  TableHead,
+  TableRow,
+  Paper,
+  Button,
+  TextField,
+  MenuItem,
+  Select,
+  InputLabel,
+  FormControl,
+  Stack,
+  Pagination,
+} from "@mui/material";
+import { AddCircleOutline } from "@mui/icons-material";
 
 function ManagePackGym() {
-    const [gympack, setGymPack] = useState([]);
-    const [searchTerm, setSearchTerm] = useState("");
-    const [sortType, setSortType] = useState("");
-    const [showModal, setShowModal] = useState(false);
-    const [update, setUpdate] = useState(false);
-    const [selectedPack, setSelectedPack] = useState(null);
-    const { setError, setMessage } = useAnnouncement;
+  const [gympack, setGymPack] = useState([]);
+  const [searchTerm, setSearchTerm] = useState("");
+  const [sortType, setSortType] = useState("");
+  const [showModal, setShowModal] = useState(false);
+  const [update, setUpdate] = useState(false);
+  const [selectedPack, setSelectedPack] = useState(null);
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(5); // Số lượng item mỗi trang
+  const { setError, setMessage } = useAnnouncement();
 
-    useEffect(() => {
-        axios.get('http://localhost:8080/Backend/gympack/')
-            .then(response => {
-                if (response.status >= 200 && response.status < 300) {
-                    setGymPack(response.data);
-                } else {
-                    throw new Error("Lấy thông tin thất bại");
-                }
-            })
-            .catch(error => {
-                setError(true);
-                setMessage(error.response.data.error);
-            });
-    }, [update]); // eslint-disable-line react-hooks/exhaustive-deps
+  useEffect(() => {
+    axios
+      .get("http://localhost:8080/Backend/gympack/")
+      .then((response) => {
+        if (response.status >= 200 && response.status < 300) {
+          setGymPack(response.data);
+        } else {
+          throw new Error("Lấy thông tin thất bại");
+        }
+      })
+      .catch((error) => {
+        setError(true);
+        setMessage(error.response.data.error);
+      });
+  }, [update]);
 
-    const handleSearch = (e) => {
-        setSearchTerm(e.target.value);
-    };
+  const handleSearch = (e) => {
+    setSearchTerm(e.target.value);
+    setCurrentPage(1); // Reset về trang 1 khi tìm kiếm
+  };
 
-    const handleSort = (e) => {
-        setSortType(e.target.value);
-    };
+  const handleSort = (e) => {
+    setSortType(e.target.value);
+  };
 
-    const handleEdit = (pack) => {
-        setSelectedPack(pack);
-        setUpdate(true);
-    };
+  const handleEdit = (pack) => {
+    setSelectedPack(pack);
+    setUpdate(true);
+  };
 
-    const sortedGymPack = gympack
-        .filter(pack => pack.TenGoiTap.toLowerCase().includes(searchTerm.toLowerCase()))
-        .sort((a, b) => {
-            if (sortType === "priceAsc") {
-                return a.Gia - b.Gia;
-            } else if (sortType === "priceDesc") {
-                return b.Gia - a.Gia;
-            } else if (sortType === "durationAsc") {
-                return a.ThoiHan - b.ThoiHan;
-            } else if (sortType === "durationDesc") {
-                return b.ThoiHan - a.ThoiHan;
-            }
-            return 0;
-        });
+  // Xử lý sắp xếp và lọc
+  const sortedGymPack = gympack
+    .filter((pack) =>
+      pack.TenGoiTap.toLowerCase().includes(searchTerm.toLowerCase())
+    )
+    .sort((a, b) => {
+      if (sortType === "priceAsc") {
+        return a.Gia - b.Gia;
+      } else if (sortType === "priceDesc") {
+        return b.Gia - a.Gia;
+      } else if (sortType === "durationAsc") {
+        return a.ThoiHan - b.ThoiHan;
+      } else if (sortType === "durationDesc") {
+        return b.ThoiHan - a.ThoiHan;
+      }
+      return 0;
+    });
 
-    return (
-        <div className={style['wrap']}>
-            {showModal && <RegisterPackModal data={gympack} setShowModal={setShowModal} />}
-            {update && <UpdateGymPackModal data={selectedPack} setShowModal={setUpdate} />}
-            <div className={style['header']}>
-                <div className={style['searchSortContainer']}>
-                    <div className={style['searchInput']}>
-                        <FontAwesomeIcon icon={faSearch} />
-                        <input
-                            type="text"
-                            placeholder="Tìm kiếm sản phẩm..."
-                            value={searchTerm}
-                            onChange={handleSearch}
-                        />
-                    </div>
-                    <div className={style.sortSelect}>
-                        <FontAwesomeIcon icon={faSort} />
-                        <select value={sortType} onChange={handleSort}>
-                            <option value="">Sắp xếp</option>
-                            <option value="priceAsc">Giá tăng dần</option>
-                            <option value="priceDesc">Giá giảm dần</option>
-                            <option value="durationAsc">Thời hạn tăng dần</option>
-                            <option value="durationDesc">Thời hạn giảm dần</option>
-                        </select>
-                    </div>
-                </div>
-                <button onClick={() => setShowModal(true)}>
-                    Thêm gói tập mới <FontAwesomeIcon icon={faPlus} />
-                </button>
-            </div>
-            <table className={style['manage_product']}>
-                <thead>
-                    <tr>
-                        <th>ID Gói Tập</th>
-                        <th>Tên gói tập</th>
-                        <th>Thời hạn</th>
-                        <th>Giá</th>
-                        <th>Hành động</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {sortedGymPack.map((value) => (
-                        <tr key={value.IDGoiTap}>
-                            <td>{value.IDGoiTap}</td>
-                            <td>{value.TenGoiTap}</td>
-                            <td>{value.ThoiHan} ngày </td>
-                            <td>{value.Gia.toLocaleString('vi-VN', { style: 'currency', currency: 'VND' })}</td>
-                            <td>
-                                <button className={style['editButton']} onClick={() => handleEdit(value)}>
-                                    <FontAwesomeIcon icon={faPenToSquare} /> Chỉnh sửa
-                                </button>
-                            </td>
-                        </tr>
-                    ))}
-                </tbody>
-            </table>
+  // Phân trang dữ liệu
+  const startIndex = (currentPage - 1) * itemsPerPage;
+  const endIndex = startIndex + itemsPerPage;
+  const paginatedGymPack = sortedGymPack.slice(startIndex, endIndex);
+
+  const handlePageChange = (event, value) => {
+    setCurrentPage(value);
+  };
+
+  return (
+    <div style={{ padding: "20px" }}>
+      {showModal && <RegisterPackModal data={gympack} setShowModal={setShowModal} />}
+      {update && <UpdateGymPackModal data={selectedPack} setShowModal={setUpdate} />}
+      <div style={{ marginBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+        <div style={{ display: "flex", alignItems: "center" }}>
+          <TextField
+            label="Tìm kiếm gói tập"
+            variant="outlined"
+            value={searchTerm}
+            onChange={handleSearch}
+            style={{ marginLeft: "10px", marginRight: "20px" }}
+          />
+          <FormControl style={{ marginRight: "20px" }}>
+            <InputLabel>Sắp xếp theo</InputLabel>
+            <Select
+              value={sortType}
+              onChange={handleSort}
+              displayEmpty
+              inputProps={{ "aria-label": "Sắp xếp theo" }}
+            >
+              <MenuItem value="">Sắp xếp theo...</MenuItem>
+              <MenuItem value="priceAsc">Giá tăng dần</MenuItem>
+              <MenuItem value="priceDesc">Giá giảm dần</MenuItem>
+              <MenuItem value="durationAsc">Thời hạn tăng dần</MenuItem>
+              <MenuItem value="durationDesc">Thời hạn giảm dần</MenuItem>
+            </Select>
+          </FormControl>
         </div>
-    );
+        <Button
+          variant="contained"
+          color="primary"
+          onClick={() => setShowModal(true)}
+          startIcon={<AddCircleOutline fontSize="small" />}
+        >
+          Thêm gói tập mới
+        </Button>
+      </div>
+      <TableContainer component={Paper}>
+        <Table>
+          <TableHead>
+            <TableRow>
+              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>ID Gói Tập</TableCell>
+              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>Tên gói tập</TableCell>
+              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>Thời hạn</TableCell>
+              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>Giá</TableCell>
+              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>Hành động</TableCell>
+            </TableRow>
+          </TableHead>
+          <TableBody>
+            {paginatedGymPack.map((value, index) => (
+              <TableRow
+                key={value.IDGoiTap}
+                sx={{
+                  backgroundColor: index % 2 === 0 ? "white" : "#f5f5f5", // Hàng lẻ màu trắng, hàng chẵn màu xám
+                }}
+              >
+                <TableCell style={{ textAlign: "center" }}>{value.IDGoiTap}</TableCell>
+                <TableCell style={{ textAlign: "center" }}>{value.TenGoiTap}</TableCell>
+                <TableCell style={{ textAlign: "center" }}>{value.ThoiHan} ngày</TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                  {value.Gia.toLocaleString("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  })}
+                </TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => handleEdit(value)}
+                  >
+                    <FontAwesomeIcon icon={faPenToSquare} /> Chỉnh sửa
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
+        </Table>
+      </TableContainer>
+      <Stack spacing={2} style={{ marginTop: "20px", float: "right" }}>
+        <Pagination
+          count={Math.ceil(sortedGymPack.length / itemsPerPage)}
+          page={currentPage}
+          onChange={handlePageChange}
+          color="primary"
+        />
+      </Stack>
+    </div>
+  );
 }
 
 export default ManagePackGym;
