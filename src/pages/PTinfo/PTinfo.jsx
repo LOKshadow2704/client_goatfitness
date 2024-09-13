@@ -1,12 +1,12 @@
 import React, { useEffect, useState } from "react";
 import style from './style.module.css';
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 import {useParams} from 'react-router-dom';
 import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import StarRating from "../../components/Rating";
-import RegisterTraining from "../../components/RegisterTraining";
+import StarRating from "../../components/Rating/Rating";
+import RegisterTraining from "../../components/RegisterTraining/RegisterTraining";
 
 function PTInfo (){
     const {PTID} =  useParams();

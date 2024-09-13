@@ -5,11 +5,11 @@ import {
   InputLabel, Select, MenuItem, TextField,
   Button, TablePagination
 } from '@mui/material';
-import { faPenToSquare, faPlus, faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import CreateUserModal from "../CreateUserModal";
-import UpdateRoleModal from "../UpdateRoleModal";
+import CreateUserModal from "../CreateUserModal/CreateUserModal";
+import UpdateRoleModal from "../UpdateRoleModal/UpdateRoleModal";
 import { useAnnouncement } from "../../contexts/Announcement";
 import { AddCircleOutline } from "@mui/icons-material";
 

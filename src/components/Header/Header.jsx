@@ -4,10 +4,10 @@ import { Link, useLocation } from 'react-router-dom';
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faShopify } from '@fortawesome/free-brands-svg-icons';
 import { useAuth } from '../../contexts/AuthContext';
-import Cart from '../../components/Cart';
-import UserPackage from '../UserPackage';
+import Cart from '../Cart/Cart';
+import UserPackage from '../UserPackage/UserPackage';
 import { useAnnouncement } from '../../contexts/Announcement';
-import Announcement from '../../components/Announcement';
+import Announcement from '../Announcement/Announcement';
 import style from './style.module.css';
 import { useNavigate } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
@@ -170,27 +170,19 @@ function Header() {
                         <Cart />
                     }
                 </div> */}
-                <div className={style['shopyfi']} ref={cartRef}>
-    <ShoppingCartIcon 
-        onClick={() => {
-            if (cart) {
-                if (!isLogin) {
-                    setError(true);
-                    setMessage("Vui lòng đăng nhập!");
-                }
-                setCart(false);
-            } else {
-                if (!isLogin) {
-                    setError(true);
-                    setMessage("Vui lòng đăng nhập!");
-                }
-                setCart(true);
-            }
-        }} 
-    />
-    {cart && isLogin && <Cart />}
-</div>
-
+                <div className={style['shopyfi']}>
+                    <ShoppingCartIcon 
+                        onClick={() => {
+                            if (!isLogin) {
+                                setError(true);
+                                setMessage("Vui lòng đăng nhập!");
+                            } else {
+                                // Điều hướng đến trang giỏ hàng
+                                navigate('/cart');
+                            }
+                        }} 
+                    />
+                </div>
                 {user && isLogin && (
                     <div className={style["user"]}>
                         <img src={user.avt} alt="user" width="100%" />

@@ -7,7 +7,7 @@ import { TextField } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import PaymentModal from "../PaymentModal";
+import PaymentModal from "../PaymentModal/PaymentModal";
 import { useAnnouncement } from "../../contexts/Announcement";
 import { format } from "date-fns";
 import { vi } from "date-fns/locale";

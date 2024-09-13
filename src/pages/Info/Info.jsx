@@ -1,7 +1,7 @@
 import React from "react";
 import style from './style.module.css';
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 import SlideShow from "../../components/SlideShow/SlideShow"; 
 
 

@@ -11,18 +11,16 @@ import {
   MenuItem,
   Select,
   Paper,
-  Typography,
   Stack,
 } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import {
   faPenToSquare,
-  faPlus,
   faTrashCan,
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import UpdateProductModal from "../../components/UpdateProductModal";
-import AddProductModal from "../../components/AddProductModal";
+import UpdateProductModal from "../UpdateProductModal/UpdateProductModal";
+import AddProductModal from "../AddProductModal/AddProductModal";
 import axios from "axios";
 import { useAnnouncement } from "../../contexts/Announcement";
 import { AddCircleOutline } from "@mui/icons-material";

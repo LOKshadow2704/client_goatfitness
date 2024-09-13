@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
-import { faPenToSquare, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import RegisterPackModal from "../RegisterPackModal";
-import UpdateGymPackModal from "../UpdateGymPackModal";
+import RegisterPackModal from "../RegisterPackModal/RegisterPackModal";
+import UpdateGymPackModal from "../UpdateGymPackModal/UpdateGymPackModal";
 import { useAnnouncement } from "../../contexts/Announcement";
 import {
   Table,
@@ -152,7 +152,7 @@ function ManagePackGym() {
                 <TableCell style={{ textAlign: "center" }}>{value.IDGoiTap}</TableCell>
                 <TableCell style={{ textAlign: "center" }}>{value.TenGoiTap}</TableCell>
                 <TableCell style={{ textAlign: "center" }}>{value.ThoiHan} ngày</TableCell>
-                <TableCell style={{ textAlign: "center" }}>
+                <TableCell style={{ textAlign: "center",color:"red" }}>
                   {value.Gia.toLocaleString("vi-VN", {
                     style: "currency",
                     currency: "VND",

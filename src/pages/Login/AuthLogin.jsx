@@ -27,7 +27,7 @@ import Google from "src/assets/social-google.svg"; // Import Google icon
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../../contexts/AuthContext";
 import { useAnnouncement } from "../../contexts/Announcement";
-import Announcement from "../../components/Announcement";
+import Announcement from "../../components/Announcement/Announcement";
 
 const AuthLogin = () => {
   const theme = useTheme();

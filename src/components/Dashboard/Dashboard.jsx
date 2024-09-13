@@ -3,7 +3,7 @@ import style from './style.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faHeartPulse, faIndustry, faUsers } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
-import Statistical from "../../components/Statistical";
+import Statistical from "../Statistical/Statistical";
 import { useAnnouncement } from "../../contexts/Announcement";
 
 function Dashboard(){

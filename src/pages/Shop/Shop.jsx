@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
-import ProductItem from "../../components/ProductItem";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import ProductItem from "../../components/ProductItem/ProductItem";
 import style from "./style.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";

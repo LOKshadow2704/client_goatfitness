@@ -1,14 +1,14 @@
 import React, { useEffect, useState } from "react";
 import style from "./style.module.css";
 import axios from "axios";
-import Header from "../../components/Header";
-import Footer from "../../components/Footer";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 import { Link } from "react-router-dom";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faKey, faUserGear, faCamera } from "@fortawesome/free-solid-svg-icons";
-import AccountInfo from "../../components/AccountInfo";
-import ResetPassword from "../../components/ResetPassword";
-import Loading from "../../components/Loading";
+import AccountInfo from "../../components/AccountInfo/AccountInfo";
+import ResetPassword from "../../components/ResetPassword/ResetPassword";
+import Loading from "../../components/Loading/Loading";
 import { useAnnouncement } from "../../contexts/Announcement";
 
 function AccountSetting({ changeForm, setRefresh }) {

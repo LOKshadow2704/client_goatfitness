@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-import style from "./style.module.css";
-import { faXmark } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { Box, Button, Backdrop, CircularProgress, Dialog, DialogContent, DialogTitle, FormControl, InputLabel, MenuItem, Select, TextField, Typography, IconButton } from "@mui/material";
+import { Close } from "@mui/icons-material";
 import axios from "axios";
-import Loading from "../Loading";
 import { useAnnouncement } from "../../contexts/Announcement";
 
 function AddProductModal({ setShowModal }) {
@@ -15,7 +13,8 @@ function AddProductModal({ setShowModal }) {
         DonGia: "",
         IMG: "",
     });
-    const {setSuccess , setError , setMessage , setWarning} = useAnnouncement();
+    const [selectedFileName, setSelectedFileName] = useState(""); // Thêm state để lưu tên file
+    const { setSuccess, setError, setMessage, setWarning } = useAnnouncement();
     const [category, setCategory] = useState([]);
     const [loading, setLoading] = useState(false);
 
@@ -31,12 +30,17 @@ function AddProductModal({ setShowModal }) {
                 setError(true);
                 setMessage(error.response.data.error);
             });
-    }, [setError, setMessage]);//Lấy thông tin category
+    }, [setError, setMessage]);
 
     const handleChange = (e) => {
-        const { name, value } = e.target;
+        const { name, value, files } = e.target;
         if (name === "SoLuong") {
             setSoLuong(value);
+        } else if (name === "IMG") {
+            if (files.length > 0) {
+                setSelectedFileName(files[0].name); // Cập nhật tên file
+                setFormData({ ...formData, [name]: files[0] }); // Lưu file vào formData
+            }
         } else {
             setFormData({ ...formData, [name]: value });
         }
@@ -45,26 +49,21 @@ function AddProductModal({ setShowModal }) {
     const findCookie = (name) => {
         const cookies = document.cookie.split(';');
         for (let i = 0; i < cookies.length; i++) {
-          const cookie = cookies[i].trim();
-          if (cookie.startsWith(name + '=')) {
-            return cookie.substring(name.length + 1);
-          }
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(name + '=')) {
+                return cookie.substring(name.length + 1);
+            }
         }
         return null;
     };
 
     const uploadImage = (file) => {
         return new Promise((resolve, reject) => {
-            // Kiểm tra hợp lệ
             const isImageValid = (file) => {
                 return new Promise((resolve, reject) => {
                     const img = new Image();
-                    img.onload = () => {
-                        resolve(true);
-                    };
-                    img.onerror = () => {
-                        reject(false);
-                    };
+                    img.onload = () => resolve(true);
+                    img.onerror = () => reject(false);
                     img.src = URL.createObjectURL(file);
                 });
             };
@@ -81,7 +80,6 @@ function AddProductModal({ setShowModal }) {
                 return;
             }
 
-            // Kiểm tra kích thước tệp
             const maxFileSize = 10 * 1024 * 1024; // 10 MB
             if (file.size > maxFileSize) {
                 setError(true);
@@ -90,7 +88,6 @@ function AddProductModal({ setShowModal }) {
                 return;
             }
 
-            // Kiểm tra tính toàn vẹn của hình ảnh
             isImageValid(file)
                 .then(() => {
                     axios.post('https://api.imgbb.com/1/upload?key=abbbfc4dd8180b09d029902de59a5241', formData)
@@ -112,12 +109,13 @@ function AddProductModal({ setShowModal }) {
     const handleSubmit = async (e) => {
         e.preventDefault();
         for (const key in formData) {
-            if (formData[key] === "") {
+            if (formData[key] === "" && key !== "IMG") {
                 setWarning(true);
                 setMessage("Vui lòng điền đầy đủ thông tin");
                 return;
             }
         }
+
         const isLogin = findCookie("jwt");
         if (isLogin) {
             setLoading(true);
@@ -127,17 +125,17 @@ function AddProductModal({ setShowModal }) {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            //Upload ảnh
-            const file = document.getElementById("IMG").files[0];
+
+            const file = formData.IMG;
             let newlink = '';
-            if(file){
+            if (file) {
                 newlink = await uploadImage(file);
             }
             if (newlink) {
                 formData.IMG = newlink;
             }
-            // Gửi đi
-            axios.post('http://localhost:8080/Backend/product/add', { data: formData , SoLuong: soLuong }, { headers: headers })
+
+            axios.post('http://localhost:8080/Backend/product/add', { data: formData, SoLuong: soLuong }, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);
@@ -150,93 +148,132 @@ function AddProductModal({ setShowModal }) {
                     setError(true);
                     setMessage(error.response.data.error);
                 }).finally(() => {
-                    setLoading(false); // Kết thúc loading
-                });;
+                    setLoading(false);
+                });
         }
-    }
+    };
 
     return (
-        <div className={style.modal}>
-            <div className={style.wrap_content}>
-                {loading && (
-                    <Loading/>
-                )
-                }
-                <p><FontAwesomeIcon icon={faXmark} onClick={() => setShowModal(false)} /></p>
-                <h1>Thêm sản phẩm mới</h1>
-                <form className={style.updateForm} onSubmit={handleSubmit}>
-                    <div className={style.formGroup}>
-                        <label htmlFor="TenSP">Tên sản phẩm:</label>
-                        <input
-                            type="text"
+        <Dialog open onClose={() => setShowModal(false)}>
+            <DialogTitle sx={{textAlign:'center',fontWeight:'bold',fontSize:'22px'}}>
+                Thêm sản phẩm mới
+                <IconButton
+                    aria-label="close"
+                    onClick={() => setShowModal(false)}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
+                    }}
+                >
+                    <Close />
+                </IconButton>
+            </DialogTitle>
+            <DialogContent dividers>
+                <form onSubmit={handleSubmit}>
+                    <FormControl fullWidth margin="normal">
+                        <TextField
+                            label="Tên sản phẩm"
                             id="TenSP"
                             name="TenSP"
                             value={formData.TenSP}
                             onChange={handleChange}
+                            fullWidth
                         />
-                    </div>
-                    <div className={style.formGroup}>
-                        <label htmlFor="IDLoaiSanPham">Loại sản phẩm:</label>
-                        <select
+                    </FormControl>
+                    <FormControl fullWidth margin="normal">
+                        <InputLabel id="IDLoaiSanPham-label">Loại sản phẩm</InputLabel>
+                        <Select
+                            labelId="IDLoaiSanPham-label"
                             id="IDLoaiSanPham"
                             name="IDLoaiSanPham"
                             value={formData.IDLoaiSanPham}
                             onChange={handleChange}
+                            label="Loại sản phẩm"
                         >
-                            <option value="">Chọn loại sản phẩm</option>
+                            <MenuItem value="">
+                                <em>Chọn loại sản phẩm</em>
+                            </MenuItem>
                             {category.map((value) => (
-                                <option
+                                <MenuItem
                                     key={value.IDLoaiSanPham}
                                     value={value.IDLoaiSanPham}
                                 >
                                     {value.TenLoaiSanPham}
-                                </option>
+                                </MenuItem>
                             ))}
-                        </select>
-                    </div>
-                    <div className={style.formGroup}>
-                        <label htmlFor="Mota">Mô tả:</label>
-                        <textarea
+                        </Select>
+                    </FormControl>
+                    <FormControl fullWidth margin="normal">
+                        <TextField
+                            label="Mô tả"
                             id="Mota"
                             name="Mota"
                             value={formData.Mota}
                             onChange={handleChange}
+                            multiline
+                            rows={4}
+                            fullWidth
                         />
-                    </div>
-                    <div className={style.formGroup}>
-                        <label htmlFor="DonGia">Đơn giá:</label>
-                        <input
+                    </FormControl>
+                    <FormControl fullWidth margin="normal">
+                        <TextField
+                            label="Đơn giá"
                             type="number"
                             id="DonGia"
                             name="DonGia"
                             value={formData.DonGia}
                             onChange={handleChange}
+                            fullWidth
                         />
-                    </div>
-                    <div className={style.formGroup}>
-                        <label htmlFor="IMG">Hình ảnh:</label>
-                        <input
-                            type="file"
-                            id="IMG"
-                            name="IMG"
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className={style.formGroup}>
-                        <label htmlFor="SoLuong">Số lượng tồn kho:</label>
-                        <input
+                    </FormControl>
+                    <FormControl sx={{width:"120px"}} margin="normal">
+                        <Button
+                            variant="contained"
+                            component="label"
+                        >
+                            Tải ảnh lên
+                            <input
+                                type="file"
+                                id="IMG"
+                                name="IMG"
+                                hidden
+                                onChange={handleChange}
+                            />
+                        </Button>
+                        {selectedFileName && (
+                            <Typography variant="body2" color="textSecondary" mt={1}>
+                                {selectedFileName}
+                            </Typography>
+                        )}
+                    </FormControl>
+                    <FormControl fullWidth margin="normal">
+                        <TextField
+                            label="Số lượng tồn kho"
                             type="number"
                             id="SoLuong"
                             name="SoLuong"
+                            value={soLuong}
                             onChange={handleChange}
+                            fullWidth
                         />
-                    </div>
-                    <button type="submit">Lưu</button>
+                    </FormControl>
+                    <Box mt={1} textAlign="center">
+                        <Button variant="contained" color="primary" type="submit" sx={{width:"120px"}}> 
+                            Lưu
+                        </Button>
+                    </Box>
                 </form>
-            </div>
-        </div>
-
+            </DialogContent>
+            <Backdrop
+                sx={{ color: '#fff', zIndex: (theme) => theme.zIndex.drawer + 1 }}
+                open={loading}
+            >
+                <CircularProgress color="inherit" />
+            </Backdrop>
+        </Dialog>
     );
-};
+}
 
 export default AddProductModal;
