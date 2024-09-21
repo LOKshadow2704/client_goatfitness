@@ -4,6 +4,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartShopping, faHeartPulse, faIndustry, faUsers } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import Statistical from "../Statistical/Statistical";
+import LineChart  from "../LineChart/LineChart";
 import { useAnnouncement } from "../../contexts/Announcement";
 
 function Dashboard(){
@@ -94,8 +95,9 @@ function Dashboard(){
             </div>
             <div className={style["statistical"]}>
                 
-                <h1><FontAwesomeIcon icon={faIndustry} />Thống kê lượng người tham gia tập</h1>
-                <Statistical />
+                {/* <h1><FontAwesomeIcon icon={faIndustry} />Thống kê lượng người tham gia tập</h1> */}
+                {/* <Statistical /> */}
+                <LineChart/>
             </div>
 
             

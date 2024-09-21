@@ -1,9 +1,21 @@
 import React, { useState } from "react";
-import style from "./style.module.css";
-import { Close } from "@mui/icons-material";
 import axios from "axios";
 import { useAnnouncement } from "../../contexts/Announcement";
-import { Button } from "@mui/material"; 
+import { TextField, Select, MenuItem, Button, IconButton, FormControl, InputLabel, Box, Typography, Modal } from "@mui/material";
+import { Close } from "@mui/icons-material";
+
+// Style cho Modal
+const modalStyle = {
+    position: 'absolute',
+    top: '50%',
+    left: '50%',
+    transform: 'translate(-50%, -50%)',
+    width: 400,
+    bgcolor: 'background.paper',
+    borderRadius: '8px',
+    boxShadow: 24,
+    p: 4,
+};
 
 function UpdateRoleModal({ data, setShowModal }) {
     const { setError, setMessage, setSuccess, setLocation, setLink } = useAnnouncement();
@@ -47,9 +59,7 @@ function UpdateRoleModal({ data, setShowModal }) {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-
             console.log(formData)
-
             axios.put('http://localhost:8080/Backend/admin/update', formData, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
@@ -72,50 +82,60 @@ function UpdateRoleModal({ data, setShowModal }) {
     };
 
     return (
-        <div className={style.modal}>
-            <div className={style.wrap_content}>
-                <p>
-                    <Close
-                        onClick={() => setShowModal(false)}
-                        style={{ cursor: 'pointer' ,marginTop:'5px'}} // Thêm kiểu con trỏ để giống như icon đóng
-                    />
-                </p>
-                <h1>Cập nhật vai trò</h1>
-                <form className={style.updateForm} onSubmit={handleSubmit}>
-                    <div className={style.formGroup}>
-                        <label htmlFor="TenDangNhap">Tên đăng nhập:</label>
-                        <input
-                            type="text"
+        <Modal
+            open={true}
+            onClose={() => setShowModal(false)}
+            aria-labelledby="modal-title"
+            aria-describedby="modal-description"
+        >
+            <Box sx={modalStyle}>
+                <IconButton onClick={() => setShowModal(false)} sx={{ position: 'absolute', top: '16px', right: '16px' }}>
+                    <Close />
+                </IconButton>
+                <Typography id="modal-title" variant="h6" component="h2" sx={{ mb: 2 ,textAlign:'center',fontWeight:'bold',fontSize:'24px'}}>
+                    Cập nhật vai trò
+                </Typography>
+                <form onSubmit={handleSubmit}>
+                    <FormControl fullWidth sx={{ mb: 2,mt:2}}>
+                        <TextField
+                            label="Tên đăng nhập"
                             id="TenDangNhap"
                             name="TenDangNhap"
                             value={formData.TenDangNhap}
-                            readOnly
+                            InputProps={{ readOnly: true }}
+                            variant="outlined"
+                            fullWidth
                         />
-                    </div>
-                    <div className={style.formGroup}>
-                        <label htmlFor="IDVaiTro">Vai trò :</label>
-                        <select
+                    </FormControl>
+                    <FormControl fullWidth sx={{ mb: 2, mt:1 }}>
+                        <InputLabel id="role-label">Vai trò</InputLabel>
+                        <Select
+                            labelId="role-label"
                             id="IDVaiTro"
                             name="IDVaiTro"
                             value={formData.IDVaiTro}
                             onChange={handleChange}
+                            label="Vai Trò"
                         >
-                            <option value="1">Admin</option>
-                            <option value="2">Employee</option>
-                            <option value="3">User</option>
-                        </select>
-                    </div>
-                    <Button 
-                        type="submit" 
-                        variant="contained" 
+                            <MenuItem value="1">Admin</MenuItem>
+                            <MenuItem value="2">Employee</MenuItem>
+                            <MenuItem value="3">User</MenuItem>
+                        </Select>
+                    </FormControl>
+
+                    {/* Button Lưu */}
+                    <Button
+                        type="submit"
+                        variant="contained"
                         color="primary"
-                        style={{ width: '20%', marginTop: '20px' , marginLeft:'45%' ,padding:'20px'}}
+                        fullWidth
+                        sx={{mt:2}}
                     >
                         Lưu
                     </Button>
                 </form>
-            </div>
-        </div>
+            </Box>
+        </Modal>
     );
 }
 

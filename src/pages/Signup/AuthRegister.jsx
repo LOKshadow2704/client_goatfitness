@@ -116,9 +116,9 @@ const AuthRegister = ({ ...others }) => {
     // Validate all fields
     ['username', 'password', 're_password', 'email', 'phone', 'fullname', 'address'].forEach(field => {
       const value = formData[field];
-      validateField(field, value);
-      if (errors[field]) {
-        newErrors[field] = errors[field];
+      validateField(field, value); // Kiểm tra lỗi cho từng trường
+      if (!value || errors[field]) {
+        newErrors[field] = errors[field] || "Vui lòng điền thông tin vào trường này.";
         isValid = false;
       }
     });
@@ -131,10 +131,11 @@ const AuthRegister = ({ ...others }) => {
     setErrors(newErrors);
     return isValid;
   };
+  
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    
+  
     if (!validateForm()) {
       return;
     }
@@ -145,17 +146,25 @@ const AuthRegister = ({ ...others }) => {
       if (response.status === 200) {
         setSuccess(true);
         setMessage(response.data.success || "Đăng ký thành công");
-        setLocation(true); // Đảm bảo setLocation làm gì đó trong context
-        setLink("http://localhost:3000/login"); // Đảm bảo link được cập nhật đúng cách
-        navigate('/login'); // Sử dụng navigate để chuyển hướng
+        setLocation(true);
+        setLink("http://localhost:3000/login");
+        navigate('/login');
       } else {
         throw new Error(response.data.error || 'Unknown error');
       }
     } catch (error) {
-      setError(true);
-      setMessage(error.response?.data?.error || 'Đã xảy ra lỗi khi đăng ký');
+      if (error.response?.data?.error === "Tên đăng nhập đã tồn tại") {
+        setErrors((prevState) => ({
+          ...prevState,
+          username: "Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác."
+        }));
+      } else {
+        setError(true);
+        setMessage(error.response?.data?.error || 'Đã xảy ra lỗi khi đăng ký');
+      }
     }
   };
+  
   
 
   return (
@@ -171,15 +180,15 @@ const AuthRegister = ({ ...others }) => {
         helperText={errors.fullname}
       />
       <TextField
-        fullWidth
-        label="Tên đăng nhập"
-        margin="normal"
-        name="username"
-        value={formData.username}
-        onChange={handleChange}
-        error={Boolean(errors.username)}
-        helperText={errors.username}
-      />
+  fullWidth
+  label="Tên đăng nhập"
+  margin="normal"
+  name="username"
+  value={formData.username}
+  onChange={handleChange}
+  error={Boolean(errors.username)}
+  helperText={errors.username}
+/>
       <FormControl fullWidth error={Boolean(errors.password)} sx={{ marginTop: '10px' }}>
         <InputLabel htmlFor="outlined-adornment-password-register">Mật khẩu</InputLabel>
         <OutlinedInput

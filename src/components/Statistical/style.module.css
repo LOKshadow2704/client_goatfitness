@@ -14,6 +14,14 @@
 .apexcharts-toolbar {
   font-size: 14px !important;
 }
+.apexcharts-menu {
+  max-height: 200px; /* Giới hạn chiều cao */
+  overflow-y: auto; /* Thêm khả năng cuộn */
+}
+
+.apexcharts-menu-item {
+  font-size: 12px !important; /* Giữ font chữ nhỏ */
+}
 
 .apexcharts-toolbar .apexcharts-toolbar-icon {
   width: 16px !important;

@@ -15,7 +15,7 @@ import PurchaseOrder from "../pages/PurchaseOrder/PurchaseOrder";
 import RegisterPT from "../pages/RegisterPT/Register";
 import CartPage from "../pages/Cart/Cart"
 // import Dashboard from "../components/Dashboard/Dashboard";
-// import MainLayout from "src/components/MainLayout";
+import MainLayout from "src/components/MainLayout";
 
 
 // Route public cho nhóm người dùng
