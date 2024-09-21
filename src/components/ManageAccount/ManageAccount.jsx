@@ -106,7 +106,7 @@ function ManageAccount({ data }) {
             onChange={handleSearchChange}
             variant="outlined"
             size="small"
-            sx={{marginRight:'40px'}}
+            sx={{marginRight:'20px'}}
           />
         </div>
 

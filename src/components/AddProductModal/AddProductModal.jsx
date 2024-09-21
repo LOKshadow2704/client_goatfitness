@@ -228,7 +228,7 @@ function AddProductModal({ setShowModal }) {
                             fullWidth
                         />
                     </FormControl>
-                    <FormControl sx={{width:"120px"}} margin="normal">
+                    <FormControl sx={{width:"130px"}} margin="normal">
                         <Button
                             variant="contained"
                             component="label"

@@ -134,17 +134,28 @@ function ManageProduct({ data }) {
       <div style={{ marginBottom: "20px" }}>
         {/* Input tìm kiếm */}
         <TextField
-          label="Tìm kiếm sản phẩm"
-          variant="outlined"
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-          sx={{
-            marginRight: "20px",
-            "& .MuiInputBase-root": {
-              height: "50px",
-            },
-          }}
-        />
+  label="Tìm kiếm sản phẩm"
+  variant="outlined"
+  value={searchTerm}
+  onChange={(e) => setSearchTerm(e.target.value)}
+  sx={{
+    marginRight: "20px",
+    "& .MuiInputBase-root": {
+      height: "40px",
+      display: "flex",
+      alignItems: "center", 
+    },
+    "& .MuiInputLabel-root": {
+      top: "-4px", 
+      fontSize: "14px", 
+    },
+    "& .MuiOutlinedInput-input": {
+      padding: "10px 14px", 
+      height: "40px", 
+    },
+  }}
+/>
+
 
         {/* Select sắp xếp */}
         <Select
@@ -152,7 +163,7 @@ function ManageProduct({ data }) {
           onChange={handleSortChange}
           displayEmpty
           inputProps={{ "aria-label": "Sắp xếp theo" }}
-          style={{ width: "200px",height:"50px" }}
+          style={{ width: "200px",height:"40px" }}
         >
           <MenuItem value="">Sắp xếp theo</MenuItem>
           <MenuItem value="name">Tên từ A-Z</MenuItem>

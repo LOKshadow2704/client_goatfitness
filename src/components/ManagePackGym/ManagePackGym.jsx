@@ -98,28 +98,64 @@ function ManagePackGym() {
       {update && <UpdateGymPackModal data={selectedPack} setShowModal={setUpdate} />}
       <div style={{ marginBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <TextField
-            label="Tìm kiếm gói tập"
-            variant="outlined"
-            value={searchTerm}
-            onChange={handleSearch}
-            style={{ marginLeft: "10px", marginRight: "20px" }}
-          />
-          <FormControl style={{ marginRight: "20px" }}>
-            <InputLabel>Sắp xếp theo</InputLabel>
-            <Select
-              value={sortType}
-              onChange={handleSort}
-              displayEmpty
-              inputProps={{ "aria-label": "Sắp xếp theo" }}
-            >
-              <MenuItem value="">Sắp xếp theo...</MenuItem>
-              <MenuItem value="priceAsc">Giá tăng dần</MenuItem>
-              <MenuItem value="priceDesc">Giá giảm dần</MenuItem>
-              <MenuItem value="durationAsc">Thời hạn tăng dần</MenuItem>
-              <MenuItem value="durationDesc">Thời hạn giảm dần</MenuItem>
-            </Select>
-          </FormControl>
+        <TextField
+  label="Tìm kiếm gói tập"
+  variant="outlined"
+  value={searchTerm}
+  onChange={handleSearch}
+  sx={{
+    marginLeft: "10px",
+    marginRight: "20px",
+    "& .MuiInputBase-root": {
+      height: "40px !important",
+      display: "flex",
+      alignItems: "center", 
+    },
+    "& .MuiInputLabel-root": {
+      top: "-4px", 
+      fontSize: "14px", 
+    },
+    "& .MuiOutlinedInput-input": {
+      padding: "10px 14px", 
+      height: "40px", 
+    },
+  }}
+/>
+
+<FormControl 
+  sx={{
+    marginRight: "20px",
+    "& .MuiInputBase-root": {
+      height: "40px", // Đặt chiều cao cho Select
+      width:"180px"
+    },
+    "& .MuiInputLabel-root": {
+      top: "-6px", // Điều chỉnh vị trí của label nếu cần
+      fontSize: "14px", // Điều chỉnh kích thước label
+    },
+    "& .MuiSelect-select": {
+      padding: "10px 14px", // Điều chỉnh padding để canh giữa nội dung
+      height: "40px", // Đặt chiều cao của nội dung bên trong Select
+      display: "flex",
+      alignItems: "center", // Canh giữa nội dung theo chiều dọc
+    }
+  }}
+>
+  {/* <InputLabel>Sắp xếp theo</InputLabel> */}
+  <Select
+    value={sortType}
+    onChange={handleSort}
+    displayEmpty
+    inputProps={{ "aria-label": "Sắp xếp theo" }}
+  >
+    <MenuItem value="">Sắp xếp theo</MenuItem>
+    <MenuItem value="priceAsc">Giá tăng dần</MenuItem>
+    <MenuItem value="priceDesc">Giá giảm dần</MenuItem>
+    <MenuItem value="durationAsc">Thời hạn tăng dần</MenuItem>
+    <MenuItem value="durationDesc">Thời hạn giảm dần</MenuItem>
+  </Select>
+</FormControl>
+
         </div>
         <Button
           variant="contained"
