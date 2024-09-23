@@ -148,7 +148,7 @@ function UpdateProductModal({ data, setShowModal }) {
 
     return (
         <Dialog open={true} onClose={() => setShowModal(false)} fullWidth maxWidth="sm">
-            <DialogTitle sx={{textAlign:'center'}}>
+            <DialogTitle sx={{textAlign:'center',fontWeight:'bold'}}>
                 Cập nhật sản phẩm
                 <IconButton 
                     onClick={() => setShowModal(false)}

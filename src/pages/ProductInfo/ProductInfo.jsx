@@ -7,6 +7,8 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faCartPlus } from "@fortawesome/free-solid-svg-icons";
 import { Button, ButtonGroup } from '@mui/material';
 import { useAnnouncement } from "../../contexts/Announcement"; 
+import { faPlus, faMinus } from "@fortawesome/free-solid-svg-icons";
+
 
 function ProductInfo() {
     const { productID } = useParams();
@@ -117,23 +119,24 @@ function ProductInfo() {
                     <div>
                         <p> Số lượng </p>
                         <ButtonGroup
-                          size="small"
-                          aria-label="small outlined button group"
-                          sx={{ marginLeft: 7, color: "black" }}
-                        >
-                          <Button
-                            onClick={() => handleQuantityChange(-1)}
-                            disabled={quantity === 1}
-                          >
-                            -
-                          </Button>
-                          <Button disabled>{quantity}</Button>
-                          <Button
-                            onClick={() => handleQuantityChange(1)}
-                          >
-                            +
-                          </Button>
-                        </ButtonGroup>
+  size="small"
+  aria-label="small outlined button group"
+  sx={{ marginLeft: 7, color: "black" }}
+>
+  <Button
+    onClick={() => handleQuantityChange(-1)}
+    disabled={quantity === 1}
+  >
+    <FontAwesomeIcon icon={faMinus} />
+  </Button>
+  <Button disabled>{quantity}</Button>
+  <Button
+    onClick={() => handleQuantityChange(1)}
+  >
+    <FontAwesomeIcon icon={faPlus} />
+  </Button>
+</ButtonGroup>
+
                         <div className={style.action}>
                             <button className={style['CartBtn-1']} onClick={() => {
                             AddtoCart(product.IDSanPham);

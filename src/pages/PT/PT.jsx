@@ -162,8 +162,20 @@ function PT() {
                 fullWidth
                 sx={{
                   width: "200px",
-                  height: "50px",
-                  marginTop: "10px",
+                  marginTop: "15px",
+                  "& .MuiInputBase-root": {
+                    height: "40px",
+                  },
+                  "& .MuiInputLabel-root": {
+                    top: "-6px",
+                    fontSize: "14px",
+                  },
+                  "& .MuiSelect-select": {
+                    padding: "10px 14px",
+                    height: "40px",
+                    display: "flex",
+                    alignItems: "center",
+                  },
                 }}
               >
                 <InputLabel id="pt_category_label">Danh mục HLV</InputLabel>
@@ -173,12 +185,6 @@ function PT() {
                   value={productsByCategory}
                   label="Danh mục HLV"
                   onChange={(e) => setProductsByCategory(e.target.value)}
-                  sx={{
-                    height: "50px",
-                    width: "200px",
-                    fontSize: "14px",
-                    borderRadius: "8px",
-                  }}
                 >
                   <MenuItem value="Tất cả">Tất cả</MenuItem>
                   {categories.map((value, index) => (
@@ -195,8 +201,20 @@ function PT() {
                 fullWidth
                 sx={{
                   width: "200px",
-                  height: "50px",
-                  marginTop: "10px",
+                  marginTop: "15px",
+                  "& .MuiInputBase-root": {
+                    height: "40px",
+                  },
+                  "& .MuiInputLabel-root": {
+                    top: "-6px",
+                    fontSize: "14px",
+                  },
+                  "& .MuiSelect-select": {
+                    padding: "10px 14px",
+                    height: "40px",
+                    display: "flex",
+                    alignItems: "center",
+                  },
                 }}
               >
                 <InputLabel id="sort_label">Sắp xếp theo giá</InputLabel>
@@ -206,12 +224,6 @@ function PT() {
                   value={sortOrder}
                   label="Sắp xếp theo giá"
                   onChange={handleSort}
-                  sx={{
-                    height: "50px",
-                    width: "200px",
-                    fontSize: "14px",
-                    borderRadius: "8px",
-                  }}
                 >
                   <MenuItem value="none">Không sắp xếp</MenuItem>
                   <MenuItem value="asc">Tăng dần</MenuItem>

@@ -31,7 +31,7 @@ const AuthRegister = ({ ...others }) => {
     fullname: '',
     username: '',
     password: '',
-    re_password: '', // Đổi tên trường từ confirmPassword thành re_password
+    re_password: '', 
     email: '',
     phone: '',
     address: '',
@@ -116,7 +116,7 @@ const AuthRegister = ({ ...others }) => {
     // Validate all fields
     ['username', 'password', 're_password', 'email', 'phone', 'fullname', 'address'].forEach(field => {
       const value = formData[field];
-      validateField(field, value); // Kiểm tra lỗi cho từng trường
+      validateField(field, value); 
       if (!value || errors[field]) {
         newErrors[field] = errors[field] || "Vui lòng điền thông tin vào trường này.";
         isValid = false;
@@ -220,7 +220,7 @@ const AuthRegister = ({ ...others }) => {
           id="outlined-adornment-confirm-password-register"
           type="password"
           value={formData.re_password}
-          name="re_password" // Đổi tên trường từ confirmPassword thành re_password
+          name="re_password" 
           onChange={handleChange}
           label="Nhập lại mật khẩu"
         />

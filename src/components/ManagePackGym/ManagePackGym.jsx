@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare,faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import RegisterPackModal from "../RegisterPackModal/RegisterPackModal";
@@ -126,18 +126,18 @@ function ManagePackGym() {
   sx={{
     marginRight: "20px",
     "& .MuiInputBase-root": {
-      height: "40px", // Đặt chiều cao cho Select
+      height: "40px", 
       width:"180px"
     },
     "& .MuiInputLabel-root": {
-      top: "-6px", // Điều chỉnh vị trí của label nếu cần
-      fontSize: "14px", // Điều chỉnh kích thước label
+      top: "-6px", 
+      fontSize: "14px", 
     },
     "& .MuiSelect-select": {
-      padding: "10px 14px", // Điều chỉnh padding để canh giữa nội dung
-      height: "40px", // Đặt chiều cao của nội dung bên trong Select
+      padding: "10px 14px", 
+      height: "40px", 
       display: "flex",
-      alignItems: "center", // Canh giữa nội dung theo chiều dọc
+      alignItems: "center", 
     }
   }}
 >
@@ -199,8 +199,16 @@ function ManagePackGym() {
                     variant="outlined"
                     color="primary"
                     onClick={() => handleEdit(value)}
+                    style={{ marginRight: "5px" }}
                   >
-                    <FontAwesomeIcon icon={faPenToSquare} /> Chỉnh sửa
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    // onClick={() => handleDelete(value.IDGoiTap)} Này Vỹ khóa cái hàm handleDelete tại hong có API xóa.
+                  >
+                    <FontAwesomeIcon icon={faTrashCan} />
                   </Button>
                 </TableCell>
               </TableRow>

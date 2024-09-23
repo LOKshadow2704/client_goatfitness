@@ -5,7 +5,7 @@ import {
   InputLabel, Select, MenuItem, TextField,
   Button, TablePagination
 } from '@mui/material';
-import { faPenToSquare } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 import CreateUserModal from "../CreateUserModal/CreateUserModal";
@@ -80,6 +80,45 @@ function ManageAccount({ data }) {
     setSelectedUser(user);
     setModalUpdate(true);
   }
+  // const handleDelete = (id) => {
+  //   const findCookie = (name) => {
+  //     const cookies = document.cookie.split(";");
+  //     for (let i = 0; i < cookies.length; i++) {
+  //       const cookie = cookies[i].trim();
+  //       if (cookie.startsWith(name + "=")) {
+  //         return cookie.substring(name.length + 1);
+  //       }
+  //     }
+  //     return null;
+  //   };
+  //   const isLogin = findCookie("jwt");
+  //   if (isLogin) {
+  //     const jwt = findCookie("jwt");
+  //     const headers = {
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer " + jwt,
+  //       PHPSESSID: findCookie("PHPSESSID"),
+  //     };
+  //     axios
+  //       .delete("http://localhost:8080/Backend/account/delete", {
+  //         data: { TenDangNhap: id },
+  //         headers: headers,
+  //       })
+  //       .then((response) => {
+  //         if (response.status >= 200 && response.status < 300) {
+  //           setSuccess(true);
+  //           setMessage("Xóa thành công");
+  //           setRerender(!rerender);
+  //         } else {
+  //           throw new Error("Xóa thất bại");
+  //         }
+  //       })
+  //       .catch((error) => {
+  //         setError(true);
+  //         setMessage(error.response.data.error);
+  //       });
+  //   }
+  // };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -151,14 +190,21 @@ function ManageAccount({ data }) {
               <TableRow key={value.IDSanPham}>
                 <TableCell style={{ textAlign: "center"}}>{value.TenDangNhap}</TableCell>
                 <TableCell style={{ textAlign: "center"}}>{value.TenVaiTro}</TableCell>
-                <TableCell style={{ textAlign: "center"}}>
+                <TableCell style={{ textAlign: "center" }}>
                   <Button
                     variant="outlined"
                     color="primary"
-                    startIcon={<FontAwesomeIcon icon={faPenToSquare} />}
                     onClick={() => handleClickUpdate(value)}
+                    style={{ marginRight: "5px" }}
                   >
-                    Chỉnh sửa
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    // onClick={() => handleClickUpdate(value.IDSanPham)}
+                  >
+                    <FontAwesomeIcon icon={faTrashCan} />
                   </Button>
                 </TableCell>
               </TableRow>

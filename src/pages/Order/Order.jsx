@@ -155,9 +155,9 @@ function Order() {
             <table className={style.bang}>
               <thead>
                 <tr>
-                  <th>Sản Phẩm</th>
-                  <th>Số Lượng</th>
-                  <th>Đơn Giá</th>
+                  <th>Sản phẩm</th>
+                  <th>Số lượng</th>
+                  <th>Đơn giá</th>
                   <th>Thành tiền</th>
                 </tr>
               </thead>

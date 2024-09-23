@@ -74,7 +74,7 @@ function Cart() {
         setTotalPrice(total);
     }, [selectedItems, cartData]);
 
-    // Check if the cart is empty and navigate to the shop page
+    // Kiểm tra nếu giỏ hàng trống tự động trở về trang sản phẩm
     useEffect(() => {
         if (cartData.length === 0) {
             const timer = setTimeout(() => {
@@ -279,18 +279,18 @@ function Cart() {
                                             color="secondary"
                                             onClick={() => updateQuanMinus(item.IDSanPham, item.SoLuong)}
                                             className={style.button}
-                                            style={{ minWidth: "30px", padding: "5px 10px", marginRight: '5px' }}
+                                            style={{ minWidth: "30px", padding: "5px 10px", marginRight: '10px' }}
                                         >
                                             <FontAwesomeIcon icon={faMinus} />
                                         </Button>
-                                        {item.SoLuong}
+                                        <span style={{fontWeight:'bo'}}>{item.SoLuong}</span>
                                         <Button
                                             variant="outlined"
                                             size="small"
                                             color="primary"
                                             onClick={() => updateQuanPlus(item.IDSanPham)}
                                             className={style.button}
-                                            style={{ minWidth: "30px", padding: "5px 10px", marginLeft: '5px' }}
+                                            style={{ minWidth: "30px", padding: "5px 10px", marginLeft: '10px' }}
                                         >
                                             <FontAwesomeIcon icon={faPlus} />
                                         </Button>

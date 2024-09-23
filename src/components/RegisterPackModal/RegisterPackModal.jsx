@@ -1,9 +1,19 @@
 import React, { useState } from "react";
-import style from "./style.module.css";
+import Dialog from "@mui/material/Dialog";
+import DialogActions from "@mui/material/DialogActions";
+import DialogContent from "@mui/material/DialogContent";
+import DialogTitle from "@mui/material/DialogTitle";
+import Button from "@mui/material/Button";
+import TextField from "@mui/material/TextField";
+import Select from "@mui/material/Select";
+import MenuItem from "@mui/material/MenuItem";
+import IconButton from "@mui/material/IconButton";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import axios from "axios";
 import { useAnnouncement } from "../../contexts/Announcement";
+import FormControl from "@mui/material/FormControl";
+import InputLabel from "@mui/material/InputLabel";
 
 function RegisterPackModal({ data, setShowModal }) {
     const [formData, setFormData] = useState({
@@ -11,13 +21,12 @@ function RegisterPackModal({ data, setShowModal }) {
         IDGoiTap: "",
         ThoiHan: ""
     });
-    const { setError ,setMessage ,setSuccess , setLocation , setLink} = useAnnouncement();
+    const { setError, setMessage, setSuccess, setLocation, setLink } = useAnnouncement();
 
     const handleChange = (e) => {
         const { name, value } = e.target;
         let updatedFormData = { ...formData, [name]: value };
 
-        // Kiểm tra xem số điện thoại có bắt đầu bằng số 0 hay không
         if (name === "SDT" && value.length > 0 && value.charAt(0) !== '0') {
             setError(true);
             setMessage("Số điện thoại phải bắt đầu bằng số 0");
@@ -36,21 +45,20 @@ function RegisterPackModal({ data, setShowModal }) {
         setFormData(updatedFormData);
     };
 
-
     const handleSubmit = (e) => {
         e.preventDefault();
         const findCookie = (name) => {
             const cookies = document.cookie.split(';');
             for (let i = 0; i < cookies.length; i++) {
-              const cookie = cookies[i].trim();
-              if (cookie.startsWith(name + '=')) {
-                return cookie.substring(name.length + 1);
-              }
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
             }
             return null;
         };
         const isLogin = findCookie("jwt");
-        if(isLogin){
+        if (isLogin) {
             if (!formData.SDT || !formData.IDGoiTap) {
                 setError(true);
                 setMessage("Vui lòng điền đầy đủ thông tin");
@@ -62,7 +70,7 @@ function RegisterPackModal({ data, setShowModal }) {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.post('http://localhost:8080/Backend/gympack/registerByEmployee', formData ,{ headers: headers })
+            axios.post('http://localhost:8080/Backend/gympack/registerByEmployee', formData, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);
@@ -76,56 +84,92 @@ function RegisterPackModal({ data, setShowModal }) {
                     setError(true);
                     setMessage(error.response.data.error);
                 });
-        }else{
+        } else {
             setError(true);
             setMessage("Vui lòng đăng nhập!");
             setLocation(true);
-            setLink("http://localhost:3000/login"); 
-        }    
+            setLink("http://localhost:3000/login");
+        }
     };
 
     return (
-        <div className={style.modal}>
-            <div className={style.wrap_content}>
-                <p><FontAwesomeIcon icon={faXmark} onClick={() => setShowModal(false)} /></p>
-                <h1>Đăng ký mới</h1>
-                <form className={style.updateForm} onSubmit={handleSubmit}>
-                    <div className={style.formGroup}>
-                        <label htmlFor="SDT">Số điện thoại: </label>
-                        <input
-                            type="text"
-                            pattern="[0-9]*"
-                            maxLength="11"
-                            minLength="10"
-                            id="SDT"
-                            name="SDT"
-                            value={formData.SDT}
-                            onChange={handleChange}
-                        />
-                    </div>
-                    <div className={style.formGroup}>
-                        <label htmlFor="IDGoiTap">Loại sản phẩm:</label>
-                        <select
-                            id="IDGoiTap"
-                            name="IDGoiTap"
-                            value={formData.IDGoiTap}
-                            onChange={handleChange}
-                        >
-                            <option value="">Chọn loại sản phẩm</option>
-                            {data && data.map((value) => (
-                                <option
-                                    key={value.IDGoiTap}
-                                    value={value.IDGoiTap}
-                                >
-                                    {value.TenGoiTap}
-                                </option>
-                            ))}
-                        </select>
-                    </div>
-                    <button type="submit">Lưu</button>
+        <Dialog open={true} onClose={() => setShowModal(false)} maxWidth="xs" fullWidth sx={{height:'600px'}}>
+            <DialogTitle>
+                <span style={{textAlign:"center"}}>Đăng ký mới</span>
+                <IconButton
+                    aria-label="close"
+                    onClick={() => setShowModal(false)}
+                    sx={{
+                        position: 'absolute',
+                        right: 8,
+                        top: 8,
+                        color: (theme) => theme.palette.grey[500],
+                    }}
+                >
+                    <FontAwesomeIcon icon={faXmark} />
+                </IconButton>
+            </DialogTitle>
+            <DialogContent>
+                <form onSubmit={handleSubmit}>
+                    <TextField
+                        fullWidth
+                        margin="normal"
+                        label="Số điện thoại"
+                        name="SDT"
+                        type="text"
+                        inputProps={{ maxLength: 11, minLength: 10, pattern: "[0-9]*" }}
+                        value={formData.SDT}
+                        onChange={handleChange}
+                       
+                        // required
+                    />
+                    {/* <Select
+                        fullWidth
+                        label="Loại sản phẩm"
+                        name="IDGoiTap"
+                        value={formData.IDGoiTap}
+                        onChange={handleChange}
+                        displayEmpty
+                        required
+                    >
+                        <MenuItem value="">
+                            <em>Chọn loại sản phẩm</em>
+                        </MenuItem>
+                        {data && data.map((value) => (
+                            <MenuItem key={value.IDGoiTap} value={value.IDGoiTap}>
+                                {value.TenGoiTap}
+                            </MenuItem>
+                        ))}
+                    </Select> */}
+                    <FormControl fullWidth margin="normal" >
+    <InputLabel id="product-select-label">Loại sản phẩm</InputLabel>
+    <Select
+        labelId="product-select-label"
+        name="IDGoiTap"
+        value={formData.IDGoiTap}
+        onChange={handleChange}
+        label="Loại sản phẩm"  
+    >
+        <MenuItem value="">
+            <em>Chọn loại sản phẩm</em>
+        </MenuItem>
+        {data && data.map((value) => (
+            <MenuItem key={value.IDGoiTap} value={value.IDGoiTap}>
+                {value.TenGoiTap}
+            </MenuItem>
+        ))}
+    </Select>
+</FormControl>
+
                 </form>
-            </div>
-        </div>
+            </DialogContent>
+            <DialogActions>
+                <Button onClick={() => setShowModal(false)}>Hủy</Button>
+                <Button type="submit" onClick={handleSubmit} variant="contained" color="primary">
+                    Lưu
+                </Button>
+            </DialogActions>
+        </Dialog>
     );
 }
 

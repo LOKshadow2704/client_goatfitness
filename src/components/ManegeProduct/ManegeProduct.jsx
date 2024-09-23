@@ -14,10 +14,7 @@ import {
   Stack,
 } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
-import {
-  faPenToSquare,
-  faTrashCan,
-} from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UpdateProductModal from "../UpdateProductModal/UpdateProductModal";
 import AddProductModal from "../AddProductModal/AddProductModal";
@@ -134,28 +131,27 @@ function ManageProduct({ data }) {
       <div style={{ marginBottom: "20px" }}>
         {/* Input tìm kiếm */}
         <TextField
-  label="Tìm kiếm sản phẩm"
-  variant="outlined"
-  value={searchTerm}
-  onChange={(e) => setSearchTerm(e.target.value)}
-  sx={{
-    marginRight: "20px",
-    "& .MuiInputBase-root": {
-      height: "40px",
-      display: "flex",
-      alignItems: "center", 
-    },
-    "& .MuiInputLabel-root": {
-      top: "-4px", 
-      fontSize: "14px", 
-    },
-    "& .MuiOutlinedInput-input": {
-      padding: "10px 14px", 
-      height: "40px", 
-    },
-  }}
-/>
-
+          label="Tìm kiếm sản phẩm"
+          variant="outlined"
+          value={searchTerm}
+          onChange={(e) => setSearchTerm(e.target.value)}
+          sx={{
+            marginRight: "20px",
+            "& .MuiInputBase-root": {
+              height: "40px",
+              display: "flex",
+              alignItems: "center",
+            },
+            "& .MuiInputLabel-root": {
+              top: "-4px",
+              fontSize: "14px",
+            },
+            "& .MuiOutlinedInput-input": {
+              padding: "10px 14px",
+              height: "40px",
+            },
+          }}
+        />
 
         {/* Select sắp xếp */}
         <Select
@@ -163,7 +159,7 @@ function ManageProduct({ data }) {
           onChange={handleSortChange}
           displayEmpty
           inputProps={{ "aria-label": "Sắp xếp theo" }}
-          style={{ width: "200px",height:"40px" }}
+          style={{ width: "200px", height: "40px" }}
         >
           <MenuItem value="">Sắp xếp theo</MenuItem>
           <MenuItem value="name">Tên từ A-Z</MenuItem>
@@ -189,9 +185,8 @@ function ManageProduct({ data }) {
         />
       )}
       {addproductModal && <AddProductModal setShowModal={setAddproductModal} />}
-      
+
       <TableContainer component={Paper}>
-    
         <Table>
           <TableHead>
             <TableRow>
@@ -213,50 +208,56 @@ function ManageProduct({ data }) {
             </TableRow>
           </TableHead>
           <TableBody>
-  {paginatedData.map((value, index) => (
-    <TableRow
-      key={value.IDSanPham}
-      sx={{
-        backgroundColor: index % 2 === 0 ? "white" : "#f5f5f5", // Hàng lẻ màu trắng, hàng chẵn màu xám
-      }}
-    >
-      <TableCell style={{ textAlign: "center" }}>
-        <div style={{ display: "flex", alignItems: "center" }}>
-          <img src={value.IMG} alt={value.TenSP} width="80px" height="50px" />
-          <p style={{ marginLeft: "30px" }}>{value.TenSP}</p>
-        </div>
-      </TableCell>
-      <TableCell style={{ textAlign: "center" }}>
-        {value.TenLoaiSanPham}
-      </TableCell>
-      <TableCell style={{ textAlign: "center",color:"red" }}>
-        {value.DonGia.toLocaleString("vi-VN", {
-          style: "currency",
-          currency: "VND",
-        })}
-      </TableCell>
-      <TableCell style={{ textAlign: "center" }}>{value.SoLuong}</TableCell>
-      <TableCell style={{ textAlign: "center" }}>
-        <Button
-          variant="outlined"
-          color="primary"
-          onClick={() => handleEdit(value)}
-          style={{ marginRight: "5px" }}
-        >
-          <FontAwesomeIcon icon={faPenToSquare} />
-        </Button>
-        <Button
-          variant="outlined"
-          color="error"
-          onClick={() => handleDelete(value.IDSanPham)}
-        >
-          <FontAwesomeIcon icon={faTrashCan} />
-        </Button>
-      </TableCell>
-    </TableRow>
-  ))}
-</TableBody>
-
+            {paginatedData.map((value, index) => (
+              <TableRow
+                key={value.IDSanPham}
+                sx={{
+                  backgroundColor: index % 2 === 0 ? "white" : "#f5f5f5", // Hàng lẻ màu trắng, hàng chẵn màu xám
+                }}
+              >
+                <TableCell style={{ textAlign: "center" }}>
+                  <div style={{ display: "flex", alignItems: "center" }}>
+                    <img
+                      src={value.IMG}
+                      alt={value.TenSP}
+                      width="80px"
+                      height="50px"
+                    />
+                    <p style={{ marginLeft: "30px" }}>{value.TenSP}</p>
+                  </div>
+                </TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                  {value.TenLoaiSanPham}
+                </TableCell>
+                <TableCell style={{ textAlign: "center", color: "red" }}>
+                  {value.DonGia.toLocaleString("vi-VN", {
+                    style: "currency",
+                    currency: "VND",
+                  })}
+                </TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                  {value.SoLuong}
+                </TableCell>
+                <TableCell style={{ textAlign: "center" }}>
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => handleEdit(value)}
+                    style={{ marginRight: "5px" }}
+                  >
+                    <FontAwesomeIcon icon={faPenToSquare} />
+                  </Button>
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => handleDelete(value.IDSanPham)}
+                  >
+                    <FontAwesomeIcon icon={faTrashCan} />
+                  </Button>
+                </TableCell>
+              </TableRow>
+            ))}
+          </TableBody>
         </Table>
       </TableContainer>
 

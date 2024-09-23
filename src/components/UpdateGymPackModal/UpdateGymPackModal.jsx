@@ -6,6 +6,7 @@ import { useAnnouncement } from "../../contexts/Announcement";
 
 function UpdateGymPackModal({ data, setShowModal }) {
     const { setError, setMessage, setSuccess } = useAnnouncement();
+    const [rerender, setRerender] = useState(false);
     const [formData, setFormData] = useState({
         IDGoiTap: data.IDGoiTap,
         TenGoiTap: data.TenGoiTap,
@@ -40,6 +41,48 @@ function UpdateGymPackModal({ data, setShowModal }) {
         const { name, value } = e.target;
         setFormData(prevState => ({ ...prevState, [name]: value }));
     };
+
+    //Vỹ thêm cái delete nhưng không biết đúng không. Với cái điểm endpoint hong có biết tạo API nên để vậy.
+
+    const handleDelete = (id) => {
+        const findCookie = (name) => {
+          const cookies = document.cookie.split(";");
+          for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(name + "=")) {
+              return cookie.substring(name.length + 1);
+            }
+          }
+          return null;
+        };
+        const isLogin = findCookie("jwt");
+        if (isLogin) {
+          const jwt = findCookie("jwt");
+          const headers = {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + jwt,
+            PHPSESSID: findCookie("PHPSESSID"),
+          };
+          axios
+            .delete("http://localhost:8080/Backend/gympack/delete", {
+              data: { IDGoiTap: id },
+              headers: headers,
+            })
+            .then((response) => {
+              if (response.status >= 200 && response.status < 300) {
+                setSuccess(true);
+                setMessage("Xóa thành công");
+                setRerender(!rerender);
+              } else {
+                throw new Error("Xóa thất bại");
+              }
+            })
+            .catch((error) => {
+              setError(true);
+              setMessage(error.response.data.error);
+            });
+        }
+      };
 
     const findCookie = (name) => {
         const cookies = document.cookie.split(';');
@@ -86,8 +129,9 @@ function UpdateGymPackModal({ data, setShowModal }) {
     };
 
     return (
-        <Dialog open onClose={() => setShowModal(false)}>
-            <DialogTitle sx={{ fontWeight: 'bold', textAlign: 'center', fontSize: '26px' }}>
+        <Dialog open onClose={() => setShowModal(false)}
+        sx={{ '& .MuiDialog-paper': { width: '400px', maxWidth: '90%' } }}>
+            <DialogTitle sx={{ fontWeight: 'bold', textAlign: 'center', fontSize: '22px' }}>
                 Cập nhật gói tập
                 <IconButton
                     aria-label="close"

@@ -1,20 +1,19 @@
-// src/pages/CartPage.jsx
+
 import React from 'react';
 import { useAuth } from '../../contexts/AuthContext';
-import Cart from '../../components/Cart/Cart'; // Import component giỏ hàng
-import Header from '../../components/Header/Header'; // Import component header
-import Footer from '../../components/Footer/Footer'; // Import component footer
-import { Container, Typography, Paper, Button } from '@mui/material'; // Import các component MUI
-import { Link } from 'react-router-dom'; // Sử dụng Link để điều hướng nếu cần
-import style from './style.module.css'; // Import các style nếu cần
+import Cart from '../../components/Cart/Cart'; 
+import Header from '../../components/Header/Header'; 
+import Footer from '../../components/Footer/Footer'; 
+import { Container, Typography, Paper, Button } from '@mui/material'; 
+import { Link } from 'react-router-dom'; 
+import style from './style.module.css'; 
 
 function CartPage() {
     const { isLogin } = useAuth();
 
     return (
         <div className={style.pageContainer}>
-            <Header /> {/* Thêm header */}
-
+            <Header /> 
             <Container className={style.content} maxWidth="lg">
                 {!isLogin ? (
                     <Paper elevation={3} className={style.loginReminder}>
@@ -36,7 +35,7 @@ function CartPage() {
                         <Typography variant="h5" gutterBottom  marginTop="10%">
                           GOAT FITNESS |  Giỏ Hàng
                         </Typography>
-                        <Cart /> {/* Hiển thị nội dung giỏ hàng */}
+                        <Cart />
                         <div className={style.cartActions}>
                             <Button
                                 variant="outlined"
@@ -52,10 +51,8 @@ function CartPage() {
                     </div>
                 )}
             </Container>
-
-            <Footer /> {/* Thêm footer */}
+            <Footer /> 
         </div>
     );
 }
-
 export default CartPage;

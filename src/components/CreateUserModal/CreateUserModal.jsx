@@ -1,170 +1,290 @@
 import React, { useState } from "react";
 import axios from "axios";
-import style from './style.module.css';
+import { Box, TextField, Button, Typography, IconButton } from "@mui/material";
 import { faXmark } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAnnouncement } from "../../contexts/Announcement";
 
-function CreateUserModal({setShowModal}) {
-    const [formData, setFormData] = useState();
-    const {setSuccess  , setMessage } = useAnnouncement();
+function CreateUserModal({ setShowModal }) {
+  const [formData, setFormData] = useState({
+    fullname: "",
+    username: "",
+    password: "",
+    re_password: "",
+    email: "",
+    phone: "",
+    address: "",
+  });
 
-    const [errors, setErrors] = useState({});
+  const { setSuccess, setMessage } = useAnnouncement();
+  const [errors, setErrors] = useState({});
 
-    const handleChange = (e) => {
-        const { id, value } = e.target;
-        setFormData(prevState => ({
-            ...prevState,
-            [id]: value
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setFormData((prevState) => ({
+      ...prevState,
+      [id]: value,
+    }));
+    validateField(id, value);
+  };
+
+  const validateField = (id, value) => {
+    let errorMsg = "";
+
+    switch (id) {
+      case "username":
+        if (!/^[a-zA-Z0-9]{10,30}$/.test(value)) {
+          errorMsg =
+            "Tên đăng nhập phải từ 10 đến 30 ký tự và chỉ chứa chữ cái và số.";
+        }
+        break;
+      case "password":
+        if (
+          !/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~\\/-]).{6,18}$/.test(
+            value
+          )
+        ) {
+          errorMsg =
+            "Mật khẩu phải từ 6 đến 18 ký tự, gồm chữ thường, chữ in, số và ký tự đặc biệt.";
+        }
+        break;
+      case "re_password":
+        if (value !== formData.password) {
+          errorMsg = "Mật khẩu không khớp!";
+        }
+        break;
+      case "email":
+        if (!/^[\w.%+-]+@gmail\.com$/.test(value)) {
+          errorMsg = "Email phải có đuôi @gmail.com.";
+        }
+        break;
+      case "phone":
+        if (!/^0\d{9}$/.test(value)) {
+          errorMsg = "Số điện thoại phải có 10 chữ số và bắt đầu bằng số 0.";
+        }
+        break;
+      case "address":
+        if (value.trim() === "") {
+          errorMsg = "Vui lòng nhập địa chỉ của bạn.";
+        }
+        break;
+      case "fullname":
+        if (value.trim() === "") {
+          errorMsg = "Vui lòng nhập họ và tên của bạn.";
+        }
+        break;
+      default:
+        break;
+    }
+
+    setErrors((prevState) => ({
+      ...prevState,
+      [id]: errorMsg,
+    }));
+  };
+
+  const validateForm = () => {
+    let isValid = true;
+    const newErrors = {};
+  
+    // Kiểm tra các trường bắt buộc
+    ["fullname", "username", "password", "re_password", "email", "phone", "address"].forEach((field) => {
+      const value = formData[field];
+  
+      // Nếu trường bị bỏ trống
+      if (!value.trim()) {
+        newErrors[field] = "Vui lòng điền thông tin vào trường này.";
+        isValid = false;
+      } else {
+        validateField(field, value); // Kiểm tra từng field xem có đúng định dạng không
+        if (errors[field]) {
+          newErrors[field] = errors[field];
+          isValid = false;
+        }
+      }
+    });
+  
+    setErrors(newErrors);
+    return isValid;
+  };
+  
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    const { re_password, ...formDataToSend } = formData;
+  
+    // Kiểm tra tính hợp lệ của form
+    if (!validateForm()) {
+      return;
+    }
+  
+    try {
+      // Gửi yêu cầu POST đăng ký người dùng
+      const response = await axios.post('http://localhost:8080/Backend/signup', formDataToSend);
+  
+      if (response.status === 200) {
+        setSuccess(true);
+        setMessage("Đăng ký thành công");
+        setShowModal(false); // Đóng modal khi đăng ký thành công
+      } else {
+        setErrors(true);
+        console.error("Đăng ký không thành công. Mã lỗi:", response.status);
+        setMessage("Đăng ký không thành công. Vui lòng thử lại sau.");
+      }
+    } catch (error) {
+      console.error("Đã xảy ra lỗi khi đăng ký!", error);
+  
+      // Kiểm tra lỗi từ server
+      if (error.response?.data?.error === "Tên đăng nhập đã tồn tại") {
+        setErrors((prevState) => ({
+          ...prevState,
+          username: "Tên đăng nhập đã tồn tại. Vui lòng chọn tên khác."
         }));
-        validateField(id, value);
-    };
-
-    const validateField = (id, value) => {
-        let errorMsg = '';
-    
-        switch (id) {
-            case 'username':
-                if (!/^[a-zA-Z0-9]{10,30}$/.test(value)) {
-                    errorMsg = "Tên đăng nhập phải từ 10 đến 30 ký tự và chỉ chứa chữ cái và số.";
-                }
-                break;
-            case 'password':
-                if (!/^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[!@#$%^&*()_+{}[\]:;<>,.?~\\/-]).{6,18}$/.test(value)) {
-                    errorMsg = "Mật khẩu phải từ 6 đến 18 ký tự, gồm chữ thường, chữ in, số và ký tự đặc biệt.";
-                }
-                break;
-            case 're_password':
-                if (value !== formData.password) {
-                    errorMsg = "Mật khẩu không khớp!";
-                }
-                break;
-            case 'email':
-                if (!/^[\w.%+-]+@gmail\.com$/.test(value)) {
-                    errorMsg = "Email phải có đuôi @gmail.com.";
-                }
-                break;
-            case 'phone':
-                if (!/^0\d{9}$/.test(value)) {
-                    errorMsg = "Số điện thoại phải có 10 chữ số và bắt đầu bằng số 0.";
-                }
-                break;
-            case 'address':
-                if (value.trim() === '') {
-                    errorMsg = "Vui lòng nhập địa chỉ của bạn.";
-                }
-                break;
-            case 'fullname':
-                if (value.trim() === '') {
-                    errorMsg = "Vui lòng nhập họ và tên của bạn.";
-                }
-                break;
-            default:
-                break;
-        }
-    
-        setErrors(prevState => ({
-            ...prevState,
-            [id]: errorMsg
+      } else {
+        setErrors((prevState) => ({
+          ...prevState,
+          general: "Đã xảy ra lỗi khi đăng ký. Vui lòng thử lại."
         }));
-    };
+      }
+    }
+  };
+  
+  return (
+    <Box
+      sx={{
+        display: "flex",
+        justifyContent: "center",
+        alignItems: "center",
+        position: "fixed", 
+        top: 0,
+        left: 0,
+        width: "100vw", 
+        height: "100vh", 
+        backgroundColor: "rgba(0, 0, 0, 0.5)", 
+        zIndex: 1000, 
+      }}
+    >
+      <Box
+        component="form"
+        sx={{
+          backgroundColor: "#fff",
+          padding: "20px",
+          width: "350px", 
+          borderRadius: "8px",
+          boxShadow: "0px 0px 15px rgba(0, 0, 0, 0.1)",
+          position: "relative", 
+          maxHeight: "90vh",
+          overflowY: "auto",
+        }}
+        onSubmit={handleSubmit}
+      >
+        <IconButton
+          onClick={() => setShowModal(false)}
+          sx={{ position: "absolute", top: 10, right: 10 }}
+        >
+          <FontAwesomeIcon icon={faXmark} />
+        </IconButton>
+        <Typography variant="h5" sx={{ marginBottom: "20px" ,textAlign:'center'}}>
+          Đăng ký
+        </Typography>
 
-    const validateForm = () => {
-        let isValid = true;
-        const newErrors = {};
+        {/* Họ tên */}
+        <TextField
+          id="fullname"
+          label="Họ và tên"
+          fullWidth
+          margin="normal"
+          value={formData.fullname}
+          onChange={handleChange}
+          error={!!errors.fullname}
+          helperText={errors.fullname}
+        />
 
-        // Validate all fields
-        ['username', 'password', 're_password', 'email', 'phone'].forEach(field => {
-            const value = formData[field];
-            validateField(field, value);
-            if (errors[field]) {
-                newErrors[field] = errors[field];
-                isValid = false;
-            }
-        });
+        {/* Tên đăng nhập */}
+        <TextField
+          id="username"
+          label="Tên đăng nhập"
+          fullWidth
+          margin="normal"
+          value={formData.username}
+          onChange={handleChange}
+          error={!!errors.username}
+          helperText={errors.username}
+        />
 
-        setErrors(newErrors);
-        return isValid;
-    };
+        {/* Mật khẩu */}
+        <TextField
+          id="password"
+          label="Mật khẩu"
+          type="password"
+          fullWidth
+          margin="normal"
+          value={formData.password}
+          onChange={handleChange}
+          error={!!errors.password}
+          helperText={errors.password}
+        />
 
-    const handleSubmit = async (e) => {
-        e.preventDefault();
-        console.log(formData)
-        const { re_password, ...formDataToSend } = formData;
-        if (!validateForm()) {
-            return;
-        }
-        try {
-            const response = await axios.post('http://localhost:8080/Backend/signup', formDataToSend);
-            if (response.status === 200) { 
-                setSuccess(true);
-                setMessage("Đăng ký thành công");
-                setShowModal(false);
-            } else {
-                setErrors(true);
-                console.error("Đăng ký không thành công. Mã lỗi:", response.status);
-                setMessage("Đăng ký không thành công. Vui lòng thử lại sau.");
-            }
+        {/* Nhập lại mật khẩu */}
+        <TextField
+          id="re_password"
+          label="Nhập lại mật khẩu"
+          type="password"
+          fullWidth
+          margin="normal"
+          value={formData.re_password}
+          onChange={handleChange}
+          error={!!errors.re_password}
+          helperText={errors.re_password}
+        />
 
-        } catch (error) {
-            console.error("Đã xảy ra lỗi khi đăng ký!", error);
-            // handle error
-        }
-    };
+        {/* Email */}
+        <TextField
+          id="email"
+          label="Email"
+          fullWidth
+          margin="normal"
+          value={formData.email}
+          onChange={handleChange}
+          error={!!errors.email}
+          helperText={errors.email}
+        />
 
-    return (
-        <div className={style['Wrap']}>
-            <form className={`${style['login']} ${style['scrollable']}`} onSubmit={handleSubmit}>
-                <h2 className={style['wrap-back']}><FontAwesomeIcon icon={faXmark} onClick={() => setShowModal(false)} /></h2>
-                <h1>Đăng ký</h1>
+        {/* Số điện thoại */}
+        <TextField
+          id="phone"
+          label="Số điện thoại"
+          fullWidth
+          margin="normal"
+          value={formData.phone}
+          onChange={handleChange}
+          error={!!errors.phone}
+          helperText={errors.phone}
+        />
 
-                {/* Họ tên */}
-                <div className={style["input-group"]}>
-                    <label htmlFor="fullname">Họ và tên</label> <br/>
-                    <input type="text" id="fullname" value={formData.fullname} onChange={handleChange} required /> <br/>
-                    {errors.fullname && <span className={style['error']}>{errors.fullname}</span>}
-                </div>
+        {/* Địa chỉ */}
+        <TextField
+          id="address"
+          label="Địa chỉ"
+          fullWidth
+          margin="normal"
+          value={formData.address}
+          onChange={handleChange}
+          error={!!errors.address}
+          helperText={errors.address}
+        />
 
-                {/* Tên đăng nhập */}
-                <div className={style["input-group"]}>
-                    <label htmlFor="username">Tên đăng nhập</label> <br/>
-                    <input type="text" id="username" value={formData.username} onChange={handleChange} required /> <br/>
-                    {errors.username && <span className={style['error']}>{errors.username}</span>}
-                </div>
-                {/* Mật khẩu */}
-                <div className={style["input-group"]}>
-                    <label htmlFor="password">Mật khẩu</label> <br/>
-                    <input type="password" id="password" value={formData.password} onChange={handleChange} required /> <br/>
-                    {errors.password && <span className={style['error']}>{errors.password}</span>}
-                </div>
-                {/* Nhập lại mật khẩu */}
-                <div className={style["input-group"]}>
-                    <label htmlFor="re_password">Nhập lại mật khẩu</label> <br/>
-                    <input type="password" id="re_password" value={formData.re_password} onChange={handleChange} required /> <br/>
-                    {errors.re_password && <span className={style['error']}>{errors.re_password}</span>}
-                </div>
-                {/* Email */}
-                <div className={style["input-group"]}>
-                    <label htmlFor="email">Email</label> <br/>
-                    <input type="email" id="email" value={formData.email} onChange={handleChange} required /> <br/>
-                    {errors.email && <span className={style['error']}>{errors.email}</span>}
-                </div>
-                {/* Số điện thoại */}
-                <div className={style["input-group"]}>
-                    <label htmlFor="phone">Số điện thoại</label> <br/>
-                    <input type="text" id="phone" value={formData.phone} onChange={handleChange} required /> <br/>
-                    {errors.phone && <span className={style['error']}>{errors.phone}</span>}
-                </div>
-                {/* Địa chỉ */}
-                <div className={style["input-group"]}>
-                    <label htmlFor="address">Địa chỉ</label> <br/>
-                    <input type="text" id="address" value={formData.address} onChange={handleChange} required /> <br/>
-                    {errors.address && <span className={style['error']}>{errors.address}</span>}
-                </div>
-                <button type="submit" className={style['button']}>Đăng ký</button>
-            </form>
-        </div>
-    );
+<Button
+  type="submit"
+  fullWidth
+  variant="contained"
+  sx={{ mt: 2, backgroundColor: "#0070f3" }}
+>
+  Đăng ký
+</Button>
+
+      </Box>
+    </Box>
+  );
 }
 
 export default CreateUserModal;
