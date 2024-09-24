@@ -2,7 +2,8 @@ import React, { useEffect, useState } from "react";
 import { faPenToSquare,faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
-import RegisterPackModal from "../RegisterPackModal/RegisterPackModal";
+// import RegisterPackModal from "../RegisterPackModal/RegisterPackModal";
+import AddPackGym from "../AddPackGym/AddPackGym";
 import UpdateGymPackModal from "../UpdateGymPackModal/UpdateGymPackModal";
 import { useAnnouncement } from "../../contexts/Announcement";
 import {
@@ -17,10 +18,13 @@ import {
   TextField,
   MenuItem,
   Select,
-  InputLabel,
   FormControl,
   Stack,
   Pagination,
+  Dialog,
+  DialogTitle,
+  DialogContentText,
+  DialogActions,
 } from "@mui/material";
 import { AddCircleOutline } from "@mui/icons-material";
 
@@ -33,7 +37,10 @@ function ManagePackGym() {
   const [selectedPack, setSelectedPack] = useState(null);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5); // Số lượng item mỗi trang
-  const { setError, setMessage } = useAnnouncement();
+  const { setSuccess, setError, setMessage } = useAnnouncement();
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const [gympackToDelete, setGymPackToDelete] = useState(null);
+  const [rerender, setRerender] = useState(false);
 
   useEffect(() => {
     axios
@@ -49,7 +56,7 @@ function ManagePackGym() {
         setError(true);
         setMessage(error.response.data.error);
       });
-  }, [update]);
+  }, [update,setError, setMessage]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -65,6 +72,61 @@ function ManagePackGym() {
     setUpdate(true);
   };
 
+  // Nhấn nút xóa
+  const handleDeleteClick = (gympackId) => {
+    setGymPackToDelete(gympackId);
+    setOpenConfirmDialog(true);
+  };
+  
+  //Xác nhận xóa
+  const handleConfirmDelete = () => {
+    handleDelete(gympackToDelete);
+    setOpenConfirmDialog(false);
+  };
+  //Hủy xóa
+  const handleCancelDelete = () => {
+    setOpenConfirmDialog(false);
+  };
+  //Hàm xóa
+  const handleDelete = (id) => {
+    const findCookie = (name) => {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + "=")) {
+          return cookie.substring(name.length + 1);
+        }
+      }
+      return null;
+    };
+    const isLogin = findCookie("jwt");
+    if (isLogin) {
+      const jwt = findCookie("jwt");
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + jwt,
+        PHPSESSID: findCookie("PHPSESSID"),
+      };
+      axios
+        .delete("http://localhost:8080/Backend/gympack/delete", {
+          data: { IDGoiTap: id },
+          headers: headers,
+        })
+        .then((response) => {
+          if (response.status >= 200 && response.status < 300) {
+            setSuccess(true);
+            setMessage("Xóa thành công");
+            setRerender(!rerender);
+          } else {
+            throw new Error("Xóa thất bại");
+          }
+        })
+        .catch((error) => {
+          setError(true);
+          setMessage(error.response.data.error);
+        });
+    }
+  };
   // Xử lý sắp xếp và lọc
   const sortedGymPack = gympack
     .filter((pack) =>
@@ -94,7 +156,15 @@ function ManagePackGym() {
 
   return (
     <div style={{ padding: "20px" }}>
-      {showModal && <RegisterPackModal data={gympack} setShowModal={setShowModal} />}
+      {/* {showModal && <AddPackGym data={gympack} setShowModal={setShowModal} />} */}
+      {showModal && (
+  <AddPackGym
+    data={gympack}
+    setShowModal={setShowModal}
+    onPackAdded={(newPack) => setGymPack((prevGymPack) => [...prevGymPack, newPack])}
+  />
+)}
+
       {update && <UpdateGymPackModal data={selectedPack} setShowModal={setUpdate} />}
       <div style={{ marginBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
@@ -206,7 +276,8 @@ function ManagePackGym() {
                   <Button
                     variant="outlined"
                     color="error"
-                    // onClick={() => handleDelete(value.IDGoiTap)} Này Vỹ khóa cái hàm handleDelete tại hong có API xóa.
+                    onClick={() => handleDeleteClick(value.IDGoiTap)} 
+                    
                   >
                     <FontAwesomeIcon icon={faTrashCan} />
                   </Button>
@@ -216,6 +287,29 @@ function ManagePackGym() {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Dialog
+  open={openConfirmDialog}
+  onClose={handleCancelDelete}
+  aria-labelledby="confirm-dialog-title"
+  aria-describedby="confirm-dialog-description"
+>
+  <DialogTitle id="confirm-dialog-title">Xác nhận xóa</DialogTitle>
+  <DialogContentText
+    id="confirm-dialog-description"
+    style={{ padding: "20px" }}
+  >
+    Bạn có chắc chắn muốn xóa gói tập này không?
+  </DialogContentText>
+  <DialogActions>
+    <Button onClick={handleCancelDelete} color="primary">
+      Hủy
+    </Button>
+    <Button onClick={handleConfirmDelete} color="error" autoFocus>
+      Đồng ý
+    </Button>
+  </DialogActions>
+</Dialog>
       <Stack spacing={2} style={{ marginTop: "20px", float: "right" }}>
         <Pagination
           count={Math.ceil(sortedGymPack.length / itemsPerPage)}

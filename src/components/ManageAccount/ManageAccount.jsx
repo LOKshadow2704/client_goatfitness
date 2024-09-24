@@ -3,7 +3,8 @@ import {
   Table, TableBody, TableCell, TableContainer,
   TableHead, TableRow, Paper, FormControl,
   InputLabel, Select, MenuItem, TextField,
-  Button, TablePagination
+  Button, TablePagination,Dialog,DialogActions,
+  DialogTitle,DialogContentText,
 } from '@mui/material';
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -21,10 +22,13 @@ function ManageAccount({ data }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [modalUpdate, setModalUpdate] = useState(false);
   const [selectedUser, setSelectedUser] = useState(null);
-  const { setError, setMessage } = useAnnouncement();
+  const { setSuccess, setError, setMessage } = useAnnouncement();
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
-
+  const [accountToDelete, setAccountToDelete] = useState(null);
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const [rerender, setRerender] = useState(false);
+  
   useEffect(() => {
     const findCookie = (name) => {
       const cookies = document.cookie.split(';');
@@ -80,45 +84,63 @@ function ManageAccount({ data }) {
     setSelectedUser(user);
     setModalUpdate(true);
   }
-  // const handleDelete = (id) => {
-  //   const findCookie = (name) => {
-  //     const cookies = document.cookie.split(";");
-  //     for (let i = 0; i < cookies.length; i++) {
-  //       const cookie = cookies[i].trim();
-  //       if (cookie.startsWith(name + "=")) {
-  //         return cookie.substring(name.length + 1);
-  //       }
-  //     }
-  //     return null;
-  //   };
-  //   const isLogin = findCookie("jwt");
-  //   if (isLogin) {
-  //     const jwt = findCookie("jwt");
-  //     const headers = {
-  //       "Content-Type": "application/json",
-  //       Authorization: "Bearer " + jwt,
-  //       PHPSESSID: findCookie("PHPSESSID"),
-  //     };
-  //     axios
-  //       .delete("http://localhost:8080/Backend/account/delete", {
-  //         data: { TenDangNhap: id },
-  //         headers: headers,
-  //       })
-  //       .then((response) => {
-  //         if (response.status >= 200 && response.status < 300) {
-  //           setSuccess(true);
-  //           setMessage("Xóa thành công");
-  //           setRerender(!rerender);
-  //         } else {
-  //           throw new Error("Xóa thất bại");
-  //         }
-  //       })
-  //       .catch((error) => {
-  //         setError(true);
-  //         setMessage(error.response.data.error);
-  //       });
-  //   }
-  // };
+
+  //Nhấn nút xóa
+  const handleDeleteClick = (tendangnhap) => {
+    setAccountToDelete(tendangnhap);
+    setOpenConfirmDialog(true);
+};
+
+  //Xác nhận xóa
+  const handleConfirmDelete = () => {
+    handleDelete(accountToDelete);
+    setOpenConfirmDialog(false);
+};
+  //Hủy xóa
+  const handleCancelDelete = () => {
+  setOpenConfirmDialog(false);
+};
+
+  //Hàm xóa
+  const handleDelete = (id) => {
+    const findCookie = (name) => {
+      const cookies = document.cookie.split(";");
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + "=")) {
+          return cookie.substring(name.length + 1);
+        }
+      }
+      return null;
+    };
+    const isLogin = findCookie("jwt");
+    if (isLogin) {
+      const jwt = findCookie("jwt");
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: "Bearer " + jwt,
+        PHPSESSID: findCookie("PHPSESSID"),
+      };
+      axios
+        .delete("http://localhost:8080/Backend/admin/delete", {
+          data: { TenDangNhap: id },
+          headers: headers,
+        })
+        .then((response) => {
+          if (response.status >= 200 && response.status < 300) {
+            setSuccess(true);
+            setMessage("Xóa thành công");
+            setRerender(!rerender);
+          } else {
+            throw new Error("Xóa thất bại");
+          }
+        })
+        .catch((error) => {
+          setError(true);
+          setMessage(error.response.data.error);
+        });
+    }
+  };
 
   const handleChangePage = (event, newPage) => {
     setPage(newPage);
@@ -202,7 +224,7 @@ function ManageAccount({ data }) {
                   <Button
                     variant="outlined"
                     color="error"
-                    // onClick={() => handleClickUpdate(value.IDSanPham)}
+                    onClick={() => handleDeleteClick(value.TenDangNhap)}
                   >
                     <FontAwesomeIcon icon={faTrashCan} />
                   </Button>
@@ -212,6 +234,31 @@ function ManageAccount({ data }) {
           </TableBody>
         </Table>
       </TableContainer>
+        
+      <Dialog
+    open={openConfirmDialog}
+    onClose={handleCancelDelete}
+    aria-labelledby="confirm-dialog-title"
+    aria-describedby="confirm-dialog-description"
+>
+    <DialogTitle id="confirm-dialog-title">Xác nhận xóa</DialogTitle>
+    <DialogContentText
+        id="confirm-dialog-description"
+        style={{ padding: "20px" }}
+    >
+        Bạn có chắc chắn muốn xóa tài khoản này không?
+    </DialogContentText>
+    <DialogActions>
+        <Button onClick={handleCancelDelete} color="primary">
+            Hủy
+        </Button>
+        <Button onClick={handleConfirmDelete} color="error" autoFocus>
+            Đồng ý
+        </Button>
+    </DialogActions>
+</Dialog>
+
+
 
       <TablePagination
         rowsPerPageOptions={[5, 10, 25]}

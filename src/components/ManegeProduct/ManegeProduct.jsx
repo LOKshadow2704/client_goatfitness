@@ -12,6 +12,10 @@ import {
   Select,
   Paper,
   Stack,
+  Dialog,
+  DialogActions,
+  DialogTitle,
+  DialogContentText,
 } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -33,6 +37,8 @@ function ManageProduct({ data }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [productsPerPage] = useState(6); // Number of products per page
   const { setSuccess, setError, setMessage } = useAnnouncement();
+  const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const [productToDelete, setProductToDelete] = useState(null);
 
   useEffect(() => {
     fetch("http://localhost:8080/Backend/shop/manege/")
@@ -74,6 +80,23 @@ function ManageProduct({ data }) {
 
   const handlePageChange = (event, value) => {
     setCurrentPage(value);
+  };
+
+  //Hàm dùng để mở xác nhận khi người dùng chọn xóa
+  const handleDeleteClick = (productId) => {
+    setProductToDelete(productId);
+    setOpenConfirmDialog(true);
+  };
+
+  //Người dùng xác nhận xóa
+  const handleConfirmDelete = () => {
+    handleDelete(productToDelete);
+    setOpenConfirmDialog(false);
+  };
+
+  //Người dùng hủy xóa
+  const handleCancelDelete = () => {
+    setOpenConfirmDialog(false);
   };
 
   // Hàm xử lý thay đổi kiểu sắp xếp
@@ -250,7 +273,7 @@ function ManageProduct({ data }) {
                   <Button
                     variant="outlined"
                     color="error"
-                    onClick={() => handleDelete(value.IDSanPham)}
+                    onClick={() => handleDeleteClick(value.IDSanPham)}
                   >
                     <FontAwesomeIcon icon={faTrashCan} />
                   </Button>
@@ -260,6 +283,29 @@ function ManageProduct({ data }) {
           </TableBody>
         </Table>
       </TableContainer>
+
+      <Dialog
+        open={openConfirmDialog}
+        onClose={handleCancelDelete}
+        aria-labelledby="confirm-dialog-title"
+        aria-describedby="confirm-dialog-description"
+      >
+        <DialogTitle id="confirm-dialog-title">Xác nhận xóa</DialogTitle>
+        <DialogContentText
+          id="confirm-dialog-description"
+          style={{ padding: "20px" }}
+        >
+          Bạn có chắc chắn muốn xóa sản phẩm này không?
+        </DialogContentText>
+        <DialogActions>
+          <Button onClick={handleCancelDelete} color="primary">
+            Hủy
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error" autoFocus>
+            Đồng ý
+          </Button>
+        </DialogActions>
+      </Dialog>
 
       <Stack spacing={2} style={{ marginTop: "20px", alignItems: "center" }}>
         {/* <Typography>Trang: {currentPage}</Typography> */}
