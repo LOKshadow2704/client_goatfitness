@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { faPenToSquare,faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import axios from "axios";
 // import RegisterPackModal from "../RegisterPackModal/RegisterPackModal";
@@ -56,7 +56,7 @@ function ManagePackGym() {
         setError(true);
         setMessage(error.response.data.error);
       });
-  }, [update,setError, setMessage]);
+  }, [update, setError, setMessage]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -77,7 +77,7 @@ function ManagePackGym() {
     setGymPackToDelete(gympackId);
     setOpenConfirmDialog(true);
   };
-  
+
   //Xác nhận xóa
   const handleConfirmDelete = () => {
     handleDelete(gympackToDelete);
@@ -158,74 +158,84 @@ function ManagePackGym() {
     <div style={{ padding: "20px" }}>
       {/* {showModal && <AddPackGym data={gympack} setShowModal={setShowModal} />} */}
       {showModal && (
-  <AddPackGym
-    data={gympack}
-    setShowModal={setShowModal}
-    onPackAdded={(newPack) => setGymPack((prevGymPack) => [...prevGymPack, newPack])}
-  />
-)}
+        <AddPackGym
+          data={gympack}
+          setShowModal={setShowModal}
+          onPackAdded={(newPack) =>
+            setGymPack((prevGymPack) => [...prevGymPack, newPack])
+          }
+        />
+      )}
 
-      {update && <UpdateGymPackModal data={selectedPack} setShowModal={setUpdate} />}
-      <div style={{ marginBottom: "20px", display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+      {update && (
+        <UpdateGymPackModal data={selectedPack} setShowModal={setUpdate} />
+      )}
+      <div
+        style={{
+          marginBottom: "20px",
+          display: "flex",
+          justifyContent: "space-between",
+          alignItems: "center",
+        }}
+      >
         <div style={{ display: "flex", alignItems: "center" }}>
-        <TextField
-  label="Tìm kiếm gói tập"
-  variant="outlined"
-  value={searchTerm}
-  onChange={handleSearch}
-  sx={{
-    marginLeft: "10px",
-    marginRight: "20px",
-    "& .MuiInputBase-root": {
-      height: "40px !important",
-      display: "flex",
-      alignItems: "center", 
-    },
-    "& .MuiInputLabel-root": {
-      top: "-4px", 
-      fontSize: "14px", 
-    },
-    "& .MuiOutlinedInput-input": {
-      padding: "10px 14px", 
-      height: "40px", 
-    },
-  }}
-/>
+          <TextField
+            label="Tìm kiếm gói tập"
+            variant="outlined"
+            value={searchTerm}
+            onChange={handleSearch}
+            sx={{
+              marginLeft: "10px",
+              marginRight: "20px",
+              "& .MuiInputBase-root": {
+                height: "40px !important",
+                display: "flex",
+                alignItems: "center",
+              },
+              "& .MuiInputLabel-root": {
+                top: "-4px",
+                fontSize: "14px",
+              },
+              "& .MuiOutlinedInput-input": {
+                padding: "10px 14px",
+                height: "40px",
+              },
+            }}
+          />
 
-<FormControl 
-  sx={{
-    marginRight: "20px",
-    "& .MuiInputBase-root": {
-      height: "40px", 
-      width:"180px"
-    },
-    "& .MuiInputLabel-root": {
-      top: "-6px", 
-      fontSize: "14px", 
-    },
-    "& .MuiSelect-select": {
-      padding: "10px 14px", 
-      height: "40px", 
-      display: "flex",
-      alignItems: "center", 
-    }
-  }}
->
-  {/* <InputLabel>Sắp xếp theo</InputLabel> */}
-  <Select
-    value={sortType}
-    onChange={handleSort}
-    displayEmpty
-    inputProps={{ "aria-label": "Sắp xếp theo" }}
-  >
-    <MenuItem value="">Sắp xếp theo</MenuItem>
-    <MenuItem value="priceAsc">Giá tăng dần</MenuItem>
-    <MenuItem value="priceDesc">Giá giảm dần</MenuItem>
-    <MenuItem value="durationAsc">Thời hạn tăng dần</MenuItem>
-    <MenuItem value="durationDesc">Thời hạn giảm dần</MenuItem>
-  </Select>
-</FormControl>
-
+          <FormControl
+            sx={{
+              marginRight: "20px",
+              "& .MuiInputBase-root": {
+                height: "40px",
+                width: "180px",
+              },
+              "& .MuiInputLabel-root": {
+                top: "-6px",
+                fontSize: "14px",
+              },
+              "& .MuiSelect-select": {
+                padding: "10px 14px",
+                height: "40px",
+                display: "flex",
+                alignItems: "center",
+              },
+            }}
+          >
+            {/* <InputLabel>Sắp xếp theo</InputLabel> */}
+            <Select
+              value={sortType}
+              onChange={handleSort}
+              displayEmpty
+              inputProps={{ "aria-label": "Sắp xếp theo" }}
+            >
+              <MenuItem value="">Sắp xếp theo</MenuItem>
+              <MenuItem value="priceAsc">Giá tăng dần</MenuItem>
+              <MenuItem value="priceDesc">Giá giảm dần</MenuItem>
+              <MenuItem value="durationAsc">Thời hạn tăng dần</MenuItem>
+              <MenuItem value="durationDesc">Thời hạn giảm dần</MenuItem>
+            </Select>
+          </FormControl>
         </div>
         <Button
           variant="contained"
@@ -240,76 +250,99 @@ function ManagePackGym() {
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>ID Gói Tập</TableCell>
-              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>Tên gói tập</TableCell>
-              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>Thời hạn</TableCell>
-              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>Giá</TableCell>
-              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>Hành động</TableCell>
+              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>
+                ID Gói Tập
+              </TableCell>
+              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>
+                Tên gói tập
+              </TableCell>
+              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>
+                Thời hạn
+              </TableCell>
+              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>
+                Giá
+              </TableCell>
+              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>
+                Hành động
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedGymPack.map((value, index) => (
-              <TableRow
-                key={value.IDGoiTap}
-                sx={{
-                  backgroundColor: index % 2 === 0 ? "white" : "#f5f5f5", // Hàng lẻ màu trắng, hàng chẵn màu xám
-                }}
-              >
-                <TableCell style={{ textAlign: "center" }}>{value.IDGoiTap}</TableCell>
-                <TableCell style={{ textAlign: "center" }}>{value.TenGoiTap}</TableCell>
-                <TableCell style={{ textAlign: "center" }}>{value.ThoiHan} ngày</TableCell>
-                <TableCell style={{ textAlign: "center",color:"red" }}>
-                  {value.Gia.toLocaleString("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  })}
-                </TableCell>
-                <TableCell style={{ textAlign: "center" }}>
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={() => handleEdit(value)}
-                    style={{ marginRight: "5px" }}
-                  >
-                    <FontAwesomeIcon icon={faPenToSquare} />
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    onClick={() => handleDeleteClick(value.IDGoiTap)} 
-                    
-                  >
-                    <FontAwesomeIcon icon={faTrashCan} />
-                  </Button>
+            {paginatedGymPack.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={5} style={{ textAlign: "center" }}>
+                  Không tìm thấy gói tập.
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              paginatedGymPack.map((value, index) => (
+                <TableRow
+                  key={value.IDGoiTap}
+                  sx={{
+                    backgroundColor: index % 2 === 0 ? "white" : "#f5f5f5", // Hàng lẻ màu trắng, hàng chẵn màu xám
+                  }}
+                >
+                  <TableCell style={{ textAlign: "center" }}>
+                    {value.IDGoiTap}
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>
+                    {value.TenGoiTap}
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>
+                    {value.ThoiHan} ngày
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center", color: "red" }}>
+                    {value.Gia.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    })}
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={() => handleEdit(value)}
+                      style={{ marginRight: "5px" }}
+                    >
+                      <FontAwesomeIcon icon={faPenToSquare} />
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      onClick={() => handleDeleteClick(value.IDGoiTap)}
+                    >
+                      <FontAwesomeIcon icon={faTrashCan} />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>
 
       <Dialog
-  open={openConfirmDialog}
-  onClose={handleCancelDelete}
-  aria-labelledby="confirm-dialog-title"
-  aria-describedby="confirm-dialog-description"
->
-  <DialogTitle id="confirm-dialog-title">Xác nhận xóa</DialogTitle>
-  <DialogContentText
-    id="confirm-dialog-description"
-    style={{ padding: "20px" }}
-  >
-    Bạn có chắc chắn muốn xóa gói tập này không?
-  </DialogContentText>
-  <DialogActions>
-    <Button onClick={handleCancelDelete} color="primary">
-      Hủy
-    </Button>
-    <Button onClick={handleConfirmDelete} color="error" autoFocus>
-      Đồng ý
-    </Button>
-  </DialogActions>
-</Dialog>
+        open={openConfirmDialog}
+        onClose={handleCancelDelete}
+        aria-labelledby="confirm-dialog-title"
+        aria-describedby="confirm-dialog-description"
+      >
+        <DialogTitle id="confirm-dialog-title">Xác nhận xóa</DialogTitle>
+        <DialogContentText
+          id="confirm-dialog-description"
+          style={{ padding: "20px" }}
+        >
+          Bạn có chắc chắn muốn xóa gói tập này không?
+        </DialogContentText>
+        <DialogActions>
+          <Button onClick={handleCancelDelete} color="primary">
+            Hủy
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error" autoFocus>
+            Đồng ý
+          </Button>
+        </DialogActions>
+      </Dialog>
       <Stack spacing={2} style={{ marginTop: "20px", float: "right" }}>
         <Pagination
           count={Math.ceil(sortedGymPack.length / itemsPerPage)}
