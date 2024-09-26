@@ -231,55 +231,63 @@ function ManageProduct({ data }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {paginatedData.map((value, index) => (
-              <TableRow
-                key={value.IDSanPham}
-                sx={{
-                  backgroundColor: index % 2 === 0 ? "white" : "#f5f5f5", // Hàng lẻ màu trắng, hàng chẵn màu xám
-                }}
-              >
-                <TableCell style={{ textAlign: "center" }}>
-                  <div style={{ display: "flex", alignItems: "center" }}>
-                    <img
-                      src={value.IMG}
-                      alt={value.TenSP}
-                      width="80px"
-                      height="50px"
-                    />
-                    <p style={{ marginLeft: "30px" }}>{value.TenSP}</p>
-                  </div>
-                </TableCell>
-                <TableCell style={{ textAlign: "center" }}>
-                  {value.TenLoaiSanPham}
-                </TableCell>
-                <TableCell style={{ textAlign: "center", color: "red" }}>
-                  {value.DonGia.toLocaleString("vi-VN", {
-                    style: "currency",
-                    currency: "VND",
-                  })}
-                </TableCell>
-                <TableCell style={{ textAlign: "center" }}>
-                  {value.SoLuong}
-                </TableCell>
-                <TableCell style={{ textAlign: "center" }}>
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={() => handleEdit(value)}
-                    style={{ marginRight: "5px" }}
-                  >
-                    <FontAwesomeIcon icon={faPenToSquare} />
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    onClick={() => handleDeleteClick(value.IDSanPham)}
-                  >
-                    <FontAwesomeIcon icon={faTrashCan} />
-                  </Button>
+            {paginatedData.length === 0 ? (
+              <TableRow>
+                <TableCell colSpan={5} style={{ textAlign: "center" }}>
+                  Không tìm thấy sản phẩm.
                 </TableCell>
               </TableRow>
-            ))}
+            ) : (
+              paginatedData.map((value, index) => (
+                <TableRow
+                  key={value.IDSanPham}
+                  sx={{
+                    backgroundColor: index % 2 === 0 ? "white" : "#f5f5f5", // Hàng lẻ màu trắng, hàng chẵn màu xám
+                  }}
+                >
+                  <TableCell style={{ textAlign: "center" }}>
+                    <div style={{ display: "flex", alignItems: "center" }}>
+                      <img
+                        src={value.IMG} 
+                        alt={value.TenSP} 
+                        width="80px"
+                        height="50px"
+                      />
+                      <p style={{ marginLeft: "30px" }}>{value.TenSP}</p>
+                    </div>
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>
+                    {value.TenLoaiSanPham}
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center", color: "red" }}>
+                    {value.DonGia.toLocaleString("vi-VN", {
+                      style: "currency",
+                      currency: "VND",
+                    })}
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>
+                    {value.SoLuong}
+                  </TableCell>
+                  <TableCell style={{ textAlign: "center" }}>
+                    <Button
+                      variant="outlined"
+                      color="primary"
+                      onClick={() => handleEdit(value)}
+                      style={{ marginRight: "5px" }}
+                    >
+                      <FontAwesomeIcon icon={faPenToSquare} />
+                    </Button>
+                    <Button
+                      variant="outlined"
+                      color="error"
+                      onClick={() => handleDeleteClick(value.IDSanPham)}
+                    >
+                      <FontAwesomeIcon icon={faTrashCan} />
+                    </Button>
+                  </TableCell>
+                </TableRow>
+              ))
+            )}
           </TableBody>
         </Table>
       </TableContainer>

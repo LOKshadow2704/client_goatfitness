@@ -208,30 +208,39 @@ function ManageAccount({ data }) {
             </TableRow>
           </TableHead>
           <TableBody>
-            {filteredAccounts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((value) => (
-              <TableRow key={value.IDSanPham}>
-                <TableCell style={{ textAlign: "center"}}>{value.TenDangNhap}</TableCell>
-                <TableCell style={{ textAlign: "center"}}>{value.TenVaiTro}</TableCell>
-                <TableCell style={{ textAlign: "center" }}>
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={() => handleClickUpdate(value)}
-                    style={{ marginRight: "5px" }}
-                  >
-                    <FontAwesomeIcon icon={faPenToSquare} />
-                  </Button>
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    onClick={() => handleDeleteClick(value.TenDangNhap)}
-                  >
-                    <FontAwesomeIcon icon={faTrashCan} />
-                  </Button>
-                </TableCell>
-              </TableRow>
-            ))}
-          </TableBody>
+  {filteredAccounts.length === 0 ? (
+    <TableRow>
+      <TableCell colSpan={3} style={{ textAlign: "center"}}>
+        Không tìm thấy tài khoản.
+      </TableCell>
+    </TableRow>
+  ) : (
+    filteredAccounts.slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage).map((value) => (
+      <TableRow key={value.IDSanPham}>
+        <TableCell style={{ textAlign: "center" }}>{value.TenDangNhap}</TableCell>
+        <TableCell style={{ textAlign: "center" }}>{value.TenVaiTro}</TableCell>
+        <TableCell style={{ textAlign: "center" }}>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => handleClickUpdate(value)}
+            style={{ marginRight: "5px" }}
+          >
+            <FontAwesomeIcon icon={faPenToSquare} />
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            onClick={() => handleDeleteClick(value.TenDangNhap)}
+          >
+            <FontAwesomeIcon icon={faTrashCan} />
+          </Button>
+        </TableCell>
+      </TableRow>
+    ))
+  )}
+</TableBody>
+
         </Table>
       </TableContainer>
         
