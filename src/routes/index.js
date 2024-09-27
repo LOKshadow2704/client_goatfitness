@@ -1,18 +1,21 @@
-import Home from "../pages/Home";
+import Home from "../pages/Home/Home";
 import Login from "../pages/Login";
-import Signup from "../pages/Signup";
-import Shop from "../pages/Shop";
-import PT from "../pages/PT";
-import Info from "../pages/Info";
-import Employee from "../pages/Employee";
-import Admin from "../pages/Admin";
-import GymPack from "../pages/PackGym";
-import ProductInfo from "../pages/ProductInfo";
-import PTInfo from "../pages/PTinfo";
-import Order from "../pages/Order";
-import AccountSetting from "../pages/AccountSetting";
-import PurchaseOrder from "../pages/PurchaseOrder";
-import RegisterPT from "../pages/RegisterPT";
+import Signup from "../pages/Signup/Signup";
+import Shop from "../pages/Shop/Shop";
+import PT from "../pages/PT/PT";
+import Info from "../pages/Info/Info";
+import Employee from "../pages/Employee/Employee";
+import Admin from "../pages/Admin/Admin";
+import GymPack from "../pages/PackGym/PackGym";
+import ProductInfo from "../pages/ProductInfo/ProductInfo";
+import PTInfo from "../pages/PTinfo/PTinfo";
+import Order from "../pages/Order/Order";
+import AccountSetting from "../pages/AccountSetting/AccountSetting";
+import PurchaseOrder from "../pages/PurchaseOrder/PurchaseOrder";
+import RegisterPT from "../pages/RegisterPT/Register";
+import CartPage from "../pages/Cart/Cart"
+// import Dashboard from "../components/Dashboard/Dashboard";
+import MainLayout from "src/components/MainLayout";
 
 
 // Route public cho nhóm người dùng
@@ -26,6 +29,7 @@ const PublicRoutes =[
     {path: '/GymPack', component: GymPack},
     {path: '/ProductInfo/:productID', component: ProductInfo},
     {path: '/PTInfo/:PTID', component: PTInfo},
+    { path: '/cart', component: CartPage },
 ];
 
 // Route private cho nhóm người dùng
@@ -38,7 +42,9 @@ const PrivateRoutes =[
 
 // Route riêng tư cho admin
 const AdminRoutes = [
-    {path: '/admin', component: Admin , allowedRoles: ['admin'] ,isLogin : true},
+    // {path: '/admin', component: MainLayout , allowedRoles: ['admin'] ,isLogin : true},
+        {path: '/admin', component: Admin , allowedRoles: ['admin'] ,isLogin : true},
+    
 ];
 
 // Route riêng tư cho nhân viên

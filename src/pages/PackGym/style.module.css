@@ -114,6 +114,11 @@
 .info{
   margin-top: 100px;
 }
+.info h3{
+  text-align: center;
+  font-size: 32px;
+  margin-bottom: 20px;
+}
 
 .info table {
   border-collapse: collapse;

@@ -1,14 +1,21 @@
-.slide-container{
-height: 350px;
-width: 100%;
+.slide-container {
+  height: 350px;
+  width: 100%;
 }
 
 .slide-item {
-    display: flex;
-    justify-content: center;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
 }
 
 .slide-container img{
-    height: 550px;
-    width: 80%;
+  height: 550px;
+  width: 80%;
+}
+
+.svg-wrapper {
+  height: 550px; 
+  width: 80%; 
 }

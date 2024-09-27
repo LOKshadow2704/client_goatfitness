@@ -1,4 +1,3 @@
-import { Outlet } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
 
 // material-ui
@@ -11,9 +10,11 @@ import useMediaQuery from '@mui/material/useMediaQuery';
 import { CssBaseline, styled, useTheme } from '@mui/material';
 import Header from './Header';
 import Sidebar from './Sidebar';
-import Customization from '../Customization';
-import { SET_MENU } from 'store/actions';
-import { drawerWidth } from 'store/constant';
+import Customization from 'src/components/Customization/Customization';
+import { SET_MENU } from 'src/store/actions';
+import { drawerWidth } from 'src/store/constant';
+import { Outlet } from 'react-router-dom';
+import Dashboard from 'src/components/Dashboard/Dashboard';
 
 
 const Main = styled('main', { shouldForwardProp: (prop) => prop !== 'open' && prop !== 'theme' })(({ theme, open }) => ({
@@ -85,8 +86,8 @@ const MainLayout = () => {
 
       {/* main content */}
       <Main theme={theme} open={leftDrawerOpened}>
-        {/* breadcrumb */}
-        <Outlet />
+        <Dashboard />
+        {/* <Outlet /> */}
       </Main>
       <Customization />
     </Box>

@@ -65,6 +65,10 @@
     justify-items: center;
     align-items: center;
 }
+.info span{
+    font-size: 17px;
+    color: red;
+}
 
 .info h1:nth-child(1){
     grid-row-start: 1;

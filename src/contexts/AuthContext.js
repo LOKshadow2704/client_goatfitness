@@ -10,72 +10,77 @@ export const AuthProvider = ({ children }) => {
     const login = async (credentials) => {
         try {
             console.log(credentials)
-            const response = await axios.post('http://localhost:8080/Backend/login/', credentials, {
+            const response = await axios.post('http://localhost:8080/Backend/login', credentials, {
                 withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json',
+                    'User-Agent': 'WEB'
                 }
             });
             const data = response.data;
+            console.log(data)
             // if(user){
             //     user.TrangThai = user.TrangThai === 0 ? 'offline' : 'online';
             // }
             const { user } = data;
-            setUser(user[0]);
+            setUser(user);
             setIsLogin(true);
-            return { success: true , role: user[0].TenVaiTro };
+            return { success: true , role: user.TenVaiTro };
         } catch (error) {
             console.error('Error', error.message);
             return { success: false, message: 'Kiểm tra lại thông tin' };
         }
     };
 
-    const logout = () => {
+    const logout = async () => {
         const jwt = findCookie('jwt');
-        const option = {
-            method : 'POST',
-            headers:{
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer '+jwt,
-                'PHPSESSID': findCookie("PHPSESSID")
-            }
+        const phpSessionId = findCookie('PHPSESSID');
+        if (!jwt || !phpSessionId) {
+            console.error("No valid session found.");
+            return;
         }
-        fetch('http://localhost:8080/Backend/logout/',option)
-            .then(
-                response=>{
-                    if(response.ok){
-                        document.cookie = 'jwt=; Max-Age=-1; path=/;';
-                        document.cookie = 'PHPSESSID=; Max-Age=-1; path=/;';
-                        return response.json();
-                    }else{
-                        throw new Error (response.error);
-                    }
-                }
-            )
-            .then(
-                data =>{
-                    alert(data.message);
-                    window.location.href = 'http://localhost:3000/';
-                }
-            )
-            .catch(
-                error => {
-                    console.error(error);
-                }
-            )
+    
+        try {
+            const response = await fetch('http://localhost:8080/Backend/logout/', {
+                method: 'POST',
+                headers: {
+                    'Content-Type': 'application/json',
+                    'Authorization': `Bearer ${jwt}`,
+                    'PHPSESSID': phpSessionId
+                },
+            });
+    
+            if (response.ok) {
+                const data = await response.json();
+                console.log(data.message); // Hiển thị thông báo từ server (nếu có)
+                
+                // Xóa cookie sau khi server phản hồi thành công
+                document.cookie = 'jwt=; Max-Age=-1; path=/;';
+                document.cookie = 'PHPSESSID=; Max-Age=-1; path=/;';
+    
+                // Cập nhật trạng thái người dùng
+                setUser(null);
+                setIsLogin(false);
+    
+                // Điều hướng sau khi đăng xuất thành công
+                window.location.href = '/'; // Redirect về trang chủ hoặc trang login
+            } else {
+                throw new Error('Failed to logout.');
+            }
+        } catch (error) {
+            console.error('Logout Error:', error.message);
+        }
     };
+    
 
     useEffect(() => {
         const jwt = findCookie('jwt');
-        if(!user){
-            if (jwt) {
-                setIsLogin(true);               
-                fetchUserInfo();
-            }
+        if (jwt && !user) {
+            setIsLogin(true);
+            fetchUserInfo();
         }
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [user]);
-
+    
     const fetchUserInfo = () => {
         const jwt = findCookie('jwt');
         if (jwt) {
@@ -117,7 +122,7 @@ export const AuthProvider = ({ children }) => {
     };
 
     return (
-        <AuthContext.Provider value={{ user, login, logout, isLogin }}>
+        <AuthContext.Provider value={{ user, login, logout, isLogin,fetchUserInfo }}>
             {children}
         </AuthContext.Provider>
     );

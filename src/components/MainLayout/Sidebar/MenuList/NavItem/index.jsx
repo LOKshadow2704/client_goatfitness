@@ -14,7 +14,7 @@ import Typography from '@mui/material/Typography';
 import useMediaQuery from '@mui/material/useMediaQuery';
 
 // project imports
-import { MENU_OPEN, SET_MENU } from 'store/actions';
+import { MENU_OPEN, SET_MENU } from 'src/store/actions';
 
 // assets
 import FiberManualRecordIcon from '@mui/icons-material/FiberManualRecord';

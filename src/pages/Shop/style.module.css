@@ -1,6 +1,6 @@
 .container {
     padding-top: 10%;
-    margin-bottom: 150px;
+    margin-bottom: 50px;
 
 }
 
@@ -45,6 +45,7 @@
     display: grid;
     grid-template-columns: 60% 20% 20%;
     align-items: center;
+    margin-top: 20px;
 }
 
 
@@ -97,3 +98,9 @@
     width: 170px !important;
     margin-top: 10px;
 }
+.pagination-container {
+    display: flex;
+    justify-content: flex-end; /* Đặt các phần tử phân trang ở phía bên phải */
+    margin-top: 40px;
+    margin-right: 40px;
+  }
