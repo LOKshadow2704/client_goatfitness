@@ -14,7 +14,7 @@ export const AuthProvider = ({ children }) => {
                 withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json',
-                    'User-Agent': 'WEB'
+                    // 'User-Agent': 'WEB'
                 }
             });
             const data = response.data;
