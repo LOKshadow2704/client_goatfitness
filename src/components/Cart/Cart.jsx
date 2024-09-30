@@ -44,7 +44,7 @@ function Cart() {
                 'PHPSESSID': findCookie("PHPSESSID")
             }
         };
-        fetch('http://localhost:8080/Backend/cart/', option)
+        fetch('http://localhost:8080/Backend/cart', option)
             .then(response => {
                 if (!response.ok) {
                     throw new Error('Lỗi server');
@@ -234,7 +234,7 @@ function Cart() {
 
     return (
         <>
-            {cartData.length === 0 ? (
+            {!cartData ? (
                 <Container className={style.emptyCart}>
                     <Alert severity="info">
                         Giỏ hàng của bạn trống! Bạn sẽ được chuyển đến trang shop trong giây lát.
