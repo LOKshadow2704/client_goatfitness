@@ -8,7 +8,7 @@
 }
 
 .orderItem h1:nth-of-type(1) {
-    width: 100%;
+    width: 90%;
     text-align: left;
     padding-left: 10% ;
 }
@@ -25,10 +25,7 @@
 
 .group_title{
     display: grid;
-    /* grid-template-columns: 40% 50%; */
-    padding-left: 60%;
-    width: 550px;
-    margin-bottom: 40px;
+    grid-template-columns: 40% 50%;
 }
 
 .group_title h1{
@@ -60,7 +57,8 @@
 
 .container table th ,  .container table tr{
     border-bottom: 1px solid gray;
-    padding-bottom: 50px;
+    padding-bottom: 25px;
+    padding-top: 30px;
 }
 
 .container table , tr , td{
@@ -117,11 +115,9 @@
     margin-bottom: 100px;
 }
 
-.order h1{
+.order h2{
     display: inline-block;
     grid-column: span 2;
-    margin-top: 10px;
-    font-size: 30x;
 }
 
 .order button {
@@ -181,13 +177,7 @@
     width: 35px;
 }
 .thanhtoan{
-    font-size: 18px;
+    font-size: 19px;
     margin-top: 15px;
-}
-.orderItem h2{
-    padding-top: 15px;
-    padding-left: 30px;
-}
-.bang th{
-    font-size: 18px;
+    margin-bottom: 15px;
 }

@@ -92,7 +92,7 @@ function UpdateRoleModal({ data, setShowModal }) {
                 <IconButton onClick={() => setShowModal(false)} sx={{ position: 'absolute', top: '16px', right: '16px' }}>
                     <Close />
                 </IconButton>
-                <Typography id="modal-title" variant="h6" component="h2" sx={{ mb: 2 ,textAlign:'center',fontWeight:'bold',fontSize:'22px'}}>
+                <Typography id="modal-title" variant="h6" component="h2" sx={{ fontWeight: 'bold', textAlign: 'center', fontSize: '20px', borderBottom: '1px solid #ddd', paddingBottom: '10px',marginBottom:'10px'}}>
                     Cập nhật vai trò
                 </Typography>
                 <form onSubmit={handleSubmit}>
@@ -128,8 +128,7 @@ function UpdateRoleModal({ data, setShowModal }) {
                         type="submit"
                         variant="contained"
                         color="primary"
-                        fullWidth
-                        sx={{mt:2}}
+                        sx={{mt:2, width:'150px', marginLeft:'30%'}}
                     >
                         Lưu
                     </Button>

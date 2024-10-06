@@ -11,10 +11,12 @@ import Announcement from '../Announcement/Announcement';
 import style from './style.module.css';
 import { useNavigate } from 'react-router-dom';
 import ShoppingCartIcon from '@mui/icons-material/ShoppingCart';
+import UserPTPackage from '../UserPTPackage/UserPTPackage';
 
 
 function Header() {
     const [showModal, setShowModal] = useState(false);
+    const [showPTModal, setShowPTModal] = useState(false);
     const [cart, setCart] = useState(false);
     const cartRef = useRef(null);
     const { isLogin, user } = useAuth();
@@ -148,28 +150,13 @@ function Header() {
                 </Tabs>
             </div>
             <div className={style.nav_item}>
-                {!isLogin &&
-                    <button><a href="/login">Luyện tập ngay</a></button>}
-                {/* <div className={style['shopyfi']} ref={cartRef}>
-                    <FontAwesomeIcon icon={faShopify} onClick={() => {
-                        if (cart) {
-                            if (!isLogin) {
-                                setError(true);
-                                setMessage("Vui lòng đăng nhập!");
-                            }
-                            setCart(false);
-                        } else {
-                            if (!isLogin) {
-                                setError(true);
-                                setMessage("Vui lòng đăng nhập!");
-                            }
-                            setCart(true);
-                        }
-                    }} />
-                    {cart && isLogin &&
-                        <Cart />
-                    }
-                </div> */}
+            {!isLogin && 
+    <button onClick={() => window.location.href = '/login'}>
+        Luyện tập ngay
+    </button>
+}
+
+
                 <div className={style['shopyfi']}>
                     <ShoppingCartIcon 
                         onClick={() => {
@@ -191,13 +178,14 @@ function Header() {
                             <li><Link to="/account-setting">Thông tin tài khoản</Link></li>
                             <li onClick={() => setShowModal(true)}><Link to="#">Thông tin gói tập</Link></li>
                             <li><Link to="/PurchaseOrder">Đơn hàng</Link></li>
-                            <li><Link to="#">Thông tin thuê PT</Link></li>
+                            <li onClick={() => setShowPTModal(true)}><Link to="#">Thông tin thuê PT</Link></li>
                             <li onClick={Logout}>Đăng xuất</li>
                         </ul>
                     </div>
                 )}
             </div>
             {showModal && <UserPackage setShowModal={setShowModal} />}
+            {showPTModal && <UserPTPackage setShowModal={setShowPTModal} />}
             {error || success || warning ? <Announcement /> : null}
         </header>
     );

@@ -245,7 +245,7 @@ function ManageProduct({ data }) {
                     backgroundColor: index % 2 === 0 ? "white" : "#f5f5f5", // Hàng lẻ màu trắng, hàng chẵn màu xám
                   }}
                 >
-                  <TableCell style={{ textAlign: "center" }}>
+                  <TableCell style={{ textAlign: "center",width:'300px' }}>
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <img
                         src={value.IMG} 
@@ -298,10 +298,10 @@ function ManageProduct({ data }) {
         aria-labelledby="confirm-dialog-title"
         aria-describedby="confirm-dialog-description"
       >
-        <DialogTitle id="confirm-dialog-title">Xác nhận xóa</DialogTitle>
+        <DialogTitle id="confirm-dialog-title" sx={{borderBottom: '1px solid #ddd'}}>Xác nhận xóa</DialogTitle>
         <DialogContentText
           id="confirm-dialog-description"
-          style={{ padding: "20px" }}
+          style={{ padding: "20px"}}
         >
           Bạn có chắc chắn muốn xóa sản phẩm này không?
         </DialogContentText>

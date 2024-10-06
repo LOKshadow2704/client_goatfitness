@@ -148,7 +148,7 @@ function UpdateProductModal({ data, setShowModal }) {
 
     return (
         <Dialog open={true} onClose={() => setShowModal(false)} fullWidth maxWidth="sm">
-            <DialogTitle sx={{textAlign:'center',fontWeight:'bold'}}>
+            <DialogTitle sx={{fontWeight: 'bold', textAlign: 'center', fontSize: '20px', borderBottom: '1px solid #ddd', paddingBottom: '10px',marginBottom:'10px'}}>
                 Cập nhật sản phẩm
                 <IconButton 
                     onClick={() => setShowModal(false)}
@@ -240,7 +240,7 @@ function UpdateProductModal({ data, setShowModal }) {
                         onChange={handleChange}
                         margin="normal"
                     />
-                    <Button type="submit" variant="contained" color="primary" fullWidth style={{marginTop:'10px'}}>
+                    <Button type="submit" variant="contained" color="primary"  style={{marginTop:'20px',width:'150px',marginLeft:'35%'}}>
                         Lưu
                     </Button>
                 </form>

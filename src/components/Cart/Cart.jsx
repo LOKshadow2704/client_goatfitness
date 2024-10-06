@@ -10,6 +10,7 @@ function Cart() {
     const [cartData, setCartData] = useState([]);
     const [totalPrice, setTotalPrice] = useState(0);
     const [selectedItems, setSelectedItems] = useState([]);
+    const [selectAll, setSelectAll] = useState(false); // State for select all
     const [update, setUpdate] = useState(false);
     const { setMessage, setWarning, setSuccess, setError } = useAnnouncement();
     const navigate = useNavigate();
@@ -89,6 +90,17 @@ function Cart() {
             setSelectedItems([...selectedItems, index]);
         } else {
             setSelectedItems(selectedItems.filter((item) => item !== index));
+        }
+    };
+
+    const handleSelectAllChange = (event) => {
+        const checked = event.target.checked;
+        setSelectAll(checked);
+        if (checked) {
+            const allIndexes = cartData.map((_, index) => index);
+            setSelectedItems(allIndexes);
+        } else {
+            setSelectedItems([]);
         }
     };
 
@@ -245,13 +257,19 @@ function Cart() {
                     <Table>
                         <TableHead>
                             <TableRow>
-                                <TableCell>Chọn</TableCell>
-                                <TableCell>Hình ảnh</TableCell>
-                                <TableCell>Tên sản phẩm</TableCell>
-                                <TableCell>Giá</TableCell>
-                                <TableCell>Số lượng</TableCell>
-                                <TableCell>Tổng giá</TableCell>
-                                <TableCell>Hành động</TableCell>
+                                <TableCell>
+                                    <input
+                                        type="checkbox"
+                                        checked={selectAll}
+                                        onChange={handleSelectAllChange}
+                                    />
+                                </TableCell>
+                                <TableCell sx={{fontWeight:'bold'}}>Hình ảnh</TableCell>
+                                <TableCell sx={{fontWeight:'bold'}}>Tên sản phẩm</TableCell>
+                                <TableCell sx={{fontWeight:'bold'}}>Giá</TableCell>
+                                <TableCell sx={{fontWeight:'bold'}}>Số lượng</TableCell>
+                                <TableCell sx={{fontWeight:'bold'}}>Tổng giá</TableCell>
+                                <TableCell sx={{fontWeight:'bold'}}>Hành động</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
@@ -260,6 +278,7 @@ function Cart() {
                                     <TableCell>
                                         <input
                                             type="checkbox"
+                                            checked={selectedItems.includes(index)}
                                             onChange={(e) => handleCheckboxChange(e, index)}
                                         />
                                     </TableCell>
@@ -283,7 +302,7 @@ function Cart() {
                                         >
                                             <FontAwesomeIcon icon={faMinus} />
                                         </Button>
-                                        <span style={{fontWeight:'bo'}}>{item.SoLuong}</span>
+                                        <span style={{fontWeight:'bold'}}>{item.SoLuong}</span>
                                         <Button
                                             variant="outlined"
                                             size="small"
@@ -296,10 +315,11 @@ function Cart() {
                                         </Button>
                                     </TableCell>
                                     <TableCell>{(item.DonGia * item.SoLuong).toLocaleString()} VNĐ</TableCell>
-                                    <TableCell>
+                                    <TableCell sx={{textAlign:'center'}}>
                                         <FontAwesomeIcon
                                             icon={faTrash}
                                             onClick={() => deleteCartItem(item.IDSanPham)}
+                                            style={{ color: "red", cursor: "pointer" }}
                                         />
                                     </TableCell>
                                 </TableRow>

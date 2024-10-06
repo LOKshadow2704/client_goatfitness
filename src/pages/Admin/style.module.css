@@ -103,7 +103,7 @@
 
 }
 
-.menu >ul li:nth-child(8) {
+.menu >ul li:nth-child(10) {
     position: relative;
 }
 
@@ -121,15 +121,15 @@
     padding-left: 30% !important;
 }
 
-.menu > ul li:nth-child(8):hover .dropdown{
+.menu > ul li:nth-child(10):hover .dropdown{
     display: inline-block;
 }
 
-.menu > ul li:nth-child(8) ul li:not(:active) {
+.menu > ul li:nth-child(10) ul li:not(:active) {
     color: white;
 }
 
-.menu > ul li:nth-child(8) ul li:active{
+.menu > ul li:nth-child(10) ul li:active{
     color: rgb(97, 97, 97);
 }
 

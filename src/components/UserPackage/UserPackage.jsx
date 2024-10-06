@@ -67,9 +67,9 @@ function UserPackage({ setShowModal }) {
         <h1>
           <FontAwesomeIcon icon={faXmark} onClick={() => setShowModal(false)} />
         </h1>
-        <h1>Thông tin gói tập của bạn</h1>
+        <h1 style={{textAlign:'center',marginBottom:'10px'}}>Thông tin gói tập của bạn</h1>
         <div className={style.info}>
-          <h1>Tên gói tập: {data && data.info.TenGoiTap}</h1>
+          <h3>Tên gói tập: {data && data.info.TenGoiTap}</h3>
           <span>Ngày đăng ký: {displayDate}</span>
           <span>Ngày hết hạn: {displayExpiryDate}</span>
           {/* <span>Trạng thái thanh toán: {data && data.TrangThaiThanhToan}</span> */}

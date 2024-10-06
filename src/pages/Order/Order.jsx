@@ -13,8 +13,14 @@ import TextField from "@mui/material/TextField";
 import Select from "@mui/material/Select";
 import MenuItem from "@mui/material/MenuItem";
 import Button from "@mui/material/Button";
-import ButtonGroup from "@mui/material/ButtonGroup";
-
+import Table from "@mui/material/Table";
+import TableBody from "@mui/material/TableBody";
+import TableCell from "@mui/material/TableCell";
+import TableContainer from "@mui/material/TableContainer";
+import TableHead from "@mui/material/TableHead";
+import TableRow from "@mui/material/TableRow";
+import Paper from "@mui/material/Paper";
+import { faMinus, faPlus } from "@fortawesome/free-solid-svg-icons";
 
 function Order() {
   const location = useLocation();
@@ -92,15 +98,12 @@ function Order() {
         .post("http://localhost:8080/Backend/order", data, { headers: headers })
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {
-            if (response.data) {
-              window.location.href = response.data;
-            } else {
-              setSuccess(true);
-              setMessage(response.data.message);
-              setLocation(true);
-              setLink("http://localhost:3000/PurchaseOrder");
-            }
-            console.log(response);
+            // Giả sử response.data là một thông báo thành công, bạn có thể thay đổi theo API của bạn
+            setSuccess(true);
+            setMessage("Đặt hàng thành công!");
+            setLocation(true);
+            setLink("http://localhost:3000/PurchaseOrder"); // Chuyển hướng đến trang PurchaseOrder
+            sessionStorage.removeItem("OrderInfo");
           } else {
             throw new Error("Đặt hàng không thành công!");
           }
@@ -109,7 +112,9 @@ function Order() {
         .catch((error) => {
           setLoading(false);
           setError(true);
-          setMessage(error.response.data.error);
+          setMessage(
+            error.response ? error.response.data.error : "Có lỗi xảy ra!"
+          );
         });
     } else {
       setError(true);
@@ -126,8 +131,8 @@ function Order() {
     setProducts(updatedProduct); // Update the state
   };
 
-  const handleQuantityChange = (index, newQuantity) => {
-    if (newQuantity < 1) return;
+  const handleQuantityChange = (e, index) => {
+    const newQuantity = parseInt(e.target.value);
     const updatedProducts = [...products];
     updatedProducts[index].SoLuong = newQuantity;
     setProducts(updatedProducts);
@@ -140,11 +145,12 @@ function Order() {
       {!loading && (
         <div className={style.container}>
           <div className={style.orderItem}>
-            <h2>Thông tin đặt hàng</h2>
+            <h1 style={{ paddingTop: "30px" }}>Thông tin đặt hàng</h1>
             <div className={style.group_title}>
               <TextField
                 label="Địa chỉ"
                 variant="outlined"
+                sx={{ marginLeft: "133%" }}
                 fullWidth
                 value={user ? user["DiaChi"] : ""}
                 InputProps={{
@@ -152,67 +158,152 @@ function Order() {
                 }}
               />
             </div>
-            <table className={style.bang}>
-              <thead>
-                <tr>
-                  <th>Sản phẩm</th>
-                  <th>Số lượng</th>
-                  <th>Đơn giá</th>
-                  <th>Thành tiền</th>
-                </tr>
-              </thead>
-              <tbody>
-                {products ? (
-                  products.map((value, index) => (
-                    <tr key={index}>
-                      <td>
-                        <FontAwesomeIcon
-                          icon={faTrashCan}
-                          onClick={() => removeItem(value.IDSanPham)}
-                        />
-                        <img src={value.IMG} alt="" />
-                        <p>{value.TenSP}</p>
-                      </td>
-                      <td>
-                        <ButtonGroup
-                          size="small"
-                          aria-label="small outlined button group"
-                        >
+            <TableContainer
+              component={Paper}
+              sx={{
+                paddingBottom: "50px",
+                width: "83%",
+                marginLeft: "150px",
+                marginTop: "30px",
+                backgroundColor: "aliceblue",
+                marginBottom: "50px",
+              }}
+            >
+              <Table>
+                <TableHead>
+                  <TableRow>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        fontSize: "15px",
+                      }}
+                    >
+                      Sản phẩm
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        fontSize: "15px",
+                      }}
+                    >
+                      Số lượng
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        fontSize: "15px",
+                      }}
+                    >
+                      Đơn giá
+                    </TableCell>
+                    <TableCell
+                      style={{
+                        fontWeight: "bold",
+                        textAlign: "center",
+                        fontSize: "15px",
+                      }}
+                    >
+                      Thành tiền
+                    </TableCell>
+                  </TableRow>
+                </TableHead>
+                <TableBody>
+                  {products ? (
+                    products.map((value, index) => (
+                      <TableRow key={index}>
+                        <TableCell>
+                          <FontAwesomeIcon
+                            style={{ color: "red" }}
+                            icon={faTrashCan}
+                            onClick={() => removeItem(value.IDSanPham)}
+                          />
+                          <img
+                            src={value.IMG}
+                            alt=""
+                            style={{
+                              width: "50px",
+                              marginRight: "10px",
+                              border: "none",
+                            }}
+                          />
+                          {value.TenSP}
+                        </TableCell>
+                        <TableCell style={{ border: "none" }}>
                           <Button
-                            onClick={() =>
-                              handleQuantityChange(index, value.SoLuong - 1)
-                            }
-                            disabled={value.SoLuong === 1}
+                            variant="outlined"
+                            size="small"
+                            color="secondary"
+                            onClick={() => {
+                              const updatedProducts = [...products];
+                              if (value.SoLuong > 1) {
+                                updatedProducts[index].SoLuong -= 1; // Giảm số lượng
+                                setProducts(updatedProducts); // Cập nhật state
+                              }
+                            }}
+                            className={style.button}
+                            style={{
+                              minWidth: "25px",
+                              padding: "5px 5px",
+                              marginRight: "10px",
+                            }}
                           >
-                            -
+                            <FontAwesomeIcon icon={faMinus} />
                           </Button>
-                          <Button disabled>{value.SoLuong}</Button>
-                          <Button
-                            onClick={() =>
-                              handleQuantityChange(index, value.SoLuong + 1)
-                            }
-                          >
-                            +
-                          </Button>
-                        </ButtonGroup>
-                      </td>
 
-                      <td>{value.DonGia.toLocaleString("vi-VN")}</td>
-                      <td>
-                        {(value.SoLuong * value.DonGia).toLocaleString("vi-VN")}
-                      </td>
-                    </tr>
-                  ))
-                ) : (
-                  <tr>
-                    <td colSpan="4">Không có sản phẩm</td>
-                  </tr>
-                )}
-              </tbody>
-            </table>
+                          <span style={{ fontWeight: "bold" }}>
+                            {value.SoLuong}
+                          </span>
+
+                          <Button
+                            variant="outlined"
+                            size="small"
+                            color="primary"
+                            onClick={() => {
+                              const updatedProducts = [...products];
+                              updatedProducts[index].SoLuong += 1; // Tăng số lượng
+                              setProducts(updatedProducts); // Cập nhật state
+                            }}
+                            className={style.button}
+                            style={{
+                              minWidth: "25px",
+                              padding: "5px 5px",
+                              marginLeft: "10px",
+                            }}
+                          >
+                            <FontAwesomeIcon icon={faPlus} />
+                          </Button>
+                        </TableCell>
+
+                        <TableCell style={{ border: "none" }}>
+                          {value.DonGia.toLocaleString("vi", {
+                            style: "currency",
+                            currency: "VND",
+                          })}
+                        </TableCell>
+                        <TableCell style={{ border: "none" }}>
+                          {(value.SoLuong * value.DonGia).toLocaleString("vi", {
+                            style: "currency",
+                            currency: "VND",
+                          })}
+                        </TableCell>
+                      </TableRow>
+                    ))
+                  ) : (
+                    <TableRow>
+                      <TableCell colSpan={4} align="center">
+                        Không có sản phẩm
+                      </TableCell>
+                    </TableRow>
+                  )}
+                </TableBody>
+              </Table>
+            </TableContainer>
           </div>
           <div className={style.order}>
-            <h1>Thông tin thanh toán</h1>
+            <h2>Thông tin thanh toán</h2>
             <span className={style.thanhtoan}>Thành tiền: </span>
             <span style={{ color: "red", fontSize: "24px", marginTop: "10px" }}>
               {totalPrice.toLocaleString("vi", {
@@ -220,7 +311,6 @@ function Order() {
                 currency: "VND",
               })}
             </span>
-
             <label htmlFor="payment" className={style.thanhtoan}>
               Hình thức thanh toán:
             </label>

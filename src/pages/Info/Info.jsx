@@ -13,7 +13,7 @@ function Info() {
                 {/* <h1 className={style["gradientText"]}>Về chúng tôi</h1> */}
                 <div className={style["children_1"]}>
                     <div className={style["left-content"]}>
-                        <h1 style={{ marginTop: '15px' ,color:'#081158'}}>Chào bạn, chúng tôi là <span className={style["gradientText1"]}>GOAT FITNESS</span></h1>
+                        <h1 style={{ marginTop: '15px' ,color:'#081158',marginBottom:'15px',textAlign:'center'}}>Chào bạn, chúng tôi là <span className={style["gradientText1"]}>GOAT FITNESS</span></h1>
                         <p style={{ textAlign: 'justify', lineHeight: '1.5', marginLeft: '35px', fontSize: '18px', height: '100%' ,color:'#081158'}} className={style["plus-jakarta-sans"]}>
                         GOAT FITNESS, viết tắt của "Greatest of All Time Fitness," là điểm đến lý tưởng cho những ai muốn nâng cao sức khỏe và thể hình. Với trang thiết bị hiện đại và đội ngũ huấn luyện viên giàu kinh nghiệm, 
                         chúng tôi cam kết mang đến môi trường tập luyện chuyên nghiệp và hiệu quả. Cho dù mục tiêu của bạn là thể hình, giảm cân, hay cải thiện sức khỏe tinh thần qua yoga và boxing, GOAT FITNESS có các chương 

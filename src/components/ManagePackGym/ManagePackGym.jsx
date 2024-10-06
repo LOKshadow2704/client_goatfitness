@@ -56,7 +56,7 @@ function ManagePackGym() {
         setError(true);
         setMessage(error.response.data.error);
       });
-  }, [update, setError, setMessage]);
+  }, [update, rerender, showModal, setError, setMessage]);
 
   const handleSearch = (e) => {
     setSearchTerm(e.target.value);
@@ -327,7 +327,7 @@ function ManagePackGym() {
         aria-labelledby="confirm-dialog-title"
         aria-describedby="confirm-dialog-description"
       >
-        <DialogTitle id="confirm-dialog-title">Xác nhận xóa</DialogTitle>
+        <DialogTitle id="confirm-dialog-title" sx={{borderBottom: '1px solid #ddd'}}>Xác nhận xóa</DialogTitle>
         <DialogContentText
           id="confirm-dialog-description"
           style={{ padding: "20px" }}

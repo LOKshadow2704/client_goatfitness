@@ -36,7 +36,7 @@ function PurchaseOrder(){
                     };
                     const response = await axios.get('http://localhost:8080/Backend/PurchaseOrder', { headers: headers });
                     if (response.status >= 200 && response.status < 300) {
-                        setPurchaseOrders(response.data.orders);
+                      setPurchaseOrders(response.data.orders || []);
                     } else {
                         throw new Error("Lấy thông tin đơn hàng thất bại!");
                     }
@@ -75,7 +75,22 @@ function PurchaseOrder(){
                     {isLoading ? (
                         <h1 style={{ backgroundColor: 'white' }}>Đang tải dữ liệu...</h1>
                     ) : purchaseOrders.length === 0 ? (
-                        <h1 style={{ backgroundColor: 'white' }}>Không có đơn hàng</h1>
+                      <h2 
+                      style={{ 
+                          backgroundImage: 'url(https://res.cloudinary.com/dzh4pimvj/image/upload/v1727708058/ae7688fd-8318-4b59-8009-04cac4930652.png)', 
+                          backgroundSize: 'cover', 
+                          textAlign: 'center', 
+                          marginBottom: '30px',
+                          color: 'white', 
+                          padding: '20px', 
+                          height:'500px',
+                          marginLeft:'45px',
+                          marginRight:'45px',
+                          fontSize:'30px',
+                      }}
+                  >
+                      Không có đơn hàng !!!
+                  </h2>
                     ) : (
                         purchaseOrders.map((value) => (
                             <div className={style.order_item} key={value.IDDonHang}>

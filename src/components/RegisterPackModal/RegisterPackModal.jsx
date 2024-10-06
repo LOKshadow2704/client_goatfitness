@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import Dialog from "@mui/material/Dialog";
 import DialogActions from "@mui/material/DialogActions";
 import DialogContent from "@mui/material/DialogContent";
@@ -15,13 +15,24 @@ import { useAnnouncement } from "../../contexts/Announcement";
 import FormControl from "@mui/material/FormControl";
 import InputLabel from "@mui/material/InputLabel";
 
-function RegisterPackModal({ data, setShowModal }) {
+function RegisterPackModal({ setShowModal }) {
     const [formData, setFormData] = useState({
         SDT: "",
         IDGoiTap: "",
         ThoiHan: ""
     });
+    const [data, setData] = useState([]); 
     const { setError, setMessage, setSuccess, setLocation, setLink } = useAnnouncement();
+
+    useEffect(() => {
+        axios.get("http://localhost:8080/Backend/gympack/")
+            .then(response => {
+                setData(response.data);
+            })
+            .catch(error => {
+                console.error("Error fetching gym packs data:", error);
+            });
+    }, []); 
 
     const handleChange = (e) => {
         const { name, value } = e.target;
@@ -93,9 +104,9 @@ function RegisterPackModal({ data, setShowModal }) {
     };
 
     return (
-        <Dialog open={true} onClose={() => setShowModal(false)} maxWidth="xs" fullWidth sx={{height:'600px'}}>
-            <DialogTitle>
-                <span style={{textAlign:"center"}}>Đăng ký mới</span>
+        <Dialog open={true} onClose={() => setShowModal(false)} maxWidth="xs" fullWidth sx={{ height: '600px' }}>
+            <DialogTitle sx={{ fontWeight: 'bold', textAlign: 'center', fontSize: '20px', borderBottom: '1px solid #ddd', paddingBottom: '10px', marginBottom: '10px' }}>
+                Đăng ký mới
                 <IconButton
                     aria-label="close"
                     onClick={() => setShowModal(false)}
@@ -120,47 +131,26 @@ function RegisterPackModal({ data, setShowModal }) {
                         inputProps={{ maxLength: 11, minLength: 10, pattern: "[0-9]*" }}
                         value={formData.SDT}
                         onChange={handleChange}
-                       
-                        // required
                     />
-                    {/* <Select
-                        fullWidth
-                        label="Loại sản phẩm"
-                        name="IDGoiTap"
-                        value={formData.IDGoiTap}
-                        onChange={handleChange}
-                        displayEmpty
-                        required
-                    >
-                        <MenuItem value="">
-                            <em>Chọn loại sản phẩm</em>
-                        </MenuItem>
-                        {data && data.map((value) => (
-                            <MenuItem key={value.IDGoiTap} value={value.IDGoiTap}>
-                                {value.TenGoiTap}
+                    <FormControl fullWidth margin="normal">
+                        <InputLabel id="product-select-label">Loại sản phẩm</InputLabel>
+                        <Select
+                            labelId="product-select-label"
+                            name="IDGoiTap"
+                            value={formData.IDGoiTap}
+                            onChange={handleChange}
+                            label="Loại sản phẩm"
+                        >
+                            <MenuItem value="">
+                                <em>Chọn loại sản phẩm</em>
                             </MenuItem>
-                        ))}
-                    </Select> */}
-                    <FormControl fullWidth margin="normal" >
-    <InputLabel id="product-select-label">Loại sản phẩm</InputLabel>
-    <Select
-        labelId="product-select-label"
-        name="IDGoiTap"
-        value={formData.IDGoiTap}
-        onChange={handleChange}
-        label="Loại sản phẩm"  
-    >
-        <MenuItem value="">
-            <em>Chọn loại sản phẩm</em>
-        </MenuItem>
-        {data && data.map((value) => (
-            <MenuItem key={value.IDGoiTap} value={value.IDGoiTap}>
-                {value.TenGoiTap}
-            </MenuItem>
-        ))}
-    </Select>
-</FormControl>
-
+                            {data.map((value) => (
+                                <MenuItem key={value.IDGoiTap} value={value.IDGoiTap}>
+                                    {value.TenGoiTap}
+                                </MenuItem>
+                            ))}
+                        </Select>
+                    </FormControl>
                 </form>
             </DialogContent>
             <DialogActions>

@@ -100,8 +100,8 @@ function AddPackGym({ data, setShowModal }) {
     return (
         <>
             <Dialog open={true} onClose={() => setShowModal(false)} maxWidth="xs" fullWidth sx={{ height: '600px' }}>
-                <DialogTitle>
-                    <span style={{ textAlign: "center" }}>Đăng ký gói tập mới</span>
+                <DialogTitle sx={{fontWeight: 'bold', textAlign: 'center', fontSize: '20px', borderBottom: '1px solid #ddd', paddingBottom: '10px',marginBottom:'10px'}}>
+                  Thêm gói tập mới
                     <IconButton
                         aria-label="close"
                         onClick={() => setShowModal(false)}
