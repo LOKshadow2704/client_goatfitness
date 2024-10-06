@@ -11,12 +11,12 @@ function HomeContent() {
   const { user } = useAuth();
 
   useEffect(() => {
-    if (user && user.IDVaiTro === 2) {
-      window.location.href = "http://localhost:3000/employee";
-    }
-    if (user && user.IDVaiTro === 1) {
-      window.location.href = "http://localhost:3000/admin";
-    }
+    // if (user && user.IDVaiTro === 2) {
+    //   window.location.href = "http://localhost:3000/employee";
+    // }
+    // if (user && user.IDVaiTro === 1) {
+    //   window.location.href = "http://localhost:3000/admin";
+    // }
     axios
       .get("http://localhost:8080/Backend/HomeContent")
       .then((response) => {
