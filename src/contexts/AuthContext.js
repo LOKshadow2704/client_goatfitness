@@ -10,7 +10,7 @@ export const AuthProvider = ({ children }) => {
     const login = async (credentials) => {
         try {
             console.log(credentials)
-            const response = await axios.post('http://localhost:8080/Backend/login', credentials, {
+            const response = await axios.post('http://localhost:8080/Backend/login/', credentials, {
                 withCredentials: true,
                 headers: {
                     'Content-Type': 'application/json',
