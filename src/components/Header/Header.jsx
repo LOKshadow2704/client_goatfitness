@@ -3,8 +3,8 @@ import { Tabs, Tab } from "@mui/material";
 import { Link, useLocation } from "react-router-dom";
 // import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 // import { faShopify } from '@fortawesome/free-brands-svg-icons';
+//import Cart from "../Cart/Cart";
 import { useAuth } from "../../contexts/AuthContext";
-import Cart from "../Cart/Cart";
 import UserPackage from "../UserPackage/UserPackage";
 import { useAnnouncement } from "../../contexts/Announcement";
 import Announcement from "../Announcement/Announcement";
@@ -16,7 +16,7 @@ import UserPTPackage from "../UserPTPackage/UserPTPackage";
 function Header() {
   const [showModal, setShowModal] = useState(false);
   const [showPTModal, setShowPTModal] = useState(false);
-  const [cart, setCart] = useState(false);
+  const [ setCart ] = useState(false);
   const cartRef = useRef(null);
   const { isLogin, user } = useAuth();
   const {
@@ -42,7 +42,7 @@ function Header() {
     return () => {
       document.removeEventListener("click", handleClickOutside);
     };
-  }, []);
+  }, [setCart]);
 
   const findCookie = (name) => {
     const cookies = document.cookie.split(";");
@@ -57,9 +57,11 @@ function Header() {
 
   // Xác định danh sách các đường dẫn hợp lệ cho Tabs
   const validTabPaths = ["/", "/shop", "/PT", "/info", "/GymPack"];
-    
+
   // Nếu location.pathname không có trong danh sách hợp lệ, cung cấp giá trị null hoặc giá trị mặc định
-  const tabValue = validTabPaths.includes(location.pathname) ? location.pathname : false;
+  const tabValue = validTabPaths.includes(location.pathname)
+    ? location.pathname
+    : false;
 
   function Logout() {
     const jwt = findCookie("jwt");
@@ -96,9 +98,7 @@ function Header() {
         setSuccess(true);
         setMessage(data.message || "Đăng xuất thành công");
         setLocation(true);
-
-        // Điều hướng về trang login
-        navigate("/login"); // Thêm dòng này
+        navigate("/login"); 
       })
       .catch((error) => {
         console.error(error);

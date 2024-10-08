@@ -23,9 +23,9 @@ export const AuthProvider = ({ children }) => {
             //     user.TrangThai = user.TrangThai === 0 ? 'offline' : 'online';
             // }
             const { user } = data;
-            setUser(user);
+            setUser(user[0]);
             setIsLogin(true);
-            return { success: true , role: user.TenVaiTro };
+            return { success: true , role: user[0].TenVaiTro };
         } catch (error) {
             console.error('Error', error.message);
             return { success: false, message: 'Kiểm tra lại thông tin' };
