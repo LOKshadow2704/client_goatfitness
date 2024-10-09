@@ -241,7 +241,7 @@ function ManageAccount({ data }) {
               filteredAccounts
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
                 .map((value) => (
-                  <TableRow key={value.IDSanPham}>
+                  <TableRow key={value.TenDangNhap}>
                     <TableCell style={{ textAlign: "center" }}>
                       {value.TenDangNhap}
                     </TableCell>

@@ -289,9 +289,9 @@ function ManageWorkEmployee() {
     {paginatedWorkEmployee.length > 0 ? (
       paginatedWorkEmployee.map((value) => (
         <TableRow
-          key={value.IDHoaDon} 
+          key={value.TenHLV} 
           sx={{
-            backgroundColor: value.IDHoaDon % 2 === 0 ? "white" : "#f5f5f5", // Áp dụng màu nền xen kẽ
+            backgroundColor: value.TenHLV % 2 === 0 ? "white" : "#f5f5f5", // Áp dụng màu nền xen kẽ
           }}
         >
           <TableCell style={{ textAlign: "center" }}>{value.TenHLV}</TableCell>
