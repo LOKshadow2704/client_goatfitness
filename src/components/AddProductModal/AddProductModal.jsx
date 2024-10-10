@@ -235,7 +235,7 @@ function AddProductModal({ setShowModal }) {
   };
 
   return (
-    <Dialog open onClose={() => setShowModal(false)}>
+    <Dialog open onClose={() => setShowModal(false)} fullWidth maxWidth="sm">
       <DialogTitle
         sx={{ textAlign: "center", fontWeight: "bold", fontSize: "22px" }}
       >

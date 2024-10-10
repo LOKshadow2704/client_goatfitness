@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import { IconButton, TextField, Button, Dialog, DialogTitle, DialogContent, FormControl, Box, MenuItem } from "@mui/material";
+import { IconButton, TextField, Button, Dialog, DialogTitle, DialogContent, FormControl, Box } from "@mui/material";
 import CloseIcon from '@mui/icons-material/Close';
 import axios from "axios";
 import { useAnnouncement } from "../../contexts/Announcement";
 
-function UpdateInvoiceModal({ data, setShowModal }) {
+function UpdateEmployeeModal({ data, setShowModal }) {
     const { setError, setMessage, setSuccess } = useAnnouncement();
     const [formData, setFormData] = useState({
-        IDHoaDon: data.IDHoaDon, // ID hóa đơn để cập nhật
-        TrangThaiThanhToan: data.TrangThaiThanhToan // Chỉ chỉnh sửa trạng thái thanh toán
+        TenDangNhap: data.TenDangNhap, 
+        HoTen: data.HoTen,
+        Email: data.Email,
+        SDT: data.SDT,
+        DichVu: data.DichVu,
     });
 
     // Hàm thay đổi trạng thái form
@@ -44,11 +47,11 @@ function UpdateInvoiceModal({ data, setShowModal }) {
             };
     
             try {
-                // Gửi yêu cầu PUT
-                const response = await axios.put('http://localhost:8080/Backend/order-gympack/update', formData, { headers: headers });
+                // Gửi yêu cầu PUT để cập nhật thông tin nhân viên
+                const response = await axios.put('http://localhost:8080/Backend/employee/update', formData, { headers: headers });
                 if (response.status >= 200 && response.status < 300) {
                     setSuccess(true);
-                    setMessage("Cập nhật trạng thái thanh toán thành công");
+                    setMessage("Cập nhật thông tin nhân viên thành công");
                     setShowModal(false);
                 } else {
                     throw new Error("Cập nhật thất bại");
@@ -67,7 +70,7 @@ function UpdateInvoiceModal({ data, setShowModal }) {
         <Dialog open onClose={() => setShowModal(false)}
             sx={{ '& .MuiDialog-paper': { width: '400px', maxWidth: '90%' } }}>
             <DialogTitle sx={{ fontWeight: 'bold', textAlign: 'center', fontSize: '20px', borderBottom: '1px solid #ddd', paddingBottom: '10px' }}>
-                Cập nhật trạng thái thanh toán
+                Cập nhật thông tin nhân viên
                 <IconButton
                     aria-label="close"
                     onClick={() => setShowModal(false)}
@@ -82,61 +85,51 @@ function UpdateInvoiceModal({ data, setShowModal }) {
                 </IconButton>
             </DialogTitle>
             <DialogContent>
-                {/* Hiển thị thông tin không chỉnh sửa */}
-                <Box>
-                    <TextField
-                        label="Họ tên"
-                        value={data.HoTen}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        fullWidth
-                        margin="normal"
-                        sx={{marginTop:'25px'}}
-                    />
-                    <TextField
-                        label="Tên gói tập"
-                        value={data.TenGoiTap}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        fullWidth
-                        margin="normal"
-                    />
-                    <TextField
-                        label="Ngày đăng ký"
-                        value={data.NgayDangKy}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        fullWidth
-                        margin="normal"
-                    />
-                    <TextField
-                        label="Ngày hết hạn"
-                        value={data.NgayHetHan}
-                        InputProps={{
-                            readOnly: true,
-                        }}
-                        fullWidth
-                        margin="normal"
-                    />
-                </Box>
-                {/* Chỉ cho chỉnh sửa trạng thái thanh toán */}
                 <form onSubmit={handleSubmit}>
-                    <FormControl fullWidth margin="normal">
+                <input type="hidden" name="TenDangNhap" value={formData.TenDangNhap} />
+                    <FormControl fullWidth margin="dense">
                         <TextField
-                            select
-                            label="Trạng thái thanh toán"
-                            id="TrangThaiThanhToan"
-                            name="TrangThaiThanhToan"
-                            value={formData.TrangThaiThanhToan}
+                            label="Họ tên"
+                            id="HoTen"
+                            name="HoTen"
+                            value={formData.HoTen}
                             onChange={handleChange}
                             fullWidth
-                        >
-                            <MenuItem value="Đã Thanh Toán">Đã Thanh Toán</MenuItem>
-                            <MenuItem value="Chưa thanh toán">Chưa thanh toán</MenuItem>
-                        </TextField>
+                            margin="normal"
+                        />
+                    </FormControl>
+                    <FormControl fullWidth margin="dense">
+                        <TextField
+                            label="Email"
+                            id="Email"
+                            name="Email"
+                            value={formData.Email}
+                            onChange={handleChange}
+                            fullWidth
+                            margin="normal"
+                        />
+                    </FormControl>
+                    <FormControl fullWidth margin="dense">
+                        <TextField
+                            label="Số điện thoại"
+                            id="SDT"
+                            name="SDT"
+                            value={formData.SDT}
+                            onChange={handleChange}
+                            fullWidth
+                            margin="normal"
+                        />
+                    </FormControl>
+                    <FormControl fullWidth margin="dense">
+                        <TextField
+                            label="Dịch vụ"
+                            id="DichVu"
+                            name="DichVu"
+                            value={formData.DichVu}
+                            onChange={handleChange}
+                            fullWidth
+                            margin="normal"
+                        />
                     </FormControl>
                     <Box mt={2} textAlign="center">
                         <Button variant="contained" color="primary" type="submit" sx={{ width: '150px' }}>
@@ -149,4 +142,4 @@ function UpdateInvoiceModal({ data, setShowModal }) {
     );
 }
 
-export default UpdateInvoiceModal;
+export default UpdateEmployeeModal;

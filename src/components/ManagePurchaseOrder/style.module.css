@@ -17,15 +17,9 @@
 
 .header input {
     max-width: 190px;
-    background-color: #f5f5f5;
+   
     color: #242424;
-    padding: .15rem .5rem;
-    min-height: 30px;
-    border-radius: 4px;
-    outline: none;
-    border: none;
-    line-height: 1.15;
-    box-shadow: 0px 10px 20px -18px;
+  
 }
 
 .header input:focus {
@@ -143,6 +137,7 @@
 .products{
     display: flex;
     flex-direction: column;
+    float: left;
 }
 
 .product_item{
@@ -155,4 +150,7 @@
 
 .green {
     color: green;
+}
+.header1{
+    margin-top: 25px !important;
 }

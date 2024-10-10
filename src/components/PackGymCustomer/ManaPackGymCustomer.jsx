@@ -57,7 +57,7 @@ function ManaPackGymCustomer() {
       .catch((error) => {
         console.error("Error fetching data: ", error);
       });
-  }, []);
+  }, [update, rerender, showModal]);
 
   const handleSearch = (e) => {
     const searchValue = e.target.value.toLowerCase();
@@ -360,7 +360,7 @@ function ManaPackGymCustomer() {
         aria-labelledby="confirm-dialog-title"
         aria-describedby="confirm-dialog-description"
       >
-        <DialogTitle id="confirm-dialog-title">Xác nhận xóa</DialogTitle>
+        <DialogTitle id="confirm-dialog-title" sx={{borderBottom: '1px solid #ddd'}}>Xác nhận xóa</DialogTitle>
         <DialogContentText
           id="confirm-dialog-description"
           style={{ padding: "20px" }}

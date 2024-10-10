@@ -1,47 +1,45 @@
-/* style.module.css */
-
-/* Cập nhật kích thước và căn chỉnh của hình ảnh sản phẩm */
 .productImage {
-    max-width: 100px; /* Giữ kích thước hình ảnh trong phạm vi hợp lý */
-    height: auto; /* Đảm bảo hình ảnh không bị méo */
-    object-fit: cover; /* Đảm bảo hình ảnh không bị kéo giãn */
+    max-width: 100px; 
+    height: auto; 
+    object-fit: cover; 
 }
 
-/* Cập nhật kiểu dáng cho bảng */
+
 .wrap_cart {
-    width: 100%; /* Đảm bảo bảng chiếm toàn bộ chiều rộng của vùng chứa */
-    background-color: white;
-    box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.2); /* Tạo hiệu ứng bóng cho bảng */
+    width: 100%; 
+    background-color: snow;
+    box-shadow: 0px 2px 4px 1px rgba(0,0,0,0.2); 
     border-radius: 10px;
-    padding: 20px; /* Thêm khoảng cách cho bảng */
+    padding: 20px;
+    background-color: aliceblue !important; 
 }
 
-/* Cập nhật kiểu dáng cho các ô trong bảng */
+
 .MuiTableCell-root {
-    padding: 10px; /* Cung cấp khoảng cách giữa nội dung và viền ô */
+    padding: 10px; 
 }
 
-/* Cập nhật kiểu dáng cho tiêu đề bảng */
+
 .MuiTableHead-root {
-    background-color: #f5f5f5; /* Thay đổi màu nền tiêu đề bảng */
-    font-weight: bold; /* Đặt chữ tiêu đề đậm hơn */
+    background-color: #f5f5f5; 
+    font-weight: bold; 
 }
 
-/* Cập nhật kiểu dáng cho nút xóa */
+
 .MuiSvgIcon-root {
-    cursor: pointer; /* Thay đổi con trỏ khi di chuột qua biểu tượng */
+    cursor: pointer; 
 }
 
-/* Cập nhật kiểu dáng cho các phần tử tổng tiền và nút mua */
+
 .buy {
     display: flex;
     justify-content: space-between;
     align-items: center;
-    margin-top: 20px; /* Thêm khoảng cách trên cùng */
-    padding: 10px 0; /* Thêm khoảng cách trên và dưới */
+    margin-top: 20px; 
+    padding: 10px 0;
 }
 
-/* Cập nhật kiểu dáng cho các nút trong bảng */
+
 .buy button {
     margin-top: 10px;
 }

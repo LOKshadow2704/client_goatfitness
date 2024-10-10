@@ -70,7 +70,7 @@ function RegisterPT({ setShowModal }) {
                     <CloseIcon />
                 </IconButton>
 
-                <h2 id="modal-title">Đăng ký làm huấn luyện viên</h2>
+                <h3 id="modal-title" style={{textAlign:'center',marginBottom:'10px'}}>Đăng ký làm huấn luyện viên</h3>
                 <form onSubmit={handleSubmit}>
                     <TextField
                         id="certificates"
@@ -81,7 +81,6 @@ function RegisterPT({ setShowModal }) {
                         margin="normal"
                         value={certificates}
                         onChange={(e) => setCertificates(e.target.value)}
-                        required
                     />
                     <FormControl fullWidth margin="normal">
                         <InputLabel id="service-label">Dịch vụ</InputLabel>
@@ -91,7 +90,6 @@ function RegisterPT({ setShowModal }) {
                             value={serviceID}
                             onChange={(e) => setServiceID(e.target.value)}
                             label="Dịch vụ"
-                            required
                         >
                             <MenuItem value=""><em>Vui lòng lựa chọn dịch vụ</em></MenuItem>
                             <MenuItem value="gym">Gym</MenuItem>
@@ -105,7 +103,6 @@ function RegisterPT({ setShowModal }) {
                         margin="normal"
                         value={desiredRent}
                         onChange={(e) => setDesiredRent(e.target.value)}
-                        required
                     />
                     <Box sx={{ mt: 2, display: 'flex', justifyContent: 'flex-end' }}>
                         <Button variant="contained" color="primary" type="submit" disabled={isLoading}>

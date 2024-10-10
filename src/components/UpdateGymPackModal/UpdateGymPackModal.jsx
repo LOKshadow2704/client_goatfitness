@@ -89,7 +89,7 @@ function UpdateGymPackModal({ data, setShowModal }) {
     return (
         <Dialog open onClose={() => setShowModal(false)}
         sx={{ '& .MuiDialog-paper': { width: '400px', maxWidth: '90%' } }}>
-            <DialogTitle sx={{ fontWeight: 'bold', textAlign: 'center', fontSize: '22px' }}>
+            <DialogTitle sx={{ fontWeight: 'bold', textAlign: 'center', fontSize: '20px', borderBottom: '1px solid #ddd', paddingBottom: '10px', marginBottom:'10px' }}>
                 Cập nhật gói tập
                 <IconButton
                     aria-label="close"

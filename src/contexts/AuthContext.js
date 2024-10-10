@@ -10,10 +10,11 @@ export const AuthProvider = ({ children }) => {
     const login = async (credentials) => {
         try {
             console.log(credentials)
-            const response = await axios.post('http://localhost:8080/Backend/login', credentials, {
+            const response = await axios.post('http://localhost:8080/Backend/login/', credentials, {
                 withCredentials: true,
                 headers: {
-                    'Content-Type': 'application/json'
+                    'Content-Type': 'application/json',
+                    // 'User-Agent': 'WEB'
                 }
             });
             const data = response.data;
@@ -22,9 +23,9 @@ export const AuthProvider = ({ children }) => {
             //     user.TrangThai = user.TrangThai === 0 ? 'offline' : 'online';
             // }
             const { user } = data;
-            setUser(user);
+            setUser(user[0]);
             setIsLogin(true);
-            return { success: true , role: user.TenVaiTro };
+            return { success: true , role: user[0].TenVaiTro };
         } catch (error) {
             console.error('Error', error.message);
             return { success: false, message: 'Kiểm tra lại thông tin' };
