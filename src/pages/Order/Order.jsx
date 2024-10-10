@@ -56,7 +56,7 @@ function Order() {
   // Data order
   useEffect(() => {
     setProducts(JSON.parse(sessionStorage.getItem("OrderInfo")));
-  }, []);
+  }, [products]);
 
   // Total price
   useEffect(() => {
@@ -98,12 +98,14 @@ function Order() {
         .post("http://localhost:8080/Backend/order", data, { headers: headers })
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {
-            // Giả sử response.data là một thông báo thành công, bạn có thể thay đổi theo API của bạn
-            setSuccess(true);
-            setMessage("Đặt hàng thành công!");
-            setLocation(true);
-            setLink("http://localhost:3000/PurchaseOrder"); // Chuyển hướng đến trang PurchaseOrder
-            sessionStorage.removeItem("OrderInfo");
+            if (response.data) {
+              window.location.href = response.data;
+            } else {
+              setSuccess(true);
+              setMessage(response.data.message);
+              setLocation(true);
+              setLink("http://localhost:3000/PurchaseOrder");
+            }
           } else {
             throw new Error("Đặt hàng không thành công!");
           }

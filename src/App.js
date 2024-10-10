@@ -17,9 +17,6 @@ const PrivateRoute = ({ element, allowedRoles }) => {
       }
     }
   }, [isLogin, user, allowedRoles]);
-  // if (loading) {
-  //   return "loading";
-  // }
 
   if (redirectToLogin || !isLogin || !user) {
     return <Navigate to="/login" />;
