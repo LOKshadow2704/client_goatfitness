@@ -27,7 +27,7 @@ function Shop() {
   const itemsPerPage = 8;
 
   useEffect(() => {
-    fetch("http://localhost:8080/Backend/shop")
+    fetch("http://localhost:8080/Backend/products")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Lỗi kết nối");

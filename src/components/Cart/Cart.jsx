@@ -5,6 +5,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useAnnouncement } from "../../contexts/Announcement";
 import { Button, Table, TableBody, TableCell, TableContainer, TableHead, TableRow, Paper, Typography, Alert, Container } from '@mui/material';
 import { Link, useNavigate } from "react-router-dom";
+import axios from "axios";
 
 function Cart() {
     const [cartData, setCartData] = useState([]);
@@ -35,29 +36,19 @@ function Cart() {
             return null;
         };
 
-        const jwt = findCookie('jwt');
-        const option = {
-            method: 'GET',
+        axios.get('http://localhost:8080/Backend/cart', {
             headers: {
                 'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + jwt,
+                'Authorization': 'Bearer ' + findCookie('jwt'),
                 'PHPSESSID': findCookie("PHPSESSID")
+
             }
-        };
-        fetch('http://localhost:8080/Backend/cart', option)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Lỗi server');
-                } else {
-                    return response.json();
-                }
-            })
-            .then(data => {
-                setCartData(data);
-                setUpdate(false);
+        }).then(response => {
+            setCartData(response.data);
+            setUpdate(false);
             })
             .catch(error => {
-                console.error('Lỗi khi lấy dữ liệu:', error);
+                console.error('Có lỗi xảy ra khi lấy dữ liệu giỏ hàng:', findCookie("PHPSESSID"));
             });
     }, [update]);
 
@@ -75,14 +66,14 @@ function Cart() {
     }, [selectedItems, cartData]);
 
     // Kiểm tra nếu giỏ hàng trống tự động trở về trang sản phẩm
-    useEffect(() => {
-        if (cartData.length === 0) {
-            const timer = setTimeout(() => {
-                navigate("/shop");
-            }, 5000);
-            return () => clearTimeout(timer);
-        }
-    }, [cartData, navigate]);
+    // useEffect(() => {
+    //     if (cartData.length === 0) {
+    //         const timer = setTimeout(() => {
+    //             navigate("/shop");
+    //         }, 5000);
+    //         return () => clearTimeout(timer);
+    //     }
+    // }, [cartData, navigate]);
 
     const handleCheckboxChange = (event, index) => {
         if (event.target.checked) {
@@ -136,7 +127,7 @@ function Cart() {
             setMessage("Số lượng sản phẩm không thể nhỏ hơn 1.");
             return;
         }
-    
+
         const findCookie = (name) => {
             const cookies = document.cookie.split(';');
             for (let i = 0; i < cookies.length; i++) {
@@ -147,11 +138,11 @@ function Cart() {
             }
             return null;
         };
-        
+
         const data = {
             IDSanPham: IDSanPham
         };
-    
+
         const jwt = findCookie('jwt');
         const option = {
             method: 'PUT',
@@ -162,7 +153,7 @@ function Cart() {
             },
             body: JSON.stringify(data)
         };
-    
+
         fetch('http://localhost:8080/Backend/cart/updateQuanMinus', option)
             .then(response => {
                 if (!response.ok) {
@@ -175,7 +166,7 @@ function Cart() {
                 console.log(error);
             });
     }
-    
+
 
     function deleteCartItem(IDSanPham) {
         const findCookie = (name) => {
@@ -283,7 +274,7 @@ function Cart() {
                                         >
                                             <FontAwesomeIcon icon={faMinus} />
                                         </Button>
-                                        <span style={{fontWeight:'bo'}}>{item.SoLuong}</span>
+                                        <span style={{ fontWeight: 'bo' }}>{item.SoLuong}</span>
                                         <Button
                                             variant="outlined"
                                             size="small"

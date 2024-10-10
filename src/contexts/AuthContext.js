@@ -13,8 +13,7 @@ export const AuthProvider = ({ children }) => {
             const response = await axios.post('http://localhost:8080/Backend/login', credentials, {
                 withCredentials: true,
                 headers: {
-                    'Content-Type': 'application/json',
-                    'User-Agent': 'WEB'
+                    'Content-Type': 'application/json'
                 }
             });
             const data = response.data;
