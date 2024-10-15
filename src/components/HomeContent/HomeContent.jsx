@@ -153,7 +153,7 @@ function HomeContent() {
 
       <div className={style["container-item-4"]}>
   <h1>Huấn luyện viên nổi bậc</h1>
-  <div className={style["wrap-pt"]}>
+  {/* <div className={style["wrap-pt"]}>
     {pts &&
       pts.map((value, index) => (
         <div className={style["list-item"]} key={index}>
@@ -193,7 +193,50 @@ function HomeContent() {
           </Link>
         </div>
       ))}
-  </div>
+  </div> */}
+  <div className={style["wrap-pt"]}>
+  {Array.isArray(pts) && 
+    pts.map((value, index) => (
+      <div className={style["list-item"]} key={index}>
+        <img src={value.avt} alt="nothing" width="100%" />
+        <Link to={`/PTInfo/${value.IDKhachHang}`}>
+          <div className={style["wrap-content"]}>
+            <h2>{value.HoTen} </h2>
+            <h3>Chứng chỉ: {value.ChungChi}</h3>
+            <h3>
+              Đơn giá:{" "}
+              <span className={style.price}>
+                {value.GiaThue.toLocaleString("vi-VN", { style: "currency", currency: "VND" }).replace('₫', '')}
+                <span className={style.currency}>VNĐ</span>
+              </span>{" "}
+              / giờ
+            </h3>
+            <Button
+              variant="contained"
+              sx={{ 
+                backgroundColor: '#ffd000', 
+                color: '#fff', 
+                padding: '8px 16px', 
+                borderRadius: '8px', 
+                marginTop: '15px',
+                marginLeft:'25%',
+                marginBottom: '10px',
+                '&:hover': { 
+                  backgroundColor: '#1974D3'
+                }
+              }}
+              component={Link}
+              to={`/PTInfo/${value.IDKhachHang}`}
+            >
+              Đăng ký ngay
+            </Button>
+          </div>
+        </Link>
+      </div>
+    ))
+  }
+</div>
+
 </div>
 
 
@@ -201,44 +244,50 @@ function HomeContent() {
       <div className={style["container-item-5"]}>
         <h1>Các sản phẩm hỗ trợ luyện tập</h1>
         <div className={style["wrap-pt"]}>
-          {products &&
-            products.map((value, index) => (
-              <div className={style["list-item"]} key={index}>
-                <img src={value.IMG} alt="nothing" width="100%" />
-                <Link to={`/ProductInfo/${value.IDSanPham}`}>
-                  <div className={style["wrap-content"]}>
-                    <h2>{value.TenSP}</h2>
-                    <p>
-  Đơn giá:
-  <span className={style.price}>
-    {value.DonGia.toLocaleString("vi-VN", { style: "currency", currency: "VND" }).replace('₫', '')}
-    <span className={style.currency}>VNĐ</span>
-  </span>
-</p>
-<div className={style["button-container"]}>
-  <Button
-    variant="contained"
-    sx={{ 
-      backgroundColor: '#ffd000', 
-      color: '#fff', 
-      padding: '5px 16px',
-      borderRadius: '8px',
-      '&:hover': { 
-        backgroundColor: '#1974D3'
-      }
-    }}
-    component={Link}
-    to={`/ProductInfo/${value.IDSanPham}`}
-  >
-    Mua ngay
-  </Button>
+  {Array.isArray(products) && products.length > 0 ? (
+    products.map((value, index) => (
+      <div className={style["list-item"]} key={index}>
+        <img src={value.IMG} alt="nothing" width="100%" />
+        <Link to={`/ProductInfo/${value.IDSanPham}`}>
+          <div className={style["wrap-content"]}>
+            <h2>{value.TenSP}</h2>
+            <p>
+              Đơn giá:
+              <span className={style.price}>
+                {value.DonGia.toLocaleString("vi-VN", {
+                  style: "currency",
+                  currency: "VND",
+                }).replace("₫", "")}
+                <span className={style.currency}>VNĐ</span>
+              </span>
+            </p>
+            <div className={style["button-container"]}>
+              <Button
+                variant="contained"
+                sx={{
+                  backgroundColor: "#ffd000",
+                  color: "#fff",
+                  padding: "5px 16px",
+                  borderRadius: "8px",
+                  "&:hover": {
+                    backgroundColor: "#1974D3",
+                  },
+                }}
+                component={Link}
+                to={`/ProductInfo/${value.IDSanPham}`}
+              >
+                Mua ngay
+              </Button>
+            </div>
+          </div>
+        </Link>
+      </div>
+    ))
+  ) : (
+    <p>Không có sản phẩm nào để hiển thị.</p>
+  )}
 </div>
 
-                  </div>
-                </Link>
-              </div>
-            ))}
-        </div>
         {/* <a href="/shop">Xem thêm</a> */}
       </div>
     </main>
