@@ -48,7 +48,7 @@ function ManageWorkEmployee() {
   useEffect(() => {
     // Gọi API để lấy dữ liệu
     axios
-      .get("http://localhost:8080/Backend/Invoice_PT/Owner")
+      .get("http://localhost:8080/Backend/PT")
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
           setWorkEmployee(response.data);

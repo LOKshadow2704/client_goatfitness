@@ -18,7 +18,7 @@ function GymPack() {
     const { setError, setMessage, setSuccess, setLocation, setLink } = useAnnouncement();
 
     useEffect(() => {
-        axios.get("http://localhost:8080/Backend/gympack/")
+        axios.get("http://localhost:8080/Backend/gympack")
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
                     const categorie = {

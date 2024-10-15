@@ -44,7 +44,7 @@ function ManagePackGym() {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/Backend/gympack/")
+      .get("http://localhost:8080/Backend/gympack")
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
           setGymPack(response.data);

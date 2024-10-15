@@ -18,6 +18,9 @@ import {
 import { Close } from "@mui/icons-material";
 import axios from "axios";
 import { useAnnouncement } from "../../contexts/Announcement";
+import { Editor, EditorState, convertToRaw, RichUtils } from "draft-js";
+import "draft-js/dist/Draft.css";
+import draftToHtml from "draftjs-to-html";
 
 function AddProductModal({ setShowModal }) {
   const [soLuong, setSoLuong] = useState("");
@@ -32,10 +35,11 @@ function AddProductModal({ setShowModal }) {
   const { setSuccess, setError, setMessage, setWarning } = useAnnouncement();
   const [category, setCategory] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [editorState, setEditorState] = useState(EditorState.createEmpty());
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/Backend/product/get_All_Category")
+      .get("http://localhost:8080/Backend/products")
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
           setCategory(response.data);
@@ -74,54 +78,6 @@ function AddProductModal({ setShowModal }) {
     return null;
   };
 
-  // const uploadImage = (file) => {
-  //     return new Promise((resolve, reject) => {
-  //         const isImageValid = (file) => {
-  //             return new Promise((resolve, reject) => {
-  //                 const img = new Image();
-  //                 img.onload = () => resolve(true);
-  //                 img.onerror = () => reject(false);
-  //                 img.src = URL.createObjectURL(file);
-  //             });
-  //         };
-
-  //         const formData = new FormData();
-  //         formData.append('image', file);
-
-  //         const validExtensions = ['jpg', 'jpeg', 'png'];
-  //         const fileExtension = file.name.split('.').pop().toLowerCase();
-  //         if (!validExtensions.includes(fileExtension)) {
-  //             setError(true);
-  //             setMessage('File được chấp nhận JPG, JPEG, PNG.');
-  //             reject('Invalid file extension');
-  //             return;
-  //         }
-
-  //         const maxFileSize = 10 * 1024 * 1024; // 10 MB
-  //         if (file.size > maxFileSize) {
-  //             setError(true);
-  //             setMessage('Kích thước phải nhỏ hơn 10MB');
-  //             reject('File size too large');
-  //             return;
-  //         }
-
-  //         isImageValid(file)
-  //             .then(() => {
-  //                 axios.post('https://api.imgbb.com/1/upload?key=3cce2ac9aa57bb924332afd210600b24', formData)
-  //                     .then(response => {
-  //                         const newlink = response.data.data.image.url;
-  //                         resolve(newlink);
-  //                     })
-  //                     .catch(error => {
-  //                         console.error('Upload không thành công: ', error);
-  //                         reject(error);
-  //                     });
-  //             }).catch(() => {
-  //                 console.error('Hình ảnh không hợp lệ');
-  //                 reject('Invalid image');
-  //             });
-  //     });
-  // };
 
   //Long Vỹ đổi lại cái api lưu hình ảnh. Tại cái imgbb không xài được nên đổi qua xài cloudiary
   const uploadImage = (file) => {
@@ -180,6 +136,47 @@ function AddProductModal({ setShowModal }) {
     });
   };
 
+  //Hàm chuyển đổi text sang HTML
+  const handleEditorChange = (editorState) => {
+    setEditorState(editorState);
+  };
+
+  const handleKeyCommand = (command) => {
+    const newState = RichUtils.handleKeyCommand(editorState, command);
+    if (newState) {
+      setEditorState(newState);
+      return "handled";
+    }
+    return "not-handled";
+  };
+
+  const toggleInlineStyle = (style) => {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, style));
+  };
+
+  const toggleBlockType = (blockType) => {
+    setEditorState(RichUtils.toggleBlockType(editorState, blockType));
+  };
+
+  const Toolbar = ({ toggleInlineStyle, toggleBlockType }) => {
+    return (
+      <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 1,
+        border: '1px solid #ddd', // Thêm border cho toolbar
+        borderRadius: '4px', // Để bo góc cho toolbar
+        padding: '5px', // Thêm khoảng cách bên trong
+        backgroundColor: '#f9f9f9',
+        marginBottom:'15px' // Màu nền nhẹ để nổi bật hơn
+       }}>
+        <Button onClick={() => toggleInlineStyle("BOLD")}>B</Button>
+        <Button onClick={() => toggleInlineStyle("ITALIC")}>I</Button>
+        <Button onClick={() => toggleInlineStyle("UNDERLINE")}>U</Button>
+        <Button onClick={() => toggleBlockType("unordered-list-item")}>UL</Button>
+        <Button onClick={() => toggleBlockType("ordered-list-item")}>OL</Button>
+      </Box>
+    );
+  };
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     for (const key in formData) {
@@ -189,6 +186,13 @@ function AddProductModal({ setShowModal }) {
         return;
       }
     }
+
+    //Chuyển đổi text sang HTML
+    const descriptionHTML = draftToHtml(convertToRaw(editorState.getCurrentContent()));
+    formData.Mota = descriptionHTML;
+
+    
+    
 
     const isLogin = findCookie("jwt");
     if (isLogin) {
@@ -285,7 +289,7 @@ function AddProductModal({ setShowModal }) {
               ))}
             </Select>
           </FormControl>
-          <FormControl fullWidth margin="normal">
+          {/* <FormControl fullWidth margin="normal">
             <TextField
               label="Mô tả"
               id="Mota"
@@ -307,8 +311,27 @@ function AddProductModal({ setShowModal }) {
               onChange={handleChange}
               fullWidth
             />
+          </FormControl> */}
+          <FormControl fullWidth margin="normal">
+          <Box
+            sx={{
+              border: "1px solid #ddd",
+              minHeight: "150px",
+              padding: "10px",
+              borderRadius: "4px",
+              position: 'relative',
+            }}
+          >
+            <Toolbar toggleInlineStyle={toggleInlineStyle} toggleBlockType={toggleBlockType} />
+            <Editor
+              editorState={editorState}
+              onChange={handleEditorChange}
+              handleKeyCommand={handleKeyCommand}
+              placeholder="Nhập mô tả sản phẩm..."
+            />
+          </Box>
           </FormControl>
-          <FormControl sx={{ width: "120px" }} margin="normal">
+          {/* <FormControl sx={{ width: "120px" }} margin="normal">
             <Button variant="contained" component="label">
               Tải ảnh lên
               <input
@@ -324,6 +347,17 @@ function AddProductModal({ setShowModal }) {
                 {selectedFileName}
               </Typography>
             )}
+          </FormControl> */}
+          <FormControl fullWidth margin="normal">
+            <TextField
+              label="Hình ảnh"
+              id="IMG"
+              name="IMG"
+              type="file"
+              onChange={handleChange}
+              InputLabelProps={{ shrink: true }}
+            />
+            
           </FormControl>
           <FormControl fullWidth margin="normal">
             <TextField

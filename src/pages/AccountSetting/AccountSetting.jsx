@@ -67,7 +67,7 @@ function AccountSetting({ changeForm, setRefresh }) {
         'Authorization': 'Bearer ' + jwt,
         'PHPSESSID': findCookie("PHPSESSID")
       };
-      const updateResponse = await axios.put('http://localhost:8080/Backend/updateAvt', data, { headers });
+      const updateResponse = await axios.put('http://localhost:8080/Backend/user/updateAvt', data, { headers });
       if (updateResponse.status >= 200 && updateResponse.status < 300) {
         setUpdate(!update);
         setSuccess(true);
@@ -107,7 +107,7 @@ function AccountSetting({ changeForm, setRefresh }) {
           'PHPSESSID': findCookie("PHPSESSID")
         }
       };
-      fetch('http://localhost:8080/Backend/getAccountInfo', option)
+      fetch('http://localhost:8080/Backend/user/Info', option)
         .then(response => {
           if (!response.ok) {
             throw new Error('Lỗi server');

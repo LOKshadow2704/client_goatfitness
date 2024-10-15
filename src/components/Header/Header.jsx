@@ -83,7 +83,7 @@ function Header() {
       },
     };
 
-    fetch("http://localhost:8080/Backend/logout/", option)
+    fetch("http://localhost:8080/Backend/logout", option)
       .then((response) => {
         if (!response.ok) {
           throw new Error("Đăng xuất thất bại. Server trả về lỗi.");

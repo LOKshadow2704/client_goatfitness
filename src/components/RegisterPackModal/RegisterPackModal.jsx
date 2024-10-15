@@ -25,7 +25,7 @@ function RegisterPackModal({ setShowModal }) {
     const { setError, setMessage, setSuccess, setLocation, setLink } = useAnnouncement();
 
     useEffect(() => {
-        axios.get("http://localhost:8080/Backend/gympack/")
+        axios.get("http://localhost:8080/Backend/gympack")
             .then(response => {
                 setData(response.data);
             })

@@ -111,7 +111,6 @@ function AddCategoryModal({ setShowModal }) {
               value={formData.TenLoaiSanPham}
               onChange={handleChange}
               fullWidth
-              required 
             />
           </FormControl>
           <Box mt={1} textAlign="center">

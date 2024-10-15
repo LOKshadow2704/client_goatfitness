@@ -45,7 +45,7 @@ function ManaPackGymCustomer() {
   useEffect(() => {
     // Gọi API để lấy dữ liệu
     axios
-      .get("http://localhost:8080/Backend/order-gympack/")
+      .get("http://localhost:8080/Backend/order-gympack")
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
           setGymPack(response.data);

@@ -68,7 +68,7 @@ function ProductInfo() {
     }
 
     useEffect(() => {
-        fetch(`http://localhost:8080/Backend/product?IDSanPham=${productID}`, {
+        fetch(`http://localhost:8080/Backend/products/info?IDSanPham=${productID}`, {
             method: 'GET',
             headers: {
                 'Content-Type': 'application/json'
@@ -82,7 +82,7 @@ function ProductInfo() {
                 }
             })
             .then(data => {
-                setProduct(data[0]);
+                setProduct(data);
             })
             .catch(error => {
                 console.error('Lỗi khi truy cập dữ liệu', error);
