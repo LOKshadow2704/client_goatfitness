@@ -84,7 +84,7 @@ function RegisterTraining({ setShowModal, peronalTrainer }) {
             'Authorization': 'Bearer ' + jwt,
             'PHPSESSID': findCookie("PHPSESSID")
         };
-        axios.post('http://localhost:8080/Backend/PT/Register', data, { headers: headers })
+        axios.post('http://localhost:8080/Backend/personalTrainer/Register', data, { headers: headers })
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
                     if (response.data.success) {
@@ -93,10 +93,10 @@ function RegisterTraining({ setShowModal, peronalTrainer }) {
                         setSuccess(true);
                         setMessage(response.data.message);
                         setLocation(true);
-                        setLink("http://localhost:3000/PT");
+                        setLink("http://localhost:3000/RegisterPTPaymentSuccess");
                     }
                 } else {
-                    throw new Error("Đặt hàng không thành công!");
+                    throw new Error("Đăng ký không thành công!");
                 }
             }).catch(error => {
                 setError(true);

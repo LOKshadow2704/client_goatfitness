@@ -14,8 +14,10 @@ import AccountSetting from "../pages/AccountSetting/AccountSetting";
 import PurchaseOrder from "../pages/PurchaseOrder/PurchaseOrder";
 import RegisterPT from "../pages/RegisterPT/Register";
 import CartPage from "../pages/Cart/Cart"
-import PaymentSuccess from "../pages/Payment_Success/PaymentSuccess"
-import PaymentError from "../pages/Payment_Error/PaymentError"
+import OrderPaymentSuccess from "../pages/Order_Payment_Success/Order_Payment_Success"
+import OrderPaymentError from "../pages/Order_Payment_Error/Order_Payment_Error"
+import RegisterPTPaymentError from "../pages/Register_PT_Payment_Error/Payment_Error"
+import RegisterPTPaymentSuccess from "../pages/Register_PT_Payment_Success/Register_PT_Payment_Success"
 // import Dashboard from "../components/Dashboard/Dashboard";
 // import MainLayout from "src/components/MainLayout";
 
@@ -31,9 +33,11 @@ const PublicRoutes =[
     {path: '/GymPack', component: GymPack},
     {path: '/ProductInfo/:productID', component: ProductInfo},
     {path: '/PTInfo/:PTID', component: PTInfo},
-    { path: '/cart', component: CartPage },
-    {path: '/PaymentSuccess' , component: PaymentSuccess},
-    {path: '/PaymentError' , component: PaymentError},
+    {path: '/cart', component: CartPage },
+    {path: '/OrderPaymentSuccess' , component: OrderPaymentSuccess},
+    {path: '/OrderPaymentError' , component: OrderPaymentError},
+    {path: '/RegisterPTPaymentError' , component: RegisterPTPaymentError},
+    {path: '/RegisterPTPaymentSuccess' , component: RegisterPTPaymentSuccess},
 ];
 
 // Route private cho nhóm người dùng

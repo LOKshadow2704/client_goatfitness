@@ -1,5 +1,5 @@
 import React from 'react';
-import PaymentSuccess from '../../components/Payment_Success/PaymentSuccess'; 
+import PaymentSuccess from '../../components/Payment_Order_Success/PaymentSuccess'; 
 import HeaderLogo from '../../components/Header_Logo/HeaderLogo';
 
 const PaymentSuccessPage = () => {

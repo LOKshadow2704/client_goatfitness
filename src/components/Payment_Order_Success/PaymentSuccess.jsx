@@ -45,16 +45,16 @@ const PaymentSuccess = ({ orderId, totalAmount, paymentMethod, shippingAddress }
           Đặt hàng thành công!
         </Typography>
         <Typography variant="body1">
-          Bạn đã đặt hàng thành công đơn hàng mã <strong>{orderId}</strong> trị giá <strong>{totalAmount}₫</strong>, hình thức thanh toán <strong>{paymentMethod}</strong>.
+          Bạn đã đặt hàng thành công đơn hàng mã <strong>{orderId}</strong> trị giá <strong>{totalAmount}₫</strong>, với phương thức thanh toán là <strong>{paymentMethod}</strong>.
         </Typography>
         <Typography variant="body1" sx={{ marginTop: '10px' }}>
-          Sau khi Shop xác nhận đơn hàng, sản phẩm sẽ được giao đến địa chỉ <strong>{shippingAddress}</strong> trong dự kiến trước ngày <strong>{estimatedDeliveryDate}</strong>.
+          Đơn hàng sẽ được giao đến địa chỉ <strong>{shippingAddress}</strong> sau khi được xác nhận. Thời gian giao hàng dự kiến trước ngày <strong>{estimatedDeliveryDate}</strong>.
         </Typography>
         <Typography variant="body2" sx={{ marginTop: '10px' }}>
-          Bạn có thể theo dõi đơn hàng tại <strong>Thông tin tài khoản / Đơn hàng</strong> hoặc bấm vào chi tiết đơn hàng phía dưới.
+          Bạn có thể theo dõi đơn hàng trong mục <strong>Thông tin tài khoản / Đơn hàng</strong> hoặc bấm vào nút dưới để xem chi tiết đơn hàng.
         </Typography>
         <Typography variant="body2" sx={{ marginTop: '20px', marginBottom: '30px', fontSize:'20px' }}>
-          <b>GOAT FITNESS</b> hân hạnh được phục vụ bạn!
+          <b>GOAT FITNESS</b> luôn sẵn sàng phục vụ bạn!
         </Typography>
         <Box sx={{ display: 'flex', justifyContent: 'center', gap: '20px' }}>
           <Button

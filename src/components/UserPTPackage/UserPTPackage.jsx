@@ -32,7 +32,7 @@ function UserPTPackage({ setShowModal }) {
       };
 
       axios
-        .get("http://localhost:8080/Backend/Invoice_PT/UserInfo", { headers: headers })
+        .get("http://localhost:8080/Backend/personalTrainer/all", { headers: headers })
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {
             setData(response.data[0]); // Lấy dữ liệu đầu tiên trong mảng
