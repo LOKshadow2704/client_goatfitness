@@ -62,7 +62,7 @@ function PT() {
   }, [location.search, setError, setLink, setLocation, setMessage, setSuccess]);
 
   useEffect(() => {
-    fetch("http://localhost:8080/Backend/PT")
+    fetch("http://localhost:8080/Backend/personalTrainer/all")
       .then((response) => {
         if (response.ok) {
           return response.json();

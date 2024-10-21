@@ -75,7 +75,7 @@ function Header() {
     }
 
     const option = {
-      method: "POST",
+      method: "GET",
       headers: {
         "Content-Type": "application/json",
         Authorization: "Bearer " + jwt,
@@ -107,6 +107,7 @@ function Header() {
       });
   }
 
+  
   return (
     <header className={style.header}>
       <div className={style["wrap-logo"]}>

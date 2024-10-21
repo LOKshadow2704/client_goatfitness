@@ -102,7 +102,7 @@ function Order() {
             setSuccess(true);
             setMessage("Đặt hàng thành công!");
             setLocation(true);
-            setLink("http://localhost:3000/PurchaseOrder"); // Chuyển hướng đến trang PurchaseOrder
+            setLink("/PaymentSuccess"); // Chuyển hướng đến trang PurchaseOrder
             sessionStorage.removeItem("OrderInfo");
           } else {
             throw new Error("Đặt hàng không thành công!");

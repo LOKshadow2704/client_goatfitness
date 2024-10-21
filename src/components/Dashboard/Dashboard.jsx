@@ -14,7 +14,7 @@ function Dashboard(){
     const { setError , setMessage } = useAnnouncement();
 
     useEffect(()=>{
-        axios.get("http://localhost:8080/Backend/user/checkin")
+        axios.get("http://localhost:8080/Backend/user/training")
             .then(
                 response=>{
                     if(response.status >= 200 && response.status < 300){

@@ -41,7 +41,7 @@ function ManageProduct({ data }) {
   const [productToDelete, setProductToDelete] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8080/Backend/shop/manege/")
+    fetch("http://localhost:8080/Backend/products")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Không thể truy cập");

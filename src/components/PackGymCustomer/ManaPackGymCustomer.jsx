@@ -45,7 +45,7 @@ function ManaPackGymCustomer() {
   useEffect(() => {
     // Gọi API để lấy dữ liệu
     axios
-      .get("http://localhost:8080/Backend/order-gympack")
+      .get("http://localhost:8080/Backend/invoice_gympack")
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
           setGymPack(response.data);
@@ -113,14 +113,14 @@ function ManaPackGymCustomer() {
         PHPSESSID: findCookie("PHPSESSID"),
       };
       axios
-        .delete("http://localhost:8080/Backend/order-gympack/delete", {
+        .delete("http://localhost:8080/Backend/invoice_gympack/delete", {
           data: { IDHoaDon: id },
           headers: headers,
         })
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {
             setSuccess(true);
-            setMessage("Xóa thành công");
+            setMessage("Xóa hóa đơn thuê gói tập thành công");
             setRerender(!rerender);
           } else {
             throw new Error("Xóa thất bại");

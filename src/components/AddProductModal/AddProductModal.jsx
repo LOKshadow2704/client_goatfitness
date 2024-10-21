@@ -283,7 +283,7 @@ function AddProductModal({ setShowModal }) {
                 <em>Chọn loại sản phẩm</em>
               </MenuItem>
               {category.map((value) => (
-                <MenuItem key={value.IDLoaiSanPham} value={value.IDLoaiSanPham}>
+                <MenuItem key={value.TenLoaiSanPham} value={value.TenLoaiSanPham}>
                   {value.TenLoaiSanPham}
                 </MenuItem>
               ))}

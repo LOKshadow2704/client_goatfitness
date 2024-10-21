@@ -11,7 +11,7 @@ function AccountInfo({ userData , setUpdate  }) {
     const [dataChanged, setDataChanged] = useState(false);
     const [rerender , setRerender] = useState(false);
     const {setSuccess , setError , setMessage , setWarning} = useAnnouncement();
-    //Kiểm tra thay đổi nhập
+   
     useEffect(() => {
         setDataChanged(
             name !== userData.HoTen ||
@@ -53,7 +53,7 @@ function AccountInfo({ userData , setUpdate  }) {
             'Authorization': 'Bearer ' + jwt,
             'PHPSESSID': findCookie("PHPSESSID")
         };
-        axios.put('http://localhost:8080/Backend/updateUser',  data, { headers: headers 
+        axios.put('http://localhost:8080/Backend/user/update',  data, { headers: headers 
         }).then(response => {
             if(response.status >= 200 && response.status < 300){
                 setUpdate(true);
@@ -67,7 +67,7 @@ function AccountInfo({ userData , setUpdate  }) {
         });
     };
 
-    // Hàm kiểm tra dữ liệu có thay đổi không
+    
     const checkDataChanged = () => {
         return (
             name !== userData.HoTen ||
@@ -77,11 +77,11 @@ function AccountInfo({ userData , setUpdate  }) {
         );
     };
 
-    // Xử lý sự kiện khi nhấn nút "Update"
+    
     const handleUpdateClick = () => {
         if (checkDataChanged()) {
             setDataChanged(true);
-            updateUser(); // Gửi yêu cầu đến backend khi dữ liệu thay đổi
+            updateUser(); 
         } else {
             setWarning(true);
             setMessage('Không có thay đổi nào để cập nhật.');
@@ -89,12 +89,11 @@ function AccountInfo({ userData , setUpdate  }) {
     };
 
     const resetData = () => {
-        // Reset dữ liệu về giá trị mặc định từ userData
         setName(userData.HoTen);
         setEmail(userData.Email);
         setAddress(userData.DiaChi);
         setPhoneNum(userData.SDT);
-        setDataChanged(false); // Đặt lại trạng thái dataChanged
+        setDataChanged(false); 
     };
 
     return (

@@ -31,7 +31,7 @@ function ResetPassword(){
             'Authorization': 'Bearer ' + jwt,
             'PHPSESSID': findCookie("PHPSESSID")
         };
-        axios.put('http://localhost:8080/Backend/updatePassword',  data, { headers: headers 
+        axios.put('http://localhost:8080/Backend/user/updatePW',  data, { headers: headers 
         }).then(response => {
             if(response.status >= 200 && response.status < 300){
                 setSuccess(true);

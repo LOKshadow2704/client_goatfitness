@@ -45,7 +45,7 @@ function UpdateInvoiceModal({ data, setShowModal }) {
     
             try {
                 // Gửi yêu cầu PUT
-                const response = await axios.put('http://localhost:8080/Backend/order-gympack/update', formData, { headers: headers });
+                const response = await axios.put('http://localhost:8080/Backend/invoice_gympack/update', formData, { headers: headers });
                 if (response.status >= 200 && response.status < 300) {
                     setSuccess(true);
                     setMessage("Cập nhật trạng thái thanh toán thành công");
@@ -85,7 +85,7 @@ function UpdateInvoiceModal({ data, setShowModal }) {
                 {/* Hiển thị thông tin không chỉnh sửa */}
                 <Box>
                     <TextField
-                        label="Họ tên"
+                        label="Họ tên khách hàng"
                         value={data.HoTen}
                         InputProps={{
                             readOnly: true,

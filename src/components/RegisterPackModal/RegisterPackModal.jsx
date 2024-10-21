@@ -139,10 +139,10 @@ function RegisterPackModal({ setShowModal }) {
                             name="IDGoiTap"
                             value={formData.IDGoiTap}
                             onChange={handleChange}
-                            label="Loại sản phẩm"
+                            label="Loại gói tập"
                         >
                             <MenuItem value="">
-                                <em>Chọn loại sản phẩm</em>
+                                <em>Chọn loại gói tập</em>
                             </MenuItem>
                             {data.map((value) => (
                                 <MenuItem key={value.IDGoiTap} value={value.IDGoiTap}>

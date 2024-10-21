@@ -41,8 +41,8 @@ export const AuthProvider = ({ children }) => {
         }
     
         try {
-            const response = await fetch('http://localhost:8080/Backend/logout/', {
-                method: 'POST',
+            const response = await fetch('http://localhost:8080/Backend/logout', {
+                method: 'GET',
                 headers: {
                     'Content-Type': 'application/json',
                     'Authorization': `Bearer ${jwt}`,
@@ -92,7 +92,7 @@ export const AuthProvider = ({ children }) => {
                     'PHPSESSID': findCookie("PHPSESSID")
                 }
             }
-            fetch('http://localhost:8080/Backend/getAccountInfo', option)
+            fetch('http://localhost:8080/Backend/user/Info', option)
                 .then(response => {
                     if (response.ok) {
                         return response.json();
