@@ -62,7 +62,7 @@ const PaymentRegisterPTSuccess = ({
           Giá thuê: <strong>{rentalPrice}₫</strong>
         </Typography>
         <Typography variant="body2" sx={{ marginTop: '10px' }}>
-          Bạn có thể theo dõi chi tiết trong mục <strong>Thông tin tài khoản</strong> hoặc <strong>Thông tin thuê PT</strong>. Để xem chi tiết hóa đơn thuê PT, vui lòng nhấn vào nút bên dưới.
+          Bạn có thể theo dõi chi tiết trong mục <strong>Thông tin tài khoản</strong> / <strong>Thông tin thuê PT</strong>. Để xem chi tiết hóa đơn thuê PT, vui lòng nhấn vào nút bên dưới.
         </Typography>
         <Typography variant="body2" sx={{ marginTop: '20px', marginBottom: '30px', fontSize:'20px' }}>
           <strong>GOAT FITNESS</strong> rất vinh hạnh được đồng hành cùng bạn trên hành trình rèn luyện sức khỏe!

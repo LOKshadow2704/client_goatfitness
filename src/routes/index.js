@@ -18,6 +18,8 @@ import OrderPaymentSuccess from "../pages/Order_Payment_Success/Order_Payment_Su
 import OrderPaymentError from "../pages/Order_Payment_Error/Order_Payment_Error"
 import RegisterPTPaymentError from "../pages/Register_PT_Payment_Error/Payment_Error"
 import RegisterPTPaymentSuccess from "../pages/Register_PT_Payment_Success/Register_PT_Payment_Success"
+import RegisterPackGymPaymentError from "../pages/Register_PackGym_Error/Register_GymPack_Error"
+import RegisterPackGymPaymentSuccess from "../pages/Register_GymPack_Success/Register_GymPack_Success"
 // import Dashboard from "../components/Dashboard/Dashboard";
 // import MainLayout from "src/components/MainLayout";
 
@@ -38,6 +40,9 @@ const PublicRoutes =[
     {path: '/OrderPaymentError' , component: OrderPaymentError},
     {path: '/RegisterPTPaymentError' , component: RegisterPTPaymentError},
     {path: '/RegisterPTPaymentSuccess' , component: RegisterPTPaymentSuccess},
+    {path: '/RegisterPackGymPaymentError' , component: RegisterPackGymPaymentError},
+    {path: '/RegisterPackGymPaymentSuccess' , component: RegisterPackGymPaymentSuccess},
+    
 ];
 
 // Route private cho nhóm người dùng
