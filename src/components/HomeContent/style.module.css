@@ -146,6 +146,8 @@
     gap: 20px;
     padding: 0 20px;
     height: 100%;
+    width: 85%;
+    margin-left: 90px
 }
 
 .container-item-4 .wrap-pt .list-item, .container-item-5 .wrap-pt .list-item {

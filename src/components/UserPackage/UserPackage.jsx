@@ -33,7 +33,7 @@ function UserPackage({ setShowModal }) {
       };
 
       axios
-        .get("http://localhost:8080/Backend/user/Info", { headers: headers })
+        .get("http://localhost:8080/Backend/gympack", { headers: headers })
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {
             setData(response.data);
