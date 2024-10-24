@@ -5,7 +5,6 @@ import HeaderLogo from '../../components/Header_Logo/HeaderLogo';
 const RegisterPackGymPayment = () => {
   
   const registrationId = "123456"; 
-  const trainerName = "Nguyễn Văn A"; 
   const service = "Tập Gym 1 tháng"; 
   const rentalPrice = "1,000,000"; 
   const paymentStatus = "Thanh toán tại phòng tập"; 

@@ -59,11 +59,11 @@ function AccountInfo({ userData , setUpdate  }) {
                 setUpdate(true);
                 setRerender(!rerender);
                 setSuccess(true);
-                setMessage('Update thông tin thành công');
+                setMessage('Cập nhật thông tin thành công');
             }
         }).catch(error => {
             setError(true);
-            setMessage("Update thông tin thất bại");
+            setMessage("Cập nhật thông tin thất bại");
         });
     };
 

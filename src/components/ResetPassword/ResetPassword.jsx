@@ -46,7 +46,6 @@ function ResetPassword(){
     };
     const handleUpdateClick = () => {
         if (currentPW.trim() === "" || newPW.trim() === "" || confirmPW.trim() === "") {
-            // Nếu có một trường nào đó không nhập, không thực hiện cập nhật
             setError(true);
             setMessage('Vui lòng nhập đầy đủ thông tin.');
             return false;
@@ -58,12 +57,11 @@ function ResetPassword(){
             return false;
         }
 
-        // Nếu tất cả các trường đều được nhập và mật khẩu mới khớp, thực hiện cập nhật
         updateUser();
     }
 
     const handleResetClick = () => {
-        setCurrentPW("");
+        // setCurrentPW("");
         setNewPW("");
         setConfirmPW("");
     }

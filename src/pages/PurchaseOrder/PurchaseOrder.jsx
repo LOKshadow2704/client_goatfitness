@@ -6,10 +6,13 @@ import axios from "axios";
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import { faMapMarkerAlt, faReceipt } from '@fortawesome/free-solid-svg-icons';
 import { useAnnouncement } from "../../contexts/Announcement";
+import Pagination from "@mui/material/Pagination"; 
 
-function PurchaseOrder(){
+function PurchaseOrder() {
     const [purchaseOrders, setPurchaseOrders] = useState([]);
     const [isLoading, setIsLoading] = useState(true);
+    const [currentPage, setCurrentPage] = useState(1); 
+    const [ordersPerPage] = useState(5); 
     const { setError, setMessage, setLocation, setLink } = useAnnouncement();
 
     useEffect(() => {
@@ -34,9 +37,9 @@ function PurchaseOrder(){
                         'Authorization': 'Bearer ' + jwt,
                         'PHPSESSID': findCookie("PHPSESSID")
                     };
-                    const response = await axios.get('http://localhost:8080/Backend/PurchaseOrder', { headers: headers });
+                    const response = await axios.get('http://localhost:8080/Backend/order/purchase', { headers: headers });
                     if (response.status >= 200 && response.status < 300) {
-                      setPurchaseOrders(response.data.orders || []);
+                        setPurchaseOrders(response.data.orders || []);
                     } else {
                         throw new Error("Lấy thông tin đơn hàng thất bại!");
                     }
@@ -49,7 +52,7 @@ function PurchaseOrder(){
                 setLocation(true);
                 setLink("http://localhost:3000/login");
             } finally {
-                setIsLoading(false); // Dừng hiển thị loading khi dữ liệu đã được xử lý
+                setIsLoading(false); 
             }
         };
 
@@ -66,6 +69,16 @@ function PurchaseOrder(){
         return `${day}-${month}-${year}`;
     }
 
+    // Tính toán các đơn hàng cần hiển thị trên trang hiện tại
+    const indexOfLastOrder = currentPage * ordersPerPage;
+    const indexOfFirstOrder = indexOfLastOrder - ordersPerPage;
+    const currentOrders = purchaseOrders.slice(indexOfFirstOrder, indexOfLastOrder);
+
+    // Hàm xử lý khi thay đổi trang
+    const handlePageChange = (event, value) => {
+        setCurrentPage(value);
+    };
+
     return (
         <>
             <Header />
@@ -75,60 +88,83 @@ function PurchaseOrder(){
                     {isLoading ? (
                         <h1 style={{ backgroundColor: 'white' }}>Đang tải dữ liệu...</h1>
                     ) : purchaseOrders.length === 0 ? (
-                      <h2 
-                      style={{ 
-                          backgroundImage: 'url(https://res.cloudinary.com/dzh4pimvj/image/upload/v1727708058/ae7688fd-8318-4b59-8009-04cac4930652.png)', 
-                          backgroundSize: 'cover', 
-                          textAlign: 'center', 
-                          marginBottom: '30px',
-                          color: 'white', 
-                          padding: '20px', 
-                          height:'500px',
-                          marginLeft:'45px',
-                          marginRight:'45px',
-                          fontSize:'30px',
-                      }}
-                  >
-                      Không có đơn hàng !!!
-                  </h2>
+                        <h2
+                            style={{
+                                backgroundImage: 'url(https://res.cloudinary.com/dzh4pimvj/image/upload/v1727708058/ae7688fd-8318-4b59-8009-04cac4930652.png)',
+                                backgroundSize: 'cover',
+                                textAlign: 'center',
+                                marginBottom: '30px',
+                                color: 'white',
+                                padding: '20px',
+                                height: '500px',
+                                marginLeft: '45px',
+                                marginRight: '45px',
+                                fontSize: '30px',
+                            }}
+                        >
+                            Không có đơn hàng !!!
+                        </h2>
                     ) : (
-                        purchaseOrders.map((value) => (
-                            <div className={style.order_item} key={value.IDDonHang}>
-                                <h1 >
-                                    <FontAwesomeIcon icon={faReceipt} /> Mã Đơn hàng: {value.IDDonHang}
-                                </h1>
-                                <h1 className={style.right}>
-                                    <FontAwesomeIcon icon={faMapMarkerAlt} /> Địa chỉ giao hàng: {value.DiaChi}
-                                </h1>
-                                <div className={style.order_details}>
-                                    {value.orderInfo.map(item => (
-                                        <div className={style.product_item} key={item.TenSP + item.SoLuong}>
-                                            <div className={style.group1}>
-                                                <p className={style.text_margin}>{item.TenSP}</p>
-                                                <img src={item.IMG} alt="" height="100%" width="150px" />
-                                                <span className={style.text_margin}>Số lượng: <b>{item.SoLuong}</b></span>
-                                            </div>
-                                            <div className={style.group2}>
-                                                <span> Ngày đặt: {formatDate(value.NgayDat)}</span>
-                                                <span> Ngày giao dự kiến: {formatDate(value.NgayGiaoDuKien)}</span>
-                                                <span> Trạng thái thanh toán: 
-                                                    <span style={{ color: value.TrangThaiThanhToan === 'Chưa thanh toán' ? 'red' : 'green' }}>
-                                                        {value.TrangThaiThanhToan}
+                        <>
+                            {currentOrders.map((value) => (
+                                <div className={style.order_item} key={value.IDDonHang}>
+                                    <h1>
+                                        <FontAwesomeIcon icon={faReceipt} /> Mã Đơn hàng: {value.IDDonHang}
+                                    </h1>
+                                    <h1 className={style.right}>
+                                        <FontAwesomeIcon icon={faMapMarkerAlt} /> Địa chỉ giao hàng: {value.DiaChi}
+                                    </h1>
+                                    <div className={style.order_details}>
+                                        {value.orderInfo.map((item) => (
+                                            <div className={style.product_item} key={item.TenSP + item.SoLuong}>
+                                                <div className={style.group1}>
+                                                    <p className={style.text_margin}> Tên sản phẩm: {item.TenSP}</p>
+                                                    <img src={item.IMG} alt="" height="100%" width="150px" />
+                                                    <span className={style.text_margin}>
+                                                        Số lượng: <b>{item.SoLuong}</b>
                                                     </span>
-                                                </span>
+                                                </div>
+                                                <div className={style.group2}>
+                                                    <span> Ngày đặt: {formatDate(value.NgayDat)}</span>
+                                                    <span> Ngày giao dự kiến: {formatDate(value.NgayGiaoDuKien)}</span>
+                                                    <span>
+                                                        Trạng thái thanh toán:
+                                                        <span
+                                                            style={{
+                                                                color:
+                                                                    value.TrangThaiThanhToan === 'Chưa thanh toán'
+                                                                        ? 'red'
+                                                                        : 'green',
+                                                            }}
+                                                        >
+                                                            {value.TrangThaiThanhToan}
+                                                        </span>
+                                                    </span>
+                                                </div>
+                                                <div className={style.group3}>
+                                                    <span>
+                                                        Giá: {item.DonGia.toLocaleString('vi', { style: 'currency', currency: 'VND' })}
+                                                    </span>
+                                                    <span>
+                                                        Thành tiền: {(item.SoLuong * item.DonGia).toLocaleString('vi', { style: 'currency', currency: 'VND' })}
+                                                    </span>
+                                                </div>
                                             </div>
-                                            <div className={style.group3}>
-                                                <span>Giá: {item.DonGia.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</span>
-                                                <span>Thành tiền: {(item.SoLuong * item.DonGia).toLocaleString('vi', { style: 'currency', currency: 'VND' })}</span>
-                                            </div>
+                                        ))}
+                                        <div className={style.order_total}>
+                                            Tổng đơn hàng: {value.ThanhTien.toLocaleString('vi', { style: 'currency', currency: 'VND' })}
                                         </div>
-                                    ))}
-                                    <div className={style.order_total}>
-                                        Tổng đơn hàng: {value.ThanhTien.toLocaleString('vi', { style: 'currency', currency: 'VND' })}
                                     </div>
                                 </div>
-                            </div>
-                        ))
+                            ))}
+                            <Pagination
+                                count={Math.ceil(purchaseOrders.length / ordersPerPage)}
+                                page={currentPage}
+                                onChange={handlePageChange}
+                                color="primary"
+                                sx={{marginBottom:'10px', float:'right'}}
+                            />
+                        </>
                     )}
                 </div>
             </div>

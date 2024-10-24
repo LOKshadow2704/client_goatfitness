@@ -12,7 +12,6 @@ import {
   MenuItem,
   Select,
   TextField,
-  Typography,
   IconButton,
 } from "@mui/material";
 import { Close } from "@mui/icons-material";
@@ -21,6 +20,11 @@ import { useAnnouncement } from "../../contexts/Announcement";
 import { Editor, EditorState, convertToRaw, RichUtils } from "draft-js";
 import "draft-js/dist/Draft.css";
 import draftToHtml from "draftjs-to-html";
+import FormatBoldIcon from '@mui/icons-material/FormatBold'; 
+import FormatItalicIcon from '@mui/icons-material/FormatItalic'; 
+import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined'; 
+import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
+import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
 
 function AddProductModal({ setShowModal }) {
   const [soLuong, setSoLuong] = useState("");
@@ -161,17 +165,28 @@ function AddProductModal({ setShowModal }) {
   const Toolbar = ({ toggleInlineStyle, toggleBlockType }) => {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 1,
-        border: '1px solid #ddd', // Thêm border cho toolbar
-        borderRadius: '4px', // Để bo góc cho toolbar
-        padding: '5px', // Thêm khoảng cách bên trong
+        border: '1px solid #ddd', 
+        borderRadius: '4px', 
+        // padding: '5px', 
         backgroundColor: '#f9f9f9',
-        marginBottom:'15px' // Màu nền nhẹ để nổi bật hơn
+        marginBottom:'15px', 
+        fontSize:'20px',
        }}>
-        <Button onClick={() => toggleInlineStyle("BOLD")}>B</Button>
-        <Button onClick={() => toggleInlineStyle("ITALIC")}>I</Button>
-        <Button onClick={() => toggleInlineStyle("UNDERLINE")}>U</Button>
-        <Button onClick={() => toggleBlockType("unordered-list-item")}>UL</Button>
-        <Button onClick={() => toggleBlockType("ordered-list-item")}>OL</Button>
+        <IconButton onClick={() => toggleInlineStyle('BOLD')}>
+        <FormatBoldIcon style={{ color: '#1972D5' }} />
+      </IconButton>
+      <IconButton onClick={() => toggleInlineStyle('ITALIC')}>
+        <FormatItalicIcon style={{ color: '#1972D5' }} />
+      </IconButton>
+      <IconButton onClick={() => toggleInlineStyle('UNDERLINE')}>
+        <FormatUnderlinedIcon style={{ color: '#1972D5' }} />
+      </IconButton>
+      <IconButton onClick={() => toggleBlockType('unordered-list-item')}>
+        <FormatListBulletedIcon style={{ color: '#1972D5' }} />
+      </IconButton>
+      <IconButton onClick={() => toggleBlockType('ordered-list-item')}>
+        <FormatListNumberedIcon style={{ color: '#1972D5' }} />
+      </IconButton>
       </Box>
     );
   };

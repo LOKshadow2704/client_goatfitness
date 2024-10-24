@@ -11,12 +11,13 @@ import ResetPassword from "../../components/ResetPassword/ResetPassword";
 import Loading from "../../components/Loading/Loading";
 import { useAnnouncement } from "../../contexts/Announcement";
 
-function AccountSetting({ changeForm, setRefresh }) {
+function AccountSetting({ changeForm }) {
   const [currentMenu, setCurrentMenu] = useState('info');
   const [userData, setUserData] = useState();
   const [update, setUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
   const { setError, setMessage, setSuccess, setLocation, setLink } = useAnnouncement();
+  const [setRefresh] = useState(false);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
