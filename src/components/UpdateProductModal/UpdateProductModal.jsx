@@ -148,9 +148,9 @@ function UpdateProductModal({ data, setShowModal }) {
 
     return (
         <Dialog open={true} onClose={() => setShowModal(false)} fullWidth maxWidth="sm">
-            <DialogTitle sx={{fontWeight: 'bold', textAlign: 'center', fontSize: '20px', borderBottom: '1px solid #ddd', paddingBottom: '10px',marginBottom:'10px'}}>
+            <DialogTitle sx={{ fontWeight: 'bold', textAlign: 'center', fontSize: '20px', borderBottom: '1px solid #ddd', paddingBottom: '10px', marginBottom: '10px' }}>
                 Cập nhật sản phẩm
-                <IconButton 
+                <IconButton
                     onClick={() => setShowModal(false)}
                     style={{ position: 'absolute', right: 8, top: 8 }}
                 >
@@ -208,27 +208,27 @@ function UpdateProductModal({ data, setShowModal }) {
                         margin="normal"
                     />
                     <FormControl fullWidth margin="normal">
-    <input
-        type="file"
-        id="IMG"
-        name="IMG"
-        style={{ display: 'none' }}
-        accept="image/*"
-        onChange={handleChange}
-    />
-    <label htmlFor="IMG">
-        <Button variant="contained" component="span" style={{marginBottom:'10px'}}>
-            Chọn hình ảnh
-        </Button>
-    </label>
-    {formData.IMG && (
-        <img
-            src={formData.IMG}
-            alt="Product"
-            style={{ width: '100%', maxHeight: '300px', objectFit: 'contain' }} 
-        />
-    )}
-</FormControl>
+                        <input
+                            type="file"
+                            id="IMG"
+                            name="IMG"
+                            style={{ display: 'none' }}
+                            accept="image/*"
+                            onChange={handleChange}
+                        />
+                        <label htmlFor="IMG">
+                            <Button variant="contained" component="span" style={{ marginBottom: '10px' }}>
+                                Chọn hình ảnh
+                            </Button>
+                        </label>
+                        {formData.IMG && (
+                            <img
+                                src={formData.IMG}
+                                alt="Product"
+                                style={{ width: '100%', maxHeight: '300px', objectFit: 'contain' }}
+                            />
+                        )}
+                    </FormControl>
 
                     <TextField
                         label="Số lượng tồn kho"
@@ -240,7 +240,7 @@ function UpdateProductModal({ data, setShowModal }) {
                         onChange={handleChange}
                         margin="normal"
                     />
-                    <Button type="submit" variant="contained" color="primary"  style={{marginTop:'20px',width:'150px',marginLeft:'35%'}}>
+                    <Button type="submit" variant="contained" color="primary" style={{ marginTop: '20px', width: '150px', marginLeft: '35%' }}>
                         Lưu
                     </Button>
                 </form>
