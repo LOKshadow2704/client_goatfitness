@@ -128,6 +128,7 @@ function ManageProduct({ data }) {
         .delete("http://localhost:8080/Backend/products/categories/delete", {
           data: { IDLoaiSanPham: id },
           headers: headers,
+          
         })
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {

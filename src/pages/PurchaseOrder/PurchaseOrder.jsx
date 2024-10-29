@@ -27,6 +27,35 @@ function PurchaseOrder() {
             return null;
         };
 
+        // const fetchData = async () => {
+        //     try {
+        //         const isLogin = findCookie("jwt");
+        //         if (isLogin) {
+        //             const jwt = findCookie('jwt');
+        //             const headers = {
+        //                 'Content-Type': 'application/json',
+        //                 'Authorization': 'Bearer ' + jwt,
+        //                 'PHPSESSID': findCookie("PHPSESSID")
+        //             };
+        //             const response = await axios.get('http://localhost:8080/Backend/order/purchase', { headers: headers });
+        //             if (response.status >= 200 && response.status < 300) {
+        //                 setPurchaseOrders(response.data.orders || []);
+        //             } else {
+        //                 throw new Error("Lấy thông tin đơn hàng thất bại!");
+        //             }
+        //         } else {
+        //             throw new Error("Vui lòng đăng nhập!");
+        //         }
+        //     } catch (error) {
+        //         setError(true);
+        //         setMessage(error.message);
+        //         setLocation(true);
+        //         setLink("http://localhost:3000/login");
+        //     } finally {
+        //         setIsLoading(false); 
+        //     }
+        // };
+
         const fetchData = async () => {
             try {
                 const isLogin = findCookie("jwt");
@@ -38,23 +67,40 @@ function PurchaseOrder() {
                         'PHPSESSID': findCookie("PHPSESSID")
                     };
                     const response = await axios.get('http://localhost:8080/Backend/order/purchase', { headers: headers });
+                    
+                    // Kiểm tra response có dữ liệu orders là mảng không
                     if (response.status >= 200 && response.status < 300) {
-                        setPurchaseOrders(response.data.orders || []);
+                        if (Array.isArray(response.data.orders)) {
+                            setPurchaseOrders(response.data.orders); 
+                        } else {
+                            // Xử lý khi không có đơn hàng mới, hiển thị thông báo mà không chuyển hướng
+                            setPurchaseOrders([]);
+                            setMessage("Không có đơn hàng mới");
+                        }
                     } else {
+                        // Xử lý lỗi khi không thể lấy dữ liệu đơn hàng
                         throw new Error("Lấy thông tin đơn hàng thất bại!");
                     }
                 } else {
                     throw new Error("Vui lòng đăng nhập!");
                 }
             } catch (error) {
-                setError(true);
-                setMessage(error.message);
-                setLocation(true);
-                setLink("http://localhost:3000/login");
+                if (error.message === "Vui lòng đăng nhập!") {
+                    setError(true);
+                    setMessage(error.message);
+                    setLocation(true);
+                    setLink("http://localhost:3000/login");
+                } else {
+                    // Các lỗi khác sẽ chỉ hiển thị thông báo mà không chuyển hướng
+                    setError(true);
+                    setMessage(error.message);
+                }
             } finally {
-                setIsLoading(false); 
+                setIsLoading(false);
             }
         };
+        
+        
 
         fetchData();
     }, [setError, setLink, setLocation, setMessage]);
@@ -100,6 +146,7 @@ function PurchaseOrder() {
                                 marginLeft: '45px',
                                 marginRight: '45px',
                                 fontSize: '30px',
+                                borderRadius:'20px',
                             }}
                         >
                             Không có đơn hàng !!!

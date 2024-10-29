@@ -7,6 +7,31 @@ export const AuthProvider = ({ children }) => {
     const [user, setUser] = useState(null);
     const [isLogin, setIsLogin] = useState(false);
 
+    // const login = async (credentials) => {
+    //     try {
+    //         console.log(credentials)
+    //         const response = await axios.post('http://localhost:8080/Backend/login', credentials, {
+    //             withCredentials: true,
+    //             headers: {
+    //                 'Content-Type': 'application/json',
+    //                 // 'User-Agent': 'WEB'
+    //             }
+    //         });
+    //         const data = response.data;
+    //         console.log(data)
+    //         // if(user){
+    //         //     user.TrangThai = user.TrangThai === 0 ? 'offline' : 'online';
+    //         // }
+    //         const { user } = data;
+    //         setUser(user);
+    //         setIsLogin(true);
+    //         return { success: true , roleID: user.IDVaiTro };
+    //     } catch (error) {
+    //         console.error('Error', error.message);
+    //         return { success: false, message: 'Kiểm tra lại thông tin' };
+    //     }
+    // };
+
     const login = async (credentials) => {
         try {
             console.log(credentials)
@@ -25,7 +50,7 @@ export const AuthProvider = ({ children }) => {
             const { user } = data;
             setUser(user);
             setIsLogin(true);
-            return { success: true , role: user.TenVaiTro };
+            return { success: true , roleID: user.IDVaiTro };
         } catch (error) {
             console.error('Error', error.message);
             return { success: false, message: 'Kiểm tra lại thông tin' };

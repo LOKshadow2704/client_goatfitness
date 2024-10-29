@@ -12,7 +12,7 @@ function UpdateProductModal({ data, setShowModal }) {
     const { setError, setMessage, setSuccess } = useAnnouncement();
 
     useEffect(() => {
-        axios.get('http://localhost:8080/Backend/product/get_All_Category', null)
+        axios.get('http://localhost:8080/Backend/products/categories/all')
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
                     setCategory(response.data);
@@ -22,9 +22,9 @@ function UpdateProductModal({ data, setShowModal }) {
             })
             .catch(error => {
                 setError(true);
-                setMessage(error.response.data.error);
+                setMessage(error.response?.data?.error || "Lỗi kết nối server");
             });
-    }, [data, setError, setMessage]);
+    }, [setError, setMessage]);
 
     const handleChange = (e) => {
         const { name, files, value } = e.target;
@@ -52,57 +52,11 @@ function UpdateProductModal({ data, setShowModal }) {
 
     const uploadImage = (file) => {
         return new Promise((resolve, reject) => {
-            // Kiểm tra hợp lệ
-            const isImageValid = (file) => {
-                return new Promise((resolve, reject) => {
-                    const img = new Image();
-                    img.onload = () => {
-                        resolve(true);
-                    };
-                    img.onerror = () => {
-                        reject(false);
-                    };
-                    img.src = URL.createObjectURL(file);
-                });
-            };
-
             const formData = new FormData();
             formData.append('image', file);
-
-            const validExtensions = ['jpg', 'jpeg', 'png'];
-            const fileExtension = file.name.split('.').pop().toLowerCase();
-            if (!validExtensions.includes(fileExtension)) {
-                setError(true);
-                setMessage('File được chấp nhận JPG, JPEG, PNG.');
-                reject('Invalid file extension');
-                return;
-            }
-
-            // Kiểm tra kích thước tệp
-            const maxFileSize = 10 * 1024 * 1024; // 10 MB
-            if (file.size > maxFileSize) {
-                setError(true);
-                setMessage('Kích thước phải nhỏ hơn 10MB');
-                reject('File size too large');
-                return;
-            }
-
-            // Kiểm tra tính toàn vẹn của hình ảnh
-            isImageValid(file)
-                .then(() => {
-                    axios.post('https://api.imgbb.com/1/upload?key=abbbfc4dd8180b09d029902de59a5241', formData)
-                        .then(response => {
-                            const newlink = response.data.data.image.url;
-                            resolve(newlink);
-                        })
-                        .catch(error => {
-                            console.error('Upload không thành công: ', error);
-                            reject(error);
-                        });
-                }).catch(() => {
-                    console.error('Hình ảnh không hợp lệ');
-                    reject('Invalid image');
-                });
+            axios.post('https://api.imgbb.com/1/upload?key=abbbfc4dd8180b09d029902de59a5241', formData)
+                .then(response => resolve(response.data.data.image.url))
+                .catch(error => reject(error));
         });
     };
 
@@ -125,11 +79,11 @@ function UpdateProductModal({ data, setShowModal }) {
                 changedData.IMG = newlink;
             }
             const data = {
-                data: changedData,
+                data: { ...changedData },
                 IDSanPham: formData.IDSanPham
             };
 
-            axios.put('http://localhost:8080/Backend/product/update', data, { headers })
+            axios.put('http://localhost:8080/Backend/products/product/update', data, { headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);
@@ -148,7 +102,7 @@ function UpdateProductModal({ data, setShowModal }) {
 
     return (
         <Dialog open={true} onClose={() => setShowModal(false)} fullWidth maxWidth="sm">
-            <DialogTitle sx={{fontWeight: 'bold', textAlign: 'center', fontSize: '20px', borderBottom: '1px solid #ddd', paddingBottom: '10px',marginBottom:'10px'}}>
+            <DialogTitle sx={{ fontWeight: 'bold', textAlign: 'center', fontSize: '20px', borderBottom: '1px solid #ddd', paddingBottom: '10px', marginBottom: '10px' }}>
                 Cập nhật sản phẩm
                 <IconButton 
                     onClick={() => setShowModal(false)}
@@ -177,10 +131,7 @@ function UpdateProductModal({ data, setShowModal }) {
                             onChange={handleChange}
                         >
                             {category && category.map((value) => (
-                                <MenuItem
-                                    key={value.IDLoaiSanPham}
-                                    value={value.IDLoaiSanPham}
-                                >
+                                <MenuItem key={value.IDLoaiSanPham} value={value.IDLoaiSanPham}>
                                     {value.TenLoaiSanPham}
                                 </MenuItem>
                             ))}
@@ -207,29 +158,38 @@ function UpdateProductModal({ data, setShowModal }) {
                         onChange={handleChange}
                         margin="normal"
                     />
+                    <TextField
+                        label="Giảm giá (%)"
+                        variant="outlined"
+                        fullWidth
+                        type="number"
+                        name="Discount"
+                        value={formData.Discount || 0}
+                        onChange={handleChange}
+                        margin="normal"
+                    />
                     <FormControl fullWidth margin="normal">
-    <input
-        type="file"
-        id="IMG"
-        name="IMG"
-        style={{ display: 'none' }}
-        accept="image/*"
-        onChange={handleChange}
-    />
-    <label htmlFor="IMG">
-        <Button variant="contained" component="span" style={{marginBottom:'10px'}}>
-            Chọn hình ảnh
-        </Button>
-    </label>
-    {formData.IMG && (
-        <img
-            src={formData.IMG}
-            alt="Product"
-            style={{ width: '100%', maxHeight: '300px', objectFit: 'contain' }} 
-        />
-    )}
-</FormControl>
-
+                        <input
+                            type="file"
+                            id="IMG"
+                            name="IMG"
+                            style={{ display: 'none' }}
+                            accept="image/*"
+                            onChange={handleChange}
+                        />
+                        <label htmlFor="IMG">
+                            <Button variant="contained" component="span" style={{ marginBottom: '10px' }}>
+                                Chọn hình ảnh
+                            </Button>
+                        </label>
+                        {formData.IMG && (
+                            <img
+                                src={formData.IMG}
+                                alt="Product"
+                                style={{ width: '100%', maxHeight: '300px', objectFit: 'contain' }}
+                            />
+                        )}
+                    </FormControl>
                     <TextField
                         label="Số lượng tồn kho"
                         variant="outlined"
@@ -240,7 +200,7 @@ function UpdateProductModal({ data, setShowModal }) {
                         onChange={handleChange}
                         margin="normal"
                     />
-                    <Button type="submit" variant="contained" color="primary"  style={{marginTop:'20px',width:'150px',marginLeft:'35%'}}>
+                    <Button type="submit" variant="contained" color="primary" style={{ marginTop: '20px', width: '150px', marginLeft: '35%' }}>
                         Lưu
                     </Button>
                 </form>

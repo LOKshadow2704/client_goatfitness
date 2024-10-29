@@ -25,7 +25,7 @@ function ManagePurchaseOrder() {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.post("http://localhost:8080/Backend/PurchaseOrder/unconfimred", null, { headers: headers })
+            axios.get("http://localhost:8080/Backend/order/purchase/get_unconfirm", null, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setPurchaseOrders(response.data.orders);

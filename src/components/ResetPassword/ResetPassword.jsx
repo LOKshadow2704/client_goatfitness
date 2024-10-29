@@ -61,7 +61,7 @@ function ResetPassword(){
     }
 
     const handleResetClick = () => {
-        // setCurrentPW("");
+        setCurrentPW("");
         setNewPW("");
         setConfirmPW("");
     }

@@ -201,6 +201,9 @@ function Header() {
               <li onClick={() => setShowPTModal(true)}>
                 <Link to="#">Thông tin thuê PT</Link>
               </li>
+              <li onClick={() => setShowPTModal(true)}>
+                <Link to="#">Thông tin đăng ký HLV</Link>
+              </li>
               <li onClick={Logout}>Đăng xuất</li>
             </ul>
           </div>

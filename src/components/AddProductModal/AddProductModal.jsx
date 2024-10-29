@@ -17,14 +17,13 @@ import {
 import { Close } from "@mui/icons-material";
 import axios from "axios";
 import { useAnnouncement } from "../../contexts/Announcement";
-import { Editor, EditorState, convertToRaw, RichUtils } from "draft-js";
+import { Editor, EditorState, RichUtils, convertToRaw } from "draft-js";
 import "draft-js/dist/Draft.css";
-import draftToHtml from "draftjs-to-html";
-import FormatBoldIcon from '@mui/icons-material/FormatBold'; 
-import FormatItalicIcon from '@mui/icons-material/FormatItalic'; 
-import FormatUnderlinedIcon from '@mui/icons-material/FormatUnderlined'; 
-import FormatListBulletedIcon from '@mui/icons-material/FormatListBulleted';
-import FormatListNumberedIcon from '@mui/icons-material/FormatListNumbered';
+import FormatBoldIcon from "@mui/icons-material/FormatBold";
+import FormatItalicIcon from "@mui/icons-material/FormatItalic";
+import FormatUnderlinedIcon from "@mui/icons-material/FormatUnderlined";
+import FormatListBulletedIcon from "@mui/icons-material/FormatListBulleted";
+import FormatListNumberedIcon from "@mui/icons-material/FormatListNumbered";
 
 function AddProductModal({ setShowModal }) {
   const [soLuong, setSoLuong] = useState("");
@@ -34,6 +33,8 @@ function AddProductModal({ setShowModal }) {
     Mota: "",
     DonGia: "",
     IMG: "",
+    Discount: "",
+    DaBan: "",
   });
   const [selectedFileName, setSelectedFileName] = useState(""); // Thêm state để lưu tên file
   const { setSuccess, setError, setMessage, setWarning } = useAnnouncement();
@@ -43,7 +44,7 @@ function AddProductModal({ setShowModal }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/Backend/products")
+      .get("http://localhost:8080/Backend/products/categories/all")
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
           setCategory(response.data);
@@ -59,15 +60,22 @@ function AddProductModal({ setShowModal }) {
 
   const handleChange = (e) => {
     const { name, value, files } = e.target;
+
     if (name === "SoLuong") {
       setSoLuong(value);
     } else if (name === "IMG") {
       if (files.length > 0) {
         setSelectedFileName(files[0].name); // Cập nhật tên file
-        setFormData({ ...formData, [name]: files[0] }); // Lưu file vào formData
+        setFormData((prevFormData) => ({
+          ...prevFormData,
+          [name]: files[0], 
+        }));
       }
     } else {
-      setFormData({ ...formData, [name]: value });
+      setFormData((prevFormData) => ({
+        ...prevFormData,
+        [name]: value,
+      }));
     }
   };
 
@@ -140,58 +148,6 @@ function AddProductModal({ setShowModal }) {
     });
   };
 
-  //Hàm chuyển đổi text sang HTML
-  const handleEditorChange = (editorState) => {
-    setEditorState(editorState);
-  };
-
-  const handleKeyCommand = (command) => {
-    const newState = RichUtils.handleKeyCommand(editorState, command);
-    if (newState) {
-      setEditorState(newState);
-      return "handled";
-    }
-    return "not-handled";
-  };
-
-  const toggleInlineStyle = (style) => {
-    setEditorState(RichUtils.toggleInlineStyle(editorState, style));
-  };
-
-  const toggleBlockType = (blockType) => {
-    setEditorState(RichUtils.toggleBlockType(editorState, blockType));
-  };
-
-  const Toolbar = ({ toggleInlineStyle, toggleBlockType }) => {
-    return (
-      <Box sx={{ display: 'flex', justifyContent: 'flex-start', mb: 1,
-        border: '1px solid #ddd', 
-        borderRadius: '4px', 
-        // padding: '5px', 
-        backgroundColor: '#f9f9f9',
-        marginBottom:'15px', 
-        fontSize:'20px',
-       }}>
-        <IconButton onClick={() => toggleInlineStyle('BOLD')}>
-        <FormatBoldIcon style={{ color: '#1972D5' }} />
-      </IconButton>
-      <IconButton onClick={() => toggleInlineStyle('ITALIC')}>
-        <FormatItalicIcon style={{ color: '#1972D5' }} />
-      </IconButton>
-      <IconButton onClick={() => toggleInlineStyle('UNDERLINE')}>
-        <FormatUnderlinedIcon style={{ color: '#1972D5' }} />
-      </IconButton>
-      <IconButton onClick={() => toggleBlockType('unordered-list-item')}>
-        <FormatListBulletedIcon style={{ color: '#1972D5' }} />
-      </IconButton>
-      <IconButton onClick={() => toggleBlockType('ordered-list-item')}>
-        <FormatListNumberedIcon style={{ color: '#1972D5' }} />
-      </IconButton>
-      </Box>
-    );
-  };
-
-
   const handleSubmit = async (e) => {
     e.preventDefault();
     for (const key in formData) {
@@ -201,13 +157,6 @@ function AddProductModal({ setShowModal }) {
         return;
       }
     }
-
-    //Chuyển đổi text sang HTML
-    const descriptionHTML = draftToHtml(convertToRaw(editorState.getCurrentContent()));
-    formData.Mota = descriptionHTML;
-
-    
-    
 
     const isLogin = findCookie("jwt");
     if (isLogin) {
@@ -230,7 +179,7 @@ function AddProductModal({ setShowModal }) {
 
       axios
         .post(
-          "http://localhost:8080/Backend/product/add",
+          "http://localhost:8080/Backend/products/product/add",
           { data: formData, SoLuong: soLuong },
           { headers: headers }
         )
@@ -251,6 +200,67 @@ function AddProductModal({ setShowModal }) {
           setLoading(false);
         });
     }
+  };
+
+  //Hàm chuyển đổi text sang HTML
+  const handleEditorChange = (newEditorState) => {
+    setEditorState(newEditorState);
+    const plainText = newEditorState.getCurrentContent().getPlainText();
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      Mota: plainText,
+    }));
+  };
+
+  const handleKeyCommand = (command) => {
+    const newState = RichUtils.handleKeyCommand(editorState, command);
+    if (newState) {
+      setEditorState(newState);
+      return "handled";
+    }
+    return "not-handled";
+  };
+
+  const toggleInlineStyle = (style) => {
+    setEditorState(RichUtils.toggleInlineStyle(editorState, style));
+  };
+
+  const toggleBlockType = (blockType) => {
+    setEditorState(RichUtils.toggleBlockType(editorState, blockType));
+  };
+
+  const Toolbar = ({ toggleInlineStyle, toggleBlockType }) => {
+    return (
+      <Box
+        sx={{
+          display: "flex",
+          justifyContent: "flex-start",
+          mb: 1,
+          border: "1px solid #ddd",
+          borderRadius: "4px",
+          // padding: '5px',
+          backgroundColor: "#f9f9f9",
+          marginBottom: "15px",
+          fontSize: "20px",
+        }}
+      >
+        <IconButton onClick={() => toggleInlineStyle("BOLD")}>
+          <FormatBoldIcon style={{ color: "#1972D5" }} />
+        </IconButton>
+        <IconButton onClick={() => toggleInlineStyle("ITALIC")}>
+          <FormatItalicIcon style={{ color: "#1972D5" }} />
+        </IconButton>
+        <IconButton onClick={() => toggleInlineStyle("UNDERLINE")}>
+          <FormatUnderlinedIcon style={{ color: "#1972D5" }} />
+        </IconButton>
+        <IconButton onClick={() => toggleBlockType("unordered-list-item")}>
+          <FormatListBulletedIcon style={{ color: "#1972D5" }} />
+        </IconButton>
+        <IconButton onClick={() => toggleBlockType("ordered-list-item")}>
+          <FormatListNumberedIcon style={{ color: "#1972D5" }} />
+        </IconButton>
+      </Box>
+    );
   };
 
   return (
@@ -298,22 +308,38 @@ function AddProductModal({ setShowModal }) {
                 <em>Chọn loại sản phẩm</em>
               </MenuItem>
               {category.map((value) => (
-                <MenuItem key={value.TenLoaiSanPham} value={value.TenLoaiSanPham}>
+                <MenuItem key={value.IDLoaiSanPham} value={value.IDLoaiSanPham}>
                   {value.TenLoaiSanPham}
                 </MenuItem>
               ))}
             </Select>
           </FormControl>
-          {/* <FormControl fullWidth margin="normal">
-            <TextField
-              label="Mô tả"
+          <FormControl fullWidth margin="normal">
+            <Box
+              sx={{
+                border: "1px solid #ddd",
+                minHeight: "150px",
+                padding: "10px",
+                borderRadius: "4px",
+                position: "relative",
+              }}
+            >
+              <Toolbar
+                toggleInlineStyle={toggleInlineStyle}
+                toggleBlockType={toggleBlockType}
+              />
+              <Editor
+                editorState={editorState}
+                onChange={handleEditorChange}
+                handleKeyCommand={handleKeyCommand}
+                placeholder="Nhập mô tả sản phẩm..."
+              />
+            </Box>
+            <input
+              type="hidden"
               id="Mota"
               name="Mota"
-              value={formData.Mota}
-              onChange={handleChange}
-              multiline
-              rows={4}
-              fullWidth
+              value={formData.Mota} 
             />
           </FormControl>
           <FormControl fullWidth margin="normal">
@@ -326,43 +352,7 @@ function AddProductModal({ setShowModal }) {
               onChange={handleChange}
               fullWidth
             />
-          </FormControl> */}
-          <FormControl fullWidth margin="normal">
-          <Box
-            sx={{
-              border: "1px solid #ddd",
-              minHeight: "150px",
-              padding: "10px",
-              borderRadius: "4px",
-              position: 'relative',
-            }}
-          >
-            <Toolbar toggleInlineStyle={toggleInlineStyle} toggleBlockType={toggleBlockType} />
-            <Editor
-              editorState={editorState}
-              onChange={handleEditorChange}
-              handleKeyCommand={handleKeyCommand}
-              placeholder="Nhập mô tả sản phẩm..."
-            />
-          </Box>
           </FormControl>
-          {/* <FormControl sx={{ width: "120px" }} margin="normal">
-            <Button variant="contained" component="label">
-              Tải ảnh lên
-              <input
-                type="file"
-                id="IMG"
-                name="IMG"
-                hidden
-                onChange={handleChange}
-              />
-            </Button>
-            {selectedFileName && (
-              <Typography variant="body2" color="textSecondary" mt={1}>
-                {selectedFileName}
-              </Typography>
-            )}
-          </FormControl> */}
           <FormControl fullWidth margin="normal">
             <TextField
               label="Hình ảnh"
@@ -372,7 +362,6 @@ function AddProductModal({ setShowModal }) {
               onChange={handleChange}
               InputLabelProps={{ shrink: true }}
             />
-            
           </FormControl>
           <FormControl fullWidth margin="normal">
             <TextField
@@ -381,6 +370,28 @@ function AddProductModal({ setShowModal }) {
               id="SoLuong"
               name="SoLuong"
               value={soLuong}
+              onChange={handleChange}
+              fullWidth
+            />
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <TextField
+              label="Đã bán"
+              type="number"
+              id="DaBan"
+              name="DaBan"
+              value={formData.DaBan}
+              onChange={handleChange}
+              fullWidth
+            />
+          </FormControl>
+          <FormControl fullWidth margin="normal">
+            <TextField
+              label="Giảm giá"
+              type="number"
+              id="Discount"
+              name="Discount"
+              value={formData.Discount}
               onChange={handleChange}
               fullWidth
             />

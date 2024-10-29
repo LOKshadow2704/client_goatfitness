@@ -33,14 +33,14 @@ function UserPackage({ setShowModal }) {
       };
 
       axios
-        .get("http://localhost:8080/Backend/gympack", { headers: headers })
+        .get("http://localhost:8080/Backend/invoiceGympack/user", { headers: headers })
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {
             setData(response.data);
             console.log(response.data);
 
             // Kiểm tra trạng thái thanh toán và hiển thị thông báo nếu cần
-            if (response.data.TrangThaiThanhToan === "Chưa thanh toán") {
+            if (response.data[0]?.TrangThaiThanhToan === "Chưa thanh toán") {
               setWarning(true);
               setMessage("Vui lòng thanh toán để tiếp tục sử dụng dịch vụ.");
               setLocation(true);
@@ -50,7 +50,7 @@ function UserPackage({ setShowModal }) {
         })
         .catch((error) => {
           setError(true);
-          setMessage(error.response.data.error);
+          setMessage(error.response?.data?.error || "Đã xảy ra lỗi khi tải dữ liệu.");
           setLocation(true);
           setLink("http://localhost:3000/GymPack");
         });
@@ -58,8 +58,13 @@ function UserPackage({ setShowModal }) {
   }, [setError, setMessage, setWarning, setLocation, setLink]);
 
   // Xác định giá trị hiển thị cho ngày đăng ký và ngày hết hạn
-  const displayDate = data && data.TrangThaiThanhToan === "Chưa thanh toán" ? "Không có" : data ? data.NgayDangKy : "";
-  const displayExpiryDate = data && data.TrangThaiThanhToan === "Chưa thanh toán" ? "Không có" : data ? data.NgayHetHan : "";
+  const displayDate = (data && data[0]?.TrangThaiThanhToan === "Chưa thanh toán") 
+  ? "Không có" 
+  : (data && data[0]?.NgayDangKy) || "";
+
+const displayExpiryDate = (data && data[0]?.TrangThaiThanhToan === "Chưa thanh toán") 
+  ? "Không có" 
+  : (data && data[0]?.NgayHetHan) || "";
 
   return (
     <div className={style.modal}>
@@ -67,12 +72,11 @@ function UserPackage({ setShowModal }) {
         <h1>
           <FontAwesomeIcon icon={faXmark} onClick={() => setShowModal(false)} />
         </h1>
-        <h1 style={{textAlign:'center',marginBottom:'10px'}}>Thông tin gói tập của bạn</h1>
+        <h1 style={{ textAlign: 'center', marginBottom: '10px' }}>Thông tin gói tập của bạn</h1>
         <div className={style.info}>
-          <h3>Tên gói tập: {data && data.info.TenGoiTap}</h3>
+        <h3>Tên gói tập: {data && data[0]?.TenGoiTap}</h3>
           <span>Ngày đăng ký: {displayDate}</span>
           <span>Ngày hết hạn: {displayExpiryDate}</span>
-          {/* <span>Trạng thái thanh toán: {data && data.TrangThaiThanhToan}</span> */}
         </div>
         <div className={style.describe}>
           <TableContainer component={Paper} sx={{ paddingTop: 5, paddingBottom: 5 }}>
@@ -93,9 +97,7 @@ function UserPackage({ setShowModal }) {
                   </TableCell>
                 </TableRow>
                 <TableRow>
-                  <TableCell>
-                    Tự do tập luyện tại tất cả câu lạc bộ trong hệ thống GOAT Fitness
-                  </TableCell>
+                  <TableCell>Tự do tập luyện tại tất cả câu lạc bộ trong hệ thống GOAT Fitness</TableCell>
                   <TableCell align="center">
                     <FontAwesomeIcon icon={faCircleCheck} />
                   </TableCell>

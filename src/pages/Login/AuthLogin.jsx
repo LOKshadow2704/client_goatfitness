@@ -51,9 +51,9 @@ const AuthLogin = () => {
       if (result.success) {
         setSuccess(true);
         setMessage("Đăng nhập thành công");
-        if (result.role === "admin") {
+        if (result.roleID === 1) {
           navigate("/admin");
-        } else if (result.role === "employee") {
+        } else if (result.roleID === 2) {
           navigate("/employee");
         } else {
           navigate("/");

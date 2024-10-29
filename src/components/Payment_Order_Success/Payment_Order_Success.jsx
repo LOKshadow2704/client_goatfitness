@@ -67,7 +67,7 @@ const PaymentSuccess = ({ orderId, totalAmount, paymentMethod, shippingAddress }
           <Button
             variant="outlined"
             color="secondary"
-            onClick={() => navigate(`/order-detail/${orderId}`)}
+            onClick={() => navigate(`/PurchaseOrder`)}
           >
             Chi tiết đơn hàng
           </Button>

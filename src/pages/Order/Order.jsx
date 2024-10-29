@@ -153,9 +153,9 @@ function Order() {
                 sx={{ marginLeft: "133%" }}
                 fullWidth
                 value={user ? user["DiaChi"] : ""}
-                InputProps={{
-                  readOnly: true,
-                }}
+                // InputProps={{
+                //   readOnly: true,
+                // }}
               />
             </div>
             <TableContainer
