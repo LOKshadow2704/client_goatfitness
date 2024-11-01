@@ -59,7 +59,7 @@ function AddCategoryModal({ setShowModal }) {
 
       axios
         .post(
-          "http://localhost:8080/Backend/products/categories/add",
+          "http://localhost:8080/Backend/categories/add",
           { TenLoaiSanPham: formData.TenLoaiSanPham }, 
           { headers: headers }
         )

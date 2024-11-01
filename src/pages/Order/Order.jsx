@@ -80,6 +80,51 @@ function Order() {
     return null;
   };
 
+  // const handleBuy = () => {
+  //   const isLogin = findCookie("jwt");
+  //   if (isLogin) {
+  //     setLoading(true);
+  //     const jwt = findCookie("jwt");
+  //     const data = {
+  //       products: products,
+  //       HinhThucThanhToan: selectedPayment,
+  //     };
+  //     const headers = {
+  //       "Content-Type": "application/json",
+  //       Authorization: "Bearer " + jwt,
+  //       PHPSESSID: findCookie("PHPSESSID"),
+  //     };
+  //     axios
+  //       .post("http://localhost:8080/Backend/order", data, { headers: headers })
+  //       .then((response) => {
+  //         if (response.status >= 200 && response.status < 300) {
+  //           // Giả sử response.data là một thông báo thành công, bạn có thể thay đổi theo API của bạn
+  //           setSuccess(true);
+  //           setMessage("Đặt hàng thành công!");
+  //           setLocation(true);
+  //           setLink("/OrderPaymentSuccess"); // Chuyển hướng đến trang PurchaseOrder
+  //           sessionStorage.removeItem("OrderInfo");
+  //         } else {
+  //           throw new Error("Đặt hàng không thành công!");
+  //         }
+  //         setLoading(false);
+  //       })
+  //       .catch((error) => {
+  //         setLoading(false);
+  //         setError(true);
+  //         setMessage(
+  //           error.response ? error.response.data.error : "Có lỗi xảy ra!"
+  //         );
+  //       });
+  //   } else {
+  //     setError(true);
+  //     setMessage("Vui lòng đăng nhập");
+  //     setLocation(true);
+  //     setLink("http://localhost:3000/login");
+  //     return;
+  //   }
+  // };
+
   const handleBuy = () => {
     const isLogin = findCookie("jwt");
     if (isLogin) {
@@ -94,15 +139,25 @@ function Order() {
         Authorization: "Bearer " + jwt,
         PHPSESSID: findCookie("PHPSESSID"),
       };
+      
       axios
         .post("http://localhost:8080/Backend/order", data, { headers: headers })
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {
-            // Giả sử response.data là một thông báo thành công, bạn có thể thay đổi theo API của bạn
-            setSuccess(true);
-            setMessage("Đặt hàng thành công!");
-            setLocation(true);
-            setLink("/OrderPaymentSuccess"); // Chuyển hướng đến trang PurchaseOrder
+            if (selectedPayment === 2) {
+              // Kiểm tra nếu URL thanh toán PayOS có tồn tại
+              const payosUrl = response.data.success;
+              if (payosUrl) {
+                window.location.href = payosUrl; // Chuyển hướng đến URL thanh toán của PayOS
+              } else {
+                // Hiển thị thông báo lỗi nếu URL không tồn tại
+                setError(true);
+                setMessage("Không thể lấy URL thanh toán từ PayOS.");
+              }
+            } else if (selectedPayment === 1) {
+              // Chuyển hướng đến OrderPaymentSuccess khi phương thức thanh toán là 1
+              window.location.href = "http://localhost:3000/OrderPaymentSuccess";
+            }
             sessionStorage.removeItem("OrderInfo");
           } else {
             throw new Error("Đặt hàng không thành công!");
@@ -124,6 +179,7 @@ function Order() {
       return;
     }
   };
+  
 
   const removeItem = (key) => {
     const updatedProduct = products.filter((item) => item.IDSanPham !== key);

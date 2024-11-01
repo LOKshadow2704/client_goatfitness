@@ -289,7 +289,11 @@ function Cart() {
                                             className={style.productImage}
                                         />
                                     </TableCell>
-                                    <TableCell>{item.TenSP}</TableCell>
+                                    {/* <TableCell>{item.TenSP}</TableCell> */}
+                                    <TableCell>
+    <div>{item.TenSP}</div>
+    <div style={{ fontSize: '14px', color: 'gray',marginTop:'4px' }}>Tồn kho: {item.SoLuongTonKho}</div>
+</TableCell>
                                     <TableCell>{item.DonGia.toLocaleString()} VNĐ</TableCell>
                                     <TableCell>
                                         <Button

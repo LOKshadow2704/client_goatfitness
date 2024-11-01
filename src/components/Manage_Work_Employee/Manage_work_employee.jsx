@@ -48,7 +48,7 @@ function ManageWorkEmployee() {
   useEffect(() => {
     // Gọi API để lấy dữ liệu
     axios
-      .get("http://localhost:8080/Backend/PT")
+      .get("http://localhost:8080/Backend/personalTrainer/all")
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
           setWorkEmployee(response.data);
@@ -294,10 +294,10 @@ function ManageWorkEmployee() {
             backgroundColor: value.TenHLV % 2 === 0 ? "white" : "#f5f5f5", // Áp dụng màu nền xen kẽ
           }}
         >
-          <TableCell style={{ textAlign: "center" }}>{value.TenHLV}</TableCell>
+          <TableCell style={{ textAlign: "center" }}>{value.HoTen}</TableCell>
           <TableCell style={{ textAlign: "center" }}>{value.DichVu}</TableCell>
           <TableCell style={{ textAlign: "center" }}>{value.GiaThue}</TableCell>
-          <TableCell style={{ textAlign: "center" }}>{value.SdtHLV}</TableCell>
+          <TableCell style={{ textAlign: "center" }}>{value.SDT}</TableCell>
           <TableCell style={{ textAlign: "center" }}>{value.TenKhachHang}</TableCell>
           <TableCell style={{ textAlign: "center" }}>{value.NgayDangKy}</TableCell>
           <TableCell style={{ textAlign: "center" }}>{value.NgayHetHan}</TableCell>

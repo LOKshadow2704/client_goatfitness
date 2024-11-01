@@ -71,7 +71,7 @@ function PurchaseOrder() {
                     // Kiểm tra response có dữ liệu orders là mảng không
                     if (response.status >= 200 && response.status < 300) {
                         if (Array.isArray(response.data.orders)) {
-                            setPurchaseOrders(response.data.orders); 
+                            setPurchaseOrders(response.data.orders.reverse()); 
                         } else {
                             // Xử lý khi không có đơn hàng mới, hiển thị thông báo mà không chuyển hướng
                             setPurchaseOrders([]);
@@ -186,6 +186,9 @@ function PurchaseOrder() {
                                                         >
                                                             {value.TrangThaiThanhToan}
                                                         </span>
+                                                    </span>
+                                                    <span>
+                                                        Hình thức thanh toán: {value.IDHinhThuc === 1 ? "Thanh toán khi nhận hàng" : "Thanh toán trực tuyến"}
                                                     </span>
                                                 </div>
                                                 <div className={style.group3}>

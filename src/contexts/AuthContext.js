@@ -43,7 +43,7 @@ export const AuthProvider = ({ children }) => {
                 }
             });
             const data = response.data;
-            console.log(data)
+            // console.log(data)
             // if(user){
             //     user.TrangThai = user.TrangThai === 0 ? 'offline' : 'online';
             // }
