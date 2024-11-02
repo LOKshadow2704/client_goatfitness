@@ -25,7 +25,7 @@ function ManagePurchaseOrder() {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.get("http://localhost:8080/Backend/order/purchase/get_unconfirm", null, { headers: headers })
+            axios.get("http://localhost:8080/Backend/order/purchase/get_unconfirm", { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setPurchaseOrders(response.data.orders);
@@ -83,22 +83,42 @@ function ManagePurchaseOrder() {
         setSortOrder(e.target.value);
     };
 
-    const filteredAndSortedOrders = () => {
-        let filteredOrders = purchaseOrders.filter(order =>
-            order.orderInfo.some(item => item.TenSP.toLowerCase().includes(searchTerm.toLowerCase())) ||
-            order.IDDonHang.toString().includes(searchTerm)
-        );
+    // const filteredAndSortedOrders = () => {
+    //     let filteredOrders = purchaseOrders.filter(order =>
+    //         order.orderInfo.some(item => item.TenSP.toLowerCase().includes(searchTerm.toLowerCase())) ||
+    //         order.IDDonHang.toString().includes(searchTerm)
+    //     );
 
+    //     if (sortOrder === 'date_asc') {
+    //         filteredOrders = filteredOrders.sort((a, b) => new Date(a.NgayDat) - new Date(b.NgayDat));
+    //     } else if (sortOrder === 'date_desc') {
+    //         filteredOrders = filteredOrders.sort((a, b) => new Date(b.NgayDat) - new Date(a.NgayDat));
+    //     }
+
+    //     return filteredOrders;
+    // };
+
+    //Yêu cầu người dùng xác nhận
+    
+    const filteredAndSortedOrders = () => {
+        let filteredOrders = purchaseOrders.filter(order => {
+            const hasOrderInfo = Array.isArray(order.orderInfo) && order.orderInfo.length > 0;
+            
+            return (hasOrderInfo && order.orderInfo.some(item => 
+                item.TenSP.toLowerCase().includes(searchTerm.toLowerCase())
+            )) || order.IDDonHang.toString().includes(searchTerm);
+        });
+    
         if (sortOrder === 'date_asc') {
             filteredOrders = filteredOrders.sort((a, b) => new Date(a.NgayDat) - new Date(b.NgayDat));
         } else if (sortOrder === 'date_desc') {
             filteredOrders = filteredOrders.sort((a, b) => new Date(b.NgayDat) - new Date(a.NgayDat));
         }
-
+    
         return filteredOrders;
     };
-
-    //Yêu cầu người dùng xác nhận
+    
+    
     const [openDialog, setOpenDialog] = useState(false);
     const [selectedOrder, setSelectedOrder] = useState(null);
 
@@ -198,7 +218,7 @@ function ManagePurchaseOrder() {
                     <TableBody>
                         {currentOrders.map((value) => (
                             <TableRow key={value.IDDonHang}>
-                                <TableCell>
+                                <TableCell style={{width:'400px'}}>
                                     <p><b>ID Đơn hàng: {value.IDDonHang}</b></p>
                                     <div className={style['products']}>
                                         {value.orderInfo.map(item => (
@@ -209,20 +229,21 @@ function ManagePurchaseOrder() {
                                         ))}
                                     </div>
                                 </TableCell>
-                                <TableCell>
+                                <TableCell style={{width:'300px'}}>
                                     <span>Giá trị đơn hàng: {formatCurrency(value.ThanhTien)} </span>
                                     <p>Hình thức thanh toán: {value.IDHinhThuc === 1 && <span> Thanh toán khi nhận hàng</span>}
-                                    {value.IDHinhThuc === 2 && <span> Thanh toán VNPay</span>}</p>
+                                    {value.IDHinhThuc === 2 && <span> Thanh toán trực tuyến</span>}</p>
                                     
                                     <span className={value.TrangThaiThanhToan === "Chưa thanh toán" ? style['red'] : style['green']}>
                                         Trạng thái thanh toán: {value.TrangThaiThanhToan}
                                     </span>
                                 </TableCell>
-                                <TableCell>
+                                <TableCell style={{width:'300px'}}>
                                     <span>Ngày đặt: {value.NgayDat}</span>
                                     <p>Ngày giao dự kiến: {value.NgayGiaoDuKien}</p>
+                                    <p>Địa chỉ: {value.DiaChi}</p>
                                 </TableCell>
-                                <TableCell>
+                                <TableCell style={{width:'150px'}}>
                                 <Button
     variant="contained"
     color="primary"

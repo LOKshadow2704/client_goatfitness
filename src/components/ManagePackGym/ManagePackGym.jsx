@@ -237,14 +237,14 @@ function ManagePackGym() {
             </Select>
           </FormControl>
         </div>
-        <Button
+        {/* <Button
           variant="contained"
           color="primary"
           onClick={() => setShowModal(true)}
           startIcon={<AddCircleOutline fontSize="small" />}
         >
           Thêm gói tập mới
-        </Button>
+        </Button> */}
       </div>
       <TableContainer component={Paper}>
         <Table>

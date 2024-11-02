@@ -33,13 +33,13 @@ function Admin(){
                     <span><FontAwesomeIcon icon={faCircle} />{user.TrangThai}</span>
                 </div>
                 <ul>
-                    {/* <li onClick={()=>setCurrentPage('Dashboard')}> <FontAwesomeIcon icon={faDumbbell} /> &nbsp; Dashboard</li> */}
+                    <li onClick={()=>setCurrentPage('Dashboard')}> <FontAwesomeIcon icon={faDumbbell} /> &nbsp; Dashboard</li>
                     <li onClick={()=>setCurrentPage('Quản lý sản phẩm')}><FontAwesomeIcon icon={faList} />  &nbsp; Quản lý sản phẩm</li>
                     <li onClick={()=>setCurrentPage('Quản lý danh mục sản phẩm')}><FontAwesomeIcon icon={faList} />  &nbsp; Quản lý loại sản phẩm</li>
                     <li onClick={()=>setCurrentPage('Quản lý gói tập')}><FontAwesomeIcon icon={faFolderOpen}  /> &nbsp; Quản lý gói tập</li>
                     <li onClick={()=>setCurrentPage('Gói tập của khách hàng')}><FontAwesomeIcon icon={faAddressCard}  /> &nbsp; Gói tập của khách hàng</li>
                     <li onClick={()=>setCurrentPage('Lịch dạy của HLV')}><FontAwesomeIcon icon={faAddressCard}  /> &nbsp; Lịch dạy của HLV</li>
-                    <li onClick={()=>setCurrentPage('Đơn hàng')} ><FontAwesomeIcon icon={faClipboard} /> &nbsp; Đơn hàng</li>
+                    {/* <li onClick={()=>setCurrentPage('Đơn hàng')} ><FontAwesomeIcon icon={faClipboard} /> &nbsp; Đơn hàng</li> */}
                     <li onClick={()=>setCurrentPage('Quản lý tài khoản')} ><FontAwesomeIcon icon={faPeopleRoof} /> &nbsp; Quản lý tài khoản</li>
                     <li onClick={()=>setCurrentPage('Quản lý nhân viên')} ><FontAwesomeIcon icon={faPeopleRoof} /> &nbsp; Quản lý nhân viên</li>
                     <li onClick={()=>setCurrentPage('Lương nhân viên')} ><FontAwesomeIcon icon={faMoneyBill} /> &nbsp; Lương nhân viên</li>
@@ -54,11 +54,11 @@ function Admin(){
 
             <div className={style["content"]}>
                 <h1>{currentPage} {error || success || warning ? <Announcement /> : null}</h1>
-                {/* {currentPage==='Dashboard' && (<Dashboard/>)} */}
+                {currentPage==='Dashboard' && (<Dashboard/>)}
                 {currentPage==='Quản lý sản phẩm' && (<ManageProduct/>)}
                 {currentPage==='Quản lý danh mục sản phẩm' && (<ManageCategoryProduct/>)}
                 {currentPage==='Quản lý gói tập' && (<ManagePackGym />)}
-                {currentPage==='Đơn hàng' && (<ManagePurchaseOrder/>)}
+                {/* {currentPage==='Đơn hàng' && (<ManagePurchaseOrder/>)} */}
                 {currentPage==='Quản lý tài khoản' && (<ManageAccount />)}
                 {currentPage==='Gói tập của khách hàng' && (<ManaPackGymCustomer />)}
                 {currentPage==='Lịch dạy của HLV' && (<ManageWorkEmployee />)}

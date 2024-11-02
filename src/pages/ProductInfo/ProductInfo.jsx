@@ -102,11 +102,21 @@ function ProductInfo() {
                 </div>
                 <div className={style.right}>
                     <h1>{product ? product.TenSP : ''}</h1>
-                    <span> Đơn giá:
+                    {/* <span> Đơn giá:
                         <span style={{ color: 'red', marginLeft: '5px', fontSize: '20px',fontWeight:'bold' }}>
                             {product ? new Intl.NumberFormat('vi-VN').format(product.DonGia) : ''}
                         </span> VNĐ
-                    </span>
+                    </span> */}
+                    <span>
+    Đơn giá:
+    <span style={{ color: 'red', marginLeft: '5px', fontSize: '20px', fontWeight: 'bold' }}>
+        {product ? new Intl.NumberFormat('vi-VN').format(product.DonGia) : ''}
+    </span> VNĐ
+    <span style={{ marginLeft: '70px', fontSize: '16px', fontWeight: 'normal' }}>
+       |  Đã bán: {product ? new Intl.NumberFormat('vi-VN').format(product.DaBan) : ''} sản phẩm
+    </span>
+</span>
+
 
                     <div className={style.info}>
                         <div dangerouslySetInnerHTML={{

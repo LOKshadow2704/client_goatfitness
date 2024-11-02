@@ -40,23 +40,68 @@ function ManageProduct({ data }) {
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
 
-  useEffect(() => {
-    fetch("http://localhost:8080/Backend/products")
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Không thể truy cập");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        setProduct(data);
-      })
-      .catch((error) => {
-        console.log("Lỗi khi lấy dữ liệu:", error);
-      });
-  }, [showUpdateProduct, rerender, addproductModal]);
+  // useEffect(() => {
+  //   fetch("http://localhost:8080/Backend/products")
+  //     .then((response) => {
+  //       if (!response.ok) {
+  //         throw new Error("Không thể truy cập");
+  //       }
+  //       return response.json();
+  //     })
+  //     .then((data) => {
+  //       setProduct(data);
+  //     })
+  //     .catch((error) => {
+  //       console.log("Lỗi khi lấy dữ liệu:", error);
+  //     });
+  // }, [showUpdateProduct, rerender, addproductModal]);
 
   // Hàm xử lý sắp xếp dữ liệu
+ 
+  const findCookie = (name) => {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            return cookie.substring(name.length + 1);
+        }
+    }
+    return null;
+};
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+        try {
+            const isLogin = findCookie("jwt"); 
+            if (isLogin) {
+                const jwt = findCookie('jwt');
+                const headers = {
+                    'Content-Type': 'application/json',
+                    'Authorization': 'Bearer ' + jwt,
+                    'PHPSESSID': findCookie("PHPSESSID")
+                };
+
+                const response = await fetch("http://localhost:8080/Backend/products/manager", {
+                    method: 'GET',
+                    headers: headers 
+                });
+
+                if (!response.ok) {
+                    throw new Error("Không thể truy cập");
+                }
+                const data = await response.json();
+                setProduct(data);
+            } else {
+                throw new Error("Vui lòng đăng nhập!");
+            }
+        } catch (error) {
+            console.log("Lỗi khi lấy dữ liệu:", error);
+        }
+    };
+
+    fetchProducts();
+}, [showUpdateProduct, rerender, addproductModal]);
+
   const sortData = () => {
     let sortedProducts = [...product];
     if (sortBy === "name") {

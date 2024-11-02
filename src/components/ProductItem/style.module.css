@@ -21,7 +21,7 @@
 }
 
 .productItem :not(img){
-    padding: 10px;
+    padding: 5px;
 }
 
 .CartBtn {
@@ -39,6 +39,7 @@
     box-shadow: 0px 5px 10px rgba(0, 0, 0, 0.103);
     position: relative;
     margin-bottom: 10px;
+    margin-top: 20px;
   }
   
   .IconContainer {
@@ -96,4 +97,20 @@
   }
   .red_price{
     color: red;
+    margin-left: 1px;
   }
+  .inlineInfo {
+    display: flex; 
+    gap: 8px; 
+    align-items: center; 
+}
+
+.discount {
+    font-size: 14px;
+    color: green; 
+    font-weight: bold;
+    background-color: bisque;
+    border-radius: 5px;
+    padding: 2px 4px;
+    line-height: 1;
+}
