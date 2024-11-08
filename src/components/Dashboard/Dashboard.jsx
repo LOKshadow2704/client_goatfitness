@@ -29,18 +29,58 @@ function Dashboard(){
             });
     },[setError , setMessage])
 
-    useEffect(()=>{
-        axios.get("http://localhost:8080/Backend/employee/working")
-            .then(
-                response=>{
-                    if(response.status >= 200 && response.status < 300){
+    // useEffect(()=>{
+    //     axios.get("http://localhost:8080/Backend/employee/working")
+    //         .then(
+    //             response=>{
+    //                 if(response.status >= 200 && response.status < 300){
+    //                     setEmployeeWorking(response.data.success);
+    //                 }
+    //             }).catch(error => {
+    //                 setError(true);
+    //                 setMessage(error.response.data.error);
+    //         });
+    // },[setError , setMessage])
+
+    useEffect(() => {
+        // Hàm tìm cookie dựa trên tên
+        const findCookie = (name) => {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    return cookie.substring(name.length + 1);
+                }
+            }
+            return null;
+        };
+    
+        // Kiểm tra nếu người dùng đã đăng nhập (có JWT)
+        const isLogin = findCookie("jwt");
+        if (isLogin) {
+            const jwt = findCookie('jwt');
+            const headers = {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + jwt,
+                'PHPSESSID': findCookie("PHPSESSID")
+            };
+    
+            // Gửi yêu cầu với JWT trong header
+            axios.get("http://localhost:8080/Backend/employee/working", { headers: headers })
+                .then(response => {
+                    if (response.status >= 200 && response.status < 300) {
                         setEmployeeWorking(response.data.success);
                     }
                 }).catch(error => {
                     setError(true);
-                    setMessage(error.response.data.error);
-            });
-    },[setError , setMessage])
+                    setMessage(error.response?.data?.error || "Có lỗi xảy ra trong quá trình lấy dữ liệu");
+                });
+        } else {
+            setError(true);
+            setMessage("Người dùng chưa đăng nhập");
+        }
+    }, [setError, setMessage]);
+    
 
     useEffect(()=>{
         const findCookie = (name) => {
@@ -61,7 +101,7 @@ function Dashboard(){
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.get("http://localhost:8080/Backend/PurchaseOrder/unconfimred", { headers: headers 
+            axios.get("http://localhost:8080/Backend/order/purchase/get_unconfirm", { headers: headers 
             }).then(response => {
                 if(response.status >= 200 && response.status < 300){
                     setPurchaseOder(response.data.orders);

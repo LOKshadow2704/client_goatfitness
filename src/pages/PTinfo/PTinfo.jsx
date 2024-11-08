@@ -5,7 +5,7 @@ import Footer from "../../components/Footer/Footer";
 import {useParams} from 'react-router-dom';
 import { faCaretRight } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import StarRating from "../../components/Rating/Rating";
+// import StarRating from "../../components/Rating/Rating";
 import RegisterTraining from "../../components/RegisterTraining/RegisterTraining";
 
 function PTInfo (){
@@ -28,7 +28,7 @@ function PTInfo (){
                 }
             })
             .then(data => {
-                setperonalTrainer(data[0]);
+                setperonalTrainer(data);
             })
             .catch(error => {
                 console.error('Lỗi khi truy cập dữ liệu', error);
@@ -43,13 +43,15 @@ function PTInfo (){
                 </div>
                 <div className={style.right}>
                     <div className={style.info}>
-                        <h1>Họ và tên HLV: {peronalTrainer && peronalTrainer.HoTen}</h1>
-                        <p className={style.rating}>Đánh giá </p>
-                        <StarRating rating={peronalTrainer && peronalTrainer.DanhGia}/>
-                        <div className={style.info}>
+                        <h1 style={{fontSize:'26px'}}>Họ và tên HLV: {peronalTrainer && peronalTrainer.HoTen}</h1>
+                        {/* <p className={style.rating}>Đánh giá </p>
+                        <StarRating rating={peronalTrainer && peronalTrainer.DanhGia}/> */}
+                        <div className={style.info} style={{marginTop:'30px'}}>
                             <p>Loại dịch vụ: {peronalTrainer && peronalTrainer.DichVu}</p>
                         </div>
-                        
+                        <div className={style.info}>
+                        <p>Giá thuê: <p style={{color:'red'}}>{peronalTrainer && peronalTrainer.GiaThue.toLocaleString('vi-VN')}</p> VNĐ / giờ</p>
+                        </div>
                     </div>
                     <div className={style.info}>
                         <p>Các chứng chỉ: {peronalTrainer && peronalTrainer.ChungChi}</p>

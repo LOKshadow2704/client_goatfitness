@@ -21,7 +21,7 @@ import {
   DialogContentText,
   DialogActions,
 } from "@mui/material";
-import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
+import { faMoneyBill1, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import UpdateInvoiceModal from "../UpdateInvoiceGympack/UpdateInvoiceGympack";
 import RegisterPackModal from "../RegisterPackModal/RegisterPackModal";
@@ -45,7 +45,7 @@ function ManaPackGymCustomer() {
   useEffect(() => {
     // Gọi API để lấy dữ liệu
     axios
-      .get("http://localhost:8080/Backend/invoice_gympack")
+      .get("http://localhost:8080/Backend/invoicePackgym/all")
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
           setGymPack(response.data);
@@ -332,7 +332,7 @@ function ManaPackGymCustomer() {
                       onClick={() => handleEdit(value)}
                       style={{ marginRight: "5px" }}
                     >
-                      <FontAwesomeIcon icon={faPenToSquare} />
+                      <FontAwesomeIcon icon={faMoneyBill1} />
                     </Button>
                     <Button
                       variant="outlined"

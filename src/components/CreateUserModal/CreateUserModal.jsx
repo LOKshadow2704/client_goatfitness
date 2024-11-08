@@ -65,12 +65,12 @@ function CreateUserModal({ setShowModal }) {
         break;
       case "address":
         if (value.trim() === "") {
-          errorMsg = "Vui lòng nhập địa chỉ của bạn.";
+          errorMsg = "Vui lòng nhập địa chỉ của người dùng.";
         }
         break;
       case "fullname":
         if (value.trim() === "") {
-          errorMsg = "Vui lòng nhập họ và tên của bạn.";
+          errorMsg = "Vui lòng nhập họ và tên của người dùng.";
         }
         break;
       default:
@@ -184,7 +184,7 @@ function CreateUserModal({ setShowModal }) {
           <FontAwesomeIcon icon={faXmark} />
         </IconButton>
         <Typography variant="h5" sx={{ marginBottom: "20px" ,textAlign:'center'}}>
-          Đăng ký
+          Thêm tài khoản mới
         </Typography>
 
         {/* Họ tên */}
@@ -279,7 +279,7 @@ function CreateUserModal({ setShowModal }) {
   variant="contained"
   sx={{ mt: 2, backgroundColor: "#0070f3" }}
 >
-  Đăng ký
+  Lưu
 </Button>
 
       </Box>

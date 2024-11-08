@@ -292,7 +292,7 @@ function Cart() {
                                     {/* <TableCell>{item.TenSP}</TableCell> */}
                                     <TableCell>
     <div>{item.TenSP}</div>
-    <div style={{ fontSize: '14px', color: 'gray',marginTop:'4px' }}>Tồn kho: {item.SoLuongTonKho}</div>
+    <div style={{ fontSize: '14px', color: 'gray',marginTop:'4px' }}>Còn lại: {item.SoLuongTonKho}</div>
 </TableCell>
                                     <TableCell>{item.DonGia.toLocaleString()} VNĐ</TableCell>
                                     <TableCell>

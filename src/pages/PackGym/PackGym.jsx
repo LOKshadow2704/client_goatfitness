@@ -108,7 +108,7 @@ function GymPack() {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.post('http://localhost:8080/Backend/order-gympack', data, { headers: headers })
+            axios.post('http://localhost:8080/Backend/gympack/register', data, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         if (response.data.success) {

@@ -28,7 +28,7 @@ function ManagePurchaseOrder() {
             axios.get("http://localhost:8080/Backend/order/purchase/get_unconfirm", { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
-                        setPurchaseOrders(response.data.orders);
+                        setPurchaseOrders(response.data.orders.reverse());
                     } else {
                         throw new Error("Lấy thông tin đơn hàng thất bại!");
                     }
@@ -59,7 +59,7 @@ function ManagePurchaseOrder() {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.put("http://localhost:8080/Backend/PurchaseOrder/confirm", { IDDonHang: id }, { headers: headers })
+            axios.put("http://localhost:8080/Backend/order/purchase/confirm", { IDDonHang: id }, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);
@@ -199,8 +199,8 @@ function ManagePurchaseOrder() {
                         inputProps={{ "aria-label": "Sắp xếp theo" }}
                     >
                         <MenuItem value="">Sắp xếp theo...</MenuItem>
-                        <MenuItem value="date_asc">Ngày đặt (Mới nhất)</MenuItem>
-                        <MenuItem value="date_desc">Ngày đặt (Cũ nhất)</MenuItem>
+                        <MenuItem value="date_asc">Ngày đặt (Cũ nhất)</MenuItem>
+                        <MenuItem value="date_desc">Ngày đặt (Mới nhất)</MenuItem>
                     </Select>
                 </FormControl>
             </div>
@@ -261,11 +261,11 @@ function ManagePurchaseOrder() {
             <Dialog open={openDialog} onClose={handleCloseDialog}>
     <DialogTitle>Xác nhận đơn hàng</DialogTitle>
     <DialogContent>
-        <DialogContentText>Bạn có chắc chắn muốn xác nhận đơn hàng {selectedOrder?.IDDonHang}?</DialogContentText>
+        <DialogContentText>Bạn có chắc chắn muốn xác nhận đơn hàng <span style={{fontWeight:'bold'}}>{selectedOrder?.IDDonHang}</span> này không?</DialogContentText>
     </DialogContent>
     <DialogActions>
         <Button onClick={handleCloseDialog} color="error">Hủy</Button>
-        <Button onClick={handleConfirmOrder} color="primary">Xác nhận</Button>
+        <Button onClick={handleConfirmOrder} color="primary">Đồng ý</Button>
     </DialogActions>
 </Dialog>
             {/* Pagination */}

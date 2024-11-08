@@ -8,6 +8,7 @@ import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass } from "@fortawesome/free-solid-svg-icons";
 import { useLocation } from "react-router-dom";
 import { useAnnouncement } from "../../contexts/Announcement";
+import { useAuth } from "../../contexts/AuthContext";
 import {
   Select,
   MenuItem,
@@ -29,6 +30,7 @@ function PT() {
   const [searchQuery, setSearchQuery] = useState("");
   const [sortOrder, setSortOrder] = useState("none");
   const [showModal, setShowModal] = useState(false);
+  const { isLogin } = useAuth();
   const { setError, setMessage, setSuccess, setLocation, setLink } =
     useAnnouncement();
 
@@ -133,7 +135,14 @@ function PT() {
           <div className={style.action}>
             <div className={style.action4}>
               <Button
-                onClick={() => setShowModal(true)}
+                onClick={() => {
+                  if (!isLogin) {
+                    setError(true);
+                    setMessage("Vui lòng đăng nhập!");
+                  } else {
+                    setShowModal(true);
+                  }
+                }}
                 variant="contained"
                 color="primary"
                 sx={{
@@ -146,6 +155,7 @@ function PT() {
                 Đăng ký làm việc
               </Button>
             </div>
+
             <div className={style.action1}>
               <FontAwesomeIcon icon={faMagnifyingGlass} />
               <input

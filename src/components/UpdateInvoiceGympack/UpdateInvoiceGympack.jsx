@@ -45,7 +45,7 @@ function UpdateInvoiceModal({ data, setShowModal }) {
     
             try {
                 // Gửi yêu cầu PUT
-                const response = await axios.put('http://localhost:8080/Backend/invoice_gympack/update', formData, { headers: headers });
+                const response = await axios.put('http://localhost:8080/Backend/invoicePackgym/update', formData, { headers: headers });
                 if (response.status >= 200 && response.status < 300) {
                     setSuccess(true);
                     setMessage("Cập nhật trạng thái thanh toán thành công");

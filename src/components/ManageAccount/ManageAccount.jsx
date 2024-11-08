@@ -211,7 +211,7 @@ function ManageAccount({ data }) {
           onClick={() => setModalAdd(true)}
           sx={{ marginLeft: "46%" }}
         >
-          Tạo tài khoản
+          Thêm tài khoản mới
         </Button>
       </div>
 

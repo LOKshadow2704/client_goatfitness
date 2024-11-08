@@ -47,7 +47,7 @@ const ManageEmployee = () => {
   useEffect(() => {
     const fetchEmployees = async () => {
       try {
-        const response = await fetch("http://localhost:8080/Backend/employee/");
+        const response = await fetch("http://localhost:8080/Backend/employee/getall");
         if (!response.ok) {
           throw new Error("Network response was not ok");
         }

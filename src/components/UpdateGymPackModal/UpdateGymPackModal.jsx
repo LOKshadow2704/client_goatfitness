@@ -114,6 +114,7 @@ function UpdateGymPackModal({ data, setShowModal }) {
                             value={formData.TenGoiTap}
                             onChange={handleChange}
                             fullWidth
+                            InputProps={{ readOnly: true }}
                         />
                     </FormControl>
                     <FormControl fullWidth margin="normal">
@@ -125,6 +126,7 @@ function UpdateGymPackModal({ data, setShowModal }) {
                             value={formData.ThoiHan}
                             onChange={handleChange}
                             fullWidth
+                            InputProps={{ readOnly: true }}
                         />
                     </FormControl>
                     <FormControl fullWidth margin="normal">

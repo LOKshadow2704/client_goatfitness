@@ -245,14 +245,14 @@ function ManageWorkEmployee() {
             <UpdateInvoiceModal data={selectedPack} setShowModal={setUpdate} />
           )}
         </div>
-        <Button
+        {/* <Button
           variant="contained"
           color="primary"
           onClick={() => setShowModal(true)}
           startIcon={<AddCircleOutline fontSize="small" />}
         >
           Thêm đăng ký mới
-        </Button>
+        </Button> */}
       </div>
 
       <TableContainer component={Paper}>
