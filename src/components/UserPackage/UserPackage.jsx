@@ -33,14 +33,14 @@ function UserPackage({ setShowModal }) {
       };
 
       axios
-        .get("http://localhost:8080/Backend/invoiceGympack/user", { headers: headers })
+        .get("http://localhost:8080/Backend/gympack/user", { headers: headers })
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {
             setData(response.data);
             console.log(response.data);
 
             // Kiểm tra trạng thái thanh toán và hiển thị thông báo nếu cần
-            if (response.data[0]?.TrangThaiThanhToan === "Chưa thanh toán") {
+            if (response.data?.TrangThaiThanhToan === "Chưa thanh toán") {
               setWarning(true);
               setMessage("Vui lòng thanh toán để tiếp tục sử dụng dịch vụ.");
               setLocation(true);
@@ -58,13 +58,13 @@ function UserPackage({ setShowModal }) {
   }, [setError, setMessage, setWarning, setLocation, setLink]);
 
   // Xác định giá trị hiển thị cho ngày đăng ký và ngày hết hạn
-  const displayDate = (data && data[0]?.TrangThaiThanhToan === "Chưa thanh toán") 
+  const displayDate = (data && data?.TrangThaiThanhToan === "Chưa thanh toán") 
   ? "Không có" 
-  : (data && data[0]?.NgayDangKy) || "";
+  : (data && data?.NgayDangKy) || "";
 
-const displayExpiryDate = (data && data[0]?.TrangThaiThanhToan === "Chưa thanh toán") 
+const displayExpiryDate = (data && data?.TrangThaiThanhToan === "Chưa thanh toán") 
   ? "Không có" 
-  : (data && data[0]?.NgayHetHan) || "";
+  : (data && data?.NgayHetHan) || "";
 
   return (
     <div className={style.modal}>
@@ -74,7 +74,7 @@ const displayExpiryDate = (data && data[0]?.TrangThaiThanhToan === "Chưa thanh 
         </h1>
         <h1 style={{ textAlign: 'center', marginBottom: '10px' }}>Thông tin gói tập của bạn</h1>
         <div className={style.info}>
-        <h3>Tên gói tập: {data && data[0]?.TenGoiTap}</h3>
+        <h3>Tên gói tập: {data?.info?.TenGoiTap || "Chưa có thông tin"}</h3>
           <span>Ngày đăng ký: {displayDate}</span>
           <span>Ngày hết hạn: {displayExpiryDate}</span>
         </div>

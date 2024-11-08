@@ -43,7 +43,7 @@ function UpdateCategoryModal({ data, setShowModal }) {
                 IDLoaiSanPham: formData.IDLoaiSanPham
             };
 
-            axios.put('http://localhost:8080/Backend/products/categories/update', data, { headers })
+            axios.put('http://localhost:8080/Backend/Category/update', data, { headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);

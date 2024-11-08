@@ -1,9 +1,9 @@
 import React, { useEffect, useState } from "react";
 import style from './style.module.css';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowRightFromBracket, faCircle, faClipboard, faDumbbell, faFolderOpen, faGears, faList, faPeopleRoof, faUserGear,faAddressCard, faMoneyBill} from "@fortawesome/free-solid-svg-icons";
+import { faArrowRightFromBracket, faCircle, faDumbbell, faGears,faUserGear, faMoneyBill} from "@fortawesome/free-solid-svg-icons";
 import { useAuth } from "../../contexts/AuthContext";
-import ManagePurchaseOrder from "../../components/ManagePurchaseOrder/ManagePurchaseOrder";
+// import ManagePurchaseOrder from "../../components/ManagePurchaseOrder/ManagePurchaseOrder";
 import ManagePackGym from "../../components/ManagePackGym/ManagePackGym";
 import Dashboard from "../../components/Dashboard/Dashboard";
 import ManageProduct from "../../components/ManegeProduct/ManegeProduct";
@@ -11,6 +11,14 @@ import AccountSetting from "../AccountSetting/AccountSetting";
 import ManageAccount from "../../components/ManageAccount/ManageAccount";
 import Announcement from "../../components/Announcement/Announcement";
 import { useAnnouncement } from "../../contexts/Announcement";
+import CategoryIcon from '@mui/icons-material/Category';
+import DashboardCustomizeRoundedIcon from '@mui/icons-material/DashboardCustomizeRounded';
+import InventoryTwoToneIcon from '@mui/icons-material/InventoryTwoTone';
+import CalendarTodayTwoToneIcon from '@mui/icons-material/CalendarTodayTwoTone';
+import BadgeTwoToneIcon from '@mui/icons-material/BadgeTwoTone';
+import PermContactCalendarTwoToneIcon from '@mui/icons-material/PermContactCalendarTwoTone';
+
+
 
 import ManageCategoryProduct from "../../components/ManageCategoryProduct/Manage_category_product";
 import ManageEmployee from "../../components/Manage_Employee/Manage_employee";
@@ -33,15 +41,15 @@ function Admin(){
                     <span><FontAwesomeIcon icon={faCircle} />{user.TrangThai}</span>
                 </div>
                 <ul>
-                    <li onClick={()=>setCurrentPage('Dashboard')}> <FontAwesomeIcon icon={faDumbbell} /> &nbsp; Dashboard</li>
-                    <li onClick={()=>setCurrentPage('Quản lý sản phẩm')}><FontAwesomeIcon icon={faList} />  &nbsp; Quản lý sản phẩm</li>
-                    <li onClick={()=>setCurrentPage('Quản lý danh mục sản phẩm')}><FontAwesomeIcon icon={faList} />  &nbsp; Quản lý loại sản phẩm</li>
-                    <li onClick={()=>setCurrentPage('Quản lý gói tập')}><FontAwesomeIcon icon={faFolderOpen}  /> &nbsp; Quản lý gói tập</li>
+                    <li onClick={()=>setCurrentPage('Dashboard')}> <DashboardCustomizeRoundedIcon /> &nbsp; Dashboard</li>
+                    <li onClick={()=>setCurrentPage('Quản lý sản phẩm')}><FontAwesomeIcon icon={faDumbbell} />  &nbsp; Quản lý sản phẩm</li>
+                    <li onClick={()=>setCurrentPage('Quản lý danh mục sản phẩm')}><CategoryIcon />  &nbsp; Quản lý loại sản phẩm</li>
+                    <li onClick={()=>setCurrentPage('Quản lý gói tập')}><InventoryTwoToneIcon /> &nbsp; Quản lý gói tập</li>
                     
-                    <li onClick={()=>setCurrentPage('Lịch dạy của HLV')}><FontAwesomeIcon icon={faAddressCard}  /> &nbsp; Lịch dạy của HLV</li>
+                    <li onClick={()=>setCurrentPage('Lịch dạy của HLV')}><CalendarTodayTwoToneIcon/> &nbsp; Lịch dạy của HLV</li>
                     {/* <li onClick={()=>setCurrentPage('Đơn hàng')} ><FontAwesomeIcon icon={faClipboard} /> &nbsp; Đơn hàng</li> */}
-                    <li onClick={()=>setCurrentPage('Quản lý người dùng')} ><FontAwesomeIcon icon={faPeopleRoof} /> &nbsp; Quản lý người dùng</li>
-                    <li onClick={()=>setCurrentPage('Quản lý nhân viên')} ><FontAwesomeIcon icon={faPeopleRoof} /> &nbsp; Quản lý nhân viên</li>
+                    <li onClick={()=>setCurrentPage('Quản lý người dùng')} ><BadgeTwoToneIcon/> &nbsp; Quản lý người dùng</li>
+                    <li onClick={()=>setCurrentPage('Quản lý nhân viên')} ><PermContactCalendarTwoToneIcon/> &nbsp; Quản lý nhân viên</li>
                     <li onClick={()=>setCurrentPage('Lương nhân viên')} ><FontAwesomeIcon icon={faMoneyBill} /> &nbsp; Lương nhân viên</li>
                     <li ><FontAwesomeIcon icon={faUserGear} /> &nbsp; Tài khoản của bạn
                         <ul className={style.dropdown}>

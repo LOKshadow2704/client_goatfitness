@@ -125,7 +125,7 @@ function ManageProduct({ data }) {
         PHPSESSID: findCookie("PHPSESSID"),
       };
       axios
-        .delete("http://localhost:8080/Backend/products/categories/delete", {
+        .delete("http://localhost:8080/Backend/Category/delete", {
           data: { IDLoaiSanPham: id },
           headers: headers,
           
