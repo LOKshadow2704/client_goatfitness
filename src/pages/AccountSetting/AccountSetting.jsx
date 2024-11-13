@@ -156,7 +156,7 @@ function AccountSetting({ changeForm }) {
               <div className={style.links}>
                 <Link to="#" onClick={() => setCurrentMenu("info")}>
                   <FontAwesomeIcon icon={faUserGear} />
-                  <p>Thông tin</p>
+                  <p>Sửa thông tin</p>
                 </Link>
                 <Link to="#" onClick={() => setCurrentMenu("resetPW")}>
                   <FontAwesomeIcon icon={faKey} />

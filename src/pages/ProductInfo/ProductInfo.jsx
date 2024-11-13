@@ -102,11 +102,6 @@ function ProductInfo() {
                 </div>
                 <div className={style.right}>
                     <h1>{product ? product.TenSP : ''}</h1>
-                    {/* <span> Đơn giá:
-                        <span style={{ color: 'red', marginLeft: '5px', fontSize: '20px',fontWeight:'bold' }}>
-                            {product ? new Intl.NumberFormat('vi-VN').format(product.DonGia) : ''}
-                        </span> VNĐ
-                    </span> */}
                     <span>
     Đơn giá:
     <span style={{ color: 'red', marginLeft: '5px', fontSize: '20px', fontWeight: 'bold' }}>
@@ -119,6 +114,7 @@ function ProductInfo() {
 
 
                     <div className={style.info}>
+                        <span>Mô tả:</span>
                         <div dangerouslySetInnerHTML={{
                             __html: product
                                 ? '· ' + product.Mota.replace(/(\r\n|\n|\r)/g, '<br>· ')

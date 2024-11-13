@@ -28,6 +28,50 @@ import RegisterPackModal from "../RegisterPackModal/RegisterPackModal";
 import { AddCircleOutline } from "@mui/icons-material";
 
 function ManaPackGymCustomer() {
+
+  const mockData = [
+    {
+      HoTen: "Nguyen Van A",
+      TenGoiTap: "Gói tập cơ bản",
+      TrangThaiThanhToan: "Đã thanh toán",
+      NgayDangKy: "2024-01-01",
+      NgayHetHan: "2024-04-01",
+      IDHoaDon: 1,
+    },
+    {
+      HoTen: "Le Thi B",
+      TenGoiTap: "Gói tập nâng cao",
+      TrangThaiThanhToan: "Chưa thanh toán",
+      NgayDangKy: "2023-12-15",
+      NgayHetHan: "2024-03-15",
+      IDHoaDon: 2,
+    },
+    {
+      HoTen: "Tran Van C",
+      TenGoiTap: "Gói tập toàn diện",
+      TrangThaiThanhToan: "Đã thanh toán",
+      NgayDangKy: "2023-11-01",
+      NgayHetHan: "2024-02-01",
+      IDHoaDon: 3,
+    },
+    {
+      HoTen: "Pham Thi D",
+      TenGoiTap: "Gói tập cơ bản",
+      TrangThaiThanhToan: "Đã thanh toán",
+      NgayDangKy: "2023-10-10",
+      NgayHetHan: "2024-01-10",
+      IDHoaDon: 4,
+    },
+    {
+      HoTen: "Hoang Van E",
+      TenGoiTap: "Gói tập nâng cao",
+      TrangThaiThanhToan: "Chưa thanh toán",
+      NgayDangKy: "2023-09-25",
+      NgayHetHan: "2023-12-25",
+      IDHoaDon: 5,
+    },
+  ];
+
   const [gympack, setGymPack] = useState([]);
   const [filteredGymPack, setFilteredGymPack] = useState([]); 
   const [currentPage, setCurrentPage] = useState(1);
@@ -42,22 +86,28 @@ function ManaPackGymCustomer() {
   const { setSuccess, setError, setMessage } = useAnnouncement();
   const [rerender, setRerender] = useState(false);
 
+  // useEffect(() => {
+  //   // Gọi API để lấy dữ liệu
+  //   axios
+  //     .get("http://localhost:8080/Backend/invoicePackgym/all")
+  //     .then((response) => {
+  //       if (response.status >= 200 && response.status < 300) {
+  //         setGymPack(response.data);
+  //         setFilteredGymPack(response.data); 
+  //       } else {
+  //         throw new Error("Lấy thông tin thất bại");
+  //       }
+  //     })
+  //     .catch((error) => {
+  //       console.error("Error fetching data: ", error);
+  //     });
+  // }, [update, rerender, showModal]);
+
   useEffect(() => {
-    // Gọi API để lấy dữ liệu
-    axios
-      .get("http://localhost:8080/Backend/invoicePackgym/all")
-      .then((response) => {
-        if (response.status >= 200 && response.status < 300) {
-          setGymPack(response.data);
-          setFilteredGymPack(response.data); 
-        } else {
-          throw new Error("Lấy thông tin thất bại");
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching data: ", error);
-      });
-  }, [update, rerender, showModal]);
+    // Set mock data instead of calling API
+    setGymPack(mockData);
+    setFilteredGymPack(mockData);
+  }, [update, showModal]);
 
   const handleSearch = (e) => {
     const searchValue = e.target.value.toLowerCase();
@@ -147,7 +197,7 @@ function ManaPackGymCustomer() {
       );
     } else if (sortOption === "paid") {
       sortedData = sortedData.filter(
-        (item) => item.TrangThaiThanhToan === "Đã Thanh Toán"
+        (item) => item.TrangThaiThanhToan === "Đã thanh toán"
       );
     } else if (sortOption === "expiring") {
 

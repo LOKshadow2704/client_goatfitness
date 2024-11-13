@@ -196,7 +196,7 @@ function GymPack() {
                                     <TableCell></TableCell>
                                     <TableCell style={{fontWeight:"bold", textAlign:"center",fontSize:"18px"}}>Classic</TableCell>
                                     <TableCell style={{fontWeight:"bold", textAlign:"center",fontSize:"18px"}}>Royal</TableCell>
-                                    <TableCell style={{fontWeight:"bold", textAlign:"center",fontSize:"18px"}}>Signature</TableCell>
+                                  
                                 </TableRow>
                             </TableHead>
                             <TableBody>
@@ -204,61 +204,43 @@ function GymPack() {
                                     <TableCell>Không giới hạn thời gian luyện tập.</TableCell>
                                     <TableCell></TableCell>
                                     <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
-                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Tự do tập luyện tại tất cả câu lạc bộ trong hệ thống GOAT Fitness.</TableCell>
                                     <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
                                     <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
-                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Nước uống miễn phí.</TableCell>
                                     <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
                                     <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
-                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Dịch vụ khăn tập thể thao cao cấp.</TableCell>
                                     <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
                                     <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
-                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>1 buổi định hướng luyện tập riêng biệt và tư vấn dinh dưỡng.</TableCell>
                                     <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
                                     <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
-                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Được sử dụng dịch vụ thư giãn sau luyện tập (sauna và steambath).</TableCell>
                                     <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
                                     <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
-                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    
                                 </TableRow>
                                 <TableRow>
                                     <TableCell>Được dẫn theo 1 người thân đi tập cùng (người đi cùng được phục vụ như quyền lợi thẻ classic).</TableCell>
                                     <TableCell></TableCell>
                                     <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
-                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>Lối vào check-in ưu tiên cho hội viên Signature.</TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>Phục vụ thảm tập Yoga có logo Signature khi tham gia lớp.</TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
-                                </TableRow>
-                                <TableRow>
-                                    <TableCell>Sử dụng khu vực VIP Lounge dành riêng cho hội viên Signature (Không áp dụng cho Khách đi kèm).</TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell></TableCell>
-                                    <TableCell><FontAwesomeIcon icon={faCircleCheck} style={{ color: "green" }} /></TableCell>
+                                    
                                 </TableRow>
                             </TableBody>
                         </Table>

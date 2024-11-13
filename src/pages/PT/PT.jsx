@@ -129,8 +129,8 @@ function PT() {
       <div className={style["container"]}>
         <div className={style["wrap_content"]}>
           <div className={style.header}>
-            <h1>Các Huấn luyên viên nổi bật tại GOAT GYM</h1>
-            <h2>Mô tả</h2>
+            <h1>Các Huấn luyện viên nổi bật tại GOAT GYM</h1>
+            {/* <h2>Mô tả</h2> */}
           </div>
           <div className={style.action}>
             <div className={style.action4}>

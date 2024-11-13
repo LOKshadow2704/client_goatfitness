@@ -137,3 +137,6 @@
 .info{
   margin-bottom: 10px;
 }
+.info p{
+  font-size: 16px;
+}
