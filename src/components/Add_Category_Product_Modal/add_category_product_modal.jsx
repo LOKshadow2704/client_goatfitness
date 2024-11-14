@@ -43,7 +43,7 @@ function AddCategoryModal({ setShowModal }) {
 
     if (formData.TenLoaiSanPham === "") {
       setWarning(true);
-      setMessage("Vui lòng điền đầy đủ thông tin Tên loại sản phẩm");
+      setMessage("Vui lòng điền đầy đủ thông tin");
       return;
     }
 
@@ -118,7 +118,7 @@ function AddCategoryModal({ setShowModal }) {
               variant="contained"
               color="primary"
               type="submit"
-              sx={{ width: "120px" }}
+              sx={{ width: "120px" ,marginTop:"10px"}}
             >
               Lưu
             </Button>

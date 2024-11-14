@@ -81,7 +81,7 @@ function RegisterPackModal({ setShowModal }) {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.post('http://localhost:8080/Backend/gympack/registerByEmployee', formData, { headers: headers })
+            axios.post('http://localhost:8080/Backend/gympack/register', formData, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);
@@ -133,7 +133,7 @@ function RegisterPackModal({ setShowModal }) {
                         onChange={handleChange}
                     />
                     <FormControl fullWidth margin="normal">
-                        <InputLabel id="product-select-label">Loại sản phẩm</InputLabel>
+                        <InputLabel id="product-select-label">Loại gói tập</InputLabel>
                         <Select
                             labelId="product-select-label"
                             name="IDGoiTap"

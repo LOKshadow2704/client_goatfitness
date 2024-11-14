@@ -266,7 +266,7 @@ function AddProductModal({ setShowModal }) {
   return (
     <Dialog open onClose={() => setShowModal(false)} fullWidth maxWidth="sm">
       <DialogTitle
-        sx={{ textAlign: "center", fontWeight: "bold", fontSize: "22px" }}
+        sx={{ textAlign: "center", fontWeight: "bold", fontSize: "20px" }}
       >
         Thêm sản phẩm mới
         <IconButton
@@ -401,7 +401,7 @@ function AddProductModal({ setShowModal }) {
               variant="contained"
               color="primary"
               type="submit"
-              sx={{ width: "120px" }}
+              sx={{ width: "150px" }}
             >
               Lưu
             </Button>

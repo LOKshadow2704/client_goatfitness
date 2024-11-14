@@ -29,12 +29,12 @@ function RegisterTraining({ setShowModal, peronalTrainer }) {
   const handleEndDateChange = (date) => {
     if (!startDate) {
       setWarning(true);
-      setMessage('Vui lòng chọn ngày giờ bắt đầu trước');
+      setMessage('Vui lòng chọn ngày giờ bắt đầu trước.');
       return;
     }
     if (date < startDate) {
       setWarning(true);
-      setMessage('Ngày giờ kết thúc không thể trước ngày giờ bắt đầu');
+      setMessage('Ngày giờ kết thúc không thể trước ngày giờ bắt đầu.');
       setEndDate(null);
     } else {
       setEndDate(date);
@@ -56,7 +56,7 @@ function RegisterTraining({ setShowModal, peronalTrainer }) {
   const handleSubmit = (payment) => {
     if (!startDate || !endDate) {
         setError(true);
-        setMessage("Bạn chưa chọn ngày giờ");
+        setMessage("Bạn chưa chọn ngày giờ.");
         return;
     }
     const findCookie = (name) => {
@@ -124,8 +124,8 @@ function formatDate(date) {
   return (
     <div className={style.modal}>
       <div className={style.wrap_content}>
-        <h1>
-          <FontAwesomeIcon icon={faXmark} onClick={() => setShowModal(false)} />
+        <h1 style={{marginTop:'10px'}}>
+          <FontAwesomeIcon icon={faXmark} style={{cursor: 'pointer'}} onClick={() => setShowModal(false)} />
         </h1>
         <h2>Chọn ngày và giờ đăng ký luyện tập</h2>
         <LocalizationProvider dateAdapter={AdapterDateFns} locale={vi}>

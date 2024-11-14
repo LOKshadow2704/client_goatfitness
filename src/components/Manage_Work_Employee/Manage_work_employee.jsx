@@ -18,12 +18,13 @@ import {
   MenuItem,
   Dialog,
   DialogTitle,
+  DialogContent,
   DialogContentText,
   DialogActions,
 } from "@mui/material";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import UpdateInvoiceModal from "../UpdateInvoiceGympack/UpdateInvoiceGympack";
+import UpdateEmployeeWork from "../Update_Employee_Work/Update_employee_work";
 import RegisterPackModal from "../RegisterPackModal/RegisterPackModal";
 import { AddCircleOutline } from "@mui/icons-material";
 
@@ -36,7 +37,7 @@ function ManageWorkEmployee() {
   const [searchTerm, setSearchTerm] = useState("");
   const [sortType, setSortType] = useState("");
   const [update, setUpdate] = useState(false);
-  const [selectedPack, setSelectedPack] = useState(null);
+  const [selectedWork, setSelectedWork] = useState(null);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [workEmployeeToDelete, setWorkEmployeeToDelete] = useState(null);
   const { setSuccess, setError, setMessage } = useAnnouncement();
@@ -94,7 +95,7 @@ function ManageWorkEmployee() {
 
   //Hàm sửa
   const handleEdit = (pack) => {
-    setSelectedPack(pack);
+    setSelectedWork(pack);
     setUpdate(true);
   };
 
@@ -242,7 +243,7 @@ function ManageWorkEmployee() {
 </FormControl>
 
           {update && (
-            <UpdateInvoiceModal data={selectedPack} setShowModal={setUpdate} />
+            <UpdateEmployeeWork data={selectedWork} setShowModal={setUpdate} />
           )}
         </div>
         {/* <Button
@@ -305,7 +306,7 @@ function ManageWorkEmployee() {
             <Button
               variant="outlined"
               color="primary"
-              // onClick={() => handleEdit(value)} 
+              onClick={() => handleEdit(value)} 
               style={{ marginRight: "5px" }}
             >
               <FontAwesomeIcon icon={faPenToSquare} />
@@ -313,7 +314,7 @@ function ManageWorkEmployee() {
             <Button
               variant="outlined"
               color="error"
-              // onClick={() => handleDeleteClick(value.IDHoaDon)}
+              onClick={() => handleDeleteClick(value.IDHoaDon)}
             >
               <FontAwesomeIcon icon={faTrashCan} />
             </Button>
@@ -331,6 +332,29 @@ function ManageWorkEmployee() {
 </Table>
 
       </TableContainer>
+
+      <Dialog
+        open={openConfirmDialog}
+        onClose={handleCancelDelete}
+        aria-labelledby="confirm-dialog-title"
+        aria-describedby="confirm-dialog-description"
+      >
+        <DialogTitle id="confirm-dialog-title" sx={{borderBottom: '1px solid #ddd'}}>Xác nhận xóa</DialogTitle>
+        <DialogContentText
+          id="confirm-dialog-description"
+          style={{ padding: "20px" }}
+        >
+          Bạn có chắc chắn muốn xóa lịch dạy của HLV này không?
+        </DialogContentText>
+        <DialogActions>
+          <Button onClick={handleCancelDelete} color="primary">
+            Hủy
+          </Button>
+          <Button onClick={handleConfirmDelete} color="error" autoFocus>
+            Đồng ý
+          </Button>
+        </DialogActions>
+      </Dialog>
      
       <Stack spacing={2} style={{ marginTop: "20px", float: "right" }}>
         <Pagination
