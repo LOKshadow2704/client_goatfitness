@@ -256,7 +256,7 @@ function ManageWorkEmployee() {
         </Button> */}
       </div>
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper} sx={{ border: "1px solid #ddd",margin: "10px", width: "98%"}}>
       <Table>
   <TableHead>
     <TableRow>

@@ -62,20 +62,38 @@ function Cart() {
             });
     }, [update]);
 
-    useEffect(() => {
-        let total = 0;
-        if (!selectedItems) {
-            return;
-        }
-        selectedItems.forEach((index) => {
-            if (cartData[index]) {
-                total += cartData[index].DonGia * cartData[index].SoLuong;
-            }
-        });
-        setTotalPrice(total);
-    }, [selectedItems, cartData]);
+    // useEffect(() => {
+    //     let total = 0;
+    //     if (!selectedItems) {
+    //         return;
+    //     }
+    //     selectedItems.forEach((index) => {
+    //         if (cartData[index]) {
+    //             total += cartData[index].DonGia * cartData[index].SoLuong;
+    //         }
+    //     });
+    //     setTotalPrice(total);
+    // }, [selectedItems, cartData]);
 
     // Kiểm tra nếu giỏ hàng trống tự động trở về trang sản phẩm
+    
+    useEffect(() => {
+        calculateTotalPrice(selectedItems);
+    }, [selectedItems, cartData]);
+
+    const updateQuantity = (index, action) => {
+        const updatedCart = [...cartData];
+        const item = updatedCart[index];
+
+        if (action === 'plus') {
+            item.SoLuong += 1; // Tăng số lượng
+        } else if (action === 'minus' && item.SoLuong > 1) {
+            item.SoLuong -= 1; // Giảm số lượng, nhưng không cho nhỏ hơn 1
+        }
+
+        setCartData(updatedCart); // Cập nhật lại giỏ hàng
+    };
+
     useEffect(() => {
         if (cartData.length === 0) {
             const timer = setTimeout(() => {
@@ -91,6 +109,17 @@ function Cart() {
         } else {
             setSelectedItems(selectedItems.filter((item) => item !== index));
         }
+    };
+
+    // Hàm tính tổng giá
+    const calculateTotalPrice = (selectedItems) => {
+        let total = 0;
+        selectedItems.forEach((index) => {
+            if (cartData[index]) {
+                total += cartData[index].DonGia * cartData[index].SoLuong;
+            }
+        });
+        setTotalPrice(total);
     };
 
     const handleSelectAllChange = (event) => {
@@ -295,7 +324,7 @@ function Cart() {
     <div style={{ fontSize: '14px', color: 'gray',marginTop:'4px' }}>Còn lại: {item.SoLuongTonKho}</div>
 </TableCell>
                                     <TableCell>{item.DonGia.toLocaleString()} VNĐ</TableCell>
-                                    <TableCell>
+                                    {/* <TableCell>
                                         <Button
                                             variant="outlined"
                                             size="small"
@@ -312,6 +341,29 @@ function Cart() {
                                             size="small"
                                             color="primary"
                                             onClick={() => updateQuanPlus(item.IDSanPham)}
+                                            className={style.button}
+                                            style={{ minWidth: "30px", padding: "5px 10px", marginLeft: '10px' }}
+                                        >
+                                            <FontAwesomeIcon icon={faPlus} />
+                                        </Button>
+                                    </TableCell> */}
+                                    <TableCell>
+                                        <Button
+                                            variant="outlined"
+                                            size="small"
+                                            color="secondary"
+                                            onClick={() => updateQuantity(index, 'minus')}
+                                            className={style.button}
+                                            style={{ minWidth: "30px", padding: "5px 10px", marginRight: '10px' }}
+                                        >
+                                            <FontAwesomeIcon icon={faMinus} />
+                                        </Button>
+                                        <span style={{fontWeight:'bold'}}>{item.SoLuong}</span>
+                                        <Button
+                                            variant="outlined"
+                                            size="small"
+                                            color="primary"
+                                            onClick={() => updateQuantity(index, 'plus')}
                                             className={style.button}
                                             style={{ minWidth: "30px", padding: "5px 10px", marginLeft: '10px' }}
                                         >

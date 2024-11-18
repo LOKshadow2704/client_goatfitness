@@ -183,7 +183,7 @@ function CreateUserModal({ setShowModal }) {
         >
           <FontAwesomeIcon icon={faXmark} />
         </IconButton>
-        <Typography variant="h5" sx={{ marginBottom: "20px" ,textAlign:'center'}}>
+        <Typography sx={{ marginBottom: "20px" ,textAlign:'center',fontSize:'20px'}}>
           Thêm tài khoản mới
         </Typography>
 

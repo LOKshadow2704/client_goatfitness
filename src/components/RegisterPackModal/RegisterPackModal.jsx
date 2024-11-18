@@ -81,7 +81,7 @@ function RegisterPackModal({ setShowModal }) {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.post('http://localhost:8080/Backend/gympack/register', formData, { headers: headers })
+            axios.post('http://localhost:8080/Backend/employee/gympack/register', formData, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);

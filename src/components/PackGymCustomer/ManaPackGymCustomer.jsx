@@ -29,49 +29,6 @@ import { AddCircleOutline } from "@mui/icons-material";
 
 function ManaPackGymCustomer() {
 
-  const mockData = [
-    {
-      HoTen: "Nguyen Van A",
-      TenGoiTap: "Gói tập cơ bản",
-      TrangThaiThanhToan: "Đã thanh toán",
-      NgayDangKy: "2024-01-01",
-      NgayHetHan: "2024-04-01",
-      IDHoaDon: 1,
-    },
-    {
-      HoTen: "Le Thi B",
-      TenGoiTap: "Gói tập nâng cao",
-      TrangThaiThanhToan: "Chưa thanh toán",
-      NgayDangKy: "2023-12-15",
-      NgayHetHan: "2024-03-15",
-      IDHoaDon: 2,
-    },
-    {
-      HoTen: "Tran Van C",
-      TenGoiTap: "Gói tập toàn diện",
-      TrangThaiThanhToan: "Đã thanh toán",
-      NgayDangKy: "2023-11-01",
-      NgayHetHan: "2024-02-01",
-      IDHoaDon: 3,
-    },
-    {
-      HoTen: "Pham Thi D",
-      TenGoiTap: "Gói tập cơ bản",
-      TrangThaiThanhToan: "Đã thanh toán",
-      NgayDangKy: "2023-10-10",
-      NgayHetHan: "2024-01-10",
-      IDHoaDon: 4,
-    },
-    {
-      HoTen: "Hoang Van E",
-      TenGoiTap: "Gói tập nâng cao",
-      TrangThaiThanhToan: "Chưa thanh toán",
-      NgayDangKy: "2023-09-25",
-      NgayHetHan: "2023-12-25",
-      IDHoaDon: 5,
-    },
-  ];
-
   const [gympack, setGymPack] = useState([]);
   const [filteredGymPack, setFilteredGymPack] = useState([]); 
   const [currentPage, setCurrentPage] = useState(1);
@@ -86,41 +43,62 @@ function ManaPackGymCustomer() {
   const { setSuccess, setError, setMessage } = useAnnouncement();
   const [rerender, setRerender] = useState(false);
 
-  // useEffect(() => {
-  //   // Gọi API để lấy dữ liệu
-  //   axios
-  //     .get("http://localhost:8080/Backend/invoicePackgym/all")
-  //     .then((response) => {
-  //       if (response.status >= 200 && response.status < 300) {
-  //         setGymPack(response.data);
-  //         setFilteredGymPack(response.data); 
-  //       } else {
-  //         throw new Error("Lấy thông tin thất bại");
-  //       }
-  //     })
-  //     .catch((error) => {
-  //       console.error("Error fetching data: ", error);
-  //     });
-  // }, [update, rerender, showModal]);
 
-  useEffect(() => {
-    // Set mock data instead of calling API
-    setGymPack(mockData);
-    setFilteredGymPack(mockData);
-  }, [update, showModal]);
+  const findCookie = (name) => {
+    const cookies = document.cookie.split(';');
+    for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+            return cookie.substring(name.length + 1);
+        }
+    }
+    return null;
+};
+
+useEffect(() => {
+  const fetchGymPack = async () => {
+    try {
+      const jwt = findCookie("jwt");
+      if (!jwt) throw new Error("Vui lòng đăng nhập!");
+
+      const headers = {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${jwt}`,
+        PHPSESSID: findCookie("PHPSESSID"),
+      };
+
+      const response = await axios.get(
+        "http://localhost:8080/Backend/employee/user/gympack",
+        { headers }
+      );
+
+      if (response.status === 200) {
+        setGymPack(response.data);
+        setFilteredGymPack(response.data); // Đồng bộ filteredGymPack
+      } else {
+        throw new Error("Không thể truy cập dữ liệu");
+      }
+    } catch (error) {
+      console.error("Lỗi khi lấy dữ liệu:", error);
+    }
+  };
+
+  fetchGymPack();
+}, [update, rerender, showModal]);
 
   const handleSearch = (e) => {
     const searchValue = e.target.value.toLowerCase();
     setSearchTerm(searchValue);
-    setCurrentPage(1); // Reset về trang 1 khi tìm kiếm
-
-    // Lọc dựa trên searchTerm
-    const filteredData = gympack.filter((pack) =>
-      pack.HoTen.toLowerCase().includes(searchValue)
-    );
+    setCurrentPage(1);
+  
+    const filteredData = gympack.filter((pack) => {
+      // Kiểm tra cả trường null hoặc chuỗi trống
+      return pack.HoTen?.toLowerCase().includes(searchValue);
+    });
+  
     setFilteredGymPack(filteredData);
   };
-
+  
   //Hàm sửa
   const handleEdit = (pack) => {
     setSelectedPack(pack);
@@ -197,7 +175,7 @@ function ManaPackGymCustomer() {
       );
     } else if (sortOption === "paid") {
       sortedData = sortedData.filter(
-        (item) => item.TrangThaiThanhToan === "Đã thanh toán"
+        (item) => item.TrangThaiThanhToan === "Đã Thanh Toán"
       );
     } else if (sortOption === "expiring") {
 
@@ -226,6 +204,8 @@ function ManaPackGymCustomer() {
   // Phân trang dữ liệu
   const startIndex = (currentPage - 1) * itemsPerPage;
   const endIndex = startIndex + itemsPerPage;
+
+  // Kiểm tra kỹ dữ liệu filteredGymPack
   const paginatedGymPack = filteredGymPack.slice(startIndex, endIndex);
 
   const handlePageChange = (event, value) => {
@@ -259,7 +239,7 @@ function ManaPackGymCustomer() {
             value={searchTerm}
             onChange={handleSearch}
             sx={{
-              marginLeft: "10px",
+              
               marginRight: "20px",
               "& .MuiInputBase-root": {
                 height: "40px !important",
@@ -348,57 +328,42 @@ function ManaPackGymCustomer() {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+           <TableBody>
             {paginatedGymPack.length > 0 ? (
               paginatedGymPack.map((value, index) => (
                 <TableRow
-                  key={value.HoTen}
-                  sx={{
-                    backgroundColor: index % 2 === 0 ? "white" : "#f5f5f5",
-                  }}
+                  key={value.TenDangNhap}
+                  sx={{ backgroundColor: index % 2 === 0 ? "white" : "#f5f5f5" }}
                 >
+                  <TableCell align="center">{value.HoTen || "Không có"}</TableCell>
+                  <TableCell align="center">{value.TenGoiTap || "Không có"}</TableCell>
+                  <TableCell align="center">{value.NgayDangKy || "Không có"}</TableCell>
+                  <TableCell align="center">{value.NgayHetHan || "Không có"}</TableCell>
+                  <TableCell align="center">{value.TrangThaiThanhToan || "Không có"}</TableCell>
+                  <TableCell align="center">{calculateDaysLeft(value.NgayHetHan)}</TableCell>
                   <TableCell style={{ textAlign: "center" }}>
-                    {value.HoTen}
-                  </TableCell>
-                  <TableCell style={{ textAlign: "center" }}>
-                    {value.TenGoiTap}
-                  </TableCell>
-                  <TableCell style={{ textAlign: "center" }}>
-                    {value.NgayDangKy}
-                  </TableCell>
-                  <TableCell style={{ textAlign: "center" }}>
-                    {value.NgayHetHan}
-                  </TableCell>
-                  <TableCell style={{ textAlign: "center" }}>
-                    {value.TrangThaiThanhToan}
-                  </TableCell>
-                  <TableCell style={{ textAlign: "center" }}>
-                    {calculateDaysLeft(value.NgayHetHan)}
-                  </TableCell>
-                  <TableCell style={{ textAlign: "center" }}>
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={() => handleEdit(value)}
-                      style={{ marginRight: "5px" }}
-                    >
-                      <FontAwesomeIcon icon={faMoneyBill1} />
-                    </Button>
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      onClick={() => handleDeleteClick(value.IDHoaDon)}
-                    >
-                      <FontAwesomeIcon icon={faTrashCan} />
-                    </Button>
-                  </TableCell>
+          <Button
+            variant="outlined"
+            color="primary"
+            onClick={() => handleEdit(value)}
+            style={{ marginRight: "5px" }}
+          >
+            <FontAwesomeIcon icon={faMoneyBill1} />
+          </Button>
+          <Button
+            variant="outlined"
+            color="error"
+            onClick={() => handleDeleteClick(value.IDHoaDon)}
+          >
+            <FontAwesomeIcon icon={faTrashCan} />
+          </Button>
+        </TableCell>
+
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={6} style={{ textAlign: "center" }}>
-                  Không tìm thấy kết quả.
-                </TableCell>
+                <TableCell colSpan={7} align="center">Không tìm thấy kết quả.</TableCell>
               </TableRow>
             )}
           </TableBody>

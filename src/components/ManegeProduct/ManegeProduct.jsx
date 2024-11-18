@@ -81,7 +81,7 @@ function ManageProduct({ data }) {
                     'PHPSESSID': findCookie("PHPSESSID")
                 };
 
-                const response = await fetch("http://localhost:8080/Backend/products/manager", {
+                const response = await fetch("http://localhost:8080/Backend/products/employee/all", {
                     method: 'GET',
                     headers: headers 
                 });

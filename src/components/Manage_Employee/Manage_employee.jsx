@@ -44,30 +44,94 @@ const ManageEmployee = () => {
   const { setSuccess, setError, setMessage } = useAnnouncement();
   const [rerender, setRerender] = useState(false);
 
-  useEffect(() => {
-    const fetchEmployees = async () => {
-      try {
-        const response = await fetch("http://localhost:8080/Backend/employee/getall");
-        if (!response.ok) {
-          throw new Error("Network response was not ok");
-        }
-        const data = await response.json();
-        setEmployees(data);
+  const mockEmployees = [
+    {
+      TenDangNhap: "employee01",
+      HoTen: "Nguyễn Văn A",
+      Email: "nguyenvana@example.com",
+      SDT: "0123456789",
+      DichVu: "Huấn luyện cá nhân",
+      TrangThai: "Đang hoạt động",
+    },
+    {
+      TenDangNhap: "employee02",
+      HoTen: "Trần Thị B",
+      Email: "tranthib@example.com",
+      SDT: "0987654321",
+      DichVu: "Dịch vụ chăm sóc khách hàng",
+      TrangThai: "Đang hoạt động",
+    },
+    {
+      TenDangNhap: "employee03",
+      HoTen: "Lê Văn C",
+      Email: "levanc@example.com",
+      SDT: "0334455667",
+      DichVu: "Quản lý cơ sở",
+      TrangThai: "Tạm nghỉ",
+    },
+    {
+      TenDangNhap: "employee04",
+      HoTen: "Phạm Thị D",
+      Email: "phamthid@example.com",
+      SDT: "0901234567",
+      DichVu: "Huấn luyện cá nhân",
+      TrangThai: "Đang hoạt động",
+    },
+    {
+      TenDangNhap: "employee05",
+      HoTen: "Hoàng Văn E",
+      Email: "hoangvane@example.com",
+      SDT: "0912345678",
+      DichVu: "Dịch vụ chăm sóc khách hàng",
+      TrangThai: "Tạm nghỉ",
+    },
+  ];
+  
 
-        // Lấy danh sách dịch vụ duy nhất
-        const services = [...new Set(data.map((employee) => employee.DichVu))];
-        setUniqueServices(services);
-      } catch (error) {
-        setError(error.message);
-      } finally {
-        setLoading(false);
-      }
-    };
 
-    fetchEmployees();
-  }, [rerender, update, setError]);
+  // useEffect(() => {
+  //   const fetchEmployees = async () => {
+  //     try {
+  //       const response = await fetch("http://localhost:8080/Backend/employee/getall");
+  //       if (!response.ok) {
+  //         throw new Error("Network response was not ok");
+  //       }
+  //       const data = await response.json();
+  //       setEmployees(data);
+
+  //       // Lấy danh sách dịch vụ duy nhất
+  //       const services = [...new Set(data.map((employee) => employee.DichVu))];
+  //       setUniqueServices(services);
+  //     } catch (error) {
+  //       setError(error.message);
+  //     } finally {
+  //       setLoading(false);
+  //     }
+  //   };
+
+  //   fetchEmployees();
+  // }, [rerender, update, setError]);
 
   //Hàm sửa
+  
+  useEffect(() => {
+    const fetchEmployees = () => {
+      setLoading(true); // Hiển thị trạng thái loading khi xử lý dữ liệu
+      try {
+        setEmployees(mockEmployees); // Gắn mock data vào state
+        const services = [...new Set(mockEmployees.map((employee) => employee.DichVu))];
+        setUniqueServices(services); // Lấy danh sách dịch vụ duy nhất
+      } catch (error) {
+        setError("Lỗi khi lấy dữ liệu nhân viên");
+      } finally {
+        setLoading(false); // Tắt trạng thái loading
+      }
+    };
+  
+    fetchEmployees();
+  }, [rerender, update, setError]);
+  
+  
   const handleEdit = (employee) => {
     setSelectedEmployee(employee);
     setUpdate(true);
@@ -259,7 +323,7 @@ const ManageEmployee = () => {
           </Button>
         </Grid>
       </Grid>
-      <TableContainer component={Paper} sx={{ margin: "10px", width: "98%" }}>
+      <TableContainer component={Paper} sx={{ margin: "10px", width: "98%",border: "1px solid #ddd" }}>
         <Table>
           <TableHead>
             <TableRow>

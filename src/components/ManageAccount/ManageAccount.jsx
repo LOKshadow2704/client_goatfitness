@@ -185,7 +185,7 @@ function ManageAccount({ data }) {
             onChange={handleSearchChange}
             variant="outlined"
             size="small"
-            sx={{ marginRight: "20px" }}
+            sx={{ marginRight: "20px", marginLeft:"10px" }}
           />
         </div>
 
@@ -209,16 +209,19 @@ function ManageAccount({ data }) {
           color="primary"
           startIcon={<AddCircleOutline />}
           onClick={() => setModalAdd(true)}
-          sx={{ marginLeft: "46%" }}
+          sx={{ marginLeft: "43%" }}
         >
           Thêm tài khoản mới
         </Button>
       </div>
 
-      <TableContainer component={Paper}>
+      <TableContainer component={Paper}  sx={{ border: "1px solid #ddd",margin: "10px", width: "98%"}}>
         <Table>
           <TableHead>
             <TableRow>
+              <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>
+                STT
+              </TableCell>
               <TableCell style={{ textAlign: "center", fontWeight: "bold" }}>
                 Tên đăng nhập
               </TableCell>
@@ -230,7 +233,7 @@ function ManageAccount({ data }) {
               </TableCell>
             </TableRow>
           </TableHead>
-          <TableBody>
+          {/* <TableBody>
             {filteredAccounts.length === 0 ? (
               <TableRow>
                 <TableCell colSpan={3} style={{ textAlign: "center" }}>
@@ -268,7 +271,55 @@ function ManageAccount({ data }) {
                   </TableRow>
                 ))
             )}
-          </TableBody>
+          </TableBody> */}
+          <TableBody>
+            {filteredAccounts.length === 0 ? (
+            <TableRow>
+              <TableCell colSpan={4} style={{ textAlign: "center" }}>
+                  Không tìm thấy tài khoản.
+              </TableCell>
+            </TableRow>
+            ) : (
+            filteredAccounts
+            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
+            .map((value, index) => (
+            <TableRow
+            key={value.TenDangNhap}
+            style={{
+            backgroundColor: index % 2 === 0 ? "#f5f5f5" : "#ffffff", // Màu nền xen kẽ
+            }}
+            >
+            <TableCell style={{ textAlign: "center" }}>
+            {page * rowsPerPage + index + 1} {/* Số thứ tự */}
+            </TableCell>
+            <TableCell style={{ textAlign: "center" }}>
+            {value.TenDangNhap}
+            </TableCell>
+            <TableCell style={{ textAlign: "center" }}>
+            {value.TenVaiTro}
+            </TableCell>
+            <TableCell style={{ textAlign: "center" }}>
+            <Button
+              variant="outlined"
+              color="primary"
+              onClick={() => handleClickUpdate(value)}
+              style={{ marginRight: "5px" }}
+            >
+              <FontAwesomeIcon icon={faPenToSquare} />
+            </Button>
+            <Button
+              variant="outlined"
+              color="error"
+              onClick={() => handleDeleteClick(value.TenDangNhap)}
+            >
+              <FontAwesomeIcon icon={faTrashCan} />
+            </Button>
+          </TableCell>
+        </TableRow>
+      ))
+  )}
+</TableBody>
+
         </Table>
       </TableContainer>
 

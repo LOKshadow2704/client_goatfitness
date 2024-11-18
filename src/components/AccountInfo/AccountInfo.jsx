@@ -43,10 +43,10 @@ function AccountInfo({ userData, setUpdate }) {
         if (!dataChanged) return false;
         const jwt = findCookie('jwt');
         const data = {
-            name: name,
-            email: email,
-            address: address,
-            phoneNum: phoneNum
+            HoTen: name,
+            Email: email,
+            DiaChi: address,
+            SDT: phoneNum
         };
         const headers = {
             'Content-Type': 'application/json',

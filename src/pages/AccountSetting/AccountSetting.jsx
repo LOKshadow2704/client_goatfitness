@@ -17,7 +17,7 @@ function AccountSetting({ changeForm }) {
   const [update, setUpdate] = useState(false);
   const [loading, setLoading] = useState(false);
   const { setError, setMessage, setSuccess, setLocation, setLink } = useAnnouncement();
-  const [setRefresh] = useState(false);
+  const [refresh, setRefresh] = useState(false);
 
   const handleFileChange = (event) => {
     const file = event.target.files[0];
