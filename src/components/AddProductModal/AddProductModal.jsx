@@ -44,7 +44,7 @@ function AddProductModal({ setShowModal }) {
 
   useEffect(() => {
     axios
-      .get("http://localhost:8080/Backend/products/categories/all")
+      .get("http://localhost:8080/Backend/categories")
       .then((response) => {
         if (response.status >= 200 && response.status < 300) {
           setCategory(response.data);
@@ -179,7 +179,7 @@ function AddProductModal({ setShowModal }) {
 
       axios
         .post(
-          "http://localhost:8080/Backend/products/product/add",
+          "http://localhost:8080/Backend/employee/products/add",
           { data: formData, SoLuong: soLuong },
           { headers: headers }
         )

@@ -23,41 +23,73 @@ function RegisterPT({ setShowModal }) {
     const [isLoading, setIsLoading] = useState(false);
     const { setError, setMessage, setSuccess, setLocation, setLink } = useAnnouncement();
 
+    const findCookie = (name) => {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(name + '=')) {
+                return cookie.substring(name.length + 1);
+            }
+        }
+        return null;
+    };
+
     const handleSubmit = (e) => {
         e.preventDefault();
         setIsLoading(true);
 
+        const jwt = findCookie('jwt');
+        if (!jwt) {
+            setIsLoading(false);
+            setError(true);
+            setMessage('Không tìm thấy thông tin đăng nhập. Vui lòng đăng nhập lại.');
+            return;
+        }
+
+        if (!certificates || !serviceID || !desiredRent) {
+            setIsLoading(false);
+            setError(true);
+            setMessage('Vui lòng nhập đầy đủ thông tin.');
+            return;
+        }
+
         const data = {
-            certificates,
-            serviceID,
-            desiredRent,
+            ChungChi: certificates,  
+            DichVu: serviceID,       
+            GiaThue: desiredRent,    
         };
 
-        axios.post('http://localhost:8080/Backend/PT/register', data)
+        const headers = {
+            'Content-Type': 'application/json',
+            'Authorization': `Bearer ${jwt}`,
+            'PHPSESSID': findCookie("PHPSESSID"),
+        };
+
+        axios.post('http://localhost:8080/Backend/user/register_pt', data, { headers })
             .then(response => {
                 setIsLoading(false);
                 setSuccess(true);
                 setMessage('Đăng ký thành công!');
                 setLocation(true);
-                setLink("http://localhost:3000/PT");
-                setShowModal(false);
+                setLink("http://localhost:3000/PT");  
+                setShowModal(false);  
             })
             .catch(error => {
                 setIsLoading(false);
+                const errorMessage = error.response?.data?.error || 'Đăng ký thất bại';
                 setError(true);
-                setMessage('Đăng ký thất bại');
+                setMessage(errorMessage);
             });
     };
 
     return (
         <Modal
-            open={true}  // Modal luôn mở khi component được render, có thể thay đổi bằng trạng thái open
-            onClose={() => setShowModal(false)}  // Đóng modal khi người dùng nhấn ra ngoài modal
+            open={true}  
+            onClose={() => setShowModal(false)}  
             aria-labelledby="modal-title"
             aria-describedby="modal-description"
         >
             <Box sx={modalStyle}>
-                {/* Nút đóng modal với biểu tượng 'x' */}
                 <IconButton
                     onClick={() => setShowModal(false)}
                     sx={{
@@ -92,8 +124,9 @@ function RegisterPT({ setShowModal }) {
                             label="Dịch vụ"
                         >
                             <MenuItem value=""><em>Vui lòng lựa chọn dịch vụ</em></MenuItem>
-                            <MenuItem value="gym">Gym</MenuItem>
-                            <MenuItem value="yoga">Yoga</MenuItem>
+                            <MenuItem value="Gym">Gym</MenuItem>
+                            <MenuItem value="Yoga">Yoga</MenuItem>
+                            <MenuItem value="Boxing">Boxing</MenuItem>
                         </Select>
                     </FormControl>
                     <TextField

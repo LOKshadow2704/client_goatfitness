@@ -41,7 +41,7 @@ function ManageProduct({ data }) {
   const [productToDelete, setProductToDelete] = useState(null);
 
   useEffect(() => {
-    fetch("http://localhost:8080/Backend/products/categories/all")
+    fetch("http://localhost:8080/Backend/categories")
       .then((response) => {
         if (!response.ok) {
           throw new Error("Không thể truy cập");
@@ -125,7 +125,7 @@ function ManageProduct({ data }) {
         PHPSESSID: findCookie("PHPSESSID"),
       };
       axios
-        .delete("http://localhost:8080/Backend/Category/delete", {
+        .delete("http://localhost:8080/Backend/employee/category/delete", {
           data: { IDLoaiSanPham: id },
           headers: headers,
           

@@ -171,7 +171,7 @@ useEffect(() => {
     // Lọc theo trạng thái thanh toán
     if (sortOption === "unpaid") {
       sortedData = sortedData.filter(
-        (item) => item.TrangThaiThanhToan === "Chưa thanh toán"
+        (item) => item.TrangThaiThanhToan === "Chưa Thanh Toán"
       );
     } else if (sortOption === "paid") {
       sortedData = sortedData.filter(

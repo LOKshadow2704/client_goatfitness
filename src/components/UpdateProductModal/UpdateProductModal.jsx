@@ -12,7 +12,7 @@ function UpdateProductModal({ data, setShowModal }) {
     const { setError, setMessage, setSuccess } = useAnnouncement();
 
     useEffect(() => {
-        axios.get('http://localhost:8080/Backend/products/categories/all')
+        axios.get('http://localhost:8080/Backend/categories')
             .then(response => {
                 if (response.status >= 200 && response.status < 300) {
                     setCategory(response.data);
@@ -83,7 +83,7 @@ function UpdateProductModal({ data, setShowModal }) {
                 IDSanPham: formData.IDSanPham
             };
 
-            axios.put('http://localhost:8080/Backend/products/product/update', data, { headers })
+            axios.put('http://localhost:8080/Backend/employee/products/update', data, { headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);

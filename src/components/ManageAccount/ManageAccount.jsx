@@ -61,7 +61,7 @@ function ManageAccount({ data }) {
         PHPSESSID: findCookie("PHPSESSID"),
       };
       axios
-        .get("http://localhost:8080/Backend/admin/getAllAccount", {
+        .get("http://localhost:8080/Backend/admin/account/all", {
           headers: headers,
         })
         .then((response) => {
@@ -165,6 +165,12 @@ function ManageAccount({ data }) {
   const handleChangeRowsPerPage = (event) => {
     setRowsPerPage(parseInt(event.target.value, 10));
     setPage(0);
+  };
+
+  const roleMapping = {
+    admin: 'Quản trị viên',
+    employee: 'Nhân viên',
+    user: 'Khách hàng',
   };
 
   return (
@@ -295,8 +301,11 @@ function ManageAccount({ data }) {
             <TableCell style={{ textAlign: "center" }}>
             {value.TenDangNhap}
             </TableCell>
-            <TableCell style={{ textAlign: "center" }}>
+            {/* <TableCell style={{ textAlign: "center" }}>
             {value.TenVaiTro}
+            </TableCell> */}
+            <TableCell style={{ textAlign: "center" }}>
+            {roleMapping[value.TenVaiTro] || value.TenVaiTro}
             </TableCell>
             <TableCell style={{ textAlign: "center" }}>
             <Button

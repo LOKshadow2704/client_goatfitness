@@ -133,89 +133,89 @@ function Cart() {
         }
     };
 
-    function updateQuanPlus(IDSanPham) {
-        const findCookie = (name) => {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.startsWith(name + '=')) {
-                    return cookie.substring(name.length + 1);
-                }
-            }
-            return null;
-        };
-        const data = {
-            IDSanPham: IDSanPham
-        }
+    // function updateQuanPlus(IDSanPham) {
+    //     const findCookie = (name) => {
+    //         const cookies = document.cookie.split(';');
+    //         for (let i = 0; i < cookies.length; i++) {
+    //             const cookie = cookies[i].trim();
+    //             if (cookie.startsWith(name + '=')) {
+    //                 return cookie.substring(name.length + 1);
+    //             }
+    //         }
+    //         return null;
+    //     };
+    //     const data = {
+    //         IDSanPham: IDSanPham
+    //     }
 
-        const jwt = findCookie('jwt');
-        const option = {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + jwt,
-                'PHPSESSID': findCookie("PHPSESSID")
-            },
-            body: JSON.stringify(data)
-        }
-        fetch('http://localhost:8080/Backend/cart/updateQuanPlus', option)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Lỗi server');
-                } else {
-                    setUpdate(true);
-                }
-            })
-            .catch(error => {
-                console.error('Lỗi khi lấy dữ liệu:', error);
-            })
-    }
+    //     const jwt = findCookie('jwt');
+    //     const option = {
+    //         method: 'PUT',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': 'Bearer ' + jwt,
+    //             'PHPSESSID': findCookie("PHPSESSID")
+    //         },
+    //         body: JSON.stringify(data)
+    //     }
+    //     fetch('http://localhost:8080/Backend/cart/updateQuanPlus', option)
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 throw new Error('Lỗi server');
+    //             } else {
+    //                 setUpdate(true);
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.error('Lỗi khi lấy dữ liệu:', error);
+    //         })
+    // }
 
-    function updateQuanMinus(IDSanPham, currentQuantity) {
-        if (currentQuantity <= 1) {
-            setWarning(true);
-            setMessage("Số lượng sản phẩm không thể nhỏ hơn 1.");
-            return;
-        }
+    // function updateQuanMinus(IDSanPham, currentQuantity) {
+    //     if (currentQuantity <= 1) {
+    //         setWarning(true);
+    //         setMessage("Số lượng sản phẩm không thể nhỏ hơn 1.");
+    //         return;
+    //     }
     
-        const findCookie = (name) => {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.startsWith(name + '=')) {
-                    return cookie.substring(name.length + 1);
-                }
-            }
-            return null;
-        };
+    //     const findCookie = (name) => {
+    //         const cookies = document.cookie.split(';');
+    //         for (let i = 0; i < cookies.length; i++) {
+    //             const cookie = cookies[i].trim();
+    //             if (cookie.startsWith(name + '=')) {
+    //                 return cookie.substring(name.length + 1);
+    //             }
+    //         }
+    //         return null;
+    //     };
         
-        const data = {
-            IDSanPham: IDSanPham
-        };
+    //     const data = {
+    //         IDSanPham: IDSanPham
+    //     };
     
-        const jwt = findCookie('jwt');
-        const option = {
-            method: 'PUT',
-            headers: {
-                'Content-Type': 'application/json',
-                'Authorization': 'Bearer ' + jwt,
-                'PHPSESSID': findCookie("PHPSESSID")
-            },
-            body: JSON.stringify(data)
-        };
+    //     const jwt = findCookie('jwt');
+    //     const option = {
+    //         method: 'PUT',
+    //         headers: {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': 'Bearer ' + jwt,
+    //             'PHPSESSID': findCookie("PHPSESSID")
+    //         },
+    //         body: JSON.stringify(data)
+    //     };
     
-        fetch('http://localhost:8080/Backend/cart/updateQuanMinus', option)
-            .then(response => {
-                if (!response.ok) {
-                    throw new Error('Lỗi server');
-                } else {
-                    setUpdate(true);
-                }
-            })
-            .catch(error => {
-                console.log(error);
-            });
-    }
+    //     fetch('http://localhost:8080/Backend/cart/updateQuanMinus', option)
+    //         .then(response => {
+    //             if (!response.ok) {
+    //                 throw new Error('Lỗi server');
+    //             } else {
+    //                 setUpdate(true);
+    //             }
+    //         })
+    //         .catch(error => {
+    //             console.log(error);
+    //         });
+    // }
     
 
     function deleteCartItem(IDSanPham) {

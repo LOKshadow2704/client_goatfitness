@@ -13,7 +13,7 @@ import ManageCategoryProduct from "../../components/ManageCategoryProduct/Manage
 import AccountSetting from "../AccountSetting/AccountSetting";
 import { useAnnouncement } from "../../contexts/Announcement";
 import Announcement from "../../components/Announcement/Announcement";
-import ManageEmployeeWork from "../../components/Manage_Work_Employee/Manage_work_employee"
+// import ManageEmployeeWork from "../../components/Manage_Work_Employee/Manage_work_employee"
 
 function Employee(){
     const [currentPage, setCurrentPage] = useState('Dashboard');
@@ -38,7 +38,7 @@ function Employee(){
                     <li onClick={()=>setCurrentPage('Quản lý danh mục sản phẩm')}><CategoryIcon />  &nbsp; Quản lý loại sản phẩm</li>
                     <li onClick={()=>setCurrentPage('Quản lý gói tập')}><FontAwesomeIcon icon={faFolderOpen}  /> &nbsp; Quản lý gói tập</li>
                     <li onClick={()=>setCurrentPage('Gói tập của khách hàng')}><FontAwesomeIcon icon={faAddressCard}  /> &nbsp; Gói tập của khách hàng</li>
-                    <li onClick={()=>setCurrentPage('Quản lý lịch dạy HLV')}><FontAwesomeIcon icon={faAddressCard}  /> &nbsp; Lịch dạy của HLV</li>
+                    {/* <li onClick={()=>setCurrentPage('Quản lý lịch dạy HLV')}><FontAwesomeIcon icon={faAddressCard}  /> &nbsp; Lịch dạy của HLV</li> */}
                     <li onClick={()=>setCurrentPage('Đơn hàng')} ><FontAwesomeIcon icon={faClipboard} /> &nbsp; Đơn hàng</li>
                     <li ><FontAwesomeIcon icon={faUserGear} /> &nbsp; Tài khoản của bạn
                         <ul className={style.dropdown}>
@@ -56,7 +56,7 @@ function Employee(){
                 {currentPage==='Quản lý danh mục sản phẩm' && (<ManageCategoryProduct/>)}
                 {currentPage==='Quản lý gói tập' && (<ManagePackGym />)}
                 {currentPage==='Gói tập của khách hàng' && (<ManaPackGymCustomer/>)}
-                {currentPage==='Quản lý lịch dạy HLV' && (<ManageEmployeeWork/>)}
+                {/* {currentPage==='Quản lý lịch dạy HLV' && (<ManageEmployeeWork/>)} */}
                 {currentPage==='Đơn hàng' && (<ManagePurchaseOrder/>)}
                 {currentPage==='Tài khoản của bạn' && (<div className={style.AccountInfo}><AccountSetting changeForm={true}/></div>)}
             </div>

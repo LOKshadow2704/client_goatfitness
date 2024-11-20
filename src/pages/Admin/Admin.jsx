@@ -17,8 +17,9 @@ import CalendarTodayTwoToneIcon from '@mui/icons-material/CalendarTodayTwoTone';
 import BadgeTwoToneIcon from '@mui/icons-material/BadgeTwoTone';
 import PermContactCalendarTwoToneIcon from '@mui/icons-material/PermContactCalendarTwoTone';
 import ManageEmployee from "../../components/Manage_Employee/Manage_employee";
-import ManageWorkEmployee from "../../components/Manage_Work_Employee/Manage_work_employee"
+import ManageApply from "../../components/Management_apply/Management_apply"
 import ManageSalaryEmployee from "../../components/Manage_Salary_Employee/ManageSalaryEmployee"
+
 
 function Admin(){
     const [currentPage, setCurrentPage] = useState('Dashboard');
@@ -38,7 +39,7 @@ function Admin(){
                 </div>
                 <ul>
                     <li onClick={()=>setCurrentPage('Dashboard')}> <DashboardCustomizeRoundedIcon /> &nbsp; Dashboard</li>
-                    <li onClick={()=>setCurrentPage('Lịch dạy của HLV')}><CalendarTodayTwoToneIcon/> &nbsp; Lịch dạy của HLV</li>
+                    <li onClick={()=>setCurrentPage('Đăng ký làm PT')}><CalendarTodayTwoToneIcon/> &nbsp; Danh sách đăng ký làm PT</li>
                     <li onClick={()=>setCurrentPage('Quản lý người dùng')} ><BadgeTwoToneIcon/> &nbsp; Quản lý người dùng</li>
                     <li onClick={()=>setCurrentPage('Quản lý nhân viên')} ><PermContactCalendarTwoToneIcon/> &nbsp; Quản lý nhân viên</li>
                     <li onClick={()=>setCurrentPage('Lương nhân viên')} ><FontAwesomeIcon icon={faMoneyBill} /> &nbsp; Lương nhân viên</li>
@@ -55,7 +56,7 @@ function Admin(){
                 <h1>{currentPage} {error || success || warning ? <Announcement /> : null}</h1>
                 {currentPage==='Dashboard' && (<Dashboard/>)}
                 {currentPage==='Quản lý người dùng' && (<ManageAccount />)}
-                {currentPage==='Lịch dạy của HLV' && (<ManageWorkEmployee />)}
+                {currentPage==='Đăng ký làm PT' && (<ManageApply />)}
                 {currentPage==='Quản lý nhân viên' && (<ManageEmployee/>)}
                 {currentPage==='Lương nhân viên' && (<ManageSalaryEmployee />)}
                 {currentPage==='Tài khoản của bạn' && (<div className={style.AccountInfo}><AccountSetting changeForm={true} setRefresh={setUpdate}/></div>)}

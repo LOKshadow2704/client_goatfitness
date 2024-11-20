@@ -25,7 +25,7 @@ function ManagePurchaseOrder() {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.get("http://localhost:8080/Backend/order/purchase/get_unconfirm", { headers: headers })
+            axios.get("http://localhost:8080/Backend/employee/order/unconfirm/get", { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setPurchaseOrders(response.data.orders.reverse());
@@ -59,7 +59,7 @@ function ManagePurchaseOrder() {
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.put("http://localhost:8080/Backend/order/purchase/confirm", { IDDonHang: id }, { headers: headers })
+            axios.put("http://localhost:8080/Backend/employee/order/confirm", { IDDonHang: id }, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);

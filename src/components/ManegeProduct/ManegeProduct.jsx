@@ -81,7 +81,7 @@ function ManageProduct({ data }) {
                     'PHPSESSID': findCookie("PHPSESSID")
                 };
 
-                const response = await fetch("http://localhost:8080/Backend/products/employee/all", {
+                const response = await fetch("http://localhost:8080/Backend/products", {
                     method: 'GET',
                     headers: headers 
                 });
@@ -174,7 +174,7 @@ function ManageProduct({ data }) {
         PHPSESSID: findCookie("PHPSESSID"),
       };
       axios
-        .delete("http://localhost:8080/Backend/products/product/delete", {
+        .delete("http://localhost:8080/Backend/employee/products/delete", {
           data: { IDSanPham: id },
           headers: headers,
         })

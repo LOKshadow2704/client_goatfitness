@@ -14,7 +14,7 @@ const modalStyle = {
     bgcolor: 'background.paper',
     borderRadius: '8px',
     boxShadow: 24,
-    p: 4,
+    p: 3,
 };
 
 function UpdateRoleModal({ data, setShowModal }) {
@@ -60,7 +60,7 @@ function UpdateRoleModal({ data, setShowModal }) {
                 'PHPSESSID': findCookie("PHPSESSID")
             };
             console.log(formData)
-            axios.put('http://localhost:8080/Backend/admin/update', formData, { headers: headers })
+            axios.put('http://localhost:8080/Backend/admin/role/update', formData, { headers: headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);
@@ -117,9 +117,9 @@ function UpdateRoleModal({ data, setShowModal }) {
                             onChange={handleChange}
                             label="Vai Trò"
                         >
-                            <MenuItem value="1">Admin</MenuItem>
-                            <MenuItem value="2">Employee</MenuItem>
-                            <MenuItem value="3">User</MenuItem>
+                            <MenuItem value="1">Quản trị viên</MenuItem>
+                            <MenuItem value="2">Nhân viên</MenuItem>
+                            <MenuItem value="3">Khách hàng</MenuItem>
                         </Select>
                     </FormControl>
 

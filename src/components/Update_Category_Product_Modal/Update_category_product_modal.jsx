@@ -43,7 +43,7 @@ function UpdateCategoryModal({ data, setShowModal }) {
                 IDLoaiSanPham: formData.IDLoaiSanPham
             };
 
-            axios.put('http://localhost:8080/Backend/Category/update', data, { headers })
+            axios.put('http://localhost:8080/Backend/employee/category/update', data, { headers })
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);
@@ -63,7 +63,7 @@ function UpdateCategoryModal({ data, setShowModal }) {
     return (
         <Dialog open={true} onClose={() => setShowModal(false)} fullWidth maxWidth="xs">
             <DialogTitle sx={{fontWeight: 'bold', textAlign: 'center', fontSize: '20px', borderBottom: '1px solid #ddd', paddingBottom: '10px', marginBottom:'10px'}}>
-                Cập nhật loại sản phẩm
+                Cập nhật tên loại sản phẩm
                 <IconButton 
                     onClick={() => setShowModal(false)}
                     style={{ position: 'absolute', right: 8, top: 8 }}
