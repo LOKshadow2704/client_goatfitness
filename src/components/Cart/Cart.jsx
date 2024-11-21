@@ -293,12 +293,12 @@ function Cart() {
                                         onChange={handleSelectAllChange}
                                     />
                                 </TableCell>
-                                <TableCell sx={{fontWeight:'bold'}}>Hình ảnh</TableCell>
-                                <TableCell sx={{fontWeight:'bold'}}>Tên sản phẩm</TableCell>
-                                <TableCell sx={{fontWeight:'bold'}}>Giá</TableCell>
-                                <TableCell sx={{fontWeight:'bold'}}>Số lượng</TableCell>
-                                <TableCell sx={{fontWeight:'bold'}}>Tổng giá</TableCell>
-                                <TableCell sx={{fontWeight:'bold'}}>Hành động</TableCell>
+                                <TableCell sx={{fontWeight:'bold',fontSize:'16px'}}>Hình ảnh</TableCell>
+                                <TableCell sx={{fontWeight:'bold',fontSize:'16px'}}>Tên sản phẩm</TableCell>
+                                <TableCell sx={{fontWeight:'bold',fontSize:'16px'}}>Giá</TableCell>
+                                <TableCell sx={{fontWeight:'bold',fontSize:'16px'}}>Số lượng</TableCell>
+                                <TableCell sx={{fontWeight:'bold',fontSize:'16px'}}>Tổng giá</TableCell>
+                                <TableCell sx={{fontWeight:'bold',fontSize:'16px'}}>Hành động</TableCell>
                             </TableRow>
                         </TableHead>
                         <TableBody>
