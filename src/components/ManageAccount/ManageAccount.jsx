@@ -18,6 +18,7 @@ import {
   DialogActions,
   DialogTitle,
   DialogContentText,
+  Tooltip,
 } from "@mui/material";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -168,9 +169,9 @@ function ManageAccount({ data }) {
   };
 
   const roleMapping = {
-    admin: 'Quản trị viên',
-    employee: 'Nhân viên',
-    user: 'Khách hàng',
+    admin: "Quản trị viên",
+    employee: "Nhân viên",
+    user: "Khách hàng",
   };
 
   return (
@@ -182,16 +183,16 @@ function ManageAccount({ data }) {
 
       <div style={{ display: "flex", marginTop: "20px", marginBottom: "20px" }}>
         <div style={{ display: "flex", alignItems: "center" }}>
-          <FontAwesomeIcon style={{ paddingTop: "50px" }} />
+          {/* <FontAwesomeIcon style={{ paddingTop: "50px" }} /> */}
           <TextField
             type="text"
             id="search"
-            placeholder="Tìm kiếm tài khoản"
+            label="Tìm kiếm tài khoản"
             value={searchTerm}
             onChange={handleSearchChange}
             variant="outlined"
             size="small"
-            sx={{ marginRight: "20px", marginLeft:"10px" }}
+            sx={{ marginRight: "20px", marginLeft: "10px" }}
           />
         </div>
 
@@ -220,8 +221,10 @@ function ManageAccount({ data }) {
           Thêm tài khoản mới
         </Button>
       </div>
-
-      <TableContainer component={Paper}  sx={{ border: "1px solid #ddd",margin: "10px", width: "98%"}}>
+      <TableContainer
+        component={Paper}
+        sx={{ border: "1px solid #ddd", margin: "10px", width: "98%" }}
+      >
         <Table>
           <TableHead>
             <TableRow>
@@ -239,25 +242,34 @@ function ManageAccount({ data }) {
               </TableCell>
             </TableRow>
           </TableHead>
-          {/* <TableBody>
+          <TableBody>
             {filteredAccounts.length === 0 ? (
               <TableRow>
-                <TableCell colSpan={3} style={{ textAlign: "center" }}>
+                <TableCell colSpan={4} style={{ textAlign: "center" }}>
                   Không tìm thấy tài khoản.
                 </TableCell>
               </TableRow>
             ) : (
               filteredAccounts
                 .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-                .map((value) => (
-                  <TableRow key={value.TenDangNhap}>
+                .map((value, index) => (
+                  <TableRow
+                    key={value.TenDangNhap}
+                    style={{
+                      backgroundColor: index % 2 === 0 ? "#f5f5f5" : "#ffffff", // Màu nền xen kẽ
+                    }}
+                  >
+                    <TableCell style={{ textAlign: "center" }}>
+                      {page * rowsPerPage + index + 1} {/* Số thứ tự */}
+                    </TableCell>
                     <TableCell style={{ textAlign: "center" }}>
                       {value.TenDangNhap}
                     </TableCell>
                     <TableCell style={{ textAlign: "center" }}>
-                      {value.TenVaiTro}
+                      {roleMapping[value.TenVaiTro] || value.TenVaiTro}
                     </TableCell>
                     <TableCell style={{ textAlign: "center" }}>
+                    <Tooltip title="Chỉnh sửa">
                       <Button
                         variant="outlined"
                         color="primary"
@@ -266,6 +278,8 @@ function ManageAccount({ data }) {
                       >
                         <FontAwesomeIcon icon={faPenToSquare} />
                       </Button>
+                    </Tooltip>
+                    <Tooltip title="Xóa">
                       <Button
                         variant="outlined"
                         color="error"
@@ -273,62 +287,12 @@ function ManageAccount({ data }) {
                       >
                         <FontAwesomeIcon icon={faTrashCan} />
                       </Button>
+                    </Tooltip>
                     </TableCell>
                   </TableRow>
                 ))
             )}
-          </TableBody> */}
-          <TableBody>
-            {filteredAccounts.length === 0 ? (
-            <TableRow>
-              <TableCell colSpan={4} style={{ textAlign: "center" }}>
-                  Không tìm thấy tài khoản.
-              </TableCell>
-            </TableRow>
-            ) : (
-            filteredAccounts
-            .slice(page * rowsPerPage, page * rowsPerPage + rowsPerPage)
-            .map((value, index) => (
-            <TableRow
-            key={value.TenDangNhap}
-            style={{
-            backgroundColor: index % 2 === 0 ? "#f5f5f5" : "#ffffff", // Màu nền xen kẽ
-            }}
-            >
-            <TableCell style={{ textAlign: "center" }}>
-            {page * rowsPerPage + index + 1} {/* Số thứ tự */}
-            </TableCell>
-            <TableCell style={{ textAlign: "center" }}>
-            {value.TenDangNhap}
-            </TableCell>
-            {/* <TableCell style={{ textAlign: "center" }}>
-            {value.TenVaiTro}
-            </TableCell> */}
-            <TableCell style={{ textAlign: "center" }}>
-            {roleMapping[value.TenVaiTro] || value.TenVaiTro}
-            </TableCell>
-            <TableCell style={{ textAlign: "center" }}>
-            <Button
-              variant="outlined"
-              color="primary"
-              onClick={() => handleClickUpdate(value)}
-              style={{ marginRight: "5px" }}
-            >
-              <FontAwesomeIcon icon={faPenToSquare} />
-            </Button>
-            <Button
-              variant="outlined"
-              color="error"
-              onClick={() => handleDeleteClick(value.TenDangNhap)}
-            >
-              <FontAwesomeIcon icon={faTrashCan} />
-            </Button>
-          </TableCell>
-        </TableRow>
-      ))
-  )}
-</TableBody>
-
+          </TableBody>
         </Table>
       </TableContainer>
 

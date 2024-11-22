@@ -33,8 +33,6 @@ function AddProductModal({ setShowModal }) {
     Mota: "",
     DonGia: "",
     IMG: "",
-    Discount: "",
-    DaBan: "",
   });
   const [selectedFileName, setSelectedFileName] = useState(""); // Thêm state để lưu tên file
   const { setSuccess, setError, setMessage, setWarning } = useAnnouncement();
@@ -89,7 +87,6 @@ function AddProductModal({ setShowModal }) {
     }
     return null;
   };
-
 
   //Long Vỹ đổi lại cái api lưu hình ảnh. Tại cái imgbb không xài được nên đổi qua xài cloudiary
   const uploadImage = (file) => {
@@ -370,28 +367,6 @@ function AddProductModal({ setShowModal }) {
               id="SoLuong"
               name="SoLuong"
               value={soLuong}
-              onChange={handleChange}
-              fullWidth
-            />
-          </FormControl>
-          <FormControl fullWidth margin="normal">
-            <TextField
-              label="Đã bán"
-              type="number"
-              id="DaBan"
-              name="DaBan"
-              value={formData.DaBan}
-              onChange={handleChange}
-              fullWidth
-            />
-          </FormControl>
-          <FormControl fullWidth margin="normal">
-            <TextField
-              label="Giảm giá"
-              type="number"
-              id="Discount"
-              name="Discount"
-              value={formData.Discount}
               onChange={handleChange}
               fullWidth
             />

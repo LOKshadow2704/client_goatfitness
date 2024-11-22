@@ -101,7 +101,7 @@ function Dashboard(){
                 'Authorization': 'Bearer ' + jwt,
                 'PHPSESSID': findCookie("PHPSESSID")
             };
-            axios.get("http://localhost:8080/Backend/order/purchase/get_unconfirm", { headers: headers 
+            axios.get("http://localhost:8080/Backend/employee/order/unconfirm/get", { headers: headers 
             }).then(response => {
                 if(response.status >= 200 && response.status < 300){
                     setPurchaseOder(response.data.orders);

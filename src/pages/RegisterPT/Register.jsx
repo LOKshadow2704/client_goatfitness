@@ -131,7 +131,7 @@ function RegisterPT({ setShowModal }) {
                     </FormControl>
                     <TextField
                         id="desiredRent"
-                        label="Giá thuê mong muốn"
+                        label="Giá thuê mong muốn/ giờ"
                         fullWidth
                         margin="normal"
                         value={desiredRent}

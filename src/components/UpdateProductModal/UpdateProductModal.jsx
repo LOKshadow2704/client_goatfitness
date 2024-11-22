@@ -148,7 +148,7 @@ function UpdateProductModal({ data, setShowModal }) {
                         onChange={handleChange}
                         margin="normal"
                     />
-                    <TextField
+                    {/* <TextField
                         label="Đơn giá"
                         variant="outlined"
                         fullWidth
@@ -166,6 +166,36 @@ function UpdateProductModal({ data, setShowModal }) {
                         name="Discount"
                         value={formData.Discount || 0}
                         onChange={handleChange}
+                        margin="normal"
+                    /> */}
+                    <TextField
+                    label="Đơn giá"
+                    variant="outlined"
+                    fullWidth
+                    type="number"
+                    name="DonGia"
+                    value={formData.DonGia}
+                    onChange={(e) => {
+                        const value = e.target.value >= 0 ? e.target.value : 0;
+                        handleChange({ target: { name: "DonGia", value } });
+                    }}
+                    inputProps={{ min: 0 }}
+                    margin="normal"
+                    />
+
+                    <TextField
+                        label="Giảm giá (%)"
+                        variant="outlined"
+                        fullWidth
+                        type="number"
+                        name="Discount"
+                        value={formData.Discount}
+                        onChange={(e) => {
+                            let value = e.target.value;
+                            value = value < 0 ? 0 : value > 100 ? 100 : value;
+                            handleChange({ target: { name: "Discount", value } });
+                        }}
+                        inputProps={{ min: 0,max:100 }}
                         margin="normal"
                     />
                     <FormControl fullWidth margin="normal">
@@ -190,7 +220,7 @@ function UpdateProductModal({ data, setShowModal }) {
                             />
                         )}
                     </FormControl>
-                    <TextField
+                    {/* <TextField
                         label="Số lượng tồn kho"
                         variant="outlined"
                         fullWidth
@@ -199,7 +229,21 @@ function UpdateProductModal({ data, setShowModal }) {
                         value={formData.SoLuong}
                         onChange={handleChange}
                         margin="normal"
-                    />
+                    /> */}
+                    <TextField
+    label="Số lượng tồn kho"
+    variant="outlined"
+    fullWidth
+    type="number"
+    name="SoLuong"
+    value={formData.SoLuong}
+    onChange={(e) => {
+        const value = e.target.value >= 0 ? e.target.value : 0;
+        handleChange({ target: { name: "SoLuong", value } });
+    }}
+    inputProps={{ min: 0 }}
+    margin="normal"
+/>
                     <Button type="submit" variant="contained" color="primary" style={{ marginTop: '20px', width: '150px', marginLeft: '35%' }}>
                         Lưu
                     </Button>

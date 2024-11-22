@@ -16,6 +16,7 @@ import {
   DialogActions,
   DialogTitle,
   DialogContentText,
+  Tooltip,
 } from "@mui/material";
 import Pagination from "@mui/material/Pagination";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -314,6 +315,7 @@ function ManageProduct({ data }) {
                     {value.SoLuong}
                   </TableCell>
                   <TableCell style={{ textAlign: "center" }}>
+                  <Tooltip title="Chỉnh sửa">
                     <Button
                       variant="outlined"
                       color="primary"
@@ -322,6 +324,8 @@ function ManageProduct({ data }) {
                     >
                       <FontAwesomeIcon icon={faPenToSquare} />
                     </Button>
+                  </Tooltip>
+                  <Tooltip title="Xóa">
                     <Button
                       variant="outlined"
                       color="error"
@@ -329,6 +333,7 @@ function ManageProduct({ data }) {
                     >
                       <FontAwesomeIcon icon={faTrashCan} />
                     </Button>
+                  </Tooltip>
                   </TableCell>
                 </TableRow>
               ))

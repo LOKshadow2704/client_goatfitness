@@ -20,6 +20,7 @@ import {
   DialogTitle,
   DialogContentText,
   DialogActions,
+  Tooltip,
 } from "@mui/material";
 import { faMoneyBill1, faTrashCan } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
@@ -212,6 +213,11 @@ useEffect(() => {
     setCurrentPage(value);
   };
 
+  const formatDate = (dateString) => {
+    const [year, month, day] = dateString.split("-");
+    return `${day}-${month}-${year}`;
+  };
+  
   return (
     <div style={{ padding: "20px" }}>
       {showModal && (
@@ -337,33 +343,36 @@ useEffect(() => {
                 >
                   <TableCell align="center">{value.HoTen || "Không có"}</TableCell>
                   <TableCell align="center">{value.TenGoiTap || "Không có"}</TableCell>
-                  <TableCell align="center">{value.NgayDangKy || "Không có"}</TableCell>
-                  <TableCell align="center">{value.NgayHetHan || "Không có"}</TableCell>
+                  <TableCell align="center">{value.NgayDangKy ? formatDate(value.NgayDangKy) : "Không có"}</TableCell>
+                  <TableCell align="center">{value.NgayHetHan ? formatDate(value.NgayHetHan) : "Không có"}</TableCell>
                   <TableCell align="center">{value.TrangThaiThanhToan || "Không có"}</TableCell>
                   <TableCell align="center">{calculateDaysLeft(value.NgayHetHan)}</TableCell>
                   <TableCell style={{ textAlign: "center" }}>
-          <Button
-            variant="outlined"
-            color="primary"
-            onClick={() => handleEdit(value)}
-            style={{ marginRight: "5px" }}
-          >
-            <FontAwesomeIcon icon={faMoneyBill1} />
-          </Button>
-          <Button
-            variant="outlined"
-            color="error"
-            onClick={() => handleDeleteClick(value.IDHoaDon)}
-          >
-            <FontAwesomeIcon icon={faTrashCan} />
-          </Button>
-        </TableCell>
-
+                  <Tooltip title="Cập nhật thanh toán">
+                  <Button
+                    variant="outlined"
+                    color="primary"
+                    onClick={() => handleEdit(value)}
+                    style={{ marginRight: "5px" }}
+                  >
+                    <FontAwesomeIcon icon={faMoneyBill1} />
+                  </Button>
+                  </Tooltip>
+                  <Tooltip title="Xóa">
+                  <Button
+                    variant="outlined"
+                    color="error"
+                    onClick={() => handleDeleteClick(value.IDHoaDon)}
+                  >
+                    <FontAwesomeIcon icon={faTrashCan} />
+                  </Button>
+                </Tooltip>
+                </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={7} align="center">Không tìm thấy kết quả.</TableCell>
+                <TableCell colSpan={7} align="center">Không tìm thấy hóa đơn thuê gói tập.</TableCell>
               </TableRow>
             )}
           </TableBody>

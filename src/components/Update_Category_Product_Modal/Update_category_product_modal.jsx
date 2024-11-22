@@ -39,9 +39,10 @@ function UpdateCategoryModal({ data, setShowModal }) {
             };
 
             const data = {
-                data: changedData,
+                TenLoaiSanPham: changedData.TenLoaiSanPham,
                 IDLoaiSanPham: formData.IDLoaiSanPham
             };
+            
 
             axios.put('http://localhost:8080/Backend/employee/category/update', data, { headers })
                 .then(response => {

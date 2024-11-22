@@ -23,6 +23,7 @@ import {
   DialogActions,
   DialogTitle,
   DialogContentText,
+  Tooltip,
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -87,7 +88,6 @@ const ManageEmployee = () => {
     },
   ];
   
-
 
   // useEffect(() => {
   //   const fetchEmployees = async () => {
@@ -387,6 +387,7 @@ const ManageEmployee = () => {
                     {employee.TrangThai}
                   </TableCell>
                   <TableCell sx={{ textAlign: "center" }}>
+                  <Tooltip title="Chỉnh sửa">
                     <Button
                       variant="outlined"
                       color="primary"
@@ -395,6 +396,8 @@ const ManageEmployee = () => {
                     >
                       <FontAwesomeIcon icon={faPenToSquare} />
                     </Button>
+                    </Tooltip>
+                    <Tooltip title="Xóa">
                     <Button
                       variant="outlined"
                       color="error"
@@ -402,6 +405,7 @@ const ManageEmployee = () => {
                     >
                       <FontAwesomeIcon icon={faTrashCan} />
                     </Button>
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
               ))
@@ -424,7 +428,7 @@ const ManageEmployee = () => {
         </DialogTitle>
         <DialogContentText
           id="confirm-dialog-description"
-          style={{ padding: "20px" }}
+          style={{ padding: "20px" ,paddingTop:"5px"}}
         >
           Bạn có chắc chắn muốn xóa nhân viên này không?
         </DialogContentText>

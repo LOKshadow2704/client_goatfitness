@@ -25,6 +25,7 @@ import {
   DialogTitle,
   DialogContentText,
   DialogActions,
+  Tooltip,
 } from "@mui/material";
 import { AddCircleOutline } from "@mui/icons-material";
 
@@ -298,6 +299,7 @@ function ManagePackGym() {
                     })}
                   </TableCell>
                   <TableCell style={{ textAlign: "center" }}>
+                  <Tooltip title="Chỉnh sửa">
                     <Button
                       variant="outlined"
                       color="primary"
@@ -306,6 +308,8 @@ function ManagePackGym() {
                     >
                       <FontAwesomeIcon icon={faPenToSquare} />
                     </Button>
+                  </Tooltip>
+                  <Tooltip title="Xóa">
                     <Button
                       variant="outlined"
                       color="error"
@@ -313,6 +317,7 @@ function ManagePackGym() {
                     >
                       <FontAwesomeIcon icon={faTrashCan} />
                     </Button>
+                  </Tooltip>
                   </TableCell>
                 </TableRow>
               ))

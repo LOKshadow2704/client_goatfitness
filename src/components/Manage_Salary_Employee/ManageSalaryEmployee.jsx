@@ -15,7 +15,7 @@ import {
   DialogTitle,
   DialogContent,
   DialogContentText,
-  Typography,
+  Tooltip,
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
@@ -74,19 +74,35 @@ const ManageEmployeeSalary = () => {
         variant="outlined"
         value={searchTerm}
         onChange={handleSearchChange}
-        style={{ marginBottom: "15px" , marginTop:"10px"}}
+        sx={{
+          marginTop: "15px",
+          marginBottom:"15px",
+          "& .MuiInputBase-root": {
+            height: "40px !important",
+            display: "flex",
+            alignItems: "center",
+          },
+          "& .MuiInputLabel-root": {
+            top: "-4px",
+            fontSize: "14px",
+          },
+          "& .MuiOutlinedInput-input": {
+            padding: "10px 14px",
+            height: "40px",
+          },
+        }}
       />
 
-      <TableContainer component={Paper} style={{ margin: "10px" }}>
+      <TableContainer component={Paper} >
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell align="center">STT</TableCell>
-              <TableCell align="center">Họ và tên</TableCell>
-              <TableCell align="center">Vị trí</TableCell>
-              <TableCell align="center">Lương tháng</TableCell>
-              <TableCell align="center">Thưởng thêm</TableCell>
-              <TableCell align="center">Hành động</TableCell>
+              <TableCell align="center" sx={{fontWeight:"bold"}}>STT</TableCell>
+              <TableCell align="center" sx={{fontWeight:"bold"}}>Họ và tên</TableCell>
+              <TableCell align="center" sx={{fontWeight:"bold"}}>Vị trí</TableCell>
+              <TableCell align="center" sx={{fontWeight:"bold"}}>Lương tháng</TableCell>
+              <TableCell align="center" sx={{fontWeight:"bold"}}>Thưởng thêm</TableCell>
+              <TableCell align="center" sx={{fontWeight:"bold"}}>Hành động</TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -107,6 +123,7 @@ const ManageEmployeeSalary = () => {
                   <TableCell align="center">{employee.salary}</TableCell>
                   <TableCell align="center">{employee.bonus}</TableCell>
                   <TableCell align="center">
+                  <Tooltip title="Chỉnh sửa">
                     <Button
                       variant="outlined"
                       color="primary"
@@ -115,6 +132,8 @@ const ManageEmployeeSalary = () => {
                     >
                       <FontAwesomeIcon icon={faPenToSquare} />
                     </Button>
+                  </Tooltip>
+                  <Tooltip title="Xóa">
                     <Button
                       variant="outlined"
                       color="error"
@@ -122,6 +141,7 @@ const ManageEmployeeSalary = () => {
                     >
                       <FontAwesomeIcon icon={faTrashCan} />
                     </Button>
+                  </Tooltip>
                   </TableCell>
                 </TableRow>
               ))
@@ -141,9 +161,9 @@ const ManageEmployeeSalary = () => {
         open={openConfirmDialog}
         onClose={() => setOpenConfirmDialog(false)}
       >
-        <DialogTitle>Xác nhận xóa</DialogTitle>
+        <DialogTitle sx={{ borderBottom: "1px solid #ddd" }}>Xác nhận xóa</DialogTitle>
         <DialogContent>
-          <DialogContentText>
+          <DialogContentText sx={{paddingTop:"15px"}}>
           Bạn có chắc chắn muốn xóa bản ghi lương của nhân viên này không?
           </DialogContentText>
         </DialogContent>
