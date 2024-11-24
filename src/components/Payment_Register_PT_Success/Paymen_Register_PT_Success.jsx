@@ -52,15 +52,6 @@ const PaymentRegisterPTSuccess = ({
         <Typography variant="body1">
           Chúc mừng bạn đã hoàn tất đăng ký dịch vụ tập luyện với PT thành công!
         </Typography>
-        <Typography variant="body1" sx={{ marginTop: '10px' }}>
-          <strong>Mã đăng ký:</strong> {registrationId}<br />
-          <strong>Hình thức thanh toán:</strong> {paymentStatus}
-        </Typography>
-        <Typography variant="body1" sx={{ marginTop: '10px' }}>
-          Huấn luyện viên: <strong>{trainerName}</strong><br />
-          Dịch vụ: <strong>{service}</strong><br />
-          Giá thuê: <strong>{rentalPrice}₫</strong>
-        </Typography>
         <Typography variant="body2" sx={{ marginTop: '10px' }}>
           Bạn có thể theo dõi chi tiết trong mục <strong>Thông tin tài khoản</strong> / <strong>Thông tin thuê PT</strong>. Để xem chi tiết hóa đơn thuê PT, vui lòng nhấn vào nút bên dưới.
         </Typography>

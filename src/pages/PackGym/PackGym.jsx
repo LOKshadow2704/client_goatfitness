@@ -155,7 +155,7 @@ function GymPack() {
                         <h1>Bảng dịch vụ: </h1>
                         {categories && Object.keys(categories).map((category) => (
                             <div className={style.group} key={category}>
-                            <h1>{category.charAt(0).toUpperCase() + category.slice(1)}</h1>
+                            <h2>{category.charAt(0).toUpperCase() + category.slice(1)}</h2>
                             {categories[category].map((value) => (
                                 <div className={style.radio_box} key={value.IDGoiTap}>
                                     <label htmlFor={value.IDGoiTap}>{value.TenGoiTap}</label>

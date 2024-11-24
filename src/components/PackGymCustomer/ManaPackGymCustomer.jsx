@@ -29,9 +29,8 @@ import RegisterPackModal from "../RegisterPackModal/RegisterPackModal";
 import { AddCircleOutline } from "@mui/icons-material";
 
 function ManaPackGymCustomer() {
-
   const [gympack, setGymPack] = useState([]);
-  const [filteredGymPack, setFilteredGymPack] = useState([]); 
+  const [filteredGymPack, setFilteredGymPack] = useState([]);
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(5);
   const [showModal, setShowModal] = useState(false);
@@ -44,62 +43,61 @@ function ManaPackGymCustomer() {
   const { setSuccess, setError, setMessage } = useAnnouncement();
   const [rerender, setRerender] = useState(false);
 
-
   const findCookie = (name) => {
-    const cookies = document.cookie.split(';');
+    const cookies = document.cookie.split(";");
     for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith(name + '=')) {
-            return cookie.substring(name.length + 1);
-        }
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(name + "=")) {
+        return cookie.substring(name.length + 1);
+      }
     }
     return null;
-};
-
-useEffect(() => {
-  const fetchGymPack = async () => {
-    try {
-      const jwt = findCookie("jwt");
-      if (!jwt) throw new Error("Vui lòng đăng nhập!");
-
-      const headers = {
-        "Content-Type": "application/json",
-        Authorization: `Bearer ${jwt}`,
-        PHPSESSID: findCookie("PHPSESSID"),
-      };
-
-      const response = await axios.get(
-        "http://localhost:8080/Backend/employee/user/gympack",
-        { headers }
-      );
-
-      if (response.status === 200) {
-        setGymPack(response.data);
-        setFilteredGymPack(response.data); // Đồng bộ filteredGymPack
-      } else {
-        throw new Error("Không thể truy cập dữ liệu");
-      }
-    } catch (error) {
-      console.error("Lỗi khi lấy dữ liệu:", error);
-    }
   };
 
-  fetchGymPack();
-}, [update, rerender, showModal]);
+  useEffect(() => {
+    const fetchGymPack = async () => {
+      try {
+        const jwt = findCookie("jwt");
+        if (!jwt) throw new Error("Vui lòng đăng nhập!");
+
+        const headers = {
+          "Content-Type": "application/json",
+          Authorization: `Bearer ${jwt}`,
+          PHPSESSID: findCookie("PHPSESSID"),
+        };
+
+        const response = await axios.get(
+          "http://localhost:8080/Backend/employee/user/gympack",
+          { headers }
+        );
+
+        if (response.status === 200) {
+          setGymPack(response.data);
+          setFilteredGymPack(response.data);
+        } else {
+          throw new Error("Không thể truy cập dữ liệu");
+        }
+      } catch (error) {
+        console.error("Lỗi khi lấy dữ liệu:", error);
+      }
+    };
+
+    fetchGymPack();
+  }, [update, rerender, showModal]);
 
   const handleSearch = (e) => {
     const searchValue = e.target.value.toLowerCase();
     setSearchTerm(searchValue);
     setCurrentPage(1);
-  
+
     const filteredData = gympack.filter((pack) => {
       // Kiểm tra cả trường null hoặc chuỗi trống
       return pack.HoTen?.toLowerCase().includes(searchValue);
     });
-  
+
     setFilteredGymPack(filteredData);
   };
-  
+
   //Hàm sửa
   const handleEdit = (pack) => {
     setSelectedPack(pack);
@@ -166,7 +164,6 @@ useEffect(() => {
     const sortOption = e.target.value;
     setSortType(sortOption);
 
-  
     let sortedData = [...gympack];
 
     // Lọc theo trạng thái thanh toán
@@ -179,19 +176,16 @@ useEffect(() => {
         (item) => item.TrangThaiThanhToan === "Đã Thanh Toán"
       );
     } else if (sortOption === "expiring") {
-
     }
-
-
-    setFilteredGymPack(sortedData); // Cập nhật lại dữ liệu đã được lọc và sắp xếp
+    setFilteredGymPack(sortedData);
   };
 
   // Hàm tính số ngày còn lại
   const calculateDaysLeft = (expiryDate) => {
     const today = new Date();
     const expiry = new Date(expiryDate);
-    const timeDifference = expiry - today; 
-    const daysLeft = Math.ceil(timeDifference / (1000 * 3600 * 24)); 
+    const timeDifference = expiry - today;
+    const daysLeft = Math.ceil(timeDifference / (1000 * 3600 * 24));
 
     if (daysLeft > 0) {
       return `${daysLeft} ngày`;
@@ -217,7 +211,7 @@ useEffect(() => {
     const [year, month, day] = dateString.split("-");
     return `${day}-${month}-${year}`;
   };
-  
+
   return (
     <div style={{ padding: "20px" }}>
       {showModal && (
@@ -245,7 +239,6 @@ useEffect(() => {
             value={searchTerm}
             onChange={handleSearch}
             sx={{
-              
               marginRight: "20px",
               "& .MuiInputBase-root": {
                 height: "40px !important",
@@ -334,45 +327,65 @@ useEffect(() => {
               </TableCell>
             </TableRow>
           </TableHead>
-           <TableBody>
+          <TableBody>
             {paginatedGymPack.length > 0 ? (
               paginatedGymPack.map((value, index) => (
                 <TableRow
                   key={value.TenDangNhap}
-                  sx={{ backgroundColor: index % 2 === 0 ? "white" : "#f5f5f5" }}
+                  sx={{
+                    backgroundColor: index % 2 === 0 ? "white" : "#f5f5f5",
+                  }}
                 >
-                  <TableCell align="center">{value.HoTen || "Không có"}</TableCell>
-                  <TableCell align="center">{value.TenGoiTap || "Không có"}</TableCell>
-                  <TableCell align="center">{value.NgayDangKy ? formatDate(value.NgayDangKy) : "Không có"}</TableCell>
-                  <TableCell align="center">{value.NgayHetHan ? formatDate(value.NgayHetHan) : "Không có"}</TableCell>
-                  <TableCell align="center">{value.TrangThaiThanhToan || "Không có"}</TableCell>
-                  <TableCell align="center">{calculateDaysLeft(value.NgayHetHan)}</TableCell>
+                  <TableCell align="center">
+                    {value.HoTen || "Không có"}
+                  </TableCell>
+                  <TableCell align="center">
+                    {value.TenGoiTap || "Không có"}
+                  </TableCell>
+                  <TableCell align="center">
+                    {value.NgayDangKy
+                      ? formatDate(value.NgayDangKy)
+                      : "Không có"}
+                  </TableCell>
+                  <TableCell align="center">
+                    {value.NgayHetHan
+                      ? formatDate(value.NgayHetHan)
+                      : "Không có"}
+                  </TableCell>
+                  <TableCell align="center">
+                    {value.TrangThaiThanhToan || "Không có"}
+                  </TableCell>
+                  <TableCell align="center">
+                    {calculateDaysLeft(value.NgayHetHan)}
+                  </TableCell>
                   <TableCell style={{ textAlign: "center" }}>
-                  <Tooltip title="Cập nhật thanh toán">
-                  <Button
-                    variant="outlined"
-                    color="primary"
-                    onClick={() => handleEdit(value)}
-                    style={{ marginRight: "5px" }}
-                  >
-                    <FontAwesomeIcon icon={faMoneyBill1} />
-                  </Button>
-                  </Tooltip>
-                  <Tooltip title="Xóa">
-                  <Button
-                    variant="outlined"
-                    color="error"
-                    onClick={() => handleDeleteClick(value.IDHoaDon)}
-                  >
-                    <FontAwesomeIcon icon={faTrashCan} />
-                  </Button>
-                </Tooltip>
-                </TableCell>
+                    <Tooltip title="Cập nhật thanh toán">
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => handleEdit(value)}
+                        style={{ marginRight: "5px" }}
+                      >
+                        <FontAwesomeIcon icon={faMoneyBill1} />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="Xóa">
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        onClick={() => handleDeleteClick(value.IDHoaDon)}
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} />
+                      </Button>
+                    </Tooltip>
+                  </TableCell>
                 </TableRow>
               ))
             ) : (
               <TableRow>
-                <TableCell colSpan={7} align="center">Không tìm thấy hóa đơn thuê gói tập.</TableCell>
+                <TableCell colSpan={7} align="center">
+                  Không tìm thấy hóa đơn thuê gói tập.
+                </TableCell>
               </TableRow>
             )}
           </TableBody>
@@ -384,7 +397,12 @@ useEffect(() => {
         aria-labelledby="confirm-dialog-title"
         aria-describedby="confirm-dialog-description"
       >
-        <DialogTitle id="confirm-dialog-title" sx={{borderBottom: '1px solid #ddd'}}>Xác nhận xóa</DialogTitle>
+        <DialogTitle
+          id="confirm-dialog-title"
+          sx={{ borderBottom: "1px solid #ddd" }}
+        >
+          Xác nhận xóa
+        </DialogTitle>
         <DialogContentText
           id="confirm-dialog-description"
           style={{ padding: "20px" }}

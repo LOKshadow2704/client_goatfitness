@@ -19,6 +19,11 @@ import {
   Box,
   Pagination,
   Stack,
+  Dialog,
+  DialogActions,
+  DialogContent,
+  DialogContentText,
+  DialogTitle,
 } from "@mui/material";
 import { Alert } from "@mui/material";
 
@@ -30,6 +35,9 @@ const ManageRegisterPT = () => {
   const [rowsPerPage] = useState(5);
   const [error, setError] = useState(false);
   const [message, setMessage] = useState("");
+  const [openDialog, setOpenDialog] = useState(false);
+  const [selectedAction, setSelectedAction] = useState(null);
+  const [selectedId, setSelectedId] = useState(null);
 
   const findCookie = (name) => {
     const cookies = document.cookie.split(";");
@@ -89,11 +97,30 @@ const ManageRegisterPT = () => {
   const filteredByStatus = statusFilter
     ? filteredData.filter(
         (row) =>
-          row.Xacnhan !== undefined && row.Xacnhan.toString() === statusFilter
+          row.XacNhan !== undefined && row.XacNhan.toString() === statusFilter
       )
     : filteredData;
 
   // const noDataFound = filteredByStatus.length === 0;
+
+  const handleOpenDialog = (id, action) => {
+    setSelectedId(id);
+    setSelectedAction(action);
+    setOpenDialog(true);
+  };
+
+  const handleCloseDialog = () => {
+    setOpenDialog(false);
+    setSelectedId(null);
+    setSelectedAction(null);
+  };
+
+  const handleConfirmAction = () => {
+    if (selectedId && selectedAction) {
+      handleRequest(selectedId, selectedAction);
+      handleCloseDialog();
+    }
+  };
 
   // Phân trang
   const paginatedData = filteredByStatus.slice(
@@ -121,7 +148,7 @@ const ManageRegisterPT = () => {
             row.IDHLV === id
               ? {
                   ...row,
-                  Xacnhan: action === "accept" ? 1 : 2,
+                  XacNhan: action === "accept" ? 1 : 2,
                   hideActions: true,
                 }
               : row
@@ -226,6 +253,9 @@ const ManageRegisterPT = () => {
                 <strong>Chứng chỉ liên quan</strong>
               </TableCell>
               <TableCell sx={{ textAlign: "center" }}>
+                <strong>Số điện thoại</strong>
+              </TableCell>
+              <TableCell sx={{ textAlign: "center" }}>
                 <strong>Trạng thái</strong>
               </TableCell>
               <TableCell sx={{ textAlign: "center" }}>
@@ -252,41 +282,44 @@ const ManageRegisterPT = () => {
                     sx={{ backgroundColor: "rgba(0, 0, 0, 0.04)" }}
                   />
                 </TableCell>
+                <TableCell sx={{textAlign:"center"}}>
+                  {row.SDT}
+                </TableCell>
                 <TableCell sx={{ textAlign: "center" }}>
                   <Chip
                     label={
-                      row.Xacnhan === 0
+                      row.XacNhan === 0
                         ? "Chờ xử lý"
-                        : row.Xacnhan === 1
+                        : row.XacNhan === 1
                         ? "Đã chấp nhận"
                         : "Đã từ chối"
                     }
                     color={
-                      row.Xacnhan === 1
+                      row.XacNhan === 1
                         ? "success"
-                        : row.Xacnhan === 2
+                        : row.XacNhan === 2
                         ? "error"
                         : "warning"
                     }
                   />
                 </TableCell>
                 <TableCell sx={{ textAlign: "center" }}>
-                  {!row.hideActions && row.Xacnhan === 0 && (
+                  {!row.hideActions && row.XacNhan === 0 && (
                     <Stack direction="row" spacing={1}>
-                      <Tooltip title="Xác nhận">
+                      <Tooltip title="Chấp nhận">
                         <Button
                           variant="contained"
                           color="primary"
-                          onClick={() => handleRequest(row.IDHLV, "accept")}
+                          onClick={() => handleOpenDialog(row.IDHLV, "accept")}
                         >
-                          Xác nhận
+                          Chấp nhận
                         </Button>
                       </Tooltip>
                       <Tooltip title="Từ chối">
                         <Button
                           variant="contained"
                           color="secondary"
-                          onClick={() => handleRequest(row.IDHLV, "reject")}
+                          onClick={() => handleOpenDialog(row.IDHLV, "reject")}
                         >
                           Từ chối
                         </Button>
@@ -300,11 +333,35 @@ const ManageRegisterPT = () => {
         </Table>
       </TableContainer>
 
+      <Dialog
+        open={openDialog}
+        onClose={handleCloseDialog}
+        aria-labelledby="confirm-dialog-title"
+        aria-describedby="confirm-dialog-description"
+      >
+        <DialogTitle id="confirm-dialog-title" sx={{ borderBottom: "1px solid #ddd" }}>Xác nhận hành động</DialogTitle>
+        <DialogContent>
+          <DialogContentText id="confirm-dialog-description" style={{ paddingTop: "20px" }}>
+            {selectedAction === "accept"
+              ? "Bạn có chắc chắn muốn chấp nhận đăng ký này không?"
+              : "Bạn có chắc chắn muốn từ chối đăng ký này không?"}
+          </DialogContentText>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={handleCloseDialog} color="error">
+            Hủy
+          </Button>
+          <Button onClick={handleConfirmAction} color="primary" autoFocus>
+            Đồng ý
+          </Button>
+        </DialogActions>
+      </Dialog>
+
       <Pagination
         count={Math.ceil(filteredByStatus.length / rowsPerPage)}
         page={currentPage}
         onChange={handlePageChange}
-        sx={{ marginTop: 2, float:"right" }}
+        sx={{ marginTop: 2, float: "right" }}
       />
     </div>
   );

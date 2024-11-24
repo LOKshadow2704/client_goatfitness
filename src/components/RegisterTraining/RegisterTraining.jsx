@@ -13,7 +13,6 @@ import { format } from 'date-fns';
 import { vi } from 'date-fns/locale';
 import style from './style.module.css';
 
-
 function RegisterTraining({ setShowModal, peronalTrainer }) {
   const [startDate, setStartDate] = useState(null);
   const [endDate, setEndDate] = useState(null);
@@ -22,8 +21,16 @@ function RegisterTraining({ setShowModal, peronalTrainer }) {
   const { setError, setMessage, setSuccess, setLocation, setLink, setWarning } = useAnnouncement();
 
   const handleStartDateChange = (date) => {
-    setStartDate(date);
-    setEndDate(null);
+    if (!date) return;
+    const hour = date.getHours();
+    if (hour < 8 || hour > 22) {
+      setError(true);
+      setMessage('Giờ bắt đầu phải từ 8:00 đến 22:00.');
+      setStartDate(null);
+    } else {
+      setStartDate(date);
+      setEndDate(null); // Reset giờ kết thúc khi chọn giờ bắt đầu mới
+    }
   };
 
   const handleEndDateChange = (date) => {
@@ -32,9 +39,22 @@ function RegisterTraining({ setShowModal, peronalTrainer }) {
       setMessage('Vui lòng chọn ngày giờ bắt đầu trước.');
       return;
     }
-    if (date < startDate) {
-      setWarning(true);
-      setMessage('Ngày giờ kết thúc không thể trước ngày giờ bắt đầu.');
+
+    if (!date) return;
+
+    if (date <= startDate) {
+      setError(true);
+      setMessage('Giờ kết thúc phải cách giờ bắt đầu ít nhất 1 giờ.');
+      setEndDate(null);
+      return;
+    }
+
+    const startHour = startDate.getHours();
+    const endHour = date.getHours();
+
+    if (endHour > 22 || startHour < 8 || endHour < 8) {
+      setError(true);
+      setMessage('Giờ làm việc phải từ 8:00 đến 22:00.');
       setEndDate(null);
     } else {
       setEndDate(date);
@@ -55,103 +75,106 @@ function RegisterTraining({ setShowModal, peronalTrainer }) {
 
   const handleSubmit = (payment) => {
     if (!startDate || !endDate) {
-        setError(true);
-        setMessage("Bạn chưa chọn ngày giờ.");
-        return;
+      setError(true);
+      setMessage('Bạn chưa chọn ngày giờ.');
+      return;
     }
+
     const findCookie = (name) => {
-        const cookies = document.cookie.split(';');
-        for (let i = 0; i < cookies.length; i++) {
-            const cookie = cookies[i].trim();
-            if (cookie.startsWith(name + '=')) {
-                return cookie.substring(name.length + 1);
-            }
+      const cookies = document.cookie.split(';');
+      for (let i = 0; i < cookies.length; i++) {
+        const cookie = cookies[i].trim();
+        if (cookie.startsWith(name + '=')) {
+          return cookie.substring(name.length + 1);
         }
-        return null;
+      }
+      return null;
     };
-    const isLogin = findCookie("jwt");
-    if (isLogin) {
-        const jwt = findCookie('jwt');
-        const data = {
-            IDHLV: peronalTrainer.IDHLV,
-            HinhThucThanhToan: payment,
-            amount: amount,
-            StartDate: formatDate(startDate),
-            EndDate: formatDate(endDate),
-        }
-        const headers = {
-            'Content-Type': 'application/json',
-            'Authorization': 'Bearer ' + jwt,
-            'PHPSESSID': findCookie("PHPSESSID")
-        };
-        axios.post('http://localhost:8080/Backend/personalTrainer/Register', data, { headers: headers })
-            .then(response => {
-                if (response.status >= 200 && response.status < 300) {
-                    if (response.data.success) {
-                        window.location.href = response.data.success;
-                    } else {
-                        setSuccess(true);
-                        setMessage(response.data.message);
-                        setLocation(true);
-                        setLink("http://localhost:3000/RegisterPTPaymentSuccess");
-                    }
-                } else {
-                    throw new Error("Đăng ký không thành công!");
-                }
-            }).catch(error => {
-                setError(true);
-                setMessage(error.response.data.error);
-            });
-    } else {
-        setError(true);
-        setMessage("Vui lòng đăng nhập");
-        setLocation(true);
-        setLink("http://localhost:3000/login");
+
+    const jwt = findCookie('jwt');
+    if (!jwt) {
+      setError(true);
+      setMessage('Vui lòng đăng nhập.');
+      setLocation(true);
+      setLink('http://localhost:3000/login');
+      return;
     }
-}
 
-const defaultMinEndTime = new Date();
-defaultMinEndTime.setHours(8, 0, 0);
+    const data = {
+      IDHLV: peronalTrainer.IDHLV,
+      HinhThucThanhToan: payment,
+      StartDate: format(startDate, 'yyyy-MM-dd HH:mm:ss'),
+      EndDate: format(endDate, 'yyyy-MM-dd HH:mm:ss'),
+    };
 
-const defaultMaxEndTime = new Date();
-defaultMaxEndTime.setHours(18, 0, 0);
+    const headers = {
+      'Content-Type': 'application/json',
+      Authorization: `Bearer ${jwt}`,
+    };
 
-function formatDate(date) {
-    return format(date, "yyyy-MM-dd HH:mm:ss", { locale: vi });
-}
-
+    axios
+      .post('http://localhost:8080/Backend/personalTrainer/Register', data, { headers })
+      .then((response) => {
+        if (response.data.success) {
+          window.location.href = response.data.success;
+        } else {
+          setSuccess(true);
+          setMessage(response.data.message || 'Đăng ký thành công.');
+        }
+      })
+      .catch((error) => {
+        if (error.response?.data?.error) {
+          setError(true);
+          setMessage(error.response.data.error);
+        } else {
+          setError(true);
+          setMessage('Đăng ký không thành công. Hãy thử lại.');
+        }
+      });
+  };
 
   return (
     <div className={style.modal}>
       <div className={style.wrap_content}>
-        <h1 style={{marginTop:'10px'}}>
-          <FontAwesomeIcon icon={faXmark} style={{cursor: 'pointer'}} onClick={() => setShowModal(false)} />
+        <h1>
+          <FontAwesomeIcon
+            icon={faXmark}
+            style={{ cursor: 'pointer' }}
+            onClick={() => setShowModal(false)}
+          />
         </h1>
         <h2>Chọn ngày và giờ đăng ký luyện tập</h2>
         <LocalizationProvider dateAdapter={AdapterDateFns} locale={vi}>
           <div className={style.startday}>
             <p>Ngày giờ bắt đầu:</p>
             <DateTimePicker
-              label="Chọn giờ bắt đầu"
+              label="Chọn ngày giờ bắt đầu"
               value={startDate}
               onChange={handleStartDateChange}
               renderInput={(params) => <TextField {...params} />}
-              minDateTime={new Date()}
+              minDateTime={new Date()} // Ngày không thể nhỏ hơn ngày hiện tại
+              ampm={false} // Dùng định dạng 24 giờ
             />
           </div>
+
           <div className={style.endday}>
             <p>Ngày giờ kết thúc:</p>
             <DateTimePicker
-              label="Chọn giờ kết thúc"
+              label="Chọn ngày giờ kết thúc"
               value={endDate}
               onChange={handleEndDateChange}
               renderInput={(params) => <TextField {...params} />}
-              minDateTime={startDate}
+              minDateTime={startDate || new Date()} // Ngày phải lớn hơn hoặc bằng ngày bắt đầu
+              ampm={false} // Dùng định dạng 24 giờ
             />
           </div>
         </LocalizationProvider>
+
         <span className={style.cost}>
-          Thành tiền: <p>{amount && amount.toLocaleString('vi', { style: 'currency', currency: 'VND' })}</p>
+          Thành tiền:{' '}
+          <p>
+            {amount && amount.toLocaleString('vi', { style: 'currency', currency: 'VND' })}
+          </p>
         </span>
         <Button variant="contained" color="primary" onClick={() => setStatusPayment(true)}>
           Đăng ký ngay

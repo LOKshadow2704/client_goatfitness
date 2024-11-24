@@ -36,7 +36,7 @@ function ManageProduct({ data }) {
   const [rerender, setRerender] = useState(false);
   const [addcategoryproductModal, setAddcategoryproductModal] = useState(false);
   const [currentPage, setCurrentPage] = useState(1);
-  const [productsPerPage] = useState(6); // Number of products per page
+  const [productsPerPage] = useState(6); 
   const { setSuccess, setError, setMessage } = useAnnouncement();
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
@@ -61,10 +61,14 @@ function ManageProduct({ data }) {
   const sortData = () => {
     let sortedProducts = [...product];
     if (sortBy === "name") {
-      sortedProducts.sort((a, b) => a.TenLoaiSanPham.localeCompare(b.TenLoaiSanPham));
+      sortedProducts.sort((a, b) =>
+        a.TenLoaiSanPham.localeCompare(b.TenLoaiSanPham)
+      );
     } else if (sortBy === "name_desc") {
-      sortedProducts.sort((a, b) => b.TenLoaiSanPham.localeCompare(a.TenLoaiSanPham));
-    } 
+      sortedProducts.sort((a, b) =>
+        b.TenLoaiSanPham.localeCompare(a.TenLoaiSanPham)
+      );
+    }
     return sortedProducts;
   };
 
@@ -129,7 +133,6 @@ function ManageProduct({ data }) {
         .delete("http://localhost:8080/Backend/employee/category/delete", {
           data: { IDLoaiSanPham: id },
           headers: headers,
-          
         })
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {
@@ -150,7 +153,6 @@ function ManageProduct({ data }) {
   return (
     <div style={{ padding: "20px", backgroundColor: "white" }}>
       <div style={{ marginBottom: "20px" }}>
-        {/* Input tìm kiếm */}
         <TextField
           label="Tìm kiếm loại sản phẩm"
           variant="outlined"
@@ -174,7 +176,6 @@ function ManageProduct({ data }) {
           }}
         />
 
-        {/* Select sắp xếp */}
         <Select
           value={sortBy}
           onChange={handleSortChange}
@@ -203,7 +204,9 @@ function ManageProduct({ data }) {
           setShowModal={setShowUpdateProduct}
         />
       )}
-      {addcategoryproductModal && <AddCategoryModal setShowModal={setAddcategoryproductModal} />}
+      {addcategoryproductModal && (
+        <AddCategoryModal setShowModal={setAddcategoryproductModal} />
+      )}
 
       <TableContainer component={Paper}>
         <Table>
@@ -232,7 +235,7 @@ function ManageProduct({ data }) {
                 <TableRow
                   key={value.IDLoaiSanPham}
                   sx={{
-                    backgroundColor: index % 2 === 0 ? "white" : "#f5f5f5", // Hàng lẻ màu trắng, hàng chẵn màu xám
+                    backgroundColor: index % 2 === 0 ? "white" : "#f5f5f5",
                   }}
                 >
                   <TableCell style={{ textAlign: "center" }}>
@@ -242,25 +245,25 @@ function ManageProduct({ data }) {
                     {value.TenLoaiSanPham}
                   </TableCell>
                   <TableCell style={{ textAlign: "center" }}>
-                  <Tooltip title="Chỉnh sửa">
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={() => handleEdit(value)}
-                      style={{ marginRight: "5px" }}
-                    >
-                      <FontAwesomeIcon icon={faPenToSquare} />
-                    </Button>
-                  </Tooltip>
-                  <Tooltip title="Xóa">
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      onClick={() => handleDeleteClick(value.IDLoaiSanPham)}
-                    >
-                      <FontAwesomeIcon icon={faTrashCan} />
-                    </Button>
-                  </Tooltip>
+                    <Tooltip title="Chỉnh sửa">
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => handleEdit(value)}
+                        style={{ marginRight: "5px" }}
+                      >
+                        <FontAwesomeIcon icon={faPenToSquare} />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="Xóa">
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        onClick={() => handleDeleteClick(value.IDLoaiSanPham)}
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} />
+                      </Button>
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
               ))
@@ -275,7 +278,12 @@ function ManageProduct({ data }) {
         aria-labelledby="confirm-dialog-title"
         aria-describedby="confirm-dialog-description"
       >
-        <DialogTitle id="confirm-dialog-title" sx={{borderBottom: '1px solid #ddd'}}>Xác nhận xóa</DialogTitle>
+        <DialogTitle
+          id="confirm-dialog-title"
+          sx={{ borderBottom: "1px solid #ddd" }}
+        >
+          Xác nhận xóa
+        </DialogTitle>
         <DialogContentText
           id="confirm-dialog-description"
           style={{ padding: "20px" }}
@@ -293,7 +301,6 @@ function ManageProduct({ data }) {
       </Dialog>
 
       <Stack spacing={2} style={{ marginTop: "20px", alignItems: "center" }}>
-        {/* <Typography>Trang: {currentPage}</Typography> */}
         <Pagination
           count={Math.ceil(sortData().length / productsPerPage)}
           page={currentPage}

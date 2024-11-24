@@ -16,9 +16,9 @@ import {
   TableHead,
   TableRow,
   Paper,
-  Alert,
 } from "@mui/material";
 import CloseIcon from "@mui/icons-material/Close";
+import WarningAmberIcon from "@mui/icons-material/WarningAmber";
 
 const modalStyle = {
   position: "absolute",
@@ -34,8 +34,8 @@ const modalStyle = {
 
 function UserPackage({ setShowModal }) {
   const [data, setData] = useState(null);
-  const [showAlert, setShowAlert] = useState(false);
-  const { setError, setMessage, setWarning, setLocation, setLink } = useAnnouncement();
+  const [error, setError] = useState(null); 
+  const { setError: setAnnounceError, setMessage, setWarning, setLocation, setLink } = useAnnouncement();
 
   useEffect(() => {
     const findCookie = (name) => {
@@ -63,24 +63,27 @@ function UserPackage({ setShowModal }) {
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {
             setData(response.data);
-
-            if (response.data?.TrangThaiThanhToan === "Chưa thanh toán") {
-              setShowAlert(true);
-              setWarning(true);
-              setMessage("Vui lòng thanh toán cho nhân viên để tiếp tục sử dụng dịch vụ.");
-              setLocation(true);
-              setLink("http://localhost:3000/GymPack");
-            }
+            // Hiển thị cảnh báo nếu chưa thanh toán
+            // if (response.data?.TrangThaiThanhToan === "Chưa thanh toán") {
+            //   setWarning(true);
+            //   setMessage("Vui lòng thanh toán cho nhân viên để tiếp tục sử dụng dịch vụ.");
+            //   setLocation(true);
+            //   setLink("http://localhost:3000/GymPack");
+            // }
           }
         })
         .catch((error) => {
-          setError(true);
-          setMessage(error.response?.data?.error || "Đã xảy ra lỗi khi tải dữ liệu.");
-          setLocation(true);
-          setLink("http://localhost:3000/GymPack");
+          if (error.response?.status === 403) {
+            setError(error.response.data.error); 
+          } else {
+            setAnnounceError(true);
+            setMessage(error.response?.data?.error || "Đã xảy ra lỗi khi tải dữ liệu.");
+            setLocation(true);
+            setLink("http://localhost:3000/GymPack");
+          }
         });
     }
-  }, [setError, setMessage, setWarning, setLocation, setLink]);
+  }, [setAnnounceError, setMessage, setWarning, setLocation, setLink]);
 
   const getTableContent = () => {
     if (!data?.info?.TenGoiTap) return [];
@@ -118,27 +121,33 @@ function UserPackage({ setShowModal }) {
         >
           <CloseIcon />
         </IconButton>
-        <Typography variant="h6" align="center" mb={2} sx={{fontWeight:"bold"}}> 
+        <Typography variant="h6" align="center" mb={2} sx={{ fontWeight: "bold" }}>
           Thông tin gói tập của bạn
         </Typography>
-        {data?.TrangThaiThanhToan === "Đã thanh toán" ? (
+        {error ? (
+          <Typography variant="body2" color="error" align="center" sx={{fontSize:"16px"}}>
+            {error}
+          </Typography>
+        ) : data?.TrangThaiThanhToan === "Đã Thanh Toán" ? (
           <>
-            <Typography variant="subtitle1" gutterBottom sx={{textAlign:"center",marginBottom:"15px"}}>
+            <Typography variant="subtitle1" gutterBottom sx={{ textAlign: "center", marginBottom: "15px" }}>
               Tên gói tập: {data?.info?.TenGoiTap || "Chưa có thông tin"}
             </Typography>
-            <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
+              <Box display="flex" justifyContent="space-between" alignItems="center" mb={2}>
               <Typography variant="body2" gutterBottom>
-                Ngày đăng ký: {data?.NgayDangKy ? new Date(data.NgayDangKy).toLocaleString("vi-VN") : "Không có"}
+                Ngày đăng ký: {data?.NgayDangKy ? new Date(data.NgayDangKy).toLocaleDateString("vi-VN") : "Không có"}
               </Typography>
               <Typography variant="body2" gutterBottom>
-                Ngày hết hạn: {data?.NgayHetHan ? new Date(data.NgayHetHan).toLocaleString("vi-VN") : "Không có"}
+                Ngày hết hạn: {data?.NgayHetHan ? new Date(data.NgayHetHan).toLocaleDateString("vi-VN") : "Không có"}
               </Typography>
             </Box>
             <TableContainer component={Paper} sx={{ mt: 2 }}>
-              <Table sx={{backgroundColor: "#f5f5f5"}}>
+              <Table sx={{ backgroundColor: "#f5f5f5" }}>
                 <TableHead>
                   <TableRow>
-                    <TableCell align="left" sx={{fontWeight:"bold",}}>Các dịch vụ đi kèm</TableCell>
+                    <TableCell align="left" sx={{ fontWeight: "bold" }}>
+                      Các dịch vụ đi kèm
+                    </TableCell>
                   </TableRow>
                 </TableHead>
                 <TableBody>
@@ -158,9 +167,21 @@ function UserPackage({ setShowModal }) {
             </TableContainer>
           </>
         ) : (
-          <Typography variant="body2" color="error" align="center">
-            Bạn cần thanh toán để hiển thị thông tin gói tập.
+          <Typography
+            variant="body2"
+            color="error"
+            align="center"
+            sx={{
+              fontSize: "16px",
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "center",
+            }}
+          >
+            <WarningAmberIcon sx={{ fontSize: 20, marginRight: "8px" }} />
+            Vui lòng thanh toán cho nhân viên để hiển thị thông tin gói tập.
           </Typography>
+
         )}
         <Box textAlign="center" mt={3}>
           <Button variant="contained" color="primary" onClick={() => setShowModal(false)}>
