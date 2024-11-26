@@ -49,7 +49,7 @@ function UpdateRoleModal({ data, setShowModal }) {
         if (isLogin) {
             if (formData.TenDangNhap === data.TenDangNhap && formData.IDVaiTro === data.IDVaiTro) {
                 setError(true);
-                setMessage("Không có thay đổi nào cả");
+                setMessage("Không có gì thay đổi");
                 setShowModal(false);
                 return;
             }
@@ -64,7 +64,7 @@ function UpdateRoleModal({ data, setShowModal }) {
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);
-                        setMessage("Cập nhật thành công");
+                        setMessage("Cập nhật vai trò thành công");
                         setShowModal(false);
                     } else {
                         throw new Error("Lấy thông tin thất bại");

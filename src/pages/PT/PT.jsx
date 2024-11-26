@@ -130,7 +130,6 @@ function PT() {
         <div className={style["wrap_content"]}>
           <div className={style.header}>
             <h1>Các Huấn luyện viên nổi bật tại GOAT GYM</h1>
-            {/* <h2>Mô tả</h2> */}
           </div>
           <div className={style.action}>
             <div className={style.action4}>
@@ -243,17 +242,28 @@ function PT() {
             </div>
           </div>
           <div className={style["product"]}>
-            <ul>
-              {paginatedProducts &&
-                paginatedProducts.map((value) => (
+            {filteredProducts.length === 0 ? (
+              <p
+                style={{
+                  textAlign: "center",
+                  color: "red",
+                  fontWeight: "bold",
+                  marginTop: "50px",
+                  fontSize: "20px",
+                }}
+              >
+                Không tìm thấy HLV !
+              </p>
+            ) : (
+              <ul>
+                {paginatedProducts.map((value) => (
                   <li key={value.IDHLV}>
                     <PTitem children={value} />
                   </li>
                 ))}
-            </ul>
+              </ul>
+            )}
           </div>
-
-          {/* Thêm thành phần Pagination */}
           <div className={style["pagination-container"]}>
             <Pagination
               count={totalPages}

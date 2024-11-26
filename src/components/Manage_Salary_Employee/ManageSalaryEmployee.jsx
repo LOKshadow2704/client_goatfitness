@@ -19,12 +19,20 @@ import {
 } from "@mui/material";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faPenToSquare, faTrashCan } from "@fortawesome/free-solid-svg-icons";
-// import UpdateSalaryModal from "./UpdateSalaryModal"; // Import a modal component for updating salary
+import UpdateSalaryEmp from "../Modal_Update_Salary/Update_Salary_Emp";
+import AddSalaryEmp from "../Add_Salary_Emp/Add_salary_emp";
+import { AddCircleOutline } from "@mui/icons-material";
 
 const mockEmployeeData = [
-  { id: 1, name: "John Doe", position: "Developer", salary: 5000, bonus: 500 },
+  { id: 1, name: "John Doe", position: "Developer", salary: 5000, bonus: 500,status: "Chưa thanh toán" },
   { id: 2, name: "Jane Smith", position: "Designer", salary: 4500, bonus: 300 },
-  { id: 3, name: "Alice Johnson", position: "Manager", salary: 6000, bonus: 700 },
+  {
+    id: 3,
+    name: "Alice Johnson",
+    position: "Manager",
+    salary: 6000,
+    bonus: 700,
+  },
   { id: 4, name: "Bob Brown", position: "Developer", salary: 4800, bonus: 400 },
   { id: 5, name: "Carol White", position: "Analyst", salary: 4700, bonus: 350 },
   // Add more mock employees if needed for testing pagination
@@ -36,12 +44,28 @@ const ManageEmployeeSalary = () => {
   const [page, setPage] = useState(0);
   const [rowsPerPage, setRowsPerPage] = useState(5);
   const [selectedEmployee, setSelectedEmployee] = useState(null);
-  const [updateSalary, setUpdateSalary] = useState(false);
+  const [update, setUpdate] = useState(false);
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
+  const [openAddDialog, setOpenAddDialog] = useState(false);
 
   const handleEdit = (employee) => {
     setSelectedEmployee(employee);
-    setUpdateSalary(true);
+    setUpdate(true);
+  };
+
+  const handleSaveSalary = (newSalaryData) => {
+    // Lưu dữ liệu mới vào danh sách nhân viên (có thể thông qua API hoặc trực tiếp trong state)
+    setEmployees((prev) =>
+      prev.map((emp) =>
+        emp.id === selectedEmployee.id
+          ? { ...emp, salary: newSalaryData.salary, bonus: newSalaryData.bonus }
+          : emp
+      )
+    );
+  };
+
+  const handleAddEmployee = (newEmployee) => {
+    setEmployees((prev) => [...prev, newEmployee]);
   };
 
   const handleDeleteClick = (employeeId) => {
@@ -76,7 +100,7 @@ const ManageEmployeeSalary = () => {
         onChange={handleSearchChange}
         sx={{
           marginTop: "15px",
-          marginBottom:"15px",
+          marginBottom: "15px",
           "& .MuiInputBase-root": {
             height: "40px !important",
             display: "flex",
@@ -92,17 +116,55 @@ const ManageEmployeeSalary = () => {
           },
         }}
       />
+      <Button
+        variant="contained"
+        color="primary"
+        startIcon={<AddCircleOutline />}
+        onClick={() => setOpenAddDialog(true)}
+        sx={{ marginBottom: "15px", marginTop:"15px",float:"right",marginRight:"10px" }}
+      >
+        Thêm bản ghi lương mới
+      </Button>
 
-      <TableContainer component={Paper} >
+      <AddSalaryEmp
+        open={openAddDialog}
+        onClose={() => setOpenAddDialog(false)}
+        onSave={handleAddEmployee}
+      />
+      {update && (
+        <UpdateSalaryEmp
+          open={update}
+          onClose={() => setUpdate(false)}
+          employee={selectedEmployee}
+          onSave={handleSaveSalary}
+        />
+      )}
+
+      <TableContainer component={Paper}>
         <Table>
           <TableHead>
             <TableRow>
-              <TableCell align="center" sx={{fontWeight:"bold"}}>STT</TableCell>
-              <TableCell align="center" sx={{fontWeight:"bold"}}>Họ và tên</TableCell>
-              <TableCell align="center" sx={{fontWeight:"bold"}}>Vị trí</TableCell>
-              <TableCell align="center" sx={{fontWeight:"bold"}}>Lương tháng</TableCell>
-              <TableCell align="center" sx={{fontWeight:"bold"}}>Thưởng thêm</TableCell>
-              <TableCell align="center" sx={{fontWeight:"bold"}}>Hành động</TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                STT
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                Họ và tên
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                Vị trí
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                Lương tháng
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                Thưởng thêm
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                Trạng thái
+              </TableCell>
+              <TableCell align="center" sx={{ fontWeight: "bold" }}>
+                Hành động
+              </TableCell>
             </TableRow>
           </TableHead>
           <TableBody>
@@ -122,26 +184,27 @@ const ManageEmployeeSalary = () => {
                   <TableCell align="center">{employee.position}</TableCell>
                   <TableCell align="center">{employee.salary}</TableCell>
                   <TableCell align="center">{employee.bonus}</TableCell>
+                  <TableCell align="center">{employee.status}</TableCell>
                   <TableCell align="center">
-                  <Tooltip title="Chỉnh sửa">
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={() => handleEdit(employee)}
-                      style={{ marginRight: "5px" }}
-                    >
-                      <FontAwesomeIcon icon={faPenToSquare} />
-                    </Button>
-                  </Tooltip>
-                  <Tooltip title="Xóa">
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      onClick={() => handleDeleteClick(employee.id)}
-                    >
-                      <FontAwesomeIcon icon={faTrashCan} />
-                    </Button>
-                  </Tooltip>
+                    <Tooltip title="Chỉnh sửa">
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => handleEdit(employee)}
+                        style={{ marginRight: "5px" }}
+                      >
+                        <FontAwesomeIcon icon={faPenToSquare} />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="Xóa">
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        onClick={() => handleDeleteClick(employee.id)}
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} />
+                      </Button>
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
               ))
@@ -149,22 +212,16 @@ const ManageEmployeeSalary = () => {
           </TableBody>
         </Table>
       </TableContainer>
-
-      {/* {updateSalary && (
-        <UpdateSalaryModal
-          employee={selectedEmployee}
-          onClose={() => setUpdateSalary(false)}
-        />
-      )} */}
-
       <Dialog
         open={openConfirmDialog}
         onClose={() => setOpenConfirmDialog(false)}
       >
-        <DialogTitle sx={{ borderBottom: "1px solid #ddd" }}>Xác nhận xóa</DialogTitle>
+        <DialogTitle sx={{ borderBottom: "1px solid #ddd" }}>
+          Xác nhận xóa
+        </DialogTitle>
         <DialogContent>
-          <DialogContentText sx={{paddingTop:"15px"}}>
-          Bạn có chắc chắn muốn xóa bản ghi lương của nhân viên này không?
+          <DialogContentText sx={{ paddingTop: "15px" }}>
+            Bạn có chắc chắn muốn xóa bản ghi lương của nhân viên này không?
           </DialogContentText>
         </DialogContent>
         <DialogActions>
@@ -184,7 +241,9 @@ const ManageEmployeeSalary = () => {
         rowsPerPage={rowsPerPage}
         page={page}
         onPageChange={(e, newPage) => setPage(newPage)}
-        onRowsPerPageChange={(e) => setRowsPerPage(parseInt(e.target.value, 10))}
+        onRowsPerPageChange={(e) =>
+          setRowsPerPage(parseInt(e.target.value, 10))
+        }
       />
     </div>
   );

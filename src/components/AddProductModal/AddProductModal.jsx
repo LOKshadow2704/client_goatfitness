@@ -376,7 +376,7 @@ function AddProductModal({ setShowModal }) {
               variant="contained"
               color="primary"
               type="submit"
-              sx={{ width: "150px" }}
+              sx={{ width: "250px" }}
             >
               Lưu
             </Button>

@@ -41,67 +41,54 @@ function ManageProduct({ data }) {
   const [openConfirmDialog, setOpenConfirmDialog] = useState(false);
   const [productToDelete, setProductToDelete] = useState(null);
 
-  // useEffect(() => {
-  //   fetch("http://localhost:8080/Backend/products")
-  //     .then((response) => {
-  //       if (!response.ok) {
-  //         throw new Error("Không thể truy cập");
-  //       }
-  //       return response.json();
-  //     })
-  //     .then((data) => {
-  //       setProduct(data);
-  //     })
-  //     .catch((error) => {
-  //       console.log("Lỗi khi lấy dữ liệu:", error);
-  //     });
-  // }, [showUpdateProduct, rerender, addproductModal]);
-
   // Hàm xử lý sắp xếp dữ liệu
- 
+
   const findCookie = (name) => {
-    const cookies = document.cookie.split(';');
+    const cookies = document.cookie.split(";");
     for (let i = 0; i < cookies.length; i++) {
-        const cookie = cookies[i].trim();
-        if (cookie.startsWith(name + '=')) {
-            return cookie.substring(name.length + 1);
-        }
+      const cookie = cookies[i].trim();
+      if (cookie.startsWith(name + "=")) {
+        return cookie.substring(name.length + 1);
+      }
     }
     return null;
-};
+  };
 
   useEffect(() => {
     const fetchProducts = async () => {
-        try {
-            const isLogin = findCookie("jwt"); 
-            if (isLogin) {
-                const jwt = findCookie('jwt');
-                const headers = {
-                    'Content-Type': 'application/json',
-                    'Authorization': 'Bearer ' + jwt,
-                    'PHPSESSID': findCookie("PHPSESSID")
-                };
+      try {
+        const isLogin = findCookie("jwt");
+        if (isLogin) {
+          const jwt = findCookie("jwt");
+          const headers = {
+            "Content-Type": "application/json",
+            Authorization: "Bearer " + jwt,
+            PHPSESSID: findCookie("PHPSESSID"),
+          };
 
-                const response = await fetch("http://localhost:8080/Backend/products", {
-                    method: 'GET',
-                    headers: headers 
-                });
-
-                if (!response.ok) {
-                    throw new Error("Không thể truy cập");
-                }
-                const data = await response.json();
-                setProduct(data);
-            } else {
-                throw new Error("Vui lòng đăng nhập!");
+          const response = await fetch(
+            "http://localhost:8080/Backend/products",
+            {
+              method: "GET",
+              headers: headers,
             }
-        } catch (error) {
-            console.log("Lỗi khi lấy dữ liệu:", error);
+          );
+
+          if (!response.ok) {
+            throw new Error("Không thể truy cập");
+          }
+          const data = await response.json();
+          setProduct(data);
+        } else {
+          throw new Error("Vui lòng đăng nhập!");
         }
+      } catch (error) {
+        console.log("Lỗi khi lấy dữ liệu:", error);
+      }
     };
 
     fetchProducts();
-}, [showUpdateProduct, rerender, addproductModal]);
+  }, [showUpdateProduct, rerender, addproductModal]);
 
   const sortData = () => {
     let sortedProducts = [...product];
@@ -182,7 +169,7 @@ function ManageProduct({ data }) {
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {
             setSuccess(true);
-            setMessage("Xóa thành công");
+            setMessage("Xóa sản phẩm thành công");
             setRerender(!rerender);
           } else {
             throw new Error("Xóa thất bại");
@@ -222,7 +209,6 @@ function ManageProduct({ data }) {
           }}
         />
 
-        {/* Select sắp xếp */}
         <Select
           value={sortBy}
           onChange={handleSortChange}
@@ -291,11 +277,11 @@ function ManageProduct({ data }) {
                     backgroundColor: index % 2 === 0 ? "white" : "#f5f5f5", // Hàng lẻ màu trắng, hàng chẵn màu xám
                   }}
                 >
-                  <TableCell style={{ textAlign: "center",width:'300px' }}>
+                  <TableCell style={{ textAlign: "center", width: "300px" }}>
                     <div style={{ display: "flex", alignItems: "center" }}>
                       <img
-                        src={value.IMG} 
-                        alt={value.TenSP} 
+                        src={value.IMG}
+                        alt={value.TenSP}
                         width="80px"
                         height="50px"
                       />
@@ -315,25 +301,25 @@ function ManageProduct({ data }) {
                     {value.SoLuong}
                   </TableCell>
                   <TableCell style={{ textAlign: "center" }}>
-                  <Tooltip title="Chỉnh sửa">
-                    <Button
-                      variant="outlined"
-                      color="primary"
-                      onClick={() => handleEdit(value)}
-                      style={{ marginRight: "5px" }}
-                    >
-                      <FontAwesomeIcon icon={faPenToSquare} />
-                    </Button>
-                  </Tooltip>
-                  <Tooltip title="Xóa">
-                    <Button
-                      variant="outlined"
-                      color="error"
-                      onClick={() => handleDeleteClick(value.IDSanPham)}
-                    >
-                      <FontAwesomeIcon icon={faTrashCan} />
-                    </Button>
-                  </Tooltip>
+                    <Tooltip title="Chỉnh sửa">
+                      <Button
+                        variant="outlined"
+                        color="primary"
+                        onClick={() => handleEdit(value)}
+                        style={{ marginRight: "5px" }}
+                      >
+                        <FontAwesomeIcon icon={faPenToSquare} />
+                      </Button>
+                    </Tooltip>
+                    <Tooltip title="Xóa">
+                      <Button
+                        variant="outlined"
+                        color="error"
+                        onClick={() => handleDeleteClick(value.IDSanPham)}
+                      >
+                        <FontAwesomeIcon icon={faTrashCan} />
+                      </Button>
+                    </Tooltip>
                   </TableCell>
                 </TableRow>
               ))
@@ -348,10 +334,15 @@ function ManageProduct({ data }) {
         aria-labelledby="confirm-dialog-title"
         aria-describedby="confirm-dialog-description"
       >
-        <DialogTitle id="confirm-dialog-title" sx={{borderBottom: '1px solid #ddd'}}>Xác nhận xóa</DialogTitle>
+        <DialogTitle
+          id="confirm-dialog-title"
+          sx={{ borderBottom: "1px solid #ddd" }}
+        >
+          Xác nhận xóa
+        </DialogTitle>
         <DialogContentText
           id="confirm-dialog-description"
-          style={{ padding: "20px"}}
+          style={{ padding: "20px" }}
         >
           Bạn có chắc chắn muốn xóa sản phẩm này không?
         </DialogContentText>
@@ -366,7 +357,6 @@ function ManageProduct({ data }) {
       </Dialog>
 
       <Stack spacing={2} style={{ marginTop: "20px", alignItems: "center" }}>
-        {/* <Typography>Trang: {currentPage}</Typography> */}
         <Pagination
           count={Math.ceil(sortData().length / productsPerPage)}
           page={currentPage}

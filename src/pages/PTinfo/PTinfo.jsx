@@ -89,7 +89,7 @@ function PTInfo() {
                   {peronalTrainer &&
                     peronalTrainer.GiaThue.toLocaleString("vi-VN")}
                 </p>{" "}
-                VNĐ / giờ
+                VNĐ / buổi (60 phút)
               </p>
             </div>
           </div>

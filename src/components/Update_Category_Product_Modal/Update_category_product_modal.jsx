@@ -48,7 +48,7 @@ function UpdateCategoryModal({ data, setShowModal }) {
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);
-                        setMessage("Cập nhật thành công");
+                        setMessage("Cập nhật tên loại sản phẩm thành công");
                         setShowModal(false);
                     } else {
                         throw new Error("Lấy thông tin thất bại");

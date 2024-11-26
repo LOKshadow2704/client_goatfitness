@@ -10,6 +10,19 @@ function UpdateProductModal({ data, setShowModal }) {
     const [changedData, setChangedData] = useState({});
     const [category, setCategory] = useState([]);
     const { setError, setMessage, setSuccess } = useAnnouncement();
+    const [errors, setErrors] = useState({});
+
+    const validateForm = () => {
+        const newErrors = {};
+        if (!formData.TenSP) newErrors.TenSP = "Tên sản phẩm không được bỏ trống";
+        if (!formData.IDLoaiSanPham) newErrors.IDLoaiSanPham = "Vui lòng chọn loại sản phẩm";
+        if (!formData.Mota) newErrors.Mota = "Mô tả không được bỏ trống";
+        if (!formData.DonGia || formData.DonGia <= 0) newErrors.DonGia = "Đơn giá phải lớn hơn 0";
+        if (formData.Discount < 0 || formData.Discount > 100) newErrors.Discount = "Giảm giá phải trong khoảng 0 - 100%";
+        if (!formData.SoLuong || formData.SoLuong <= 0) newErrors.SoLuong = "Số lượng tồn kho phải lớn hơn 0";
+        setErrors(newErrors);
+        return Object.keys(newErrors).length === 0; // Trả về true nếu không có lỗi
+    };
 
     useEffect(() => {
         axios.get('http://localhost:8080/Backend/categories')
@@ -60,8 +73,54 @@ function UpdateProductModal({ data, setShowModal }) {
         });
     };
 
+    // const handleSubmit = async (e) => {
+    //     e.preventDefault();
+    //     const isLogin = findCookie("jwt");
+    //     if (isLogin) {
+    //         const jwt = findCookie('jwt');
+    //         const headers = {
+    //             'Content-Type': 'application/json',
+    //             'Authorization': 'Bearer ' + jwt,
+    //             'PHPSESSID': findCookie("PHPSESSID")
+    //         };
+    //         const file = document.getElementById("IMG").files[0];
+    //         let newlink = '';
+    //         if (file) {
+    //             newlink = await uploadImage(file);
+    //         }
+    //         if (newlink) {
+    //             changedData.IMG = newlink;
+    //         }
+    //         const data = {
+    //             data: { ...changedData },
+    //             IDSanPham: formData.IDSanPham
+    //         };
+
+    //         axios.put('http://localhost:8080/Backend/employee/products/update', data, { headers })
+    //             .then(response => {
+    //                 if (response.status >= 200 && response.status < 300) {
+    //                     setSuccess(true);
+    //                     setMessage("Cập nhật thông tin sản phẩm thành công");
+    //                     setShowModal(false);
+    //                 } else {
+    //                     throw new Error("Lấy thông tin thất bại");
+    //                 }
+    //             })
+    //             .catch(error => {
+    //                 setError(true);
+    //                 setMessage(error.response.data.error);
+    //             });
+    //     }
+    // };
+
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (!validateForm()) {
+            setError(true);
+            setMessage("Vui lòng điền đầy đủ thông tin");
+            return;
+        }
+
         const isLogin = findCookie("jwt");
         if (isLogin) {
             const jwt = findCookie('jwt');
@@ -87,7 +146,7 @@ function UpdateProductModal({ data, setShowModal }) {
                 .then(response => {
                     if (response.status >= 200 && response.status < 300) {
                         setSuccess(true);
-                        setMessage("Cập nhật thành công");
+                        setMessage("Cập nhật thông tin sản phẩm thành công");
                         setShowModal(false);
                     } else {
                         throw new Error("Lấy thông tin thất bại");
@@ -95,7 +154,7 @@ function UpdateProductModal({ data, setShowModal }) {
                 })
                 .catch(error => {
                     setError(true);
-                    setMessage(error.response.data.error);
+                    setMessage(error.response.data.error || "Cập nhật thất bại");
                 });
         }
     };
@@ -148,26 +207,6 @@ function UpdateProductModal({ data, setShowModal }) {
                         onChange={handleChange}
                         margin="normal"
                     />
-                    {/* <TextField
-                        label="Đơn giá"
-                        variant="outlined"
-                        fullWidth
-                        type="number"
-                        name="DonGia"
-                        value={formData.DonGia}
-                        onChange={handleChange}
-                        margin="normal"
-                    />
-                    <TextField
-                        label="Giảm giá (%)"
-                        variant="outlined"
-                        fullWidth
-                        type="number"
-                        name="Discount"
-                        value={formData.Discount || 0}
-                        onChange={handleChange}
-                        margin="normal"
-                    /> */}
                     <TextField
                     label="Đơn giá"
                     variant="outlined"

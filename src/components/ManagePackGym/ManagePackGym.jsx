@@ -116,7 +116,7 @@ function ManagePackGym() {
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {
             setSuccess(true);
-            setMessage("Xóa thành công");
+            setMessage("Xóa gói tập thành công");
             setRerender(!rerender);
           } else {
             throw new Error("Xóa thất bại");

@@ -79,41 +79,6 @@ function ManageAccount({ data }) {
     }
   }, [modalUpdate, modalAdd, rerender, setError, setMessage]);
 
-  // const sampleData = [
-  //   {
-  //     TenDangNhap: "locuse4",
-  //     SDT: "0328152829",
-  //     IDVaiTro: 3,
-  //     TenVaiTro: "user",
-  //     IDHLV: null,
-  //   },
-  //   {
-  //     TenDangNhap: "locuser3",
-  //     SDT: "0328151829",
-  //     IDVaiTro: 3,
-  //     TenVaiTro: "user",
-  //     IDHLV: null,
-  //   },
-  //   {
-  //     TenDangNhap: "locuser2",
-  //     SDT: "0123456777",
-  //     IDVaiTro: 3,
-  //     TenVaiTro: "user",
-  //     IDHLV: 29,
-  //   },
-  //   {
-  //     TenDangNhap: "locuser1",
-  //     SDT: "0987654321",
-  //     IDVaiTro: 2,
-  //     TenVaiTro: "employee",
-  //     IDHLV: null,
-  //   },
-  // ];
-
-
-  // useEffect(() => {
-  //   setAccounts(sampleData);
-  // }, []);
 
   const handleSearchChange = (e) => {
     setSearchTerm(e.target.value);
@@ -182,7 +147,7 @@ function ManageAccount({ data }) {
         .then((response) => {
           if (response.status >= 200 && response.status < 300) {
             setSuccess(true);
-            setMessage("Xóa thành công");
+            setMessage("Xóa tài khoản thành công");
             setRerender(!rerender);
           } else {
             throw new Error("Xóa thất bại");

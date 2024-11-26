@@ -184,17 +184,31 @@ function Shop() {
             </div>
           </div>
           <div className={style["product"]}>
-            <ul>
-              {paginatedProducts.map((value) => (
-                <li key={value.IDSanPham}>
-                  <ProductItem
-                    children={value}
-                    current={cartCount}
-                    setAddCartCount={setCartCount}
-                  />
-                </li>
-              ))}
-            </ul>
+            {filteredProducts.length === 0 ? (
+              <p
+                style={{
+                  textAlign: "center",
+                  color: "red",
+                  fontWeight: "bold",
+                  marginTop: "50px",
+                  fontSize: "20px",
+                }}
+              >
+                Không tìm thấy sản phẩm !
+              </p>
+            ) : (
+              <ul>
+                {paginatedProducts.map((value) => (
+                  <li key={value.IDSanPham}>
+                    <ProductItem
+                      children={value}
+                      current={cartCount}
+                      setAddCartCount={setCartCount}
+                    />
+                  </li>
+                ))}
+              </ul>
+            )}
           </div>
           <div className={style["pagination-container"]}>
             <Pagination

@@ -339,7 +339,7 @@ const ManageRegisterPT = () => {
         aria-labelledby="confirm-dialog-title"
         aria-describedby="confirm-dialog-description"
       >
-        <DialogTitle id="confirm-dialog-title" sx={{ borderBottom: "1px solid #ddd" }}>Xác nhận hành động</DialogTitle>
+        <DialogTitle id="confirm-dialog-title" sx={{ borderBottom: "1px solid #ddd",fontSize:"20px" }}>Xác nhận hành động</DialogTitle>
         <DialogContent>
           <DialogContentText id="confirm-dialog-description" style={{ paddingTop: "20px" }}>
             {selectedAction === "accept"

@@ -69,7 +69,7 @@ function UpdateGymPackModal({ data, setShowModal }) {
                     .then(response => {
                         if (response.status >= 200 && response.status < 300) {
                             setSuccess(true);
-                            setMessage("Cập nhật thành công");
+                            setMessage("Cập nhật giá gói tập thành công");
                             setShowModal(false);
                         } else {
                             throw new Error("Cập nhật thất bại");

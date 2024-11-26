@@ -12,6 +12,7 @@ function UpdateEmployeeModal({ data, setShowModal }) {
         Email: data.Email,
         SDT: data.SDT,
         DichVu: data.DichVu,
+        TrangThai: data.TrangThai,
     });
 
     // Hàm thay đổi trạng thái form
@@ -95,7 +96,7 @@ function UpdateEmployeeModal({ data, setShowModal }) {
                             value={formData.HoTen}
                             onChange={handleChange}
                             fullWidth
-                            margin="normal"
+                            margin="dense"
                         />
                     </FormControl>
                     <FormControl fullWidth margin="dense">
@@ -106,7 +107,7 @@ function UpdateEmployeeModal({ data, setShowModal }) {
                             value={formData.Email}
                             onChange={handleChange}
                             fullWidth
-                            margin="normal"
+                            margin="dense"
                         />
                     </FormControl>
                     <FormControl fullWidth margin="dense">
@@ -117,7 +118,7 @@ function UpdateEmployeeModal({ data, setShowModal }) {
                             value={formData.SDT}
                             onChange={handleChange}
                             fullWidth
-                            margin="normal"
+                            margin="dense"
                         />
                     </FormControl>
                     <FormControl fullWidth margin="dense">
@@ -128,7 +129,18 @@ function UpdateEmployeeModal({ data, setShowModal }) {
                             value={formData.DichVu}
                             onChange={handleChange}
                             fullWidth
-                            margin="normal"
+                            margin="dense"
+                        />
+                    </FormControl>
+                    <FormControl fullWidth margin="dense">
+                        <TextField
+                            label="Trạng thái"
+                            id="TrangThai"
+                            name="TrangThai"
+                            value={formData.TrangThai}
+                            onChange={handleChange}
+                            fullWidth
+                            margin="dense"
                         />
                     </FormControl>
                     <Box mt={2} textAlign="center">

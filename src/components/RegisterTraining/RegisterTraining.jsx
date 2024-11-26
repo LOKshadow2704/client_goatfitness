@@ -25,7 +25,7 @@ function RegisterTraining({ setShowModal, peronalTrainer }) {
     const hour = date.getHours();
     if (hour < 8 || hour > 22) {
       setError(true);
-      setMessage('Giờ bắt đầu phải từ 8:00 đến 22:00.');
+      setMessage('Giờ bắt đầu phải từ 8:00.');
       setStartDate(null);
     } else {
       setStartDate(date);
@@ -54,7 +54,7 @@ function RegisterTraining({ setShowModal, peronalTrainer }) {
 
     if (endHour > 22 || startHour < 8 || endHour < 8) {
       setError(true);
-      setMessage('Giờ làm việc phải từ 8:00 đến 22:00.');
+      setMessage('Giờ kết thúc phải trước 22:00.');
       setEndDate(null);
     } else {
       setEndDate(date);

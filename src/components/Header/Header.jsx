@@ -13,11 +13,13 @@ import { useNavigate } from "react-router-dom";
 import ShoppingCartIcon from "@mui/icons-material/ShoppingCart";
 import UserPTPackage from "../UserPTPackage/UserPTPackage";
 import ManagePTRegist from"../ManagePTRegist/ManagePTRegist"
+import PTManageSchedule from "../PT_Manage_Schedule/PTManageSchedule";
 
 function Header() {
   const [showModal, setShowModal] = useState(false);
   const [showPTModal, setShowPTModal] = useState(false);
   const [showRegistPTModal, setShowRegistPTModal] = useState(false);
+  const [showShedulePT, setShowShedulePT] = useState(false);
   const [ setCart ] = useState(false);
   const cartRef = useRef(null);
   const { isLogin, user } = useAuth();
@@ -186,7 +188,7 @@ function Header() {
             }}
           />
         </div>
-        {user && isLogin && (
+        {/* {user && isLogin && (
           <div className={style["user"]}>
             <img src={user.avt} alt="user" width="100%" />
             <p>{user.HoTen}</p>
@@ -203,17 +205,66 @@ function Header() {
               <li onClick={() => setShowPTModal(true)}>
                 <Link to="#">Thông tin thuê PT</Link>
               </li>
+              <li onClick={() => setShowShedulePT(true)}>
+                <Link to="#">Thông tin lịch dạy</Link>
+              </li>
               <li onClick={() => setShowRegistPTModal(true)}>
                 <Link to="#">Thông tin đăng ký HLV</Link>
               </li>
               <li onClick={Logout}>Đăng xuất</li>
             </ul>
           </div>
-        )}
+        )} */}
+        {user && isLogin && (
+  <div className={style["user"]}>
+    <img src={user.avt} alt="user" width="100%" />
+    <p>{user.HoTen}</p>
+    <ul className={style["dropdown-content"]}>
+      {/* Các mục hiển thị nếu IDHLV === null */}
+      {user.IDHLV === null && (
+        <>
+          <li>
+            <Link to="/account-setting">Thông tin tài khoản</Link>
+          </li>
+          <li onClick={() => setShowModal(true)}>
+            <Link to="#">Thông tin gói tập</Link>
+          </li>
+          <li>
+            <Link to="/PurchaseOrder">Đơn hàng</Link>
+          </li>
+          <li onClick={() => setShowPTModal(true)}>
+            <Link to="#">Thông tin thuê PT</Link>
+          </li>
+          <li onClick={() => setShowRegistPTModal(true)}>
+            <Link to="#">Thông tin đăng ký HLV</Link>
+          </li>
+        </>
+      )}
+      {/* Các mục hiển thị nếu IDHLV có giá trị */}
+      {user.IDHLV !== null && (
+        <>
+          <li>
+            <Link to="/account-setting">Thông tin tài khoản</Link>
+          </li>
+          <li>
+            <Link to="/PurchaseOrder">Đơn hàng</Link>
+          </li>
+          <li onClick={() => setShowShedulePT(true)}>
+            <Link to="#">Thông tin lịch dạy</Link>
+          </li>
+        </>
+      )}
+      {/* Mục đăng xuất hiển thị trong cả hai trường hợp */}
+      <li onClick={Logout}>Đăng xuất</li>
+    </ul>
+  </div>
+)}
+
       </div>
       {showModal && <UserPackage setShowModal={setShowModal} />}
       {showPTModal && <UserPTPackage setShowModal={setShowPTModal} />}
       {showRegistPTModal && <ManagePTRegist setShowModal={setShowRegistPTModal} />}
+      {showShedulePT && <PTManageSchedule setShowModal={setShowShedulePT} />}
       {error || success || warning ? <Announcement /> : null}
     </header>
   );
